@@ -122,28 +122,130 @@ const CHAPTERS = [
   { id: "osteomyelite", label: "Ostéomyélite aiguë", subjectId: "semio-chir" },
   { id: "plaies", label: "Plaies", subjectId: "semio-chir" },
   { id: "asepsie_inflammation", label: "Asepsie et inflammation", subjectId: "semio-chir" },
+
+  { id: "semio_generalites", label: "Généralités et définitions", subjectId: "semio-medicale" },
+  { id: "examen_clinique", label: "Examen clinique", subjectId: "semio-medicale" },
+  { id: "semio_respiratoire_toux", label: "Toux et expectoration", subjectId: "semio-medicale" },
+  { id: "hemoptysie", label: "Hémoptysie", subjectId: "semio-medicale" },
+  { id: "dyspnee", label: "Dyspnée", subjectId: "semio-medicale" },
+  { id: "semio_cardiovasculaire", label: "Symptômes cardio-vasculaires", subjectId: "semio-medicale" },
+
+  { id: "secourisme_def", label: "Définitions et principes fondamentaux", subjectId: "secourisme" },
+  { id: "degagement_urgence", label: "Dégagement d'urgence", subjectId: "secourisme" },
+  { id: "etouffement", label: "Victime qui s'étouffe", subjectId: "secourisme" },
+  { id: "hemorragie_secourisme", label: "Hémorragie", subjectId: "secourisme" },
+  { id: "victime_inconsciente", label: "Victime inconsciente", subjectId: "secourisme" },
+  { id: "rcp", label: "Réanimation cardio-pulmonaire", subjectId: "secourisme" },
+  { id: "malaises_plaies", label: "Malaises et plaies", subjectId: "secourisme" },
+
+  { id: "digestion_generalites", label: "Digestion (généralités)", subjectId: "anat-physio" },
+  { id: "cavite_buccale_pharynx", label: "Cavité buccale et pharynx", subjectId: "anat-physio" },
+  { id: "oesophage_estomac", label: "Œsophage et estomac", subjectId: "anat-physio" },
+  { id: "intestin_grele_colon", label: "Intestin grêle et côlon", subjectId: "anat-physio" },
+  { id: "foie_voies_biliaires", label: "Foie et voies biliaires", subjectId: "anat-physio" },
+  { id: "pancreas_digestif", label: "Pancréas (fonction digestive)", subjectId: "anat-physio" },
+  { id: "squelette_os", label: "Le squelette et les os", subjectId: "anat-physio" },
+  { id: "articulations", label: "Les articulations", subjectId: "anat-physio" },
+  { id: "muscles", label: "Les muscles", subjectId: "anat-physio" },
+
+  { id: "concept_infirmier", label: "Concept infirmier (rôle et fonctions)", subjectId: "concepts-sciences-inf" },
+  { id: "concept_soins_infirmiers", label: "Concept de soins infirmiers", subjectId: "concepts-sciences-inf" },
+  { id: "modele_conceptuel", label: "Modèle conceptuel en soins infirmiers", subjectId: "concepts-sciences-inf" },
+  { id: "modele_henderson", label: "Modèle de Virginia Henderson", subjectId: "concepts-sciences-inf" },
+  { id: "besoins_notion", label: "Notion de besoin", subjectId: "concepts-sciences-inf" },
+  { id: "besoins_maslow", label: "Pyramide de Maslow", subjectId: "concepts-sciences-inf" },
+  { id: "dossier_soins", label: "Dossier de soins infirmiers", subjectId: "concepts-sciences-inf" },
+  { id: "relation_aide", label: "Relation d'aide", subjectId: "concepts-sciences-inf" },
 ];
 const CH = Object.fromEntries(CHAPTERS.map((c) => [c.id, c.label]));
 
-/* ---------------- Matières (programme des évaluations INFAS L1 IDE-SFM S1/S2) ---------------- */
-// Hématologie, Déontologie, Anatomie Physiologie et Sémiologie chirurgicale disposent d'un
-// cours chargé : ce sont les matières cliquables. Les autres s'activeront au fur et à mesure
-// de l'ajout de leurs cours.
-const SUBJECTS = [
-  { id: "eval-test-deonto", label: "Évaluation Test / Déontologie", date: "Samedi 27 juin 2026", active: false },
-  { id: "eval-test-concepts", label: "Évaluation Test / Concepts et théories en sciences", date: "Mardi 30 juin 2026", active: false },
-  { id: "hematologie", label: "Hématologie", date: "Samedi 11 juillet 2026", enseignant: "M. Gogbé", active: true },
-  { id: "deontologie", label: "Déontologie", date: "Dimanche 12 juillet 2026", enseignant: "Me Bernard ZOH", active: true },
-  { id: "semio-medicale", label: "Sémiologie médicale", date: "Samedi 18 juillet 2026", active: false },
-  { id: "concepts-sciences-inf", label: "Concepts et théories en sciences infirmières / obstétricales", date: "Dimanche 19 juillet 2026", enseignant: "M. Kouakou Kan", active: false },
-  { id: "semio-chir", label: "Sémiologie chirurgicale", date: "Samedi 1er août 2026", active: true },
-  { id: "sante-pub-1", label: "Santé publique n°1", date: "Dimanche 2 août 2026", active: false },
-  { id: "secourisme", label: "Secourisme", date: "Samedi 8 août 2026", enseignant: "Mme Koné", active: false },
-  { id: "anat-physio", label: "Anatomie Physiologie (Cellules et tissus, Anatomie et Physiologie générale)", date: "Dimanche 9 août 2026", enseignant: "Dr Kamissoko", active: true },
-  { id: "maladies-transmissibles", label: "Maladies non transmissibles / Maladies transmissibles", date: "Samedi 15 août 2026", active: false },
-  { id: "sante-pub-2", label: "Santé publique n°2", date: "Dimanche 16 août 2026", active: false },
+/* ---------------- Programme officiel INFAS L1 IDE-SFM — UE / ECUE ---------------- */
+// Structure exacte du "Point des crédits" Licence 1, Semestres 1 et 2 (30 crédits chacun).
+// Chaque ECUE porte, si le cours a été fourni, l'id de la matière correspondante (subjectId) ;
+// sinon elle reste affichée mais non cliquable ("Bientôt").
+const UE_LIST = [
+  // --- Semestre 1 ---
+  { id: "CHF1110", semester: 1, code: "CHF 1110", label: "Connaissance de base du corps humain et de son fonctionnement", credits: 5 },
+  { id: "SIN1110", semester: 1, code: "SIN 1110", label: "Santé infantile", credits: 5 },
+  { id: "NBS1110", semester: 1, code: "NBS 1110", label: "Notions de base sur les situations cliniques se référant aux pathologies I", credits: 2 },
+  { id: "SPB1110", semester: 1, code: "SPB 1110", label: "Santé publique", credits: 4 },
+  { id: "PMC1120", semester: 1, code: "PMC 1120", label: "Pathologies médico-chirurgicales", credits: 4 },
+  { id: "SHU1120", semester: 1, code: "SHU 1120", label: "Santé humaine", credits: 3 },
+  { id: "IRE1130", semester: 1, code: "IRE 1130", label: "Initiation à la recherche", credits: 1 },
+  { id: "MSO1130", semester: 1, code: "MSO 1130", label: "Méthodes et techniques de base en soins infirmiers et obstétricaux (Phase I)", credits: 3 },
+  { id: "CFI1140", semester: 1, code: "CFI 1140", label: "Connaissances de base liées aux fonctions infirmières et sages-femmes", credits: 2 },
+  { id: "OMC1140", semester: 1, code: "OMC 1140", label: "Outils de communication I", credits: 1 },
+  // --- Semestre 2 ---
+  { id: "CHF1210", semester: 2, code: "CHF 1210", label: "Connaissance de base du corps humain et de son fonctionnement", credits: 3 },
+  { id: "PAC1210", semester: 2, code: "PAC 1210", label: "Prise en charge des affections courantes", credits: 5 },
+  { id: "TLB1210", semester: 2, code: "TLB 1210", label: "Techniques de laboratoire", credits: 3 },
+  { id: "SCO1220", semester: 2, code: "SCO 1220", label: "Santé communautaire", credits: 4 },
+  { id: "STG1220", semester: 2, code: "STG 1220", label: "Stage de découverte", credits: 7 },
+  { id: "MSO1230", semester: 2, code: "MSO 1230", label: "Méthodes et techniques de base en soins infirmiers et obstétricaux (Phase II)", credits: 3 },
+  { id: "PRR1230", semester: 2, code: "PRR 1230", label: "Processus de rédaction d'un rapport de stage", credits: 1 },
+  { id: "SSA1240", semester: 2, code: "SSA 1240", label: "Sport et santé", credits: 2 },
+  { id: "DRT1240", semester: 2, code: "DRT 1240", label: "Droit", credits: 2 },
 ];
-const SUBJ = Object.fromEntries(SUBJECTS.map((s) => [s.id, s.label]));
+
+const ECUE_LIST = [
+  // Semestre 1
+  { id: "CHF1111", ueId: "CHF1110", code: "CHF 1111", label: "Anatomie Physiologie : cellules et tissus, ostéologie, myologie, système nerveux", credits: 3, subjectId: "anat-physio" },
+  { id: "CHF1112", ueId: "CHF1110", code: "CHF 1112", label: "Anatomie physiologie obstétricale", credits: 2, subjectId: null },
+  { id: "SIN1111", ueId: "SIN1110", code: "SIN 1111", label: "Soins aux enfants", credits: 2, subjectId: null },
+  { id: "SIN1112", ueId: "SIN1110", code: "SIN 1112", label: "Pédiatrie", credits: 1, subjectId: null },
+  { id: "SIN1113", ueId: "SIN1110", code: "SIN 1113", label: "Diététique", credits: 2, subjectId: null },
+  { id: "NBS1111", ueId: "NBS1110", code: "NBS 1111", label: "Bactériologie", credits: 1, subjectId: null },
+  { id: "NBS1112", ueId: "NBS1110", code: "NBS 1112", label: "Parasitologie", credits: 1, subjectId: null },
+  { id: "SPB1111", ueId: "SPB1110", code: "SPB 1111", label: "Étude du milieu", credits: 2, subjectId: null },
+  { id: "SPB1112", ueId: "SPB1110", code: "SPB 1112", label: "Nutrition", credits: 1, subjectId: null },
+  { id: "SPB1113", ueId: "SPB1110", code: "SPB 1113", label: "Système National de santé", credits: 1, subjectId: null },
+  { id: "PMC1121", ueId: "PMC1120", code: "PMC 1121", label: "IST / VIH", credits: 1, subjectId: null },
+  { id: "PMC1122", ueId: "PMC1120", code: "PMC 1122", label: "Pathologies chirurgicales / Sémiologie", credits: 1, subjectId: "semio-chir" },
+  { id: "PMC1123", ueId: "PMC1120", code: "PMC 1123", label: "Pathologies médicales / Sémiologie", credits: 2, subjectId: "semio-medicale" },
+  { id: "SHU1121", ueId: "SHU1120", code: "SHU 1121", label: "Théorie et concepts des Soins Infirmiers / Obstétricaux / Relation d'aide", credits: 1, subjectId: "concepts-sciences-inf" },
+  { id: "SHU1122", ueId: "SHU1120", code: "SHU 1122", label: "Psycho-sociologie", credits: 1, subjectId: null },
+  { id: "SHU1123", ueId: "SHU1120", code: "SHU 1123", label: "Anthropologie de la santé", credits: 1, subjectId: null },
+  { id: "IRE1131", ueId: "IRE1130", code: "IRE 1131", label: "Généralités de la recherche en Soins Infirmiers et Obstétricaux", credits: 0.5, subjectId: null },
+  { id: "IRE1132", ueId: "IRE1130", code: "IRE 1132", label: "Revue de littérature et Note d'étude", credits: 0.5, subjectId: null },
+  { id: "MSO1131", ueId: "MSO1130", code: "MSO 1131", label: "Techniques de soins de base en médecine et en chirurgie", credits: 1, subjectId: null },
+  { id: "MSO1132", ueId: "MSO1130", code: "MSO 1132", label: "Secourisme", credits: 1, subjectId: "secourisme" },
+  { id: "MSO1133", ueId: "MSO1130", code: "MSO 1133", label: "Prévention des infections / Hygiène hospitalière", credits: 1, subjectId: null },
+  { id: "CFI1141", ueId: "CFI1140", code: "CFI 1141", label: "Déontologie et éthique professionnelle", credits: 0.5, subjectId: "deontologie" },
+  { id: "CFI1142", ueId: "CFI1140", code: "CFI 1142", label: "Législation du travail", credits: 1, subjectId: null },
+  { id: "CFI1143", ueId: "CFI1140", code: "CFI 1143", label: "Profession infirmière / sage-femme", credits: 0.5, subjectId: null },
+  { id: "OMC1141", ueId: "OMC1140", code: "OMC 1141", label: "Anglais de la santé", credits: 0.5, subjectId: null },
+  { id: "OMC1142", ueId: "OMC1140", code: "OMC 1142", label: "Informatique : Bureautique", credits: 0.5, subjectId: null },
+  // Semestre 2
+  { id: "CHF1211", ueId: "CHF1210", code: "CHF 1211", label: "Anatomie Physiologie : appareil respiratoire, cardiovasculaire, urinaire, reproducteur", credits: 2, subjectId: null },
+  { id: "CHF1212", ueId: "CHF1210", code: "CHF 1212", label: "Anatomie physiologie obstétricale : bassin osseux, bassin mou", credits: 1, subjectId: null },
+  { id: "PAC1211", ueId: "PAC1210", code: "PAC 1211", label: "Maladies parasitaires et infectieuses", credits: 2, subjectId: null },
+  { id: "PAC1212", ueId: "PAC1210", code: "PAC 1212", label: "Pathologies respiratoires", credits: 2, subjectId: null },
+  { id: "PAC1213", ueId: "PAC1210", code: "PAC 1213", label: "Maladies non transmissibles", credits: 1, subjectId: null },
+  { id: "TLB1211", ueId: "TLB1210", code: "TLB 1211", label: "Biochimie", credits: 1, subjectId: null },
+  { id: "TLB1212", ueId: "TLB1210", code: "TLB 1212", label: "Immunologie", credits: 1, subjectId: null },
+  { id: "TLB1213", ueId: "TLB1210", code: "TLB 1213", label: "Hématologie", credits: 1, subjectId: "hematologie" },
+  { id: "SCO1221", ueId: "SCO1220", code: "SCO 1221", label: "Hygiène et assainissement", credits: 1, subjectId: null },
+  { id: "SCO1222", ueId: "SCO1220", code: "SCO 1222", label: "Soins de santé primaire", credits: 1, subjectId: null },
+  { id: "SCO1223", ueId: "SCO1220", code: "SCO 1223", label: "Généralités sur l'épidémiologie", credits: 1, subjectId: null },
+  { id: "SCO1224", ueId: "SCO1220", code: "SCO 1224", label: "IEC / CCC", credits: 1, subjectId: null },
+  { id: "STG1221", ueId: "STG1220", code: "STG 1221", label: "Stage péri-urbain + rapport", credits: 3, subjectId: null },
+  { id: "STG1222", ueId: "STG1220", code: "STG 1222", label: "Stage en milieu hospitalier + rapport", credits: 4, subjectId: null },
+  { id: "MSO1231", ueId: "MSO1230", code: "MSO 1231", label: "Démarche de soin", credits: 1, subjectId: null },
+  { id: "MSO1232", ueId: "MSO1230", code: "MSO 1232", label: "Techniques de soins de base", credits: 1, subjectId: null },
+  { id: "MSO1233", ueId: "MSO1230", code: "MSO 1233", label: "Soins infirmiers obstétricaux / néonataux de base / infantiles", credits: 1, subjectId: null },
+  { id: "PRR1231", ueId: "PRR1230", code: "PRR 1231", label: "Informatique : Internet", credits: 0.5, subjectId: null },
+  { id: "PRR1232", ueId: "PRR1230", code: "PRR 1232", label: "Méthodologie de rédaction de rapport de stage", credits: 0.5, subjectId: null },
+  { id: "SSA1241", ueId: "SSA1240", code: "SSA 1241", label: "Sport et pathologies", credits: 1, subjectId: null },
+  { id: "SSA1242", ueId: "SSA1240", code: "SSA 1242", label: "Sport et société", credits: 1, subjectId: null },
+  { id: "DRT1241", ueId: "DRT1240", code: "DRT 1241", label: "Droit administratif", credits: 1, subjectId: null },
+  { id: "DRT1242", ueId: "DRT1240", code: "DRT 1242", label: "Droit civil", credits: 1, subjectId: null },
+];
+
+// Palette de teintes, une par UE, utilisée pour la couleur d'accent de l'UE et le fond tamisé de ses ECUE
+const UE_PALETTE = ["#0B5D8C", "#1E8F5E", "#A8720F", "#B23A2E", "#6B4FA0", "#0E7C86", "#9C5B0B", "#3D6B99", "#7A3B8C", "#5C7A0B"];
+const UE_COLOR = Object.fromEntries(UE_LIST.map((u, i) => [u.id, UE_PALETTE[i % UE_PALETTE.length]]));
+
+const SUBJ = Object.fromEntries(ECUE_LIST.filter((e) => e.subjectId).map((e) => [e.subjectId, e.label]));
 
 /* ---------------- Question bank (grounded in the course PDF) ---------------- */
 // tuple: [type, chapterId, level, stem, options[], correctIdx[], explanation, reference]
@@ -560,6 +662,107 @@ const ANATPHYSIO_RAW = [
     ["Il se développe jusqu'à la puberté puis s'atrophie chez l'adulte","Il n'existe que chez l'adulte","Il grossit continuellement toute la vie","Il disparaît dès la naissance"],[0],
     "Le développement du thymus se poursuit jusqu'à la puberté ; chez l'adulte, la glande s'atrophie et devient difficilement reconnaissable.",
     "Anatomie Physiologie – Chapitre 7 : Thymus"],
+
+  ["QCU","digestion_generalites",1,"L'appareil digestif comprend le tube digestif et les glandes annexes, qui sont :",
+    ["Le foie, les voies biliaires et le pancréas","Le cœur, les poumons et les reins","La thyroïde et les surrénales","Le cerveau et la moelle épinière"],[0],
+    "L'appareil digestif comprend le tube digestif (œsophage, estomac, duodénum, intestin grêle, côlon, rectum) et les glandes annexes : foie, voies biliaires et pancréas.",
+    "Anatomie/Physiologie de l'appareil digestif – Anatomie de l'appareil digestif"],
+  ["QCU","digestion_generalites",2,"Le cours distingue, dans la digestion, huit grands temps, parmi lesquels :",
+    ["Le temps buccal, le temps gastrique et le temps colique","Le temps cardiaque et le temps respiratoire","Le temps rénal et le temps hépatique uniquement","Le temps osseux"],[0],
+    "Les 8 temps de la digestion cités sont : buccal, pharyngien (déglutition), œsophagien, gastrique, intestinal, biliaire et pancréatique, colique, rectal.",
+    "Anatomie/Physiologie de l'appareil digestif – Anatomie de l'appareil digestif"],
+
+  ["QCU","cavite_buccale_pharynx",1,"Dans la cavité buccale, l'amylase salivaire (ptyaline) a pour rôle de :",
+    ["Dégrader l'amidon en molécules de maltose","Digérer les lipides","Digérer les protéines","Neutraliser l'acidité gastrique"],[0],
+    "La salive contient une enzyme, l'amylase salivaire ou ptyaline, qui dégrade l'amidon en molécules de maltose, facilitant la digestion des glucides.",
+    "Anatomie/Physiologie de l'appareil digestif – I. La cavité buccale"],
+  ["QCU","cavite_buccale_pharynx",2,"Le pharynx est décrit dans le cours comme le carrefour :",
+    ["Des voies aérodigestives","Des voies urinaires","Des voies biliaires","Des voies lymphatiques uniquement"],[0],
+    "Le pharynx relie le nez à la trachée et fait passer le bol alimentaire de la bouche vers l'estomac : on dit qu'il est le carrefour des voies aérodigestives.",
+    "Anatomie/Physiologie de l'appareil digestif – II. Le pharynx"],
+
+  ["QCU","oesophage_estomac",2,"La descente du bol alimentaire dans l'œsophage se fait grâce à des mouvements appelés :",
+    ["Le péristaltisme œsophagien","La glycogénolyse","La diapédèse","L'ossification"],[0],
+    "La descente du bol alimentaire se produit grâce aux mouvements péristaltiques de l'œsophage : c'est le péristaltisme œsophagien.",
+    "Anatomie/Physiologie de l'appareil digestif – III. L'Œsophage"],
+  ["QCU","oesophage_estomac",1,"Dans l'estomac, les cellules pariétales sécrètent :",
+    ["L'acide chlorhydrique et le facteur intrinsèque","Le pepsinogène","La mucine","La gastrine"],[0],
+    "Les glandes gastriques contiennent 4 types de cellules : accessoires (mucine), principales (pepsinogène), pariétales (acide chlorhydrique et facteur intrinsèque), endocrines (gastrine).",
+    "Anatomie/Physiologie de l'appareil digestif – IV. L'estomac"],
+  ["QCU","oesophage_estomac",2,"La régulation de la sécrétion du suc gastrique se fait, selon le cours, en trois phases :",
+    ["Céphalique, gastrique et intestinale","Buccale, pharyngée et œsophagienne","Hépatique, biliaire et pancréatique","Colique, rectale et anale"],[0],
+    "La régulation du suc gastrique se fait en 3 phases : céphalique (stimuli psychiques), gastrique (libération de gastrine), intestinale (inhibition hormonale).",
+    "Anatomie/Physiologie de l'appareil digestif – IV. L'estomac"],
+
+  ["QCU","intestin_grele_colon",1,"L'intestin grêle est divisé en trois parties qui se suivent :",
+    ["Le duodénum, le jéjunum et l'iléon","Le caecum, le côlon et le rectum","L'estomac, le duodénum et le pancréas","Le foie, la vésicule et le pancréas"],[0],
+    "L'intestin grêle est divisé en 3 parties qui se suivent : le duodénum, le jéjunum puis l'iléon.",
+    "Anatomie/Physiologie de l'appareil digestif – V. L'intestin grêle"],
+  ["QCU","intestin_grele_colon",1,"Le rôle principal de l'intestin grêle est :",
+    ["L'absorption des nutriments","Le stockage de la bile","La production d'insuline","La filtration du sang"],[0],
+    "Les rôles de l'intestin grêle sont multiples, le principal étant celui d'absorption.",
+    "Anatomie/Physiologie de l'appareil digestif – V. L'intestin grêle"],
+  ["QCU","intestin_grele_colon",2,"Le côlon reçoit environ 1,5 litre de liquide isotonique par jour et en réabsorbe, selon le cours, environ :",
+    ["1,3 à 1,4 litre sous forme d'eau","La totalité sous forme de graisses","Aucune quantité","La moitié sous forme de protéines"],[0],
+    "Le côlon reçoit 1,5 l de liquide isotonique par jour et en réabsorbe 1,3 à 1,4 l sous forme d'eau (fonction de réabsorption).",
+    "Anatomie/Physiologie de l'appareil digestif – VI. Le gros intestin"],
+
+  ["QCU","foie_voies_biliaires",1,"Le foie est décrit dans le cours comme :",
+    ["Le plus gros organe du corps, situé dans l'hypochondre droit","Un petit organe situé dans le bassin","Une glande endocrine du cou","Un muscle du thorax"],[0],
+    "Le foie est le plus gros organe du corps (1,5 kg), situé dans l'hypochondre droit, sous le diaphragme.",
+    "Anatomie/Physiologie de l'appareil digestif – Le foie"],
+  ["QCM","foie_voies_biliaires",2,"Parmi les fonctions du foie citées dans le cours figurent :",
+    ["La synthèse de protéines (albumine, facteurs de coagulation)","La régulation de la glycémie","La fabrication de la bile","La sécrétion d'insuline"],[0,1,2],
+    "Le foie synthétise des protéines, régule la glycémie, épure l'organisme et fabrique la bile ; l'insuline est sécrétée par le pancréas, non par le foie.",
+    "Anatomie/Physiologie de l'appareil digestif – Physiologie du foie"],
+  ["QCU","foie_voies_biliaires",2,"La fonction essentielle de la vésicule biliaire est de :",
+    ["Stocker la bile en dehors des repas et de la concentrer","Produire l'insuline","Digérer les protéines","Filtrer le sang"],[0],
+    "La vésicule biliaire stocke la bile en dehors des repas et la concentre (5 à 10 fois, soit environ 70 ml).",
+    "Anatomie/Physiologie de l'appareil digestif – Les voies biliaires"],
+
+  ["QCU","pancreas_digestif",2,"Le suc pancréatique, sécrété par la fonction exocrine du pancréas, contient notamment :",
+    ["Des enzymes et des bicarbonates","De l'insuline et du glucagon uniquement","De la bile","De l'acide chlorhydrique"],[0],
+    "Le suc pancréatique, composé d'enzymes et de bicarbonates, a un rôle dans la digestion ; le pancréas en sécrète environ 1,5 l par jour.",
+    "Anatomie/Physiologie de l'appareil digestif – Le pancréas"],
+  ["QCU","pancreas_digestif",2,"Parmi les enzymes du suc pancréatique, les trypsines ont pour rôle de :",
+    ["Lyser les protéines","Lyser l'amidon","Lyser les graisses","Lyser le glucose"],[0],
+    "Les trypsines sont des enzymes protéolytiques qui lysent les protéines ; les amylases lysent l'amidon, les lipases lysent les graisses.",
+    "Anatomie/Physiologie de l'appareil digestif – Le pancréas"],
+
+  ["QCU","squelette_os",1,"Le squelette humain, selon le cours, est composé de :",
+    ["206 os","106 os","306 os","26 os"],[0],
+    "Le squelette humain est composé de 206 os, divisé en squelette axial et squelette appendiculaire.",
+    "L'appareil locomoteur – III. Description du squelette humain"],
+  ["QCM","squelette_os",1,"Les fonctions du squelette citées dans le cours comprennent :",
+    ["Le support et la protection des organes","Le mouvement","La formation des cellules sanguines (hématopoïèse)","La digestion des aliments"],[0,1,2],
+    "Les 5 fonctions citées sont : support, protection, mouvement, réservoir de minéraux, formation des cellules sanguines (hématopoïèse).",
+    "L'appareil locomoteur – A. Le squelette, I. Fonctions des os et du squelette"],
+  ["QCU","squelette_os",2,"Le squelette humain se divise en deux parties :",
+    ["Le squelette axial et le squelette appendiculaire","Le squelette supérieur et le squelette inférieur","Le squelette interne et le squelette externe","Le squelette droit et le squelette gauche"],[0],
+    "Le squelette humain se divise en squelette axial (crâne, colonne vertébrale, côtes, sternum) et squelette appendiculaire (ceintures et membres).",
+    "L'appareil locomoteur – III. Description du squelette humain"],
+
+  ["QCU","articulations",2,"Les articulations très mobiles, comme le genou ou le coude, sont appelées :",
+    ["Des diarthroses","Des synarthroses","Des amphiarthroses","Des symphyses uniquement"],[0],
+    "Les diarthroses sont très mobiles, composées de surfaces articulaires lisses recouvertes de cartilage, d'une capsule et d'une synoviale (ex. genou, coude).",
+    "L'appareil locomoteur – B. Les articulations, I. Les différentes articulations"],
+  ["QCU","articulations",1,"Le rôle du ligament, selon le cours, est de :",
+    ["Fixer les deux pièces osseuses d'une articulation","Produire le liquide synovial","Transmettre le mouvement du muscle à l'os","Fabriquer des cellules sanguines"],[0],
+    "Le ligament fixe les deux pièces osseuses d'une articulation et constitue un facteur de stabilité de celle-ci.",
+    "L'appareil locomoteur – III. Les ligaments"],
+
+  ["QCU","muscles",1,"Les muscles striés ou squelettiques se caractérisent par une contraction :",
+    ["Volontaire","Involontaire et autonome","Uniquement réflexe","Absente au repos"],[0],
+    "Les muscles striés (ou squelettiques) unissent les os et permettent la mobilité ; leur contraction est volontaire, sous l'effet de la volonté.",
+    "L'appareil locomoteur – C. Les muscles, IV. Les différents types de muscles"],
+  ["QCU","muscles",2,"Le muscle cardiaque (myocarde) a une contraction :",
+    ["Autonome et involontaire","Strictement volontaire","Absente en permanence","Identique à celle des muscles lisses digestifs"],[0],
+    "Le muscle cardiaque a une structure proche des muscles striés, mais ses contractions sont autonomes et involontaires, propulsant le sang dans l'appareil cardiocirculatoire.",
+    "L'appareil locomoteur – C. Les muscles, Muscle cardiaque"],
+  ["QCM","muscles",2,"Parmi les caractéristiques des muscles citées dans le cours figurent :",
+    ["L'excitabilité","La contractibilité","L'élasticité","L'imperméabilité"],[0,1,2],
+    "Les caractéristiques des muscles citées sont : excitabilité, contractibilité, élasticité, tonicité.",
+    "L'appareil locomoteur – V. Les caractéristiques des muscles"],
 ];
 
 /* ---- Sémiologie chirurgicale (INFAS) ---- */
@@ -651,6 +854,288 @@ const SEMIOCHIR_RAW = [
     "Sémiologie chirurgicale – Chapitre 6 : Asepsie en chirurgie"],
 ];
 
+/* ---- Sémiologie médicale (INFAS) — généralités, respiratoire, cardio-vasculaire ---- */
+const SEMIOMED_RAW = [
+  ["QCU","semio_generalites",1,"La sémiologie est définie dans le cours comme :",
+    ["La science qui étudie les signes des maladies","La classification des maladies","L'étude de la répartition d'une maladie dans la population","Le traitement des maladies"],[0],
+    "La sémiologie est la science qui étudie les signes des maladies et analyse l'ensemble des manifestations cliniques.",
+    "Sémiologie médicale – Chapitre 1 : Généralités et définitions des concepts"],
+  ["QCU","semio_generalites",2,"Un symptôme perçu et exprimé par le malade lui-même, recueilli par l'interrogatoire, est dit :",
+    ["Subjectif ou fonctionnel","Objectif ou physique","Pathognomonique","Général"],[0],
+    "Les symptômes subjectifs ou fonctionnels sont les manifestations de la maladie perçues et exprimées par le malade, révélées par l'interrogatoire.",
+    "Sémiologie médicale – Chapitre 1 : Symptôme"],
+  ["QCU","semio_generalites",2,"Un signe dont la seule présence suffit à affirmer une maladie est dit :",
+    ["Pathognomonique","Sensible","Spécifique","Général"],[0],
+    "Le signe pathognomonique est tel que sa seule présence suffit à affirmer la maladie.",
+    "Sémiologie médicale – Chapitre 1 : Signe"],
+  ["QCU","semio_generalites",2,"Un ensemble de signes associés de façon habituelle, orientant vers une ou plusieurs maladies, est appelé :",
+    ["Un syndrome","Un symptôme","Un diagnostic","Un pronostic"],[0],
+    "Un syndrome est un ensemble ou groupe de signes associés de façon habituelle, orientant vers une ou plusieurs maladies.",
+    "Sémiologie médicale – Chapitre 1 : Syndrome"],
+
+  ["QCU","examen_clinique",1,"L'examen clinique proprement dit comprend, dans l'ordre, quatre temps obligatoires :",
+    ["Inspection, palpation, percussion, auscultation","Auscultation, palpation, percussion, inspection","Percussion, auscultation, inspection, palpation","Palpation, inspection, auscultation, percussion"],[0],
+    "L'examen physique se réalise en 4 temps obligatoires : inspection, palpation, percussion, auscultation, appareil par appareil.",
+    "Sémiologie médicale – Chapitre 1 : L'examen clinique"],
+  ["QCU","examen_clinique",2,"Une matité thoracique retrouvée à la percussion signifie :",
+    ["Un épanchement pleural ou un syndrome de condensation pulmonaire","Un organe creux contenant de l'air","Une auscultation normale","Une hyperthermie"],[0],
+    "La matité thoracique traduit un épanchement pleural ou un syndrome de condensation pulmonaire ; les organes creux contenant de l'air sont au contraire sonores (tympanisme).",
+    "Sémiologie médicale – Chapitre 1 : La percussion"],
+
+  ["QCU","semio_respiratoire_toux",1,"La toux est définie dans le cours comme :",
+    ["Un phénomène expiratoire brutal et réflexe aboutissant à l'expulsion rapide d'air des alvéoles","Une douleur thoracique permanente","Une élimination urinaire anormale","Un signe cutané"],[0],
+    "La toux est un phénomène expiratoire brutal, bruyant, le plus souvent réflexe, aboutissant à l'expulsion rapide d'air des alvéoles ; c'est un moyen de défense de l'appareil respiratoire.",
+    "Sémiologie médicale – Chapitre 2 : La toux"],
+  ["QCU","semio_respiratoire_toux",2,"Concernant l'expectoration, le cours précise qu'elle doit toujours être considérée comme :",
+    ["Une manifestation anormale, à distinguer d'un crachat salivaire","Un phénomène normal chez tout individu","Identique à la salive","Sans valeur sémiologique"],[0],
+    "L'expectoration est toujours une manifestation anormale ; il faut la distinguer d'un crachat salivaire.",
+    "Sémiologie médicale – Chapitre 2 : Expectorations, Définition"],
+  ["QCM","semio_respiratoire_toux",2,"Parmi les types d'expectoration décrits dans le cours figurent :",
+    ["L'expectoration muqueuse","L'expectoration purulente","L'expectoration mucopurulente","L'expectoration osseuse"],[0,1,2],
+    "Le cours décrit les expectorations muqueuse, purulente, mucopurulente, séreuse et hémoptoïque.",
+    "Sémiologie médicale – Chapitre 2 : Les différents types d'expectorations"],
+
+  ["QCU","hemoptysie",1,"L'hémoptysie se définit comme :",
+    ["Le rejet de sang rouge vif par la bouche, au cours d'un effort de toux, provenant des voies respiratoires sous-glottiques","Un saignement du nez","Un saignement digestif lors d'un vomissement","Une expectoration purulente uniquement"],[0],
+    "L'hémoptysie est le rejet de sang rouge vif (aéré) par la bouche, au cours d'un effort de toux, provenant de la trachée, des bronches ou des poumons.",
+    "Sémiologie médicale – Chapitre 2 : Hémoptysie, Définition"],
+  ["QCU","hemoptysie",2,"L'hémoptysie doit être distinguée notamment de :",
+    ["L'épistaxis et de l'hématémèse","La dyspnée et de la toux","La percussion et de la palpation","La lipothymie et de la syncope"],[0],
+    "Le cours précise de ne pas confondre l'hémoptysie avec l'épistaxis (saignement du nez) et l'hématémèse (saignement digestif lors d'un vomissement).",
+    "Sémiologie médicale – Chapitre 2 : Hémoptysie, Définition"],
+  ["QCU","hemoptysie",3,"Le crachat rouillé décrit dans le cours apparaît typiquement :",
+    ["Au troisième jour d'une pneumonie franche lobaire aiguë","Immédiatement après une embolie pulmonaire","Lors d'une crise d'asthme","Lors d'une bronchite chronique"],[0],
+    "Le crachat rouillé est une expectoration visqueuse de couleur orangée apparaissant au 3e jour de la pneumonie franche lobaire aiguë.",
+    "Sémiologie médicale – Chapitre 2 : Hémoptysie, NB"],
+
+  ["QCU","dyspnee",1,"La dyspnée est définie dans le cours comme :",
+    ["Une gêne respiratoire consciente et pénible, une respiration anormale","Une toux chronique isolée","Un signe cutané de pâleur","Une perte de connaissance brève"],[0],
+    "La dyspnée est une respiration anormale se traduisant par une sensation pénible d'étouffement, une perception consciente d'une gêne respiratoire.",
+    "Sémiologie médicale – Chapitre 2 : La dyspnée, Définition"],
+  ["QCU","dyspnee",2,"Selon la fréquence respiratoire, on parle de polypnée chez l'adulte lorsque la fréquence respiratoire dépasse :",
+    ["22 mouvements par minute","14 mouvements par minute","30 mouvements par minute","100 mouvements par minute"],[0],
+    "La polypnée est définie par une fréquence respiratoire supérieure à 22 mouvements/minute chez l'adulte (30 chez l'enfant).",
+    "Sémiologie médicale – Chapitre 2 : Dyspnée, selon la fréquence respiratoire"],
+  ["QCU","dyspnee",2,"L'orthopnée correspond à :",
+    ["Un essoufflement en décubitus dorsal strict, amélioré par la position assise","Une dyspnée uniquement à l'effort","Une dyspnée paroxystique de quelques secondes","Une absence totale de gêne respiratoire"],[0],
+    "La dyspnée permanente (ou de repos) se définit par un essoufflement en décubitus dorsal strict, amélioré par la position assise : c'est l'orthopnée.",
+    "Sémiologie médicale – Chapitre 2 : Dyspnée, mode d'évolution"],
+
+  ["QCU","semio_cardiovasculaire",2,"La lipothymie se distingue de la syncope car elle :",
+    ["Est une sensation passagère de malaise qui n'aboutit pas à la perte de connaissance","Entraîne systématiquement une chute", "Dure toujours plus d'une heure", "Est toujours d'origine respiratoire"],[0],
+    "La lipothymie est une sensation passagère de malaise qui n'aboutit pas à la perte de connaissance ; la syncope est une perte de connaissance complète et brève.",
+    "Sémiologie médicale – Chapitre 3 : Lipothymie et syncope"],
+  ["QCU","semio_cardiovasculaire",2,"Les palpitations sont définies dans le cours comme :",
+    ["Des sensations pénibles causées par les battements du cœur normalement non perçus","Une douleur thoracique uniquement","Un signe cutané", "Une perte de connaissance"],[0],
+    "Les palpitations sont des sensations pénibles causées par les battements du cœur, qui ne sont normalement pas perçus sauf émotion ou effort intense.",
+    "Sémiologie médicale – Chapitre 3 : Palpitation"],
+  ["QCU","semio_cardiovasculaire",2,"L'œdème d'origine cardiaque des membres inférieurs apparaît typiquement :",
+    ["D'abord sur les chevilles, souvent en fin de journée","Uniquement le matin au réveil","Sur le visage en priorité","Uniquement chez l'enfant"],[0],
+    "L'œdème d'origine cardiaque apparaît d'abord sur les chevilles, souvent en fin de journée, pour disparaître après une nuit de repos.",
+    "Sémiologie médicale – Chapitre 3 : Œdème des membres inférieurs"],
+  ["QCU","semio_cardiovasculaire",3,"La nycturie, citée parmi les signes de l'insuffisance cardiaque, se définit comme :",
+    ["Une augmentation du volume des urines pendant la nuit","Une augmentation du nombre de mictions nocturnes","Une absence totale d'urines","Une douleur à la miction"],[0],
+    "La nycturie est l'augmentation du volume des urines pendant la nuit, l'un des premiers signes de l'insuffisance cardiaque ; à distinguer de la pollakiurie (augmentation du nombre de mictions).",
+    "Sémiologie médicale – Chapitre 3 : Nycturie"],
+];
+
+/* ---- Secourisme — « Les gestes qui sauvent » (DRPC Kayes) ---- */
+const SECOURISME_RAW = [
+  ["QCU","secourisme_def",1,"Le secourisme est défini dans le cours comme :",
+    ["L'ensemble des moyens techniques, pratiques et thérapeutiques pour porter secours à une personne dont l'intégrité physique est menacée","Une spécialité médicale hospitalière uniquement","Un diplôme obligatoire pour tout citoyen","Une technique réservée aux médecins"],[0],
+    "Le secourisme est l'ensemble des moyens techniques, pratiques et thérapeutiques associés à un état d'âme pour porter secours à une personne dont l'intégrité physique est menacée ou atteinte.",
+    "Secourisme – Définition du secourisme"],
+  ["QCM","secourisme_def",1,"Les principes fondamentaux du secourisme cités dans le cours sont :",
+    ["Protéger","Alerter","Secourir","Diagnostiquer"],[0,1,2],
+    "Les trois principes fondamentaux cités sont : protéger, alerter, secourir.",
+    "Secourisme – Principes fondamentaux"],
+  ["QCU","secourisme_def",2,"Parmi les renseignements à fournir lors de l'alerte, le cours cite notamment :",
+    ["La nature et le lieu de l'accident, le nombre et l'état des victimes","Uniquement le nom de la victime","Uniquement l'heure exacte","Aucun renseignement particulier"],[0],
+    "Lors de l'alerte, il faut fournir : présentation et numéro de téléphone de l'appelant, nature et lieu de l'accident, risque apparent, nombre et état des victimes, gestes effectués.",
+    "Secourisme – Principes fondamentaux, Alerter"],
+  ["QCU","secourisme_def",1,"Selon le cours, ne pas porter secours à une personne en danger, dans la mesure de ses moyens, expose à des poursuites pour :",
+    ["Non-assistance à personne en danger","Vol qualifié","Abus de confiance","Homicide volontaire"],[0],
+    "La loi exige de porter secours dans la mesure de ses moyens, sous peine d'être poursuivi pour non-assistance à personne en danger (code pénal, article 182).",
+    "Secourisme – Définition, Les 1er secours"],
+
+  ["QCU","degagement_urgence",2,"Le dégagement d'urgence d'une victime est justifié notamment lorsque :",
+    ["Un véhicule accidenté prend feu alors que la victime est à l'intérieur","La victime présente une simple plaie superficielle","La victime est consciente et stable","Aucun danger n'est présent"],[0],
+    "Le dégagement d'urgence est justifié en cas de danger réel, immédiat et vital, par exemple un véhicule qui prend feu avec la victime à l'intérieur.",
+    "Secourisme – Dégagement d'urgence"],
+  ["QCU","degagement_urgence",2,"Parmi les techniques de dégagement d'urgence citées dans le cours figure :",
+    ["La traction par les chevilles","Le bouche-à-bouche","Le massage cardiaque externe","La position latérale de sécurité"],[0],
+    "Le cours cite quatre techniques de dégagement d'urgence : traction par les chevilles, saisie par les poignets, saisie par les épaules, dégagement hors d'un véhicule.",
+    "Secourisme – Techniques du dégagement d'urgence"],
+
+  ["QCU","etouffement",1,"Face à une victime qui s'étouffe, le cours recommande dans un premier temps de :",
+    ["Donner cinq claques vigoureuses dans le dos, entre les deux omoplates","Pratiquer immédiatement la manœuvre de Heimlich","Allonger la victime sur le dos","Lui faire boire de l'eau"],[0],
+    "Le cours recommande dans un premier temps de donner cinq claques vigoureuses dans le dos, entre les deux omoplates, pour provoquer la toux et expulser le corps étranger.",
+    "Secourisme – Une victime qui s'étouffe"],
+  ["QCU","etouffement",2,"Si les claques dans le dos restent inefficaces, le cours recommande de pratiquer :",
+    ["La méthode de Heimlich","Le massage cardiaque externe","La position latérale de sécurité","Un garrot"],[0],
+    "Si le corps étranger n'est pas expulsé par les claques dans le dos, il faut pratiquer la manœuvre de Heimlich.",
+    "Secourisme – Une victime qui s'étouffe (suite)"],
+
+  ["QCU","hemorragie_secourisme",1,"Face à une hémorragie, la conduite immédiate décrite dans le cours (hors corps étranger) est de :",
+    ["Comprimer directement l'endroit qui saigne avec la main","Appliquer immédiatement un garrot", "Donner à boire à la victime", "Retirer tout corps étranger présent dans la plaie"],[0],
+    "Dès que l'hémorragie est constatée, il faut faire une protection si besoin puis appuyer directement là où ça saigne (compression locale).",
+    "Secourisme – L'hémorragie"],
+  ["QCU","hemorragie_secourisme",1,"Le cours résume la conduite à tenir devant une hémorragie par les trois mots :",
+    ["Allonger, Appuyer, Alerter","Protéger, Alerter, Secourir","Inspecter, Palper, Percuter","Examiner, Traiter, Surveiller"],[0],
+    "La conduite à tenir devant une hémorragie est résumée par : Allonger, Appuyer, Alerter.",
+    "Secourisme – L'hémorragie (suite), Compression locale"],
+  ["QCU","hemorragie_secourisme",2,"Concernant un objet planté dans un membre, le cours précise qu'il ne faut :",
+    ["Jamais le retirer","Toujours le retirer immédiatement","Le retirer seulement s'il est petit","Le retirer après désinfection"],[0],
+    "Le cours précise clairement : si un objet est planté dans un membre, ne pas le retirer.",
+    "Secourisme – L'hémorragie, Dans tous les cas"],
+  ["QCU","hemorragie_secourisme",2,"Le garrot doit être posé, selon le cours :",
+    ["Sur la partie supérieure du membre, avec un lien large et non élastique","Sur la partie inférieure du membre avec un lien fin et élastique","Uniquement autour du cou","Sans jamais préciser l'heure de pose"],[0],
+    "Le garrot doit être placé sur la partie supérieure du membre (bras ou cuisse), réalisé avec un lien large non élastique, et son heure de pose doit rester visible.",
+    "Secourisme – Le garrot"],
+  ["QCU","hemorragie_secourisme",1,"Face à un saignement de nez, le cours recommande de :",
+    ["Laisser la victime assise, tête penchée en avant, sans l'allonger","Allonger systématiquement la victime sur le dos","Faire pencher la tête vers l'arrière","Faire moucher énergiquement la victime"],[0],
+    "En cas de saignement du nez, laisser la victime assise, tête penchée en avant, sans l'allonger, pour éviter qu'elle avale le sang.",
+    "Secourisme – Cas particulier, les hémorragies extériorisées"],
+
+  ["QCU","victime_inconsciente",1,"Une victime est dite inconsciente lorsqu'elle :",
+    ["Ne répond pas aux questions et reste immobile, mais respire","Ne respire plus du tout","Présente uniquement une plaie visible","Est simplement fatiguée"],[0],
+    "Une victime est inconsciente lorsqu'elle ne répond pas aux questions et reste immobile, mais respire.",
+    "Secourisme – La victime est inconsciente"],
+  ["QCU","victime_inconsciente",2,"Chez une victime inconsciente qui respire, le sauveteur doit la placer en :",
+    ["Position latérale de sécurité (PLS)","Position assise stricte","Position debout","Position ventrale sans précaution"],[0],
+    "Une victime inconsciente qui respire doit toujours être placée en position latérale de sécurité.",
+    "Secourisme – La victime est inconsciente, mise en PLS"],
+  ["QCM","victime_inconsciente",2,"Pour libérer les voies aériennes d'une victime inconsciente, le cours indique de :",
+    ["Basculer prudemment la tête en arrière et soulever le menton","Retirer le corps étranger visible présent dans la bouche","Laisser la tête penchée vers l'avant","Comprimer le thorax immédiatement"],[0,1],
+    "La libération des voies aériennes se fait en basculant prudemment la tête en arrière avec soulèvement du menton, puis en retirant le corps étranger visible.",
+    "Secourisme – La victime est inconsciente (suite), Libération des voies aériennes"],
+
+  ["QCU","rcp",1,"Chez l'adulte, la réanimation cardio-pulmonaire associe, selon le cours, des compressions thoraciques et des insufflations selon un rythme de :",
+    ["30 compressions pour 2 insufflations","15 compressions pour 2 insufflations","5 compressions pour 1 insufflation","2 compressions pour 30 insufflations"],[0],
+    "Chez l'adulte, le rythme est de 30 compressions thoraciques pour 2 insufflations (30/2).",
+    "Secourisme – La victime ne respire plus"],
+  ["QCU","rcp",2,"Chez le nourrisson (moins d'un an), le cours précise que les compressions thoraciques s'effectuent :",
+    ["Sur le tiers inférieur du sternum, avec deux doigts","Avec le talon d'une seule main","Avec les deux mains superposées","Sur l'abdomen"],[0],
+    "Chez le nourrisson, les compressions thoraciques s'effectuent sur le tiers inférieur du sternum avec deux doigts, au rythme 15/2.",
+    "Secourisme – La victime ne respire plus, Le Nourrisson"],
+  ["QCU","rcp",2,"La zone d'appui pour le massage cardiaque externe chez l'adulte se situe, selon le cours :",
+    ["Sur le sternum, à hauteur d'une ligne imaginaire reliant les deux mamelons","Sur les côtes","Sur l'abdomen","Sur la clavicule"],[0],
+    "La zone d'appui est située sur le sternum, à hauteur d'une ligne imaginaire qui relie les deux mamelons, strictement sur la ligne médiane, jamais sur les côtes.",
+    "Secourisme – La victime ne respire plus, Déterminer la zone d'appui"],
+
+  ["QCU","malaises_plaies",1,"Un malaise est défini dans le cours comme :",
+    ["Une sensation pénible traduisant un trouble du fonctionnement de l'organisme","Une perte de connaissance obligatoire","Une plaie superficielle","Une hémorragie mineure"],[0],
+    "Un malaise est une sensation pénible traduisant un trouble du fonctionnement de l'organisme, sans que le sujet ne puisse toujours en identifier l'origine.",
+    "Secourisme – Les malaises"],
+  ["QCU","malaises_plaies",2,"Une plaie simple, selon le cours, est une petite coupure superficielle qui :",
+    ["Sature peu et n'est pas située à proximité d'un orifice naturel ou de l'œil","Est toujours accompagnée d'une hémorragie importante","Nécessite systématiquement un garrot","Doit toujours être suturée en urgence"],[0],
+    "La plaie simple est une petite coupure superficielle ou éraflure, saignant peu, non située à proximité d'un orifice naturel ou de l'œil.",
+    "Secourisme – Les plaies, Plaie simple"],
+  ["QCU","malaises_plaies",1,"Toute plaie ou piqûre, même minime, expose selon le cours à un risque grave et souvent mortel :",
+    ["Le tétanos","La rougeole","La varicelle","La grippe"],[0],
+    "Le cours précise que toute plaie, toute piqûre, même minime, peut provoquer le tétanos, maladie très grave et souvent mortelle, contre laquelle seule la vaccination protège.",
+    "Secourisme – Les plaies, Attention"],
+];
+
+/* ---- Concepts et théories en sciences infirmières (INFAS) ---- */
+const CONCEPTSINF_RAW = [
+  ["QCU","concept_infirmier",1,"Selon le Conseil International des Infirmières, l'infirmier(ère) est la personne apte à assurer, dans son pays, la responsabilité de l'ensemble des soins infirmiers que requiert :",
+    ["La promotion de la santé, la prévention de la maladie et les soins aux malades","Uniquement la gestion administrative des hôpitaux","Uniquement la recherche médicale","Uniquement l'enseignement universitaire"],[0],
+    "Pour le Conseil International des Infirmiers, l'infirmier(ère) est apte et habilité(e) à assurer la responsabilité de l'ensemble des soins infirmiers que requiert la promotion de la santé, la prévention de la maladie et les soins aux malades.",
+    "Concepts et théories en soins infirmiers – Chapitre 1 : Concept infirmier"],
+  ["QCU","concept_infirmier",2,"Le rôle propre de l'infirmier, selon le cours, correspond à :",
+    ["L'exécution et la délégation des tâches planifiées en fonction du diagnostic infirmier","L'application stricte des prescriptions médicales uniquement","La participation à l'établissement du diagnostic médical uniquement","La gestion financière du service"],[0],
+    "Dans son rôle propre, l'infirmier exerce la responsabilité dans l'exécution et la délégation des tâches planifiées en fonction du diagnostic infirmier.",
+    "Concepts et théories en soins infirmiers – Chapitre 1 : Rôle et fonction de l'infirmier"],
+  ["QCU","concept_infirmier",2,"Le rôle délégué de l'infirmier a notamment pour finalité :",
+    ["La participation au diagnostic et à la thérapeutique, l'application des prescriptions médicales","La gestion exclusive des ressources humaines","La formation des médecins","La direction de l'hôpital"],[0],
+    "Le rôle délégué a pour finalité la participation au diagnostic et à la thérapeutique ; l'infirmier applique les prescriptions médicales et participe à la surveillance clinique.",
+    "Concepts et théories en soins infirmiers – Chapitre 1 : Rôle délégué"],
+
+  ["QCU","concept_soins_infirmiers",1,"Pour Virginia Henderson, l'unique service des soins infirmiers est de :",
+    ["Rendre le client indépendant le plus tôt possible","Prescrire des traitements médicaux","Remplacer le médecin","Gérer le dossier administratif"],[0],
+    "Pour Virginia Henderson, l'unique service des soins infirmiers est de rendre l'individu indépendant le plus tôt possible.",
+    "Concepts et théories en soins infirmiers – Chapitre 1 : Concept soins infirmiers"],
+  ["QCM","concept_soins_infirmiers",2,"Selon l'OMS, les soins infirmiers comportent quatre piliers, parmi lesquels :",
+    ["La promotion de la santé","La prévention des maladies et des blessures","La réhabilitation de la santé","La gestion financière de l'hôpital"],[0,1,2],
+    "Les quatre piliers cités par l'OMS sont : promotion de la santé, prévention des maladies et blessures, réhabilitation de la santé, réconfort des moribonds.",
+    "Concepts et théories en soins infirmiers – Chapitre 1 : Concept soins infirmiers (OMS)"],
+  ["QCU","concept_soins_infirmiers",1,"Le cours classe les soins infirmiers en trois catégories distinctes :",
+    ["Soins préventifs, curatifs et palliatifs","Soins publics, privés et mixtes","Soins ruraux, urbains et périurbains","Soins gratuits, payants et mixtes"],[0],
+    "Les soins infirmiers peuvent être classés en trois catégories distinctes : soins préventifs, soins curatifs, soins palliatifs.",
+    "Concepts et théories en soins infirmiers – Chapitre 1 : Catégories et composantes du soin infirmier"],
+
+  ["QCU","modele_conceptuel",1,"Un modèle conceptuel en soins infirmiers est défini dans le cours comme :",
+    ["Une façon simplifiée de voir la réalité professionnelle, sur laquelle l'agent de santé se base pour prodiguer des soins de qualité","Un simple document administratif","Une prescription médicale type","Un règlement intérieur de l'établissement"],[0],
+    "Le modèle conceptuel désigne une façon simplifiée de voir la réalité professionnelle, un modèle sur lequel l'agent de santé se base pour prodiguer des soins de qualité.",
+    "Concepts et théories en soins infirmiers – Chapitre 2 : Définition du modèle conceptuel"],
+  ["QCM","modele_conceptuel",2,"Les composantes essentielles d'un modèle conceptuel citées dans le cours sont :",
+    ["Les postulats","Les valeurs","Les éléments","Le budget"],[0,1,2],
+    "Les composantes essentielles d'un modèle conceptuel sont : les postulats, les valeurs, les éléments.",
+    "Concepts et théories en soins infirmiers – Chapitre 2 : Composantes d'un modèle conceptuel"],
+  ["QCU","modele_conceptuel",2,"Dans un modèle conceptuel, les postulats sont définis comme :",
+    ["Le fondement théorique sur lequel repose le modèle, admis comme vrai et non discutable","Une simple opinion personnelle de l'infirmier","Une prescription médicale","Un protocole d'hygiène"],[0],
+    "Les postulats expliquent le fondement théorique sur lequel repose le modèle conceptuel ; ils sont admis comme vrais et non discutables.",
+    "Concepts et théories en soins infirmiers – Chapitre 2 : Les postulats"],
+
+  ["QCU","modele_henderson",1,"Selon les postulats du modèle conceptuel de Virginia Henderson, l'individu forme un tout présentant :",
+    ["Des besoins fondamentaux","Uniquement des besoins physiologiques","Uniquement des besoins sociaux","Aucun besoin particulier"],[0],
+    "Un des postulats du modèle de Henderson énonce que l'individu forme un tout présentant des besoins fondamentaux.",
+    "Concepts et théories en soins infirmiers – Chapitre 2 : Postulats du modèle de Virginia Henderson"],
+  ["QCU","modele_henderson",2,"Un des trois postulats du modèle de Virginia Henderson énonce que :",
+    ["Tout homme tend vers l'indépendance et la désire","Tout homme recherche uniquement la sécurité matérielle","L'homme ne peut jamais devenir indépendant","Les besoins de l'homme sont illimités et non hiérarchisables"],[0],
+    "Les trois postulats du modèle de Henderson sont : tout homme tend vers l'indépendance et la désire ; l'individu forme un tout avec des besoins fondamentaux ; un besoin non satisfait rend l'individu incomplet.",
+    "Concepts et théories en soins infirmiers – Chapitre 2 : Postulats du modèle de Virginia Henderson"],
+
+  ["QCU","besoins_notion",1,"Un besoin fondamental est défini dans le cours comme :",
+    ["Une nécessité vitale essentielle à l'homme pour assurer son bien-être et sa préservation physique et mentale","Un simple désir passager","Une prescription médicale","Un luxe superflu"],[0],
+    "Un besoin fondamental est une nécessité vitale essentielle à l'homme pour assurer son bien-être et sa préservation physique et mentale.",
+    "Concepts et théories en soins infirmiers – Chapitre 3 : Qu'est-ce qu'un besoin fondamental ?"],
+  ["QCU","besoins_notion",2,"Selon la distinction proposée dans le cours, le besoin, contrairement au désir :",
+    ["Vise un objectif spécifique et s'en satisfait","Est une force pulsionnelle jamais satisfaite quelle que soit la réponse apportée","Est toujours une demande d'amour adressée à autrui","Ne concerne que les nourrissons"],[0],
+    "Selon la distinction évoquée dans le cours, le besoin vise un objectif spécifique et s'en satisfait, alors que le désir est une force pulsionnelle qui ne peut être satisfaite quelle que soit la réponse apportée.",
+    "Concepts et théories en soins infirmiers – Chapitre 3 : Notion de besoin"],
+
+  ["QCU","besoins_maslow",1,"Abraham Maslow présente une hiérarchie de besoins en :",
+    ["Cinq catégories","Trois catégories","Sept catégories","Dix catégories"],[0],
+    "Maslow présente cinq catégories de besoins à satisfaire selon un ordre de priorité.",
+    "Concepts et théories en soins infirmiers – Chapitre 3 : Besoins selon Abraham Maslow"],
+  ["QCM","besoins_maslow",1,"Parmi les catégories de besoins de la pyramide de Maslow figurent :",
+    ["Les besoins physiologiques","Les besoins de sûreté et de sécurité","Les besoins d'estime de soi et d'autrui","Les besoins financiers"],[0,1,2],
+    "Les cinq catégories citées sont : besoins physiologiques, de sûreté et sécurité, d'amour et d'appartenance, d'estime de soi et d'autrui, de réalisation de soi.",
+    "Concepts et théories en soins infirmiers – Chapitre 3 : Pyramide des besoins de Maslow"],
+  ["QCU","besoins_maslow",2,"Dans la pyramide de Maslow, le besoin de se réaliser (actualisation de soi) se situe :",
+    ["Au sommet de la pyramide, comme besoin secondaire","À la base de la pyramide, comme besoin primaire","En dehors de la pyramide, indépendant des autres besoins","Uniquement chez l'enfant"],[0],
+    "Le besoin de réalisation de soi (actualisation de soi) figure au sommet de la pyramide, parmi les besoins secondaires (« être »).",
+    "Concepts et théories en soins infirmiers – Chapitre 3 : Pyramide des besoins de Maslow"],
+
+  ["QCU","dossier_soins",1,"Le dossier de soins est défini dans le cours comme :",
+    ["Un document individualisé et actualisé regroupant toutes les informations concernant une personne soignée","Un simple registre administratif d'entrée et de sortie","Une prescription médicale unique","Un document réservé au seul médecin traitant"],[0],
+    "Le dossier de soins est un document individualisé et actualisé regroupant toutes les informations concernant une personne soignée, une famille.",
+    "Concepts et théories en soins infirmiers – Chapitre 4 : Définition du dossier de soins"],
+  ["QCM","dossier_soins",2,"Parmi les caractéristiques du dossier de soins citées dans le cours figurent :",
+    ["Il est individualisé","Il est actualisé","Il préserve le secret professionnel","Il est accessible librement à toute personne extérieure au service"],[0,1,2],
+    "Le dossier de soins est individualisé, actualisé, uniformisé, et préserve le secret professionnel ; il n'est pas en libre accès.",
+    "Concepts et théories en soins infirmiers – Chapitre 4 : Caractéristiques du dossier de soins"],
+  ["QCU","dossier_soins",2,"Concernant la confidentialité, le cours précise que le dossier de soins devrait être :",
+    ["Rangé dans un meuble fermant à clé","Affiché publiquement dans le service","Laissé en libre accès aux visiteurs","Transmis systématiquement à la famille sans restriction"],[0],
+    "Les informations recueillies sont confidentielles ; le dossier de soins devrait être rangé dans un meuble fermant à clé.",
+    "Concepts et théories en soins infirmiers – Chapitre 4 : Il préserve le secret professionnel"],
+
+  ["QCU","relation_aide",1,"La relation d'aide est définie dans le cours comme :",
+    ["Un échange verbal et non verbal créant un climat de confiance entre soignant et soigné","Une prescription médicale","Un acte purement technique sans dimension relationnelle","Une simple formalité administrative"],[0],
+    "La relation d'aide est un échange à la fois verbal et non verbal qui permet de créer un climat de confiance, de respect et d'amour entre le soignant et le soigné.",
+    "Concepts et théories en soins infirmiers – Chapitre 5 : Définition de la relation d'aide"],
+  ["QCM","relation_aide",2,"Parmi les attitudes primordiales en relation d'aide citées dans le cours figurent :",
+    ["L'écoute active","La considération positive","La compréhension empathique","L'indifférence"],[0,1,2],
+    "Les attitudes primordiales citées sont : écoute active, considération positive, respect chaleureux, compréhension empathique, authenticité, confrontation, spécificité, partage de soi.",
+    "Concepts et théories en soins infirmiers – Chapitre 5 : Attitudes primordiales en relation d'aide"],
+  ["QCU","relation_aide",2,"Le principe de non-directivité en relation d'aide vise à :",
+    ["Susciter chez le client la capacité à se prendre en charge, par un climat de confiance et de respect","Imposer au client les décisions du soignant","Remplacer la volonté du client par celle du soignant","Éviter tout dialogue avec le client"],[0],
+    "Le principe de non-directivité repose sur l'établissement d'un climat de confiance, d'acceptation et de respect, pour susciter chez le client la capacité à se prendre en charge.",
+    "Concepts et théories en soins infirmiers – Chapitre 5 : Nature de la relation d'aide"],
+];
+
 function buildQuestions(raw, subjectId, prefix) {
   return raw.map((r, i) => {
     const [type, chapterId, level, stem, options, correct, explanation, reference] = r;
@@ -673,6 +1158,9 @@ const QUESTIONS = [
   ...buildQuestions(DEONTO_RAW, "deontologie", "dq"),
   ...buildQuestions(ANATPHYSIO_RAW, "anat-physio", "aq"),
   ...buildQuestions(SEMIOCHIR_RAW, "semio-chir", "sq"),
+  ...buildQuestions(SEMIOMED_RAW, "semio-medicale", "mq"),
+  ...buildQuestions(SECOURISME_RAW, "secourisme", "rq"),
+  ...buildQuestions(CONCEPTSINF_RAW, "concepts-sciences-inf", "cq"),
 ];
 
 /* ---------------- Clinical cases (QCD) ---------------- */
@@ -1693,40 +2181,95 @@ function ChapterList({ title, tone, chapters, empty }) {
 /* ---------------- Setup ---------------- */
 /* ---------------- Matières ---------------- */
 function MatieresScreen({ onBack, onSelect }) {
+  const [expanded, setExpanded] = useState(() => new Set(UE_LIST.map((u) => u.id)));
+  const toggle = (ueId) => {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(ueId)) next.delete(ueId);
+      else next.add(ueId);
+      return next;
+    });
+  };
+
+  const renderSemester = (sem) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {UE_LIST.filter((u) => u.semester === sem).map((ue) => {
+        const color = UE_COLOR[ue.id];
+        const ecues = ECUE_LIST.filter((e) => e.ueId === ue.id);
+        const isOpen = expanded.has(ue.id);
+        return (
+          <div key={ue.id} style={{ borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.line}` }}>
+            <button
+              onClick={() => toggle(ue.id)}
+              style={{
+                width: "100%", textAlign: "left", cursor: "pointer", border: "none",
+                background: color, color: "white", padding: "13px 16px",
+                display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10,
+              }}
+            >
+              <div>
+                <div style={{ fontSize: 10, opacity: 0.85, letterSpacing: 0.4, fontFamily: "'IBM Plex Mono', monospace" }}>{ue.code}</div>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 13.5, marginTop: 2 }}>{ue.label}</div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, background: "rgba(255,255,255,0.2)", padding: "3px 9px", borderRadius: 999 }}>
+                  {ue.credits} cr.
+                </span>
+                <span style={{ fontSize: 12, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform .15s" }}>▾</span>
+              </div>
+            </button>
+
+            {isOpen && (
+              <div style={{ background: `${color}14`, padding: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+                {ecues.map((e) => {
+                  const active = !!e.subjectId;
+                  return (
+                    <button
+                      key={e.id}
+                      onClick={() => active && onSelect(e.subjectId)}
+                      disabled={!active}
+                      style={{
+                        textAlign: "left", borderRadius: 10, padding: "10px 12px", cursor: active ? "pointer" : "not-allowed",
+                        border: active ? `1.5px solid ${color}` : `1px solid ${COLORS.line}`,
+                        background: active ? COLORS.surface : "#FBFBFB",
+                        opacity: active ? 1 : 0.7,
+                        display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10,
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: COLORS.inkSoft }}>{e.code}</div>
+                        <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.ink, marginTop: 2 }}>{e.label}</div>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+                        <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>{e.credits} cr.</span>
+                        <Badge tone={active ? "green" : "amber"}>{active ? "Disponible" : "Bientôt"}</Badge>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
     <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 820, margin: "0 auto", padding: "30px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
         <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, marginBottom: 4 }}>Choisir une matière</h1>
-        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 22, maxWidth: 560 }}>
-          Programme des évaluations Licence 1 IDE-SFM. Les tests ne peuvent être générés que pour les matières dont le cours a déjà été chargé dans la plateforme ; les autres s'activeront au fur et à mesure de l'ajout de leurs cours.
+        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 22, maxWidth: 620 }}>
+          Programme officiel Licence 1 IDE-SFM (30 crédits par semestre). Cliquez sur une UE pour afficher ses ECUE ; seules les ECUE dont le cours a déjà été chargé sont cliquables.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
-          {SUBJECTS.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => s.active && onSelect(s.id)}
-              disabled={!s.active}
-              style={{
-                textAlign: "left", borderRadius: 12, padding: 16,
-                border: s.active ? `1.5px solid ${COLORS.blue}` : `1px solid ${COLORS.line}`,
-                background: s.active ? COLORS.blueSoft : "#F4F6F7",
-                cursor: s.active ? "pointer" : "not-allowed",
-                opacity: s.active ? 1 : 0.7,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8, marginBottom: 6 }}>
-                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 13.5, color: COLORS.ink, lineHeight: 1.35 }}>{s.label}</div>
-                <Badge tone={s.active ? "green" : "amber"}>{s.active ? "Disponible" : "Bientôt"}</Badge>
-              </div>
-              <div style={{ fontSize: 11, color: COLORS.inkSoft }}>
-                {s.date}{s.enseignant ? ` · ${s.enseignant}` : ""}
-              </div>
-            </button>
-          ))}
-        </div>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.blueDeep, marginBottom: 10 }}>Semestre 1</div>
+        {renderSemester(1)}
+
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.blueDeep, margin: "26px 0 10px" }}>Semestre 2</div>
+        {renderSemester(2)}
       </div>
     </div>
   );
