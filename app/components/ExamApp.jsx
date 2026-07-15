@@ -1,4 +1,7 @@
+"use client";
+
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { storage } from "../../lib/storage";
 
 /* ============================================================
    INFAS – Préparation Hématologie
@@ -654,47 +657,21 @@ function matchFAQ(query) {
   return bestScore > 0 ? best : null;
 }
 
-// Corrige une réponse libre d'étudiant via une vraie IA (Claude), en acceptant synonymes,
-// abréviations et formulations équivalentes. Version "aperçu Claude" : appel direct à l'API
-// Anthropic (aucune clé nécessaire ici). La version déployée (Next.js) appelle plutôt
-// /api/grade côté serveur, avec une clé API fournie par l'utilisateur — voir README.
+// Corrige une réponse libre d'étudiant via une vraie IA, en acceptant synonymes,
+// abréviations et formulations équivalentes. Version production : appelle la route
+// serveur /api/grade (Gemini côté serveur, clé GEMINI_API_KEY en variable d'environnement).
 async function gradeClinicalAnswer(challenge, studentAnswer) {
-  const prompt = `Tu es un correcteur pédagogique bienveillant pour des étudiants infirmiers et sages-femmes en formation (niveau Licence, Côte d'Ivoire).
-
-Cas / question posée :
-"""
-${challenge.stem}
-"""
-
-Réponse de référence attendue :
-"""
-${challenge.expected}
-"""
-
-Réponse donnée par l'étudiant :
-"""
-${studentAnswer}
-"""
-
-Évalue la réponse de l'étudiant par rapport à la réponse de référence. Accepte les synonymes, abréviations et formulations différentes tant que le sens clinique est correct (par exemple « GEU », « grossesse extra-utérine » et « grossesse ectopique » sont équivalents).
-
-Réponds UNIQUEMENT avec un objet JSON valide, sans aucun texte avant ou après, au format exact :
-{"verdict": "correct" | "partiel" | "incorrect", "explication": "1 à 2 phrases bienveillantes et pédagogiques expliquant l'évaluation", "rappel": "rappel concis de la notion attendue"}`;
-
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch("/api/grade", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 400,
-        messages: [{ role: "user", content: prompt }],
+        stem: challenge.stem,
+        expected: challenge.expected,
+        studentAnswer,
       }),
     });
-    const data = await response.json();
-    const text = (data.content || []).map((b) => b.text || "").join("").trim();
-    const clean = text.replace(/```json|```/g, "").trim();
-    const parsed = JSON.parse(clean);
+    const parsed = await response.json();
     return {
       verdict: ["correct", "partiel", "incorrect"].includes(parsed.verdict) ? parsed.verdict : "partiel",
       explication: parsed.explication || "",
@@ -707,41 +684,20 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans aucun texte avant ou après,
 }
 
 // Fait "parler" le patient virtuel, strictement contraint à la fiche de faits du cas (aucune
-// invention médicale autorisée). Version aperçu Claude : appel direct à l'API Anthropic.
+// invention médicale autorisée). Version production : appelle la route serveur /api/patient-chat.
 async function askVirtualPatient(caseData, studentQuestion) {
-  const factsList = caseData.faits.map((f) => `- ${f.q} → ${f.r}`).join("\n");
-  const prompt = `Tu incarnes UNIQUEMENT le patient suivant dans une simulation clinique pour étudiants infirmiers/sages-femmes. Ne sors jamais de ce personnage et n'invente AUCUN fait médical qui ne figure pas dans la fiche ci-dessous.
-
-Profil : ${caseData.profil}
-Motif de consultation : ${caseData.motif}
-
-Fiche de faits connus (utilise UNIQUEMENT ces informations) :
-${factsList}
-
-Règles strictes :
-- Si la question de l'étudiant correspond à un fait de la fiche, réponds avec ce fait, reformulé naturellement à la première personne.
-- Si la question ne correspond à AUCUN fait de la fiche, réponds de façon réaliste mais vague, SANS inventer de fait médical précis (ex : "je ne sais pas trop", "je n'ai pas vérifié", "je n'y avais pas pensé").
-- Ne révèle jamais explicitement un diagnostic médical.
-- Réponds en 1 à 2 phrases maximum, à la première personne, ton naturel d'un patient.
-
-Question de l'étudiant : "${studentQuestion}"
-
-Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ou après : {"reponse": "..."}`;
-
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch("/api/patient-chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 200,
-        messages: [{ role: "user", content: prompt }],
+        profil: caseData.profil,
+        motif: caseData.motif,
+        faits: caseData.faits,
+        studentQuestion,
       }),
     });
-    const data = await response.json();
-    const text = (data.content || []).map((b) => b.text || "").join("").trim();
-    const clean = text.replace(/```json|```/g, "").trim();
-    const parsed = JSON.parse(clean);
+    const parsed = await response.json();
     return parsed.reponse || "Je ne sais pas trop quoi répondre à ça.";
   } catch (e) {
     console.error("Erreur patient virtuel", e);
@@ -5211,7 +5167,7 @@ function seenKey(matricule) {
 
 async function loadHistory(matricule) {
   try {
-    const res = await window.storage.get(historyKey(matricule), true);
+    const res = await storage.get(historyKey(matricule), true);
     return res ? JSON.parse(res.value) : [];
   } catch {
     return [];
@@ -5219,7 +5175,7 @@ async function loadHistory(matricule) {
 }
 async function saveHistory(matricule, history) {
   try {
-    await window.storage.set(historyKey(matricule), JSON.stringify(history), true);
+    await storage.set(historyKey(matricule), JSON.stringify(history), true);
   } catch (e) {
     console.error("Erreur de sauvegarde", e);
   }
@@ -5228,7 +5184,7 @@ async function saveHistory(matricule, history) {
 /* ---- Suivi des questions/cas déjà vus, pour éviter les répétitions d'une connexion à l'autre ---- */
 async function loadSeen(matricule) {
   try {
-    const res = await window.storage.get(seenKey(matricule), true);
+    const res = await storage.get(seenKey(matricule), true);
     return res ? JSON.parse(res.value) : { q: [], c: [] };
   } catch {
     return { q: [], c: [] };
@@ -5236,7 +5192,7 @@ async function loadSeen(matricule) {
 }
 async function saveSeen(matricule, seen) {
   try {
-    await window.storage.set(seenKey(matricule), JSON.stringify(seen), true);
+    await storage.set(seenKey(matricule), JSON.stringify(seen), true);
   } catch (e) {
     console.error("Erreur de sauvegarde (suivi des questions vues)", e);
   }
@@ -5259,7 +5215,7 @@ function studentKey(matricule) {
 
 async function findStudent(matricule) {
   try {
-    const r = await window.storage.get(studentKey(matricule), true);
+    const r = await storage.get(studentKey(matricule), true);
     return r ? JSON.parse(r.value) : null;
   } catch {
     return null;
@@ -5286,7 +5242,7 @@ async function createStudent(profile) {
     pendingPlan: null,
   };
   try {
-    await window.storage.set(studentKey(profile.matricule), JSON.stringify(record), true);
+    await storage.set(studentKey(profile.matricule), JSON.stringify(record), true);
     return record;
   } catch (e) {
     console.error("Erreur création compte", e);
@@ -5296,11 +5252,11 @@ async function createStudent(profile) {
 
 async function touchStudentLastSeen(matricule) {
   try {
-    const r = await window.storage.get(studentKey(matricule), true);
+    const r = await storage.get(studentKey(matricule), true);
     if (!r) return;
     const rec = JSON.parse(r.value);
     rec.lastSeen = new Date().toISOString();
-    await window.storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
   } catch (e) {
     console.error("Erreur mise à jour compte", e);
   }
@@ -5308,12 +5264,12 @@ async function touchStudentLastSeen(matricule) {
 
 async function incrementStudentExamCount(matricule) {
   try {
-    const r = await window.storage.get(studentKey(matricule), true);
+    const r = await storage.get(studentKey(matricule), true);
     if (!r) return;
     const rec = JSON.parse(r.value);
     rec.examsCount = (rec.examsCount || 0) + 1;
     rec.lastSeen = new Date().toISOString();
-    await window.storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
   } catch (e) {
     console.error("Erreur mise à jour compte", e);
   }
@@ -5321,13 +5277,13 @@ async function incrementStudentExamCount(matricule) {
 
 async function markPaymentPending(matricule, planId) {
   try {
-    const r = await window.storage.get(studentKey(matricule), true);
+    const r = await storage.get(studentKey(matricule), true);
     if (!r) return null;
     const rec = JSON.parse(r.value);
     rec.paymentStatus = "pending";
     rec.pendingSince = new Date().toISOString();
     rec.pendingPlan = planId;
-    await window.storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
     return rec;
   } catch (e) {
     console.error("Erreur signalement paiement", e);
@@ -5337,7 +5293,7 @@ async function markPaymentPending(matricule, planId) {
 
 async function confirmPayment(matricule) {
   try {
-    const r = await window.storage.get(studentKey(matricule), true);
+    const r = await storage.get(studentKey(matricule), true);
     if (!r) return null;
     const rec = JSON.parse(r.value);
     const plan = SUBSCRIPTION_PLANS.find((p) => p.id === rec.pendingPlan);
@@ -5346,7 +5302,7 @@ async function confirmPayment(matricule) {
     rec.paidDays = plan ? plan.days : PAID_DAYS;
     rec.pendingSince = null;
     rec.pendingPlan = null;
-    await window.storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
     return rec;
   } catch (e) {
     console.error("Erreur confirmation paiement", e);
@@ -5356,12 +5312,12 @@ async function confirmPayment(matricule) {
 
 async function loadAllStudents() {
   try {
-    const listRes = await window.storage.list(STUDENT_PREFIX, true);
+    const listRes = await storage.list(STUDENT_PREFIX, true);
     const keys = listRes?.keys || [];
     const records = [];
     for (const k of keys) {
       try {
-        const r = await window.storage.get(k, true);
+        const r = await storage.get(k, true);
         if (r) records.push(JSON.parse(r.value));
       } catch {
         /* skip unreadable entry */
@@ -5397,7 +5353,7 @@ const ANNOUNCEMENTS_KEY = "infas-hemato:announcements";
 
 async function loadAnnouncements() {
   try {
-    const r = await window.storage.get(ANNOUNCEMENTS_KEY, true);
+    const r = await storage.get(ANNOUNCEMENTS_KEY, true);
     return r ? JSON.parse(r.value) : [];
   } catch {
     return [];
@@ -5405,7 +5361,7 @@ async function loadAnnouncements() {
 }
 async function saveAnnouncements(list) {
   try {
-    await window.storage.set(ANNOUNCEMENTS_KEY, JSON.stringify(list), true);
+    await storage.set(ANNOUNCEMENTS_KEY, JSON.stringify(list), true);
   } catch (e) {
     console.error("Erreur sauvegarde annonces", e);
   }
