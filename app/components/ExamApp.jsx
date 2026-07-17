@@ -898,14 +898,57 @@ const CHAPTERS = [
   { id: "rcp", label: "Réanimation cardio-pulmonaire", subjectId: "secourisme" },
   { id: "malaises_plaies", label: "Malaises et plaies", subjectId: "secourisme" },
 
+  { id: "concept_homme", label: "Concept Homme", subjectId: "concepts-sciences-inf" },
+  { id: "concept_adaptation", label: "Concept d'adaptation", subjectId: "concepts-sciences-inf" },
+  { id: "concept_sante", label: "Concept Santé", subjectId: "concepts-sciences-inf" },
+  { id: "concept_maladie", label: "Concept Maladie", subjectId: "concepts-sciences-inf" },
+  { id: "concept_dunn", label: "Concept de Dunn (continuum santé-maladie)", subjectId: "concepts-sciences-inf" },
   { id: "concept_infirmier", label: "Concept infirmier (rôle et fonctions)", subjectId: "concepts-sciences-inf" },
   { id: "concept_soins_infirmiers", label: "Concept de soins infirmiers", subjectId: "concepts-sciences-inf" },
+  { id: "concept_buts_soins", label: "Buts des soins infirmiers selon les auteurs", subjectId: "concepts-sciences-inf" },
   { id: "modele_conceptuel", label: "Modèle conceptuel en soins infirmiers", subjectId: "concepts-sciences-inf" },
   { id: "modele_henderson", label: "Modèle de Virginia Henderson", subjectId: "concepts-sciences-inf" },
+  { id: "peplau_modele", label: "Modèle de Hildegarde Peplau", subjectId: "concepts-sciences-inf" },
+  { id: "orem_modele", label: "Modèle de Dorothea Orem", subjectId: "concepts-sciences-inf" },
+  { id: "roy_modele", label: "Modèle de Callista Roy", subjectId: "concepts-sciences-inf" },
+  { id: "rogers_modele", label: "Modèle de Martha Rogers", subjectId: "concepts-sciences-inf" },
   { id: "besoins_notion", label: "Notion de besoin", subjectId: "concepts-sciences-inf" },
   { id: "besoins_maslow", label: "Pyramide de Maslow", subjectId: "concepts-sciences-inf" },
+  { id: "henderson_besoins", label: "Les 14 besoins de Virginia Henderson", subjectId: "concepts-sciences-inf" },
   { id: "dossier_soins", label: "Dossier de soins infirmiers", subjectId: "concepts-sciences-inf" },
   { id: "relation_aide", label: "Relation d'aide", subjectId: "concepts-sciences-inf" },
+  { id: "gyneco_genital_fem", label: "Appareil génital féminin", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_genital_masc", label: "Appareil génital masculin", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_puberte", label: "Puberté (généralités et anomalies)", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_puberte_fem", label: "Puberté féminine", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_puberte_masc", label: "Puberté masculine", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_bassin", label: "Bassin obstétrical", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_cycle", label: "Cycle menstruel normal", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_gametogenese", label: "Gamétogenèse", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_fecondation", label: "Fécondation et développement de l'œuf", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_modif_grossesse", label: "Modifications physiologiques de la grossesse", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_diag_grossesse", label: "Diagnostic de la grossesse", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_cpn", label: "Consultation prénatale recentrée (CPN)", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_presentation", label: "Présentations fœtales", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_accouchement", label: "Mécanisme général de l'accouchement", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_sonu", label: "SONU (Soins Obstétricaux et Néonataux d'Urgence)", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_delivrance", label: "Délivrance normale", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_suites_couches", label: "Suites de couches normales", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_avort_spontane", label: "Avortement spontané", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_avort_provoque", label: "Avortement provoqué", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_soins_nne", label: "Soins à l'accouchée et au nouveau-né", subjectId: "gyneco-obstetrique" },
+  { id: "gyneco_admission", label: "Admission de la parturiente en salle de travail", subjectId: "gyneco-obstetrique" },
+  { id: "nutrition_def", label: "Nutrition (définitions de base)", subjectId: "sante-publique" },
+  { id: "nutrition_groupes", label: "Les groupes d'aliments", subjectId: "sante-publique" },
+  { id: "nutrition_pyramide", label: "La pyramide alimentaire", subjectId: "sante-publique" },
+  { id: "nutrition_5cles", label: "Les 5 clés pour des aliments plus sûrs", subjectId: "sante-publique" },
+  { id: "nutrition_maladies_carence", label: "Maladies par carence alimentaire", subjectId: "sante-publique" },
+  { id: "nutrition_maladies_exces", label: "Maladies par excès alimentaire", subjectId: "sante-publique" },
+  { id: "santescolaire_def", label: "Santé scolaire (définition)", subjectId: "sante-publique" },
+  { id: "santescolaire_pathologies", label: "Pathologies en milieu scolaire", subjectId: "sante-publique" },
+  { id: "santescolaire_cibles", label: "Population cible du PNSSU", subjectId: "sante-publique" },
+  { id: "santescolaire_missions", label: "Missions des SSSU", subjectId: "sante-publique" },
+  { id: "santescolaire_activites", label: "Activités des SSSU", subjectId: "sante-publique" },
   { id: "socio_sante_gen", label: "Sociologie de la santé (généralités)", subjectId: "psycho-anthropo" },
   { id: "inegalites_sociales_sante", label: "Inégalités sociales en santé", subjectId: "psycho-anthropo" },
   { id: "risques_sanitaires", label: "Risques sanitaires et facteurs de risque", subjectId: "psycho-anthropo" },
@@ -1159,6 +1202,7 @@ const UE_LIST = [
   { id: "PRR1230", semester: 2, code: "PRR 1230", label: "Processus de rédaction d'un rapport de stage", credits: 1 },
   { id: "SSA1240", semester: 2, code: "SSA 1240", label: "Sport et santé", credits: 2 },
   { id: "DRT1240", semester: 2, code: "DRT 1240", label: "Droit", credits: 2 },
+  { id: "GOB1110", semester: 1, code: "GOB 1110", label: "Gynécologie-Obstétrique", credits: 3 },
 ];
 
 const ECUE_LIST = [
@@ -1213,6 +1257,7 @@ const ECUE_LIST = [
   { id: "SSA1242", ueId: "SSA1240", code: "SSA 1242", label: "Sport et société", credits: 1, subjectId: null },
   { id: "DRT1241", ueId: "DRT1240", code: "DRT 1241", label: "Droit administratif", credits: 1, subjectId: null },
   { id: "DRT1242", ueId: "DRT1240", code: "DRT 1242", label: "Droit civil", credits: 1, subjectId: null },
+  { id: "GOB1111", ueId: "GOB1110", code: "GOB 1111", label: "Gynécologie-Obstétrique", credits: 3, subjectId: "gyneco-obstetrique" },
 ];
 
 // Palette de teintes, une par UE, utilisée pour la couleur d'accent de l'UE et le fond tamisé de ses ECUE
@@ -4793,6 +4838,848 @@ const PALUDISME_RAW = [
     "La prévention primaire du paludisme comprend l'utilisation de la moustiquaire imprégnée (MILDA), l'assainissement du milieu, l'utilisation d'insecticides, la chimioprophylaxie chez les sujets non immuns, et la vaccination (4 doses : 6, 8, 9 et 15 mois).",
     "Paludisme chez l'enfant (INFAS) – Traitement préventif"],
 ];
+/* ---- Gynéco-Obstétrique (INFAS) ---- */
+const GYNECO_RAW = [
+  /* ===== Appareil génital féminin ===== */
+  ["QCU","gyneco_genital_fem",1,"L'appareil génital féminin comprend deux grandes parties : les organes génitaux externes (vulve) et :",
+    ["Les organes génitaux internes","Le seul utérus","Les seules trompes","Le seul vagin"],[0],
+    "L'appareil génital féminin comprend 2 grandes parties : les organes génitaux externes ou vulve et les organes génitaux internes.",
+    "Gynéco-Obstétrique (INFAS) – Anatomie et physiologie de l'appareil génital féminin"],
+  ["QCM","gyneco_genital_fem",2,"La vulve comprend six éléments constitutifs, parmi lesquels :",
+    ["Le mont de Vénus","Les formations labiales (grandes et petites lèvres)","L'hymen","L'utérus"],[0,1,2],
+    "La vulve comprend six éléments : le mont de Vénus, les formations labiales, le vestibule, les organes érectiles (clitoris, bulbe vestibulaire), les glandes vulvaires et l'hymen ; l'utérus est un organe génital interne.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, Organes génitaux externes"],
+  ["QCU","gyneco_genital_fem",2,"Les glandes de Bartholin, glandes vulvaires localisées, sont situées :",
+    ["De chaque côté de la moitié postérieure de l'orifice vaginal","De part et d'autre de l'urètre","Sur le mont de Vénus","Dans l'utérus"],[0],
+    "Les glandes de Bartholin (ou glandes vestibulaires) sont situées de chaque côté de la moitié postérieure de l'orifice vaginal ; les glandes de Skène sont situées de part et d'autre de l'urètre.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, Les glandes vulvaires"],
+  ["QCU","gyneco_genital_fem",1,"La vulve intervient dans trois fonctions : la miction, l'accouchement et :",
+    ["Le coït","La digestion","La respiration","La lactation"],[0],
+    "La vulve intervient dans 3 fonctions : la miction, l'accouchement et le coït (rapport sexuel).",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, Anatomie fonctionnelle de la vulve"],
+  ["QCU","gyneco_genital_fem",1,"Les organes génitaux internes féminins comprennent le vagin, l'utérus, les trompes de Fallope et :",
+    ["Les ovaires","Les testicules","La prostate","Les vésicules séminales"],[0],
+    "Les organes génitaux internes comprennent : le vagin, l'utérus, les 2 trompes de Fallope (ou trompes utérines) et les 2 ovaires.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, Organes génitaux internes"],
+  ["QCU","gyneco_genital_fem",2,"L'utérus non gravide comprend trois parties, de haut en bas : le corps utérin, l'isthme utérin et :",
+    ["Le col utérin","Le fond utérin","L'endomètre","Le myomètre"],[0],
+    "L'utérus non gravide comprend 3 parties de haut en bas : le corps utérin, l'isthme utérin, le col utérin (lui-même composé de l'exocol et de l'endocol).",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, L'utérus"],
+  ["QCM","gyneco_genital_fem",2,"La paroi utérine se compose de trois tuniques, de dehors en dedans : la séreuse (péritoine), la musculeuse (myomètre) et :",
+    ["La muqueuse (endomètre)","Le chorion externe","La capsule fibreuse","Le périmètre"],[0],
+    "La paroi utérine, épaisse d'environ 1 cm, se compose de 3 tuniques : la séreuse péritoine (ligament large), la musculeuse ou myomètre (rôle dans l'accouchement), et la muqueuse utérine ou endomètre (modifications cycliques).",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, L'utérus"],
+  ["QCU","gyneco_genital_fem",2,"L'ensemble formé par l'ovaire, la trompe et le ligament large constitue :",
+    ["L'annexe de l'utérus","Le myomètre","Le segment inférieur","Le paramètre uniquement"],[0],
+    "Les ovaires constituent avec les trompes et le ligament large les annexes de l'utérus (ovaire + trompe + ligament large = annexe de l'utérus).",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, Les ovaires"],
+  ["QCM","gyneco_genital_fem",2,"Les fonctions des trompes utérines comprennent la captation de l'ovule, le transit du spermatozoïde/ovule/œuf et :",
+    ["La nutrition de l'œuf","La sécrétion d'insuline","La production de spermatozoïdes","La filtration du sang"],[0],
+    "Les trompes utérines ont une triple fonction dans la reproduction : la captation de l'ovule, le transit du spermatozoïde/ovule/œuf, et la nutrition de l'œuf.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital féminin, Trompes utérines"],
+  /* ===== Appareil génital masculin ===== */
+  ["QCU","gyneco_genital_masc",1,"Les organes génitaux externes masculins comprennent le pénis et :",
+    ["Les bourses (renfermant les testicules)","Les vésicules séminales","La prostate","L'épididyme"],[0],
+    "Les organes génitaux externes masculins comprennent le pénis ou la verge, et les bourses, lesquelles renferment les testicules.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital masculin, Organes génitaux externes"],
+  ["QCU","gyneco_genital_masc",2,"Le corps spongieux du pénis contient l'urètre, par lequel s'écoulent l'urine et le sperme ; il se distingue des corps caverneux, qui sont :",
+    ["Deux réservoirs cylindriques riches en veines et artères","Des glandes exocrines","Des glandes endocrines","Des muscles striés"],[0],
+    "Le pénis est composé du corps (contenant deux corps caverneux, réservoirs cylindriques riches en veines et artères, et un corps spongieux contenant l'urètre) et du gland.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital masculin, Le pénis"],
+  ["QCM","gyneco_genital_masc",2,"Les testicules ont deux fonctions principales : une fonction excrétrice (production des spermatozoïdes) et :",
+    ["Une fonction endocrine (production d'androgènes, dont la testostérone)","Une fonction digestive","Une fonction respiratoire","Une fonction urinaire exclusive"],[0],
+    "Les testicules ont deux fonctions principales : une fonction excrétrice (production des spermatozoïdes) et une fonction endocrine (production d'hormones, essentiellement les androgènes dont la testostérone).",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital masculin, Les testicules"],
+  ["QCM","gyneco_genital_masc",2,"Les voies spermatiques excrétrices comprennent quatre éléments : l'épididyme, les canaux déférents, les canaux éjaculateurs et :",
+    ["L'urètre","La prostate","Les vésicules séminales","Les glandes de Cowper"],[0],
+    "Les voies spermatiques excrétrices comprennent 4 éléments : l'épididyme, les canaux déférents, les canaux éjaculateurs et l'urètre ; la prostate, les vésicules séminales et les glandes de Cowper sont des glandes annexes.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital masculin, Organes génitaux internes"],
+  ["QCU","gyneco_genital_masc",2,"La sécrétion des glandes bulbo-urétrales de Méry-Cowper est indispensable :",
+    ["À la mobilité et au pouvoir fécondant des spermatozoïdes","Au transport de l'urine uniquement","À la production de testostérone","À l'érection uniquement"],[0],
+    "La sécrétion des glandes bulbo-urétrales de Méry-Cowper est indispensable à la mobilité et au pouvoir fécondant des spermatozoïdes.",
+    "Gynéco-Obstétrique (INFAS) – Appareil génital masculin, Glandes annexes"],
+  /* ===== Puberté féminine et masculine ===== */
+  ["QCU","gyneco_puberte",1,"La puberté est définie dans le cours comme la période :",
+    ["D'acquisition des facultés de reproduction, passage de l'enfance à l'adulte","D'apparition des premières dents","De maturation osseuse uniquement","De croissance staturale exclusivement"],[0],
+    "La puberté est la période d'acquisition des facultés de reproduction ; elle correspond à la période de passage de l'enfance à l'adulte.",
+    "Gynéco-Obstétrique (INFAS) – Puberté féminine, Définition"],
+  ["QCU","gyneco_puberte_fem",2,"Chez la fille, les premières règles (ménarches) apparaissent en moyenne à :",
+    ["13 ans","8 ans","18 ans","20 ans"],[0],
+    "Les premières règles (ménarches) apparaissent en moyenne à 13 ans, avec des extrêmes allant de 9 à 14 ans (95% des filles) ; elles sont physiologiquement irrégulières les deux premières années.",
+    "Gynéco-Obstétrique (INFAS) – Puberté féminine, Physiologie"],
+  ["QCU","gyneco_puberte_fem",2,"Chez la fille, le premier signe pubertaire est généralement :",
+    ["Le développement mammaire (vers 11 ans)","La pilosité pubienne","La pilosité axillaire","L'augmentation du volume clitoridien"],[0],
+    "Le développement mammaire est, dans la plupart des cas, le premier signe à se manifester, en moyenne vers 11 ans ; la pilosité pubienne suit environ 6 mois plus tard.",
+    "Gynéco-Obstétrique (INFAS) – Puberté féminine, Caractères sexuels secondaires"],
+  ["QCU","gyneco_puberte",2,"La puberté précoce se définit comme l'apparition des signes pubertaires chez l'enfant avant l'âge de :",
+    ["8 ans","5 ans","12 ans","15 ans"],[0],
+    "La puberté précoce est l'apparition des caractères sexuels secondaires avant l'âge de 8 ans ; elle peut être due à une perturbation neurologique et hormonale.",
+    "Gynéco-Obstétrique (INFAS) – Puberté féminine/masculine, Anomalies de la puberté"],
+  ["QCU","gyneco_puberte",2,"La puberté tardive se caractérise par l'absence de signes pubertaires au-delà de :",
+    ["18 ans","10 ans","14 ans","25 ans"],[0],
+    "La puberté tardive est caractérisée par l'absence de signes pubertaires au-delà de 18 ans ; les étiologies sont nombreuses (affections chroniques, insuffisance hormonale, causes hypothalamo-hypophysaires, familiales).",
+    "Gynéco-Obstétrique (INFAS) – Puberté féminine/masculine, Anomalies de la puberté"],
+  ["QCU","gyneco_puberte_masc",2,"Chez le garçon, le premier signe de puberté est l'augmentation du volume testiculaire, survenant vers l'âge de :",
+    ["11,5 ans","6 ans","16 ans","20 ans"],[0],
+    "Chez le garçon, le premier signe de puberté est l'augmentation de volume testiculaire vers l'âge de 11,5 ans (physiologique entre 9,5 et 14 ans).",
+    "Gynéco-Obstétrique (INFAS) – Puberté masculine, Développement des organes génitaux"],
+  ["QCU","gyneco_puberte_masc",2,"Chez le garçon, une gynécomastie bilatérale transitoire peut apparaître en milieu de puberté chez :",
+    ["30 à 65 % des garçons","Moins de 1 % des garçons","100 % des garçons","Uniquement les garçons obèses"],[0],
+    "Chez 30 à 65% des garçons apparaît en milieu de puberté une gynécomastie bilatérale, qui régressera en quelques mois dans la quasi-totalité des cas.",
+    "Gynéco-Obstétrique (INFAS) – Puberté masculine, Caractères sexuels secondaires"],
+  /* ===== Bassin obstétrical ===== */
+  ["QCU","gyneco_bassin",1,"Le bassin obstétrical est composé du bassin osseux et :",
+    ["Du bassin mou","De l'utérus","Du placenta","Du périnée uniquement"],[0],
+    "Le bassin obstétrical est composé du bassin osseux et du bassin mou ; il est séparé du grand bassin par une ligne appelée ligne innominée.",
+    "Gynéco-Obstétrique (INFAS) – Bassin obstétrical, Définitions"],
+  ["QCU","gyneco_bassin",2,"Le détroit supérieur, plan d'engagement de la présentation, sépare :",
+    ["Le petit bassin du grand bassin","Le bassin mou du bassin osseux","L'excavation du détroit inférieur","L'utérus du vagin"],[0],
+    "Le détroit supérieur est le plan d'engagement de la présentation ; il sépare le petit bassin du grand bassin.",
+    "Gynéco-Obstétrique (INFAS) – Bassin obstétrical, Le détroit supérieur"],
+  ["QCU","gyneco_bassin",2,"L'excavation, canal où le fœtus effectue sa descente et sa rotation, est divisée en deux étages par un rétrécissement au niveau des épines sciatiques appelé :",
+    ["Le détroit moyen","Le détroit supérieur","Le détroit inférieur","La ligne innominée"],[0],
+    "L'excavation est divisée en deux étages par un léger rétrécissement qui passe par les épines sciatiques : c'est le détroit moyen.",
+    "Gynéco-Obstétrique (INFAS) – Bassin obstétrical, L'excavation"],
+  ["QCU","gyneco_bassin",2,"Le bassin mou est un diaphragme musculo-aponévrotique formé de quatre muscles : les deux releveurs de l'anus et :",
+    ["Les deux ischio-coccygiens","Les deux grands fessiers","Les deux psoas","Les deux obturateurs internes"],[0],
+    "Le bassin mou est formé de quatre muscles : les deux releveurs de l'anus et les deux ischio-coccygiens.",
+    "Gynéco-Obstétrique (INFAS) – Bassin obstétrical, Le bassin mou"],
+  /* ===== Cycle menstruel ===== */
+  ["QCU","gyneco_cycle",1,"Le cycle menstruel dure en moyenne :",
+    ["28 jours","14 jours","45 jours","60 jours"],[0],
+    "Le cycle menstruel dure en moyenne 28 jours pour environ 60% des femmes ; un cycle court dure moins de 25 jours, un cycle long plus de 35 jours.",
+    "Gynéco-Obstétrique (INFAS) – Cycle menstruel normal, Définitions"],
+  ["QCM","gyneco_cycle",2,"Le cycle menstruel se déroule en trois phases : la phase folliculaire, la phase ovulatoire et :",
+    ["La phase lutéale","La phase de nidation","La phase de délivrance","La phase embryonnaire"],[0],
+    "Les trois phases du cycle menstruel (28 jours) sont : la phase folliculaire (ou œstrogénique, ou proliférative, du début des règles à J13), la phase ovulatoire (J14), et la phase lutéale (ou sécrétoire).",
+    "Gynéco-Obstétrique (INFAS) – Cycle menstruel normal, Physiologie du CM"],
+  ["QCU","gyneco_cycle",2,"L'ovulation, avec rupture du follicule mûr et expulsion de l'ovocyte, a lieu au :",
+    ["14ème jour du cycle","1er jour du cycle","28ème jour du cycle","7ème jour du cycle"],[0],
+    "Au niveau de l'ovaire, la ponte ovulaire a lieu par rupture du follicule mûr et expulsion de l'ovocyte au 14ème jour du cycle.",
+    "Gynéco-Obstétrique (INFAS) – Cycle menstruel normal, La phase ovulatoire"],
+  ["QCU","gyneco_cycle",2,"En l'absence de fécondation, le corps jaune s'atrophie et se transforme en corpus albicans, entraînant une chute du taux hormonal et la survenue des règles :",
+    ["24 à 48 heures plus tard","Immédiatement","1 mois plus tard","Après 15 jours"],[0],
+    "En l'absence de fécondation, le corps jaune s'atrophie et se transforme en corpus albicans ; la sécrétion de stéroïdes cesse et cette chute brutale entraîne la survenue des règles 24 à 48h plus tard.",
+    "Gynéco-Obstétrique (INFAS) – Cycle menstruel normal, La phase lutéale"],
+  ["QCU","gyneco_cycle",2,"La FSH (hormone folliculo-stimulante) permet :",
+    ["La maturation folliculaire","La transformation du follicule en corps jaune","L'ovulation directement","La nidation"],[0],
+    "La FSH permet la maturation folliculaire ; la LH assure la transformation du follicule en corps jaune et son maintien.",
+    "Gynéco-Obstétrique (INFAS) – Cycle menstruel normal, Régulation du cycle menstruel"],
+  ["QCU","gyneco_cycle",2,"L'hypothalamus sécrète la Gn-RH (gonadolibérine ou LH-RH), qui stimule l'hypophyse antérieure pour libérer :",
+    ["Les gonadotrophines (FSH et LH)","Directement les œstrogènes","Directement la progestérone","L'ocytocine"],[0],
+    "La Gn-RH (gonadolibérine) ou LH-RH stimule l'hypophyse antérieure, qui libère à son tour les gonadotrophines (FSH et LH), qui induisent la croissance et la maturation folliculaire.",
+    "Gynéco-Obstétrique (INFAS) – Cycle menstruel normal, Régulation du cycle menstruel"],
+  /* ===== Gametogenese ===== */
+  ["QCU","gyneco_gametogenese",1,"La gamétogenèse est la production des gamètes mâles (spermatozoïdes) et des gamètes femelles appelés :",
+    ["Ovules","Ovocytes primaires uniquement","Follicules","Zygotes"],[0],
+    "La gamétogenèse est la production des gamètes mâles appelés spermatozoïdes et des gamètes femelles appelés ovules.",
+    "Gynéco-Obstétrique (INFAS) – Gamétogenèse, Définition"],
+  ["QCU","gyneco_gametogenese",2,"La spermatogenèse a lieu dans :",
+    ["Les tubes séminifères des testicules","L'épididyme","La prostate","Les vésicules séminales"],[0],
+    "La spermatogenèse, processus de production des spermatozoïdes, a lieu dans les tubes séminifères des testicules.",
+    "Gynéco-Obstétrique (INFAS) – Gamétogenèse, Spermatogenèse"],
+  ["QCM","gyneco_gametogenese",2,"Trois hormones jouent un rôle important dans la spermatogenèse : la testostérone, la LH et :",
+    ["La FSH","La progestérone","L'ocytocine","La prolactine"],[0],
+    "Trois hormones jouent un rôle important lors de la spermatogenèse : la testostérone, la LH et la FSH ; LH et FSH sont produites par l'hypophyse, la testostérone par les cellules de Leydig.",
+    "Gynéco-Obstétrique (INFAS) – Gamétogenèse, Spermatogenèse, Régulation hormonale"],
+  ["QCU","gyneco_gametogenese",2,"À la naissance, chaque ovaire contient une réserve d'environ :",
+    ["400 000 ovocytes et follicules primordiaux","4 000 ovocytes","4 millions d'ovocytes","40 ovocytes"],[0],
+    "Il reste environ 400 000 ovocytes et follicules primordiaux par ovaire à la naissance ; seulement environ 450 arriveront à maturité avec l'ovulation au cours de la vie génitale.",
+    "Gynéco-Obstétrique (INFAS) – Gamétogenèse, Ovogenèse"],
+  ["QCU","gyneco_gametogenese",2,"Le follicule tertiaire particulièrement grand, dont on suppose qu'il arrivera jusqu'à l'ovulation, est appelé :",
+    ["Follicule de De Graaf","Follicule primordial","Follicule secondaire","Corps jaune"],[0],
+    "Le follicule de De Graaf correspond à un follicule tertiaire particulièrement grand (pouvant atteindre 25 mm) dont on suppose qu'il arrivera jusqu'à l'ovulation.",
+    "Gynéco-Obstétrique (INFAS) – Gamétogenèse, Ovogenèse"],
+  /* ===== Fécondation et développement de l'œuf ===== */
+  ["QCU","gyneco_fecondation",1,"La fécondation in vivo a lieu dans :",
+    ["Le tiers externe de la trompe utérine","L'utérus","Le vagin","L'ovaire"],[0],
+    "La fécondation, fusion des gamètes mâle et femelle, a lieu in vivo dans le tiers externe de la trompe utérine.",
+    "Gynéco-Obstétrique (INFAS) – De la fécondation au développement de l'œuf, Fécondation"],
+  ["QCU","gyneco_fecondation",2,"Le sexe génétique de l'embryon est déterminé par le spermatozoïde ; si un spermatozoïde porteur du chromosome Y pénètre l'ovocyte II, l'embryon sera de sexe génétique :",
+    ["XY (masculin)","XX (féminin)","Indéterminé","XXY"],[0],
+    "Si c'est un spermatozoïde porteur du chromosome Y qui pénètre dans l'ovocyte II, l'embryon est du sexe génétique XY, c'est-à-dire masculin ; c'est le sexe masculin qui détermine le sexe de l'enfant.",
+    "Gynéco-Obstétrique (INFAS) – De la fécondation au développement de l'œuf, Déterminisme du sexe"],
+  ["QCU","gyneco_fecondation",2,"La nidation, fixation de l'œuf à la paroi utérine, se produit vers le :",
+    ["7ème jour après la fécondation","1er jour après la fécondation","21ème jour après la fécondation","30ème jour après la fécondation"],[0],
+    "Vers le 5ème-6ème jour, l'œuf arrive dans la cavité utérine ; vers le 7ème jour il se fixe à la paroi utérine en pénétrant dans l'endomètre (nidation), qui dure 7 jours.",
+    "Gynéco-Obstétrique (INFAS) – De la fécondation au développement de l'œuf, Nidation"],
+  ["QCU","gyneco_fecondation",2,"La période embryonnaire s'étend de la fécondation jusqu'à la fin de la :",
+    ["7ème semaine de grossesse","2ème semaine de grossesse","20ème semaine de grossesse","40ème semaine de grossesse"],[0],
+    "Il y a deux grandes périodes de développement de l'œuf : la période embryonnaire (de la fécondation à la 7ème semaine de grossesse) et la période fœtale (de la 8ème semaine à la naissance).",
+    "Gynéco-Obstétrique (INFAS) – De la fécondation au développement de l'œuf, Développement de l'œuf"],
+  /* ===== Modifications physiologiques de la grossesse ===== */
+  ["QCU","gyneco_modif_grossesse",1,"Au cours de la grossesse, le col utérin sécrète un mucus abondant et épais protégeant les membranes, appelé :",
+    ["Le bouchon muqueux","Le liquide amniotique","Le colostrum","Le vernix caseosa"],[0],
+    "Les glandes cervicales sécrètent un mucus abondant et épais, appelé bouchon muqueux, qui protège les membranes et s'évacue dans le vagin peu avant le début du travail.",
+    "Gynéco-Obstétrique (INFAS) – Modifications de l'organisme au cours de la grossesse, Le col utérin"],
+  ["QCU","gyneco_modif_grossesse",2,"Chez la femme enceinte, la tension artérielle ne doit pas dépasser :",
+    ["14/9","12/8","16/10","10/6"],[0],
+    "Normalement, la TA diminue au cours de la grossesse ; la TA d'une femme enceinte ne doit pas être ≥ 14/9, au-delà de ces chiffres il s'agit d'une hypertension artérielle.",
+    "Gynéco-Obstétrique (INFAS) – Modifications de l'organisme au cours de la grossesse, Appareil circulatoire"],
+  ["QCU","gyneco_modif_grossesse",2,"L'augmentation du poids au cours de la grossesse est en moyenne d'environ :",
+    ["Moins de 12 kg","Moins de 2 kg","Plus de 25 kg","Moins de 30 kg"],[0],
+    "L'augmentation du poids au cours de la grossesse est d'environ moins de 12 kg, avec une prise de poids moyenne de 1 à 1,5 kg/mois, plus rapide à partir du 5ème mois.",
+    "Gynéco-Obstétrique (INFAS) – Modifications de l'organisme au cours de la grossesse, Le poids"],
+  ["QCU","gyneco_modif_grossesse",2,"Selon les constantes biologiques du cours, le taux d'hémoglobine normal au cours de la grossesse doit rester supérieur à :",
+    ["11 g/100 ml","5 g/100 ml","20 g/100 ml","2 g/100 ml"],[0],
+    "Selon le tableau des constantes biologiques du cours, l'hémoglobine (12-17 g/100 ml avant la grossesse) doit rester supérieure à 11 g/100 ml au cours de la grossesse.",
+    "Gynéco-Obstétrique (INFAS) – Modifications de l'organisme au cours de la grossesse, Constantes biologiques"],
+  /* ===== Diagnostic de la grossesse ===== */
+  ["QCU","gyneco_diag_grossesse",1,"Le diagnostic de la grossesse au début repose sur l'interrogatoire, l'examen physique et :",
+    ["Les examens paracliniques","La seule échographie du 3ème trimestre","Le seul dosage de la progestérone","La biopsie de l'endomètre"],[0],
+    "Le diagnostic de la grossesse au début est basé sur des signes cliniques (interrogatoire, examen physique) et des examens paracliniques (dosage du béta HCG et échographie).",
+    "Gynéco-Obstétrique (INFAS) – Diagnostic de la grossesse au début"],
+  ["QCU","gyneco_diag_grossesse",2,"Le signe de Hégar, retrouvé au toucher vaginal combiné au palper, correspond à un ramollissement de l'utérus, surtout au niveau :",
+    ["De l'isthme","Du col","Du fond utérin","Des trompes"],[0],
+    "Le ramollissement de l'utérus surtout au niveau de l'isthme, permettant aux doigts vaginaux et abdominaux d'être facilement en contact, à tel point que le corps de l'utérus semble détaché du col, constitue le signe de Hégar.",
+    "Gynéco-Obstétrique (INFAS) – Diagnostic de la grossesse au début, Toucher vaginal"],
+  ["QCU","gyneco_diag_grossesse",2,"Le diagnostic biologique de la grossesse est confirmé par la recherche qualitative de :",
+    ["La béta HCG dans les urines et le sang","La progestérone urinaire uniquement","L'œstrogène sanguin uniquement","La FSH urinaire"],[0],
+    "Le diagnostic biologique de la grossesse est confirmé par la recherche qualitative des béta HCG dans les urines et dans le sang.",
+    "Gynéco-Obstétrique (INFAS) – Diagnostic de la grossesse au début, Diagnostic biologique"],
+  /* ===== CPN recentrée ===== */
+  ["QCU","gyneco_cpn",1,"Selon les directives PMA de Côte d'Ivoire, le nombre minimum de CPN pour une grossesse normale est de :",
+    ["4","1","8","12"],[0],
+    "Le nombre de CPN minimum est de 4 pour les grossesses normales selon les directives du Paquet Minimum d'Activité (PMA) de la Côte d'Ivoire.",
+    "Gynéco-Obstétrique (INFAS) – Consultation prénatale recentrée, Déroulement de la CPN"],
+  ["QCM","gyneco_cpn",2,"La CPN recentrée compte cinq principes, parmi lesquels l'évaluation focalisée à chaque visite, les soins individualisés et :",
+    ["Le counseling et le soutien","La gratuité systématique de tous les soins","L'obligation de césarienne","L'interdiction de l'allaitement"],[0],
+    "Les cinq principes de la CPN recentrée sont : l'évaluation, les soins individualisés, le counseling et soutien, les soins centrés sur la femme, et les soins assurés par un prestataire qualifié et compétent.",
+    "Gynéco-Obstétrique (INFAS) – Consultation prénatale recentrée, Principes"],
+  ["QCU","gyneco_cpn",2,"La première CPN doit avoir lieu :",
+    ["Avant la fin du 3ème mois","Après le 6ème mois","Uniquement au 9ème mois","Uniquement après l'accouchement"],[0],
+    "La 1ère CPN a lieu avant la fin du 3ème mois ; elle permet de diagnostiquer la grossesse, calculer le terme, dépister les facteurs de risque et prescrire le bilan prénatal.",
+    "Gynéco-Obstétrique (INFAS) – Consultation prénatale recentrée, Déroulement de la CPN"],
+  ["QCM","gyneco_cpn",2,"Parmi les examens obligatoires selon le PMA lors de la CPN figurent le groupe sanguin ABO+Rhésus et :",
+    ["La sérologie de la syphilis (VDRL-TPHA)","L'électrophorèse de l'hémoglobine systématique","La biopsie du col systématique","Le scanner cérébral"],[0],
+    "Les examens obligatoires selon le PMA sont : groupe sanguin (ABO + Rhésus), sérologie de la toxoplasmose, sérologie de la rubéole (1er trimestre), sérologie de la syphilis (VDRL-TPHA).",
+    "Gynéco-Obstétrique (INFAS) – Consultation prénatale recentrée, Bilan au cours de la grossesse"],
+  /* ===== Présentations fœtales ===== */
+  ["QCU","gyneco_presentation",1,"La présentation se définit comme :",
+    ["La partie du fœtus qui se présente en premier au contact de l'aire du détroit supérieur","La position de la mère pendant l'accouchement","Le type de bassin maternel","La durée du travail"],[0],
+    "La présentation est la partie du fœtus qui se présente en premier au contact de l'aire du détroit supérieur du bassin obstétrical.",
+    "Gynéco-Obstétrique (INFAS) – Présentations fœtales, Définitions"],
+  ["QCU","gyneco_presentation",2,"Dans la présentation du sommet, la tête est bien fléchie et le repère est :",
+    ["L'occiput (ou lambda, petite fontanelle)","Le menton","La pyramide nasale","Le bregma"],[0],
+    "La présentation du sommet est céphalique, avec la tête bien fléchie ; le repère est l'occiput ou lambda ou petite fontanelle, et le diamètre d'engagement (sous-occipito-bregmatique) est de 9,5 cm.",
+    "Gynéco-Obstétrique (INFAS) – Présentations fœtales, Présentation du sommet"],
+  ["QCU","gyneco_presentation",2,"L'accouchement en présentation du sommet est qualifié d'eutocique, ce qui signifie qu'il se fait :",
+    ["Par voie basse, en l'absence d'autres complications","Uniquement par césarienne","Toujours avec forceps","Toujours avant terme"],[0],
+    "L'accouchement en présentation du sommet est eutocique et se fait par voie basse en l'absence d'autres complications.",
+    "Gynéco-Obstétrique (INFAS) – Présentations fœtales, Présentation du sommet"],
+  ["QCU","gyneco_presentation",2,"La présentation de la face, avec déflexion totale de la tête fœtale, a pour repère :",
+    ["Le menton","L'occiput","Le bregma","La pyramide nasale"],[0],
+    "La présentation de la face est céphalique avec déflexion totale de la tête fœtale accompagnée d'une lordose importante ; le repère est le menton.",
+    "Gynéco-Obstétrique (INFAS) – Présentations fœtales, Présentation de la face"],
+  ["QCU","gyneco_presentation",2,"La présentation du front, hautement dystocique, impose systématiquement :",
+    ["Une césarienne obligatoire","Un accouchement par voie basse","Une délivrance artificielle","Une épisiotomie uniquement"],[0],
+    "La présentation du front est hautement dystocique (repère : pyramide nasale) et impose une césarienne obligatoire.",
+    "Gynéco-Obstétrique (INFAS) – Présentations fœtales, Présentation du front"],
+  ["QCU","gyneco_presentation",2,"Dans la présentation de siège, le repère est :",
+    ["Le sacrum","L'occiput","Le menton","L'acromion"],[0],
+    "La présentation de siège est une présentation longitudinale où le fœtus présente au détroit son pôle pelvien ; le repère est le sacrum.",
+    "Gynéco-Obstétrique (INFAS) – Présentations fœtales, Présentations de siège"],
+  ["QCU","gyneco_presentation",2,"Dans la présentation transversale, le repère est :",
+    ["Le moignon de l'épaule (acromion)","Le sacrum","L'occiput","Le menton"],[0],
+    "Dans la présentation transversale, le fœtus est perpendiculaire au détroit supérieur ; le repère est le moignon de l'épaule ou le gril costal ou l'acromion.",
+    "Gynéco-Obstétrique (INFAS) – Présentations fœtales, Présentation transversale"],
+  /* ===== Mécanisme général de l'accouchement ===== */
+  ["QCU","gyneco_accouchement",1,"L'accouchement met en présence trois éléments : le mobile fœtal, l'utérus (moteur utérin) et :",
+    ["La filière pelvienne","Le placenta uniquement","Le cordon ombilical uniquement","Les annexes uniquement"],[0],
+    "Lors d'un accouchement, trois éléments interviennent : le mobile fœtal, l'utérus ou moteur utérin, et la filière pelvienne (bassin osseux et parties molles).",
+    "Gynéco-Obstétrique (INFAS) – Mécanisme général de l'accouchement, Éléments en présence"],
+  ["QCU","gyneco_accouchement",2,"L'accouchement se déroule en trois grandes phases : la phase du travail, la phase de l'expulsion et :",
+    ["La phase de délivrance","La phase de nidation","La phase folliculaire","La phase d'engagement uniquement"],[0],
+    "L'accouchement se déroule en trois grandes phases : la phase du travail, la phase de l'expulsion et la phase de délivrance.",
+    "Gynéco-Obstétrique (INFAS) – Mécanisme général de l'accouchement, Phases de l'accouchement"],
+  ["QCM","gyneco_accouchement",2,"Les contractions utérines du travail sont caractérisées notamment par leur caractère involontaire, intermittent, rythmé et régulier, et :",
+    ["Progressif dans leur durée et intensité","Volontaire et contrôlable","Constant sans variation","Indolore systématiquement"],[0],
+    "Les contractions utérines du travail sont involontaires, intermittentes, rythmées et régulières, progressives dans leur durée et intensité, totales et douloureuses.",
+    "Gynéco-Obstétrique (INFAS) – Mécanisme général de l'accouchement, Contractions utérines"],
+  ["QCU","gyneco_accouchement",2,"La dilatation complète du col correspond à un orifice cervical d'environ :",
+    ["10 cm","1 cm","5 cm","20 cm"],[0],
+    "L'orifice du col, d'un centimètre de diamètre après l'effacement, s'agrandit progressivement pour atteindre environ 10 cm, dite dilatation complète.",
+    "Gynéco-Obstétrique (INFAS) – Mécanisme général de l'accouchement, La dilatation du col"],
+  ["QCU","gyneco_accouchement",2,"L'engagement de la présentation est le franchissement du plan du détroit supérieur par :",
+    ["Le plus grand diamètre de la présentation fœtale","Le cordon ombilical","Le placenta","Le liquide amniotique"],[0],
+    "L'engagement est le franchissement du plan du détroit supérieur du bassin maternel par le plus grand diamètre de la présentation fœtale.",
+    "Gynéco-Obstétrique (INFAS) – Mécanisme général de l'accouchement, Engagement"],
+  ["QCU","gyneco_accouchement",2,"Le signe utilisé pour faire le diagnostic clinique de l'engagement de la présentation est le signe de :",
+    ["Farabeuf","Hégar","Noble","Tarnier"],[0],
+    "Une présentation est dite engagée lorsqu'au toucher vaginal on ne peut faire passer les deux doigts vaginaux entre la présentation et la concavité sacrée : c'est le signe de Farabeuf.",
+    "Gynéco-Obstétrique (INFAS) – Mécanisme général de l'accouchement, Diagnostic de l'engagement"],
+  ["QCU","gyneco_accouchement",2,"La variété de position la plus fréquente lors de l'accouchement (environ 66% des cas) est :",
+    ["L'occipito iliaque gauche antérieure (OIGA)","L'occipito iliaque droit postérieur (OIDP)","L'occipito sacrée (OS)","L'occipito iliaque droit antérieur (OIDA)"],[0],
+    "L'occipito iliaque gauche antérieure (OIGA) est la plus fréquente des variétés de position, dans environ 66% des cas.",
+    "Gynéco-Obstétrique (INFAS) – Mécanisme général de l'accouchement, Engagement"],
+  /* ===== SONU ===== */
+  ["QCU","gyneco_sonu",1,"Les SONU (Soins Obstétricaux et Néonataux d'Urgence) sont des soins offerts en urgence à toute femme et/ou à son enfant présentant des complications au cours de :",
+    ["La grossesse, du travail et des suites de couches","La ménopause uniquement","La puberté uniquement","La consultation post-natale uniquement"],[0],
+    "Les SONU se définissent comme des soins offerts en urgence à toute femme et/ou à son enfant, présentant des complications au cours de la grossesse, du travail et des suites de couches.",
+    "Gynéco-Obstétrique (INFAS) – Généralités sur les SONU, Définition"],
+  ["QCU","gyneco_sonu",2,"Contrairement au SONU de Base (SONUB), le SONU Complet (SONUC) inclut en plus :",
+    ["La chirurgie (césarienne) et la transfusion sanguine","Les antibiotiques injectables uniquement","La réanimation du nouveau-né uniquement","Les anticonvulsivants uniquement"],[0],
+    "Le SONUC comprend, en plus des fonctions du SONUB (antibiotiques, ocytociques, anticonvulsivants, délivrance artificielle, extraction, accouchement assisté, réanimation), la chirurgie (césarienne) et la transfusion sanguine.",
+    "Gynéco-Obstétrique (INFAS) – Généralités sur les SONU, Fonctions des SONU"],
+  ["QCU","gyneco_sonu",2,"Parmi les causes directes de décès maternels, la première citée dans le cours, avec 21%, est :",
+    ["Les hémorragies","Les avortements à risque","Les éclampsies","Le travail dystocique"],[0],
+    "Les causes directes de décès maternels sont : hémorragies (21%), avortements à risque (14%), éclampsies (13%), travail dystocique (8%), infection (8%), autres (11%).",
+    "Gynéco-Obstétrique (INFAS) – Généralités sur les SONU, Causes de décès maternels"],
+  ["QCM","gyneco_sonu",2,"Le modèle des « trois retards » facteurs de mortalité maternelle comprend le retard dans la décision d'aller consulter, le retard dans la décision de référence et :",
+    ["Le retard dans l'administration de soins de qualité","Le retard de croissance fœtale","Le retard pubertaire","Le retard scolaire"],[0],
+    "Le modèle des trois retards comprend : 1er retard (décision d'aller consulter), 2ème retard (décision de référence), 3ème retard (administration de soins de qualité).",
+    "Gynéco-Obstétrique (INFAS) – Généralités sur les SONU, Facteurs de mortalité maternelle"],
+  /* ===== Delivrance normale ===== */
+  ["QCU","gyneco_delivrance",1,"La délivrance est l'expulsion hors des voies génitales maternelles du placenta et des membranes, survenant environ :",
+    ["Une demi-heure après la sortie du fœtus","Immédiatement à la sortie du fœtus","24 heures après la sortie du fœtus","1 semaine après l'accouchement"],[0],
+    "La délivrance est l'expulsion hors des voies génitales maternelles des annexes fœtales (placenta et membranes) environ une demi-heure après la sortie du fœtus ; c'est la troisième phase de l'accouchement.",
+    "Gynéco-Obstétrique (INFAS) – Délivrance normale, Définition"],
+  ["QCM","gyneco_delivrance",2,"La physiologie de la délivrance normale évolue en cinq phases : rémission, décollement, migration, expulsion et :",
+    ["Hémostase","Nidation","Engagement","Ovulation"],[0],
+    "La physiologie de la délivrance évolue en 5 phases : rémission (repos physiologique), décollement, migration, expulsion, et hémostase.",
+    "Gynéco-Obstétrique (INFAS) – Délivrance normale, Physiologie"],
+  ["QCU","gyneco_delivrance",2,"Le mécanisme le plus important pour arrêter l'hémorragie après la délivrance, par rétraction des fibres utérines qui étreignent les vaisseaux, est appelé :",
+    ["La ligature vasculaire vivante de Pinard","Le globe de sécurité uniquement","Le bouchon muqueux","La couche de Nitabuch"],[0],
+    "La rétraction de l'utérus va étreindre et obturer les vaisseaux sanguins traversant la paroi utérine : c'est la ligature vasculaire vivante de Pinard, le mécanisme le plus important pour arrêter l'hémorragie.",
+    "Gynéco-Obstétrique (INFAS) – Délivrance normale, Phase d'hémostase"],
+  ["QCU","gyneco_delivrance",2,"Le mode de sortie du placenta le plus fréquent, où la face fœtale sort en premier, est appelé :",
+    ["Le mode Baudelocque","Le mode Duncan","Le mode Farabeuf","Le mode Hégar"],[0],
+    "Le placenta sort le plus souvent par le mode Baudelocque (face fœtale qui sort la première) ; rarement il sort par le mode Duncan (face maternelle), notamment en cas de placenta bas inséré.",
+    "Gynéco-Obstétrique (INFAS) – Délivrance normale, Technique de délivrance"],
+  ["QCU","gyneco_delivrance",2,"Selon le cours, si 30 minutes après l'expulsion du fœtus le placenta n'est pas décollé, il faut procéder à :",
+    ["La délivrance artificielle","Une césarienne immédiate","Un simple massage utérin","Rien, il faut attendre encore 2 heures"],[0],
+    "30 minutes après l'expulsion du fœtus, si le placenta n'est pas décollé, il faut procéder à la délivrance artificielle.",
+    "Gynéco-Obstétrique (INFAS) – Délivrance normale, Technique de délivrance"],
+  /* ===== Suites de couches ===== */
+  ["QCU","gyneco_suites_couches",1,"Les suites de couches normales (post-partum) correspondent à la période qui s'étend de l'accouchement jusqu'à :",
+    ["Aux premières règles qui suivent l'accouchement (retour de couches)","La fin de la grossesse suivante","6 mois après l'accouchement systématiquement","La ménopause"],[0],
+    "Les suites de couches normales correspondent à la période qui s'étend de l'accouchement jusqu'aux premières règles qui suivent (appelées retour de couches).",
+    "Gynéco-Obstétrique (INFAS) – Suites de couches normales, Définition"],
+  ["QCU","gyneco_suites_couches",2,"Les suites de couches durent, chez la femme qui n'allaite pas, environ :",
+    ["45 jours (6 semaines)","10 jours","6 mois","1 an"],[0],
+    "Les suites de couches durent 45 jours soit 6 semaines après l'accouchement si la femme n'allaite pas, et peuvent se prolonger suivant la durée de l'allaitement.",
+    "Gynéco-Obstétrique (INFAS) – Suites de couches normales, Définition"],
+  ["QCU","gyneco_suites_couches",2,"Le globe arrondi et dur que forme l'utérus juste après la délivrance, garant d'une bonne hémostase, est appelé :",
+    ["Le globe de sécurité","Le bouchon muqueux","Le corps jaune","La ligature de Pinard"],[0],
+    "Aussitôt après la délivrance, l'utérus se rétracte et forme un globe arrondi et dur : c'est le globe de sécurité, garant d'une bonne hémostase.",
+    "Gynéco-Obstétrique (INFAS) – Suites de couches normales, Involution utérine"],
+  ["QCU","gyneco_suites_couches",2,"Les écoulements appelés lochies deviennent séreux, avec une odeur fade, vers le :",
+    ["15ème jour","1er jour","30ème jour","45ème jour"],[0],
+    "Les lochies sont sanglantes les 4 premiers jours, séro-sanglantes vers le 8ème jour, séreuses vers le 15ème jour avec une odeur fade.",
+    "Gynéco-Obstétrique (INFAS) – Suites de couches normales, Les lochies"],
+  ["QCU","gyneco_suites_couches",2,"La montée laiteuse (mise en place de la lactation) s'installe en :",
+    ["24 à 48 heures","2 heures","1 semaine","1 mois"],[0],
+    "Après la disparition de la sécrétion placentaire de progestérone, la prolactine est stimulée ; la lactation s'installe en 24 à 48 heures (montée laiteuse).",
+    "Gynéco-Obstétrique (INFAS) – Suites de couches normales, Mise en place de la lactation"],
+  ["QCU","gyneco_suites_couches",2,"La consultation post-partum obligatoire, permettant de confirmer le retour à la normale des voies génitales, s'effectue entre la :",
+    ["6ème et la 8ème semaine","1ère et la 2ème semaine","20ème et la 22ème semaine","1ère et la 2ème année"],[0],
+    "Avant la sortie de la maternité, la sage-femme doit communiquer la date du rendez-vous de la consultation post-partum, qui s'effectue entre la 6ème et la 8ème semaine ; cette visite est obligatoire.",
+    "Gynéco-Obstétrique (INFAS) – Suites de couches normales, Suites de couches tardives"],
+  /* ===== Avortement spontané ===== */
+  ["QCU","gyneco_avort_spontane",1,"L'avortement spontané est défini comme l'expulsion du produit de conception avant sa viabilité (28 semaines d'aménorrhée) et/ou pesant moins de :",
+    ["500 g","100 g","1000 g","2000 g"],[0],
+    "L'avortement spontané est l'expulsion du produit de conception avant sa viabilité (28 semaines d'aménorrhées soit 180 jours) et/ou pesant moins de 500g, sans action délibérée.",
+    "Gynéco-Obstétrique (INFAS) – Avortement spontané, Définition"],
+  ["QCU","gyneco_avort_spontane",2,"La fréquence des avortements spontanés est de l'ordre de :",
+    ["10 à 20 % des grossesses","1 à 2 % des grossesses","50 à 60 % des grossesses","80 à 90 % des grossesses"],[0],
+    "La fréquence des avortements spontanés est de l'ordre de 10 à 20% des grossesses.",
+    "Gynéco-Obstétrique (INFAS) – Avortement spontané, Épidémiologie"],
+  ["QCU","gyneco_avort_spontane",2,"L'avortement spontané à répétition se définit par la survenue successive de :",
+    ["Trois avortements spontanés, sans grossesse à terme intercalée, chez la même femme","Deux avortements espacés de 10 ans","Un seul avortement sévère","Cinq avortements avec des partenaires différents"],[0],
+    "L'avortement spontané à répétition est la survenue successive de trois avortements spontanés, sans intervalle de grossesse à terme chez une même femme sans changement de partenaire.",
+    "Gynéco-Obstétrique (INFAS) – Avortement spontané, Classification"],
+  ["QCM","gyneco_avort_spontane",2,"Le tableau clinique de l'avortement spontané est généralement déterminé par deux signes majeurs : les douleurs pelviennes (contractions utérines) et :",
+    ["Les métrorragies","La fièvre élevée systématique","La perte de conscience","L'hypertension artérielle sévère"],[0],
+    "Deux signes majeurs déterminent le tableau clinique de l'avortement spontané : les douleurs pelviennes (contractions utérines) et les métrorragies (hémorragies).",
+    "Gynéco-Obstétrique (INFAS) – Avortement spontané, Clinique"],
+  ["QCM","gyneco_avort_spontane",2,"Parmi les causes maternelles favorisant l'avortement spontané figurent les malformations congénitales de l'utérus et :",
+    ["La béance cervico-isthmique","L'excès de vitamine C","L'hyperthyroïdie légère","Le groupe sanguin O"],[0],
+    "Les causes maternelles comprennent les maladies de l'utérus (malformations, utérus cloisonné ou fibromateux, béance cervico-isthmique, synéchie, hypoplasie), les maladies ovulaires, endocriniennes et immunitaires.",
+    "Gynéco-Obstétrique (INFAS) – Avortement spontané, Facteurs favorisants"],
+  /* ===== Avortement provoqué ===== */
+  ["QCU","gyneco_avort_provoque",1,"L'avortement provoqué est défini comme l'interruption volontaire de la grossesse avant :",
+    ["Le 6ème mois de l'âge gestationnel","Le 3ème mois de l'âge gestationnel","Le 9ème mois de l'âge gestationnel","La 2ème semaine de grossesse"],[0],
+    "L'avortement provoqué est l'interruption volontaire de la grossesse (IVG) avant le 6ème mois de l'âge gestationnel.",
+    "Gynéco-Obstétrique (INFAS) – Avortement provoqué, Définition"],
+  ["QCM","gyneco_avort_provoque",2,"Parmi les complications immédiates de l'avortement provoqué clandestin citées dans le cours figurent l'hémorragie génitale importante et :",
+    ["L'hémopéritoine par perforation utérine","La stérilité définitive immédiate","Le tétanos post-abortum","La dyspareunie chronique"],[0],
+    "Les complications immédiates (dans les 24h) sont dominées par les complications hémorragiques : hémorragie génitale importante, hémopéritoine par perforation utérine, infarctus utérin, embolie gazeuse, intoxication.",
+    "Gynéco-Obstétrique (INFAS) – Avortement provoqué, Complications immédiates"],
+  ["QCM","gyneco_avort_provoque",2,"Les complications secondaires de l'avortement provoqué, survenant le plus souvent dans les 72 heures, sont dominées par les complications :",
+    ["Infectieuses (endométrite, pelvipéritonite, septicémie)","Hémorragiques uniquement","Cardiovasculaires uniquement","Neurologiques uniquement"],[0],
+    "Les complications secondaires surviennent le plus souvent dans les 72 heures et sont dominées par les complications infectieuses : endométrite, abcès pelvien, pelvipéritonite, péritonite généralisée, tétanos post-abortum, septicémie.",
+    "Gynéco-Obstétrique (INFAS) – Avortement provoqué, Complications secondaires"],
+  ["QCM","gyneco_avort_provoque",2,"Les complications tardives de l'avortement provoqué sont dominées par les séquelles, notamment :",
+    ["La béance du col, l'infertilité et les troubles menstruels","La guérison systématique sans séquelle","L'immunité définitive contre une nouvelle grossesse","L'absence totale de conséquence psychologique"],[0],
+    "Les complications tardives sont dominées par les séquelles : douleurs (dyspareunie, dysménorrhée), troubles menstruels, béance du col, accidents obstétricaux, infertilité, et psychoses dépressives (culpabilité).",
+    "Gynéco-Obstétrique (INFAS) – Avortement provoqué, Complications tardives"],
+  /* ===== Soins accouchée et nouveau-né ===== */
+  ["QCU","gyneco_soins_nne",1,"Le score d'APGAR du nouveau-né est apprécié à la 1ère, à la 5ème et à la :",
+    ["10ème minute de naissance","30ème minute de naissance","1ère heure de naissance","24ème heure de naissance"],[0],
+    "La cotation d'APGAR se fait à la 1ère, à la 5ème et à la 10ème minute de naissance du nouveau-né ; la 5ème est très déterminante car elle oriente en cas de réanimation.",
+    "Gynéco-Obstétrique (INFAS) – Soins à l'accouchée et au nouveau-né, Score d'APGAR"],
+  ["QCM","gyneco_soins_nne",2,"Les cinq éléments pris en compte dans le score d'APGAR sont les mouvements respiratoires, le rythme cardiaque, la coloration de la peau, le tonus musculaire et :",
+    ["La réponse aux excitations","Le poids de naissance","Le périmètre crânien","La température corporelle"],[0],
+    "Cinq éléments sont pris en compte dans le score d'APGAR : les mouvements respiratoires, le rythme cardiaque, la coloration de la peau, le tonus musculaire et la réponse aux excitations.",
+    "Gynéco-Obstétrique (INFAS) – Soins à l'accouchée et au nouveau-né, Score d'APGAR"],
+  ["QCU","gyneco_soins_nne",2,"Lors de la section du cordon ombilical, il faut vérifier la présence de trois vaisseaux, à savoir :",
+    ["2 artères et 1 veine","1 artère et 2 veines","3 artères","3 veines"],[0],
+    "Après clampage et section du cordon, il faut vérifier la présence des trois vaisseaux (2 artères et 1 veine).",
+    "Gynéco-Obstétrique (INFAS) – Soins à l'accouchée et au nouveau-né, Section du cordon ombilical"],
+  ["QCU","gyneco_soins_nne",2,"La désinfection oculaire du nouveau-né, par instillation d'un collyre antibiotique, vise à prévenir une infection due au germe maternel :",
+    ["Le gonocoque","Le staphylocoque","Le bacille de Koch","Le pneumocoque"],[0],
+    "Il faut instiller 1 à 2 gouttes de collyre antibiotique ou antiseptique dans chaque œil pour prévenir une éventuelle infection oculaire due au gonocoque, germe maternel infectant l'enfant lors de la traversée des voies génitales.",
+    "Gynéco-Obstétrique (INFAS) – Soins à l'accouchée et au nouveau-né, Désinfection des yeux"],
+  ["QCU","gyneco_soins_nne",2,"Pour prévenir l'hémorragie du nouveau-né, on administre par voie orale ou en per os :",
+    ["La vitamine K1","La vitamine A","La vitamine C","La vitamine D"],[0],
+    "Pour prévenir l'hémorragie du nouveau-né, il faut administrer la Vitamine K1 par voie orale ou en per os.",
+    "Gynéco-Obstétrique (INFAS) – Soins à l'accouchée et au nouveau-né, Prévention de l'hémorragie"],
+  ["QCU","gyneco_soins_nne",2,"Après l'accouchement, la surveillance de la mère se fait toutes les 15 minutes pendant :",
+    ["Les 2 premières heures","Les 2 premiers jours","Les 30 premières minutes uniquement","La 1ère semaine"],[0],
+    "La périodicité de surveillance est : toutes les 15 mn pendant les 2 premières heures, toutes les 30 mn pendant la 3ème heure, toutes les heures pendant les 3 dernières heures.",
+    "Gynéco-Obstétrique (INFAS) – Soins à l'accouchée et au nouveau-né, Surveillance de la mère"],
+  ["QCU","gyneco_soins_nne",2,"La règle des trois 6, pour le suivi post-natal, correspond à un examen prévu à la 6ème heure, au 6ème jour et à la :",
+    ["6ème semaine","6ème année","6ème minute","60ème minute"],[0],
+    "La règle des trois 6 (6ème heure, 6ème jour, 6ème semaine) organise le suivi post-natal de la mère et du nouveau-né après leur sortie du centre de santé.",
+    "Gynéco-Obstétrique (INFAS) – Soins à l'accouchée et au nouveau-né, Soins complémentaires"],
+  /* ===== Admission de la parturiente ===== */
+  ["QCU","gyneco_admission",1,"À l'admission en salle de travail, la sage-femme doit installer la parturiente confortablement en :",
+    ["Décubitus latéral gauche","Décubitus dorsal strict","Position debout","Décubitus ventral"],[0],
+    "L'accueil consiste notamment à installer la parturiente confortablement en décubitus latéral gauche.",
+    "Gynéco-Obstétrique (INFAS) – Rôle de la sage-femme dans l'admission de la parturiente, Accueil"],
+  ["QCU","gyneco_admission",2,"Lors de l'examen général d'entrée, une taille maternelle inférieure à 1,50 m fait suspecter :",
+    ["Un bassin rétréci","Une macrosomie fœtale","Une grossesse gémellaire","Un placenta prævia"],[0],
+    "Lors de l'examen général, il faut mesurer la taille ; si la taille est inférieure à 1,50 m, un bassin rétréci est probable.",
+    "Gynéco-Obstétrique (INFAS) – Rôle de la sage-femme dans l'admission de la parturiente, Examen clinique"],
+  ["QCU","gyneco_admission",2,"Les bruits du cœur fœtal, réguliers, doivent se situer entre :",
+    ["120 et 160 battements par minute","60 et 80 battements par minute","200 et 250 battements par minute","30 et 50 battements par minute"],[0],
+    "Il faut ausculter et chronométrer les bruits du cœur fœtal, qui doivent être réguliers, entre 120 et 160 battements par minute.",
+    "Gynéco-Obstétrique (INFAS) – Rôle de la sage-femme dans l'admission de la parturiente, Examen obstétrical"],
+  ["QCU","gyneco_admission",2,"Si la rupture des membranes date de plus de 6 heures à l'admission, il faut systématiquement :",
+    ["Faire une antibiothérapie","Attendre sans traiter","Faire immédiatement une césarienne","Provoquer un avortement"],[0],
+    "Si elle est rompue, il faut demander impérativement la date et l'heure de la rupture ; si la durée de la rupture est ≥ 6 heures, faire systématiquement une antibiothérapie.",
+    "Gynéco-Obstétrique (INFAS) – Rôle de la sage-femme dans l'admission de la parturiente, Examen obstétrical"],
+  ["QCU","gyneco_admission",2,"La hauteur utérine normale en fin de grossesse, mesurée lors de l'examen obstétrical, est d'environ :",
+    ["32 à 34 cm","10 à 15 cm","50 à 60 cm","20 à 22 cm"],[0],
+    "Il faut mesurer la hauteur utérine (normale 32, 33, 34 cm) ; si elle est supérieure à la normale, rechercher un gros fœtus, une grossesse multiple ou un hydramnios.",
+    "Gynéco-Obstétrique (INFAS) – Rôle de la sage-femme dans l'admission de la parturiente, Examen obstétrical"],
+];
+/* ---- Concepts et théories en sciences infirmières / obstétricales / Relation d'aide (INFAS) ---- */
+const CONCEPTS_RAW = [
+  /* ===== Chapitre 1 : Concepts et termes ===== */
+  ["QCU","concept_homme",1,"Selon le cours, l'homme est généralement considéré comme :",
+    ["Un animal supérieur pensant","Un simple organisme biologique isolé","Une machine autonome","Un être exclusivement social sans dimension biologique"],[0],
+    "L'homme est généralement considéré comme un animal supérieur pensant ; c'est un être social qui, placé dans un milieu, s'adapte et peut subir l'influence de l'environnement.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Homme"],
+  ["QCU","concept_homme",2,"Pour CALLISTA ROY, l'homme est un être bio-psycho-social en interaction avec son environnement, possédant quatre modes d'adaptation, parmi lesquels les besoins physiologiques et :",
+    ["L'image de lui-même, la maîtrise du rôle et l'interdépendance","La seule spiritualité","Le seul mode économique","La seule dimension culturelle"],[0],
+    "Pour Callista Roy, l'homme a quatre modes d'adaptation : les besoins physiologiques, l'image de lui-même, la maîtrise du rôle, et l'interdépendance.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Homme (Callista Roy)"],
+  ["QCU","concept_homme",2,"Selon MARTHA ROGERS, l'être humain est défini comme :",
+    ["Un tout unifié qui possède son intégrité propre, différent de la somme de ses parties","Un simple assemblage de cellules indépendantes","Un système fermé sans interaction avec l'environnement","Un organisme purement mécanique"],[0],
+    "Martha Rogers définit l'être humain comme un tout unifié qui possède son intégrité propre et qui manifeste des caractéristiques différentes de la somme de ses parties.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Homme (Martha Rogers)"],
+  ["QCU","concept_adaptation",2,"Selon Callista Roy, les mécanismes d'adaptation sont définis comme :",
+    ["Des manières innées ou acquises de répondre aux changements environnementaux","Des réflexes purement involontaires uniquement","Des comportements exclusivement pathologiques","Des règles administratives de l'hôpital"],[0],
+    "Callista Roy définit les mécanismes d'adaptation comme des manières innées ou acquises de répondre aux changements environnementaux.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept d'adaptation"],
+  ["QCU","concept_sante",1,"Selon l'OMS (1947) citée dans le cours, la santé est un état de :",
+    ["Parfait bien-être physique, mental et social, et non seulement une absence de maladie ou d'infirmité","Simple absence de maladie","Équilibre financier et social","Performance physique maximale"],[0],
+    "Selon l'OMS (1947), la santé est un état de parfait bien-être physique, mental et social et non seulement une absence de maladie ou d'infirmité.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Santé"],
+  ["QCU","concept_sante",2,"Selon RENE DUBOS, la santé est un processus :",
+    ["D'adaptation continuelle aux innombrables microbes, irritants, tensions et problèmes","Statique et définitivement acquis","Exclusivement génétique","Réservé aux personnes jeunes"],[0],
+    "Selon René Dubos, la santé est l'aptitude à exercer efficacement les fonctions requises pour un milieu donné ; comme ce milieu évolue, la santé est un processus d'adaptation continuelle.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Santé"],
+  ["QCU","concept_sante",2,"Pour KOZIER et ERB cités dans le cours, la santé est :",
+    ["Une perception dont la signification varie d'une personne à l'autre","Un concept universel et identique pour tous","Uniquement mesurable par des examens biologiques","Un droit garanti automatiquement par la loi"],[0],
+    "Pour Kozier et Erb, la santé est une perception dont la signification varie d'une personne à une autre, et peut aussi changer selon le milieu géographique et socioculturel.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Santé"],
+  ["QCM","concept_maladie",2,"Selon le cours, les stades de la maladie, en se référant aux maladies infectieuses, comprennent les prodromes, la phase de début, la phase d'état et :",
+    ["La phase terminale (guérison, stabilisation, ou stade terminal)","La phase de gestation","La phase de vaccination","La phase de sevrage"],[0],
+    "Les stades de la maladie sont : les prodromes (signes avant-coureurs), la phase de début, la phase d'état (acmé), et la phase « terminale » qui peut être la guérison, la stabilisation, ou un stade terminal.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, La maladie"],
+  ["QCU","concept_maladie",2,"La reprise évolutive d'une même maladie est appelée une rechute, tandis que la réapparition d'une maladie antérieurement guérie est appelée :",
+    ["Une récidive","Une complication","Un prodrome","Une consolidation"],[0],
+    "Les rechutes correspondent à la reprise évolutive d'une même maladie, tandis que la récidive est la réapparition d'une maladie antérieurement guérie.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, La maladie"],
+  ["QCU","concept_dunn",1,"Selon le concept de DUNN, la santé et la maladie sont représentées comme :",
+    ["Un continuum, sur lequel l'état de santé peut se déplacer dans n'importe quel sens","Deux états totalement séparés et incompatibles","Un phénomène binaire (tout ou rien)","Une hiérarchie fixe et irréversible"],[0],
+    "Selon Dunn, la santé est un état dynamique représenté sur un continuum (excellente santé, bonne santé, santé normale, mauvaise santé, très mauvaise santé, mort) ; l'état de santé peut se déplacer au jour le jour dans n'importe quel sens.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept de Dunn : continuum santé-maladie"],
+  ["QCU","concept_infirmier",1,"Pour le Conseil International des Infirmiers, l'infirmier(ère) est la personne habilitée à assurer la responsabilité de l'ensemble des soins infirmiers que requiert :",
+    ["La promotion de la santé, la prévention de la maladie et les soins aux malades","Uniquement la gestion administrative de l'hôpital","Uniquement la recherche scientifique","Uniquement la formation des étudiants"],[0],
+    "Pour le Conseil International des Infirmiers, l'infirmier(ère) est apte et habileté(e) à assurer la responsabilité de l'ensemble des soins infirmiers que requiert la promotion de la santé, la prévention de la maladie et les soins aux malades.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Infirmier"],
+  ["QCM","concept_infirmier",2,"Parmi les principales fonctions de l'infirmier(ère) citées dans le cours figurent la fonction administrative, la fonction d'enseignement et d'éducation et :",
+    ["La fonction de recherche","La fonction judiciaire","La fonction législative","La fonction diplomatique"],[0],
+    "Les principales fonctions de l'infirmier(ère) sont : administrative, d'enseignement et d'éducation, de diagnostic, de traitement et réadaptation, d'exécution des prescriptions médicales, et de recherche.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Infirmier"],
+  ["QCU","concept_soins_infirmiers",1,"Selon Virginia HENDERSON, l'unique service des soins infirmiers est de :",
+    ["Rendre le client indépendant le plus tôt possible","Prescrire les traitements médicaux","Remplacer entièrement le médecin","Gérer les stocks de médicaments"],[0],
+    "Pour Virginia Henderson, l'unique service des soins infirmiers est de rendre l'individu indépendant le plus tôt possible.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Soins Infirmiers"],
+  ["QCM","concept_soins_infirmiers",2,"Selon l'OMS citée dans le cours, les soins infirmiers (nursing care) comportent quatre piliers : la promotion de la santé, la prévention des maladies et des blessures, la réhabilitation de la santé et :",
+    ["Le réconfort des moribonds","La facturation des actes médicaux","La recherche pharmaceutique","La gestion hôtelière"],[0],
+    "Selon l'OMS, les soins infirmiers comportent quatre piliers : la promotion de la santé, la prévention des maladies et blessures, la réhabilitation de la santé, et le réconfort des moribonds (aide aux mourants).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Concept Soins Infirmiers"],
+  ["QCM","concept_soins_infirmiers",2,"Les soins infirmiers peuvent être classés en trois catégories distinctes : les soins préventifs, les soins curatifs et :",
+    ["Les soins palliatifs","Les soins chirurgicaux exclusivement","Les soins esthétiques","Les soins administratifs"],[0],
+    "Les soins infirmiers sont classés en trois catégories : préventifs, curatifs et palliatifs ; chaque catégorie intègre trois composantes (technique, relationnelle, éducative).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Catégories et composantes du soin infirmier"],
+  ["QCU","concept_soins_infirmiers",2,"Les soins infirmiers palliatifs visent à :",
+    ["Atténuer les symptômes d'une maladie sans agir sur la cause, et soulager la souffrance","Guérir définitivement la maladie causale","Prévenir uniquement l'apparition de la maladie","Remplacer les soins curatifs dans tous les cas"],[0],
+    "Les soins infirmiers palliatifs visent à atténuer les symptômes d'une maladie sans qu'ils puissent agir sur la cause ; ils visent à soulager la souffrance, « faire ce qu'il faut quand il n'y a plus rien à faire ».",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Soins infirmiers palliatifs"],
+  ["QCU","concept_buts_soins",2,"Selon FLORENCE NIGHTINGALE, le but des soins infirmiers est de :",
+    ["Mettre l'être humain dans les meilleures conditions afin que la nature agisse sur lui","Remplacer entièrement l'action de la nature","Prescrire des médicaments sans limite","Assurer uniquement la gestion administrative"],[0],
+    "Pour Florence Nightingale, le but des soins infirmiers est de mettre l'être humain dans les meilleures conditions afin que la nature agisse sur lui.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 1, Buts des soins infirmiers selon les auteurs"],
+  /* ===== Chapitre 2 : Théories et modèles ===== */
+  ["QCU","modele_conceptuel",1,"Un modèle conceptuel en soins infirmiers désigne notamment :",
+    ["Une façon simplifiée de voir la réalité professionnelle","Un règlement administratif de l'hôpital","Un protocole médicamenteux uniquement","Une simple check-list de tâches"],[0],
+    "Le modèle conceptuel désigne une façon simplifiée de voir la réalité professionnelle, un modèle sur lequel un agent de santé se base pour prodiguer des soins de qualité, et une idée précise du rôle qu'il joue auprès de la population.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Définition du modèle conceptuel"],
+  ["QCM","modele_conceptuel",2,"Les composantes essentielles d'un modèle conceptuel sont les postulats, les valeurs et :",
+    ["Les éléments","Les diagnostics médicaux","Les résultats de laboratoire","Les protocoles chirurgicaux"],[0],
+    "Les composantes essentielles d'un modèle conceptuel sont : les postulats (fondement théorique), les valeurs (le pourquoi du modèle) et les éléments (le quoi de la conception).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Composantes d'un modèle conceptuel"],
+  ["QCM","modele_conceptuel",2,"Les éléments d'un modèle conceptuel sont au nombre de six, parmi lesquels le but de la profession, la cible de l'activité professionnelle et :",
+    ["Le rôle de l'infirmier ou de la sage-femme","Le budget annuel du service","La grille salariale","L'organigramme hiérarchique"],[0],
+    "Les six éléments sont : le but de la profession, la cible de l'activité professionnelle, le rôle de l'infirmier/sage-femme, la source de difficulté, l'intervention infirmière, et les conséquences de l'activité professionnelle.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Composantes d'un modèle conceptuel"],
+  ["QCU","modele_henderson",1,"Pour Virginia HENDERSON, les soins infirmiers consistent principalement à assister l'individu malade ou en santé à accomplir les activités qu'il pourrait faire sans aide s'il avait :",
+    ["La force, la volonté et les connaissances nécessaires","Uniquement de l'argent","Uniquement du temps libre","Uniquement un diplôme"],[0],
+    "Pour Henderson, les soins infirmiers consistent à assister l'individu à accomplir les activités qui contribuent à maintenir ou recouvrer la santé, ou à vivre une mort paisible, activités qu'il pourrait faire sans aide s'il avait la force, la motivation et les connaissances nécessaires.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Conception de Virginia Henderson"],
+  ["QCM","modele_henderson",2,"Selon le cours, les postulats du modèle conceptuel de Virginia Henderson sont au nombre de trois, parmi lesquels : tout homme tend vers l'indépendance et la désire, et :",
+    ["L'individu forme un tout présentant des besoins fondamentaux","L'homme est un système économique fermé","La maladie est toujours héréditaire","Les soins infirmiers sont facultatifs"],[0],
+    "Les trois postulats du modèle de Henderson sont : tout homme tend vers l'indépendance et la désire ; l'individu forme un tout présentant des besoins fondamentaux ; lorsqu'un besoin n'est pas satisfait, l'individu n'est pas complet, pas entier, pas indépendant.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Modèle conceptuel de Virginia Henderson"],
+  ["QCM","modele_henderson",2,"Selon Henderson, les sources de difficultés reliées à la satisfaction des besoins fondamentaux sont de trois types : le manque de force physique, le manque de connaissance et :",
+    ["Le manque de volonté","Le manque d'argent uniquement","Le manque de personnel soignant","Le manque de médicaments"],[0],
+    "Selon Henderson, les sources de difficultés sont de trois types : le manque de force physique (le client ne peut pas), le manque de connaissance (le client est mal renseigné), le manque de volonté (le client ne veut pas).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Modèle conceptuel de Virginia Henderson"],
+  ["QCU","peplau_modele",2,"La théorie « existentielle » de HILDEGARDE PEPLAU démontre que l'aspect fondamental des soins infirmiers réside dans :",
+    ["La relation infirmière-client","Le seul respect des prescriptions médicales","L'organisation matérielle du service","La gestion financière des soins"],[0],
+    "La théorie existentielle de Peplau démontre que l'aspect fondamental des soins infirmiers réside dans la relation infirmière-client ; elle centre son étude sur la personnalité de l'individu qui reçoit des soins.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Modèle conceptuel de Hildegarde Peplau"],
+  ["QCM","peplau_modele",2,"Selon Peplau, les soins infirmiers se décrivent en quatre phases successives : l'orientation, l'identification, l'exploitation et :",
+    ["La résolution","La facturation","La certification","La rémission"],[0],
+    "La description des soins infirmiers de Peplau se fait en quatre phases successives : l'orientation, l'identification, l'exploitation et la résolution.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Interventions infirmières selon Peplau"],
+  ["QCU","orem_modele",2,"Pour DOROTHEA OREM, l'homme est défini comme :",
+    ["Une entité capable d'auto-soins","Un être passif dépendant exclusivement des soignants","Un simple objet de recherche scientifique","Un système purement mécanique"],[0],
+    "Dorothea Orem définit l'homme comme une entité capable d'auto-soins, ayant des capacités, des aptitudes et la liberté de s'impliquer dans des activités d'auto-soins.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Modèle conceptuel de Dorothea Orem"],
+  ["QCM","orem_modele",2,"Selon Orem, le processus de soins comprend quatre phases, parmi lesquelles rassembler des données et déterminer les problèmes de santé, et :",
+    ["Construire un système d'assistance et planifier cette assistance","Facturer les soins immédiatement","Publier un rapport annuel","Élire un représentant du personnel"],[0],
+    "Le processus de soins d'Orem comprend 4 phases : rassembler des données et déterminer les problèmes, construire et planifier un système d'assistance, mettre en œuvre et contrôler les actions planifiées, évaluer et ajuster le plan de soins.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Interventions infirmières selon Orem"],
+  ["QCU","roy_modele",2,"Le modèle conceptuel de CALLISTA ROY s'inspire de la théorie des systèmes et de la théorie des niveaux d'adaptation de :",
+    ["Helson (1964)","Maslow (1943)","Henderson (1955)","Peplau (1952)"],[0],
+    "Le modèle de Callista Roy s'inspire de la théorie des systèmes et sur la théorie des niveaux d'adaptation de Helson (1964).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Modèle conceptuel de Callista Roy"],
+  ["QCU","roy_modele",2,"Pour Callista Roy, le but des soins infirmiers est de tenir compte des quatre modes d'adaptation de la personne, lorsque celle-ci :",
+    ["Ne peut s'adapter à ces quatre modes","Souhaite uniquement obtenir un diagnostic","Refuse tout traitement","Présente un simple rhume"],[0],
+    "Pour Roy, l'individu a besoin de soins infirmiers lorsqu'il ne peut s'adapter aux quatre modes d'adaptation (besoins physiologiques, concept de soi, maîtrise du rôle, interdépendance).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, But des soins infirmiers selon Callista Roy"],
+  ["QCU","rogers_modele",2,"Selon Martha Rogers, l'un des buts des soins infirmiers est de :",
+    ["Promouvoir l'harmonie entre l'homme et son environnement","Isoler le patient de son environnement","Se limiter aux soins techniques uniquement","Éviter toute relation avec le patient"],[0],
+    "Selon Martha Rogers, les buts des soins infirmiers sont notamment de promouvoir l'harmonie entre l'homme et son environnement, et de renforcer la cohérence et l'intégrité du champ humain.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 2, Modèle conceptuel de Martha Rogers"],
+  /* ===== Chapitre 3 : Besoins de l'homme ===== */
+  ["QCU","besoins_notion",1,"Selon J. LACAN cité dans le cours, le besoin, la demande et le désir sont trois notions distinctes ; le besoin est défini comme :",
+    ["Ce qui vise un objectif spécifique et s'en satisfait","Une demande d'amour uniquement","Une force purement sexuelle","Un caprice passager"],[0],
+    "Selon Lacan, le besoin vise un objectif spécifique et s'en satisfait ; la demande s'adresse à autrui et est au fond une demande d'amour ; le désir est une force pulsionnelle qui pousse à agir.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Notion de besoin"],
+  ["QCU","besoins_notion",1,"Un besoin fondamental est défini dans le cours comme une nécessité vitale essentielle à l'homme pour assurer :",
+    ["Son bien-être et sa préservation physique et mentale","Uniquement son confort matériel","Uniquement sa réussite sociale","Uniquement sa survie économique"],[0],
+    "Un besoin fondamental est une nécessité vitale essentielle à l'homme pour assurer son bien-être et sa préservation physique et mentale.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Notion de besoin fondamental"],
+  ["QCU","besoins_maslow",1,"Selon Abraham MASLOW, il existe une hiérarchie de cinq catégories de besoins ; à la base de la pyramide se trouvent :",
+    ["Les besoins physiologiques","Les besoins de réalisation de soi","Les besoins d'estime","Les besoins d'appartenance"],[0],
+    "Maslow présente cinq catégories de besoins hiérarchisés : besoins physiologiques (base), besoins de sécurité, besoins d'amour et d'appartenance, besoins d'estime, besoins de réalisation de soi (sommet).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Pyramide de Maslow"],
+  ["QCM","besoins_maslow",2,"Parmi les besoins physiologiques de la pyramide de Maslow figurent l'oxygène, l'aliment, le liquide et :",
+    ["La régulation de la température","Le prestige social","La reconnaissance professionnelle","L'estime de soi"],[0],
+    "Les besoins physiologiques comprennent : oxygène, aliment, liquide, élimination, repos et sommeil, se mouvoir, fuite de la douleur, sexualité, régulation de la température.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Pyramide de Maslow, Besoins physiologiques"],
+  ["QCU","besoins_maslow",2,"Selon l'exemple donné dans le cours, un adolescent qui roule à moto sans casque pour être reconnu par ses pairs illustre le fait que :",
+    ["Le besoin d'estime de soi peut influencer et faire perdre de l'importance au besoin de sécurité","Le besoin physiologique prime toujours sur les autres","Les besoins de Maslow sont totalement indépendants les uns des autres","Le besoin de sécurité est toujours prioritaire"],[0],
+    "L'exemple de l'adolescent qui roule à moto sans casque pour être reconnu par ses pairs illustre que le besoin d'estime de soi peut influencer le besoin de sécurité, qui perd alors de son importance.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Pyramide de Maslow"],
+  ["QCU","henderson_besoins",1,"Selon Virginia HENDERSON, l'homme présente :",
+    ["14 besoins fondamentaux","5 besoins fondamentaux hiérarchisés","3 besoins fondamentaux uniquement","20 besoins fondamentaux"],[0],
+    "Virginia Henderson pense que l'homme est un être bio-psycho-social, culturel et spirituel présentant 14 besoins fondamentaux.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Besoins fondamentaux selon Henderson"],
+  ["QCU","henderson_besoins",2,"Contrairement aux besoins de Maslow, les 14 besoins de Virginia Henderson :",
+    ["N'obéissent à aucune hiérarchisation","Sont strictement hiérarchisés dans le même ordre que Maslow","Se limitent aux seuls besoins physiologiques","Ne concernent que les patients hospitalisés"],[0],
+    "À la différence de Maslow, les 14 besoins de Virginia Henderson n'obéissent à aucune hiérarchisation ; un besoin non satisfait est susceptible d'influencer positivement ou négativement la satisfaction des autres besoins.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Besoins fondamentaux selon Henderson"],
+  ["QCM","henderson_besoins",2,"Chaque besoin fondamental selon Henderson est relié à plusieurs dimensions de l'être humain, parmi lesquelles la dimension biophysiologique, la dimension psychologique et :",
+    ["La dimension sociale, culturelle et spirituelle","La dimension exclusivement financière","La dimension exclusivement juridique","La dimension exclusivement climatique"],[0],
+    "Chaque besoin est relié à cinq dimensions : biophysiologique, psychologique, sociale, culturelle et spirituelle.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Dimensions des besoins selon Henderson"],
+  ["QCM","henderson_besoins",2,"Parmi les 14 besoins fondamentaux de Virginia Henderson figurent respirer, manger et boire, éliminer les déchets biologiques et :",
+    ["Se mouvoir et se maintenir en position convenable","Prescrire des médicaments","Diriger une équipe médicale","Facturer les actes de soins"],[0],
+    "Les 14 besoins incluent notamment : respirer, manger et boire, éliminer, se mouvoir, dormir et se reposer, s'habiller, maintenir sa température, être propre, éviter les dangers, communiquer, pratiquer sa religion, s'occuper en vue de se réaliser, se recréer, apprendre.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 3, Les 14 besoins fondamentaux"],
+  /* ===== Chapitre 4 : Dossier de soins ===== */
+  ["QCU","dossier_soins",1,"Le dossier de soins est défini comme un document :",
+    ["Individualisé et actualisé regroupant toutes les informations concernant une personne soignée","Collectif et anonyme concernant tout le service","Uniquement financier","Réservé exclusivement au médecin"],[0],
+    "Le dossier de soins est un document individualisé et actualisé regroupant toutes les informations concernant une personne soignée, une famille ; c'est le support du processus de soins infirmiers.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 4, Définition du dossier de soins"],
+  ["QCM","dossier_soins",2,"Parmi les caractéristiques du dossier de soins citées dans le cours figurent le fait qu'il soit individualisé, actualisé et :",
+    ["Qu'il préserve le secret professionnel","Qu'il soit accessible sans restriction à toute personne","Qu'il ne concerne que les prescriptions médicales","Qu'il soit rédigé uniquement en anglais"],[0],
+    "Les caractéristiques du dossier de soins incluent : support de la démarche de soins, amélioration de l'efficacité du travail en équipe, individualisation, actualisation, uniformisation, préservation du secret professionnel, contribution à l'apprentissage.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 4, Caractéristiques du dossier de soins"],
+  ["QCU","dossier_soins",2,"La fiche « accueil et identification » du dossier de soins comporte notamment l'état civil du client, la situation sociale, la situation familiale et :",
+    ["Le motif d'hospitalisation","Le résultat des examens biologiques uniquement","Le plan de soins uniquement","Les diagnostics infirmiers uniquement"],[0],
+    "La fiche « accueil et identification » comporte notamment le numéro de dossier, l'état civil, la situation sociale, la situation familiale, la date et le mode d'entrée, le motif d'hospitalisation, le nom du médecin traitant.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 4, Composition du dossier de soins"],
+  ["QCU","dossier_soins",2,"La fiche du dossier de soins qui n'est pas archivée car elle suit le malade lors de son transfert est la fiche :",
+    ["Synthèse et liaison","Accueil et identification","Diagramme de surveillance","Prescriptions médicales"],[0],
+    "La fiche « synthèse et liaison » est le résumé de l'hospitalisation en vue d'un transfert ou d'une prise en charge à domicile ; c'est la seule fiche à ne pas être archivée dans le dossier, puisqu'elle suit le malade.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 4, Composition du dossier de soins"],
+  ["QCM","dossier_soins",2,"Pour que le dossier de soins puisse être présenté comme preuve au plan juridique, il faut notamment que les notes de l'infirmière soient lisibles, claires, précises et :",
+    ["Datées et signées par le soignant","Rédigées uniquement de mémoire, sans horodatage","Anonymes","Non chronologiques"],[0],
+    "Au plan juridique, les notes de l'infirmière doivent être lisibles, claires, précises, complètes, pertinentes, notées de façon chronologique, dans les brefs délais et signées par le soignant.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 4, Avantages du dossier de soins, Plan juridique"],
+  ["QCU","dossier_soins",2,"Selon le cours, aucune prescription médicale ne doit se faire :",
+    ["Au téléphone","Par écrit","En présence du patient","Le matin"],[0],
+    "Les prescriptions médicales doivent être écrites et rédigées de façon détaillée par le médecin prescripteur et signées par lui ; aucune prescription ne doit se faire au téléphone.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 4, Avantages du dossier de soins, Plan juridique"],
+  /* ===== Chapitre 5 : Relation d'aide ===== */
+  ["QCU","relation_aide",1,"La relation d'aide est définie comme un échange à la fois verbal et non verbal qui permet de créer :",
+    ["Un climat de confiance, de respect et d'amour entre le soignant et le soigné","Une relation strictement hiérarchique","Une distance émotionnelle totale","Un rapport exclusivement financier"],[0],
+    "La relation d'aide est un échange à la fois verbal et non verbal qui permet de créer un climat de confiance, de respect et d'amour entre le soignant et le soigné, afin de l'aider à satisfaire ses besoins fondamentaux.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 5, Définition de la relation d'aide"],
+  ["QCM","relation_aide",2,"Selon le cours, il existe deux niveaux d'intervention du soignant : les soins infirmiers (bien-être physique et confort) et :",
+    ["La relation d'aide (rassurer, diminuer la peur et l'anxiété)","La gestion administrative uniquement","La recherche fondamentale uniquement","La comptabilité hospitalière"],[0],
+    "Les deux niveaux d'intervention du soignant sont : les soins infirmiers (bien-être physique, confort, traitement des malaises) et la relation d'aide (rassurer le client, diminuer sa peur et son anxiété).",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 5, Niveaux d'intervention du soignant"],
+  ["QCU","relation_aide",2,"Le principe de la non-directivité en relation d'aide vise à susciter chez le client :",
+    ["La capacité à se prendre en charge","Une dépendance totale envers le soignant","Le silence complet","L'obéissance aveugle"],[0],
+    "Le principe de la non-directivité repose sur l'établissement d'un climat de confiance, d'acceptation, de respect et de compréhension pour susciter chez le client la capacité à se prendre en charge.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 5, Nature de la relation d'aide"],
+  ["QCM","relation_aide",2,"Parmi les attitudes primordiales en relation d'aide citées dans le cours figurent l'écoute active, la considération positive et :",
+    ["La compréhension empathique","L'indifférence programmée","La domination hiérarchique","La distance émotionnelle systématique"],[0],
+    "Les attitudes primordiales sont : l'écoute active, la considération positive, le respect chaleureux, la compréhension empathique, l'authenticité et congruence, la confrontation, la spécificité et précision, le partage de soi.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 5, Attitudes primordiales en relation d'aide"],
+  ["QCU","relation_aide",2,"La compréhension empathique en relation d'aide consiste, pour le soignant, à :",
+    ["Se mettre dans la peau du client pour comprendre comment il vit une situation donnée","Ressentir exactement les mêmes émotions que le client, de façon indifférenciée","Juger objectivement la situation du client sans aucune implication","Éviter tout contact émotionnel avec le client"],[0],
+    "La compréhension empathique consiste, pour le soignant, à se mettre dans la peau du client, en se demandant comment il vit une situation donnée.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 5, Attitudes primordiales en relation d'aide"],
+  ["QCU","relation_aide",2,"La confrontation, en relation d'aide, vise à amener le client à réaliser ses contradictions ; elle doit se faire :",
+    ["Avec tact, pour ne pas être perçue comme un jugement ou un rejet","De façon brutale et directe systématiquement","Uniquement en présence de la famille","Uniquement par écrit"],[0],
+    "La confrontation vise à amener le client à réaliser ses contradictions ou son propre réalisme face à une situation ; elle doit se faire avec tact pour ne pas être perçue comme un jugement ou un rejet.",
+    "Concepts et théories en sciences infirmières (INFAS) – Chapitre 5, Attitudes primordiales en relation d'aide"],
+];
+/* ---- Nutrition et Programme National de Santé Scolaire (ajouts à Santé publique) (INFAS) ---- */
+const NUTRITION_SCOLAIRE_RAW = [
+  /* ===== Nutrition ===== */
+  ["QCU","nutrition_def",1,"La nutrition est définie comme l'ensemble des réactions métaboliques par lesquelles l'organisme :",
+    ["Transforme et utilise les aliments pour son bon fonctionnement","Élimine uniquement les déchets solides","Produit des anticorps","Régule la température corporelle"],[0],
+    "La nutrition est un ensemble de réactions métaboliques par lesquelles l'organisme transforme et utilise les aliments pour obtenir tout ce dont il a besoin pour son bon fonctionnement et se maintenir en vie.",
+    "Santé publique (INFAS) – Nutrition, Définitions"],
+  ["QCU","nutrition_def",2,"Un aliment est défini dans le cours comme une substance naturelle complexe qui contient au moins :",
+    ["Deux nutriments","Un seul nutriment","Dix nutriments","Aucun nutriment"],[0],
+    "Un aliment est une substance naturelle complexe qui contient au moins deux nutriments.",
+    "Santé publique (INFAS) – Nutrition, Définitions"],
+  ["QCM","nutrition_def",2,"Les macronutriments, nécessaires en grande quantité, comprennent les protéines, les lipides et :",
+    ["Les glucides","Les vitamines","Les oligo-éléments","Les sels minéraux"],[0],
+    "Les macronutriments sont nécessaires en grande quantité (protéines, lipides, glucides) ; les micronutriments sont nécessaires en petite quantité (vitamines, sels minéraux, oligo-éléments).",
+    "Santé publique (INFAS) – Nutrition, Macronutriments et micronutriments"],
+  ["QCU","nutrition_def",2,"Contrairement aux macronutriments, les micronutriments, présents en petites quantités dans les aliments :",
+    ["Ne fournissent pas d'énergie","Fournissent toute l'énergie de l'organisme","Sont transformés pendant la digestion","Ne sont jamais essentiels"],[0],
+    "Selon le tableau comparatif du cours, les micronutriments ne fournissent pas d'énergie et sont absorbés tels quels, contrairement aux macronutriments qui fournissent de l'énergie et sont transformés pendant la digestion.",
+    "Santé publique (INFAS) – Nutrition, Macronutriments et micronutriments"],
+  ["QCU","nutrition_def",2,"L'allaitement exclusif consiste à nourrir l'enfant uniquement avec le lait maternel, sans ajout d'eau ni d'autres aliments, et il est recommandé pendant :",
+    ["Les 6 premiers mois de vie","Les 24 premiers mois de vie","Les 3 premiers mois de vie","La première semaine de vie uniquement"],[0],
+    "L'allaitement exclusif consiste à nourrir l'enfant uniquement avec le lait maternel sans ajout d'eau, décoction, jus de fruits ou autres aliments (sauf médicaments prescrits) ; il est recommandé pendant les 6 premiers mois de vie.",
+    "Santé publique (INFAS) – Nutrition, Définitions"],
+  ["QCU","nutrition_groupes",1,"Les aliments sont répartis en trois groupes, dont le groupe 1, aliments énergétiques, comprend les céréales, les racines et tubercules et :",
+    ["Les huiles et matières grasses","Les viandes et poissons","Les fruits et légumes","Les produits laitiers uniquement"],[0],
+    "Le groupe 1 (aliments énergétiques) comprend les céréales, les racines et tubercules, ainsi que les huiles et matières grasses.",
+    "Santé publique (INFAS) – Nutrition, Les groupes d'aliments"],
+  ["QCU","nutrition_groupes",2,"Le groupe 2, aliments de construction, favorisant la croissance et la réparation du corps, comprend les protéines d'origine animale et :",
+    ["Les protéines d'origine végétale","Les glucides uniquement","Les lipides uniquement","Les vitamines uniquement"],[0],
+    "Le groupe 2 (aliments de construction, apportant des protéines) comprend les protéines d'origine animale (viandes, œufs, poisson, lait) et les protéines d'origine végétale (arachides, soja, lentilles).",
+    "Santé publique (INFAS) – Nutrition, Les groupes d'aliments"],
+  ["QCU","nutrition_groupes",2,"Le groupe 3, aliments de protection contre les maladies, est constitué par :",
+    ["Les fruits et légumes","Les céréales et tubercules","Les huiles et matières grasses","Les viandes uniquement"],[0],
+    "Le groupe 3 (aliments de protection) est constitué par les fruits et légumes, excellente source de vitamines et de sels minéraux.",
+    "Santé publique (INFAS) – Nutrition, Les groupes d'aliments"],
+  ["QCU","nutrition_pyramide",2,"Dans la pyramide alimentaire, les aliments à consommer à volonté se situent :",
+    ["À la base de la pyramide","Au sommet de la pyramide","Uniquement au milieu","En dehors de la pyramide"],[0],
+    "Les aliments à la base de la pyramide (comme les boissons) sont à consommer à volonté ; en remontant vers le sommet, il faut diminuer la consommation jusqu'à la limiter (sucres, matières grasses).",
+    "Santé publique (INFAS) – Nutrition, La pyramide alimentaire"],
+  ["QCM","nutrition_5cles",1,"Parmi les cinq clés pour des aliments plus sûrs (OMS) citées dans le cours figurent prendre l'habitude de la propreté, séparer les aliments crus des aliments cuits et :",
+    ["Faire bien cuire les aliments","Consommer uniquement des aliments importés","Éviter systématiquement les fruits et légumes","Cuisiner uniquement le soir"],[0,1,2],
+    "Les cinq clés pour des aliments plus sûrs sont : prendre l'habitude de la propreté, séparer les aliments crus des aliments cuits, faire bien cuire les aliments, maintenir les aliments à bonne température, utiliser de l'eau et des produits sûrs.",
+    "Santé publique (INFAS) – Nutrition, Les 5 clés pour des aliments plus sûrs"],
+  ["QCU","nutrition_5cles",2,"Selon les bonnes pratiques d'hygiène alimentaire, un plat comme la soupe ou le ragoût doit être porté à ébullition pour atteindre à cœur au moins :",
+    ["70°C","30°C","100°C obligatoirement","10°C"],[0],
+    "Il faut porter les mets tels que la soupe et les ragoûts à ébullition pour s'assurer qu'ils ont atteint au moins 70°C à cœur.",
+    "Santé publique (INFAS) – Nutrition, Faire bien cuire les aliments"],
+  ["QCU","nutrition_5cles",2,"Selon le cours, un aliment cuit ne doit pas être laissé à température ambiante plus de :",
+    ["Deux heures","Deux jours","Dix minutes","Une semaine"],[0],
+    "Il ne faut pas laisser des aliments cuits plus de deux heures à température ambiante ; il faut les réfrigérer rapidement (de préférence à moins de 5°C).",
+    "Santé publique (INFAS) – Nutrition, Garder la nourriture à température sûre"],
+  ["QCM","nutrition_maladies_carence",1,"Les maladies par carence alimentaire citées dans le cours comprennent la malnutrition protéino-calorique (marasme, kwashiorkor), les anémies nutritionnelles et :",
+    ["Les troubles liés à une carence en iode (goitre)","Le diabète","L'obésité","L'hypertension artérielle"],[0],
+    "Les maladies par carence alimentaire comprennent la malnutrition protéino-calorique (marasme, kwashiorkor), les anémies nutritionnelles (carence en fer), les troubles liés à la carence en iode (goitre) et les carences vitaminiques.",
+    "Santé publique (INFAS) – Nutrition, Les maladies d'origine alimentaire"],
+  ["QCU","nutrition_maladies_carence",2,"L'avitaminose D, carence vitaminique citée dans le cours, provoque notamment :",
+    ["Une déformation osseuse et une hypotonie musculaire","Une stérilité","Une gingivite","Une kératite"],[0],
+    "L'avitaminose D provoque une déformation osseuse et une hypotonie musculaire ; l'avitaminose A provoque une kératite ; l'avitaminose C provoque une gingivite ; l'avitaminose E provoque une stérilité.",
+    "Santé publique (INFAS) – Nutrition, Carences vitaminiques"],
+  ["QCM","nutrition_maladies_exces",2,"Les maladies par excès alimentaire ou maladies de surcharge citées dans le cours sont :",
+    ["L'obésité et le diabète","Le kwashiorkor et le marasme","Le goitre et l'anémie","La rougeole et la coqueluche"],[0],
+    "Les maladies par excès alimentaire (maladies de surcharge) sont l'obésité (excès de graisse) et le diabète (augmentation de la glycémie).",
+    "Santé publique (INFAS) – Nutrition, Les maladies d'origine alimentaire"],
+  /* ===== Programme national de santé scolaire ===== */
+  ["QCU","santescolaire_def",1,"La santé en milieu scolaire est définie comme un ensemble de mesures destinées à garantir une protection sanitaire compatible avec :",
+    ["De bonnes conditions physiques et mentales d'apprentissage","La seule performance sportive","Le seul respect du règlement intérieur","La seule discipline scolaire"],[0],
+    "La santé en milieu scolaire se veut un ensemble de mesures destinées à garantir une protection sanitaire suffisante compatible avec de bonnes conditions physiques et mentales d'apprentissage.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire et Universitaire, Définition"],
+  ["QCM","santescolaire_pathologies",2,"Parmi les états morbides les plus couramment rencontrés en milieu scolaire cités dans le cours figurent le paludisme, les infections respiratoires aiguës et :",
+    ["Les caries dentaires","Le diabète de type 1 exclusivement","La tuberculose exclusivement","L'insuffisance rénale chronique exclusivement"],[0],
+    "Les états morbides les plus courants en milieu scolaire sont : le paludisme, les infections respiratoires aiguës, les caries dentaires, les dermatoses, les maladies diarrhéiques, ainsi que les IST/VIH.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire, Principales pathologies"],
+  ["QCU","santescolaire_cibles",2,"La population cible du PNSSU (Programme National de Santé Scolaire et Universitaire) comprend notamment les jeunes enfants de 3 à 4 ans du niveau préscolaire et :",
+    ["Les adultes jeunes de 20 ans et plus du niveau supérieur","Uniquement les enfants de moins de 2 ans","Uniquement les personnes âgées","Uniquement le personnel administratif"],[0],
+    "La cible du PNSSU comprend les enfants de 3-4 ans (préscolaire), 5-12 ans (primaire), les adolescents de 13-19 ans (secondaire), les adultes de 20 ans et plus (supérieur), ainsi que le personnel d'encadrement et les jeunes déscolarisés.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire, Population cible"],
+  ["QCM","santescolaire_missions",2,"Parmi les missions des Services de Santé Scolaires et Universitaires (SSSU) citées dans le cours figurent le dépistage des troubles sensoriels, physiques et mentaux, et :",
+    ["Les soins préventifs (vaccination, déparasitage, supplémentation)","La délivrance de diplômes académiques","La gestion des inscriptions scolaires","L'organisation des examens nationaux"],[0],
+    "Les missions des SSSU comprennent notamment le dépistage des troubles sensoriels/physiques/mentaux, la prise en charge des pathologies, les soins préventifs (vaccination, déparasitage, supplémentation en micronutriments), le dépistage IST/VIH et la PTME.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire, Missions des SSSU"],
+  ["QCU","santescolaire_activites",1,"Les activités des SSSU sont constituées essentiellement de la visite médicale, de la vaccination et :",
+    ["Du déparasitage","De la remise des bulletins scolaires","De la formation des enseignants","De la construction d'infrastructures"],[0],
+    "Les activités des SSSU sont constituées essentiellement de la visite médicale, du déparasitage et de la vaccination.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire, Activités des SSSU"],
+  ["QCU","santescolaire_activites",2,"La visite médicale en milieu scolaire doit être systématique, obligatoire, et effectuée :",
+    ["Une fois par an","Une fois par semaine","Une seule fois dans toute la scolarité","Tous les mois"],[0],
+    "La visite médicale doit être systématique et effectuée une fois par an, obligatoire pour tout élève et étudiant ; elle doit être accompagnée d'une supplémentation en vitamine A.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire, La visite médicale"],
+  ["QCU","santescolaire_activites",2,"Le déparasitage des élèves doit être effectué au moins deux fois par an, à un intervalle de :",
+    ["6 mois","1 mois","2 ans","1 semaine"],[0],
+    "Chaque élève doit être déparasité au moins deux fois au cours de l'année, à intervalle de 6 mois ; les déparasitants sont distribués gratuitement.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire, Le déparasitage"],
+  ["QCU","santescolaire_activites",2,"L'inscription au CP1, au CM2, en 6ème et en 2nde est conditionnée par la présentation :",
+    ["D'un certificat de vaccination à jour","D'un extrait de naissance uniquement","D'une attestation de propriété","D'un carnet de notes"],[0],
+    "L'inscription dans le préscolaire, au CP1, CM2, à la 6ème et en 2nde est conditionnée par la présentation d'un certificat de vaccination à jour.",
+    "Santé publique (INFAS) – Programme National de Santé Scolaire, Vaccination"],
+];
+/* ---- Déontologie — Questions issues de l'examen passé (reformulées et sourcées sur le cours) ---- */
+const DEONTO_EXAM_RAW = [
+  ["QCM","concept_soins_infirmiers",2,"Les soins infirmiers visent notamment à :",
+    ["Promouvoir la santé","Préserver la santé","Rétablir l'autonomie","Guérir uniquement, sans autre finalité"],[0,1,2],
+    "Les soins infirmiers visent la promotion de la santé, la préservation de la santé et le rétablissement de l'autonomie du patient ; ils ne se limitent pas à la seule guérison, car ils incluent aussi la prévention et l'accompagnement.",
+    "Déontologie (INFAS) – Concept Soins Infirmiers / Buts des soins infirmiers"],
+  ["QCU","secret_professionnel",1,"Le secret professionnel est :",
+    ["Obligatoire, et protège les informations qui doivent rester confidentielles","Facultatif, laissé au choix du soignant","Sans rapport avec la confidentialité des informations","Réservé uniquement aux médecins"],[0],
+    "Le secret professionnel est une obligation qui protège les informations confidentielles apprises dans l'exercice de la profession, hors des cas prévus par la loi.",
+    "Déontologie (INFAS) – Le secret professionnel"],
+  ["QCU","vocation_valeurs",1,"Le père fondateur de la profession infirmière moderne est :",
+    ["Florence Nightingale","Virginia Henderson","Callista Roy","Hildegarde Peplau"],[0],
+    "Florence Nightingale est considérée comme la fondatrice de la profession infirmière moderne, à l'origine des principes de l'organisation des soins.",
+    "Déontologie (INFAS) – Histoire de la profession infirmière"],
+  ["QCM","ethique_bioethique",1,"L'éthique consiste à :",
+    ["Réfléchir au bien agir","Orienter les actions","Appliquer aveuglément les règles sans réflexion","Ignorer les valeurs personnelles et professionnelles"],[0,1],
+    "L'éthique est la science de la morale et des mœurs ; elle consiste à réfléchir au bien agir et à orienter les actions, et non à appliquer aveuglément des règles sans réflexion ni à ignorer les valeurs.",
+    "Déontologie (INFAS) – Définition de l'éthique"],
+  ["QCM","vocation_valeurs",2,"Parmi les types de serments utilisés dans la profession infirmière figurent :",
+    ["Le serment probatoire","Le serment promissoire","Le serment préparatoire","Le serment définitif obligatoire dès la première année"],[0,1,2],
+    "Les types de serments utilisés dans la profession infirmière comprennent le serment probatoire, le serment promissoire et le serment préparatoire, correspondant à différentes étapes de l'engagement professionnel.",
+    "Déontologie (INFAS) – Les serments professionnels"],
+  ["QCU","morale_deontologie",1,"La déontologie est l'ensemble des règles qui régissent uniquement la profession infirmière.",
+    ["Faux","Vrai","Cela dépend du pays","Cela dépend de l'établissement"],[0],
+    "C'est faux : la déontologie est la science des droits et devoirs propres à une profession en général ; chaque profession réglementée (médecine, droit, etc.) a sa propre déontologie, pas seulement la profession infirmière.",
+    "Déontologie (INFAS) – Définition de la déontologie"],
+  ["QCU","devoirs_collegues_superieurs",2,"Les compétences et les expériences de l'infirmier ne sauraient être partagées.",
+    ["Faux","Vrai","Vrai uniquement envers les patients","Vrai uniquement envers la hiérarchie"],[0],
+    "C'est faux : le partage des compétences et de l'expérience entre collègues fait partie des devoirs professionnels et contribue à l'amélioration collective de la qualité des soins.",
+    "Déontologie (INFAS) – Les devoirs de l'Agent de Santé envers ses collègues"],
+  ["QCU","secret_professionnel",2,"Face à un cas où une information confidentielle sur un patient a été divulguée sans son consentement et hors des cas prévus par la loi, la faute commise est :",
+    ["La violation du secret professionnel","Une simple négligence administrative sans conséquence","Une erreur de transmission sans gravité","Une faute uniquement d'ordre technique"],[0],
+    "Divulguer une information confidentielle sur un patient sans son consentement et hors des cas prévus par la loi constitue une violation du secret professionnel, punie par des sanctions civiles et pénales.",
+    "Déontologie (INFAS) – Violation du secret professionnel"],
+  ["QCM","morale_deontologie",1,"La morale permet de :",
+    ["Distinguer le bien du mal","Juger l'acceptable","Éviter systématiquement toute loi","Ignorer les principes moraux"],[0,1],
+    "La morale permet de distinguer le bien du mal et de juger ce qui est acceptable ; elle n'a pas pour fonction d'éviter les lois ni d'ignorer les principes, au contraire elle les fonde.",
+    "Déontologie (INFAS) – Définition de la morale"],
+  ["QCM","dilemmes_ethiques",2,"Face à une situation conflictuelle avec un patient ou un collègue, les attitudes recommandées pour désamorcer la tension comprennent :",
+    ["L'empathie","La discussion","L'écoute active","L'évitement total de tout dialogue"],[0,1,2],
+    "Pour désamorcer une situation conflictuelle, les attitudes recommandées sont l'empathie, la discussion et l'écoute active ; l'évitement total du dialogue aggrave généralement la situation plutôt que de la résoudre.",
+    "Déontologie (INFAS) – Gestion des situations difficiles / Relation d'aide"],
+  ["QCU","secret_professionnel",1,"Le secret professionnel s'applique uniquement sur le lieu de travail.",
+    ["Faux","Vrai","Vrai, sauf urgence","Vrai, sauf pour les infirmiers seniors"],[0],
+    "C'est faux : le secret professionnel s'applique en tout lieu et en toute circonstance, y compris en dehors du lieu de travail (par exemple lors d'une conversation privée), car l'obligation de confidentialité ne dépend pas du lieu mais de la nature de l'information.",
+    "Déontologie (INFAS) – Le secret professionnel"],
+  ["QCM","devoirs_malade_famille",1,"Les actes infirmiers comprennent notamment :",
+    ["Les soins d'hygiène","Les injections","La promotion de la santé","La chirurgie lourde"],[0,1,2],
+    "Les actes infirmiers comprennent les soins d'hygiène, les injections et la promotion de la santé ; la chirurgie lourde relève de la compétence du chirurgien, pas de l'infirmier.",
+    "Déontologie (INFAS) – Rôle et fonction de l'infirmier"],
+  ["QCU","devoirs_malade_famille",2,"Le consentement éclairé d'un enfant ne peut se substituer à celui de son parent ou représentant légal.",
+    ["Vrai","Faux","Vrai uniquement après 15 ans","Faux, l'enfant décide toujours seul"],[0],
+    "C'est vrai : chez le mineur, le consentement éclairé du parent ou représentant légal reste requis, l'enfant n'ayant pas la pleine capacité juridique de consentir seul à un acte de soin.",
+    "Déontologie (INFAS) – Le consentement éclairé"],
+  ["QCU","devoirs_envers_soi",2,"La profession d'infirmier et celle de commerçant sont tout à fait compatibles.",
+    ["Faux","Vrai","Vrai uniquement en zone rurale","Vrai uniquement hors des heures de service"],[0],
+    "C'est faux : l'exercice d'une activité commerciale parallèle par l'infirmier est généralement incompatible avec la déontologie professionnelle, en raison des risques de conflit d'intérêt et d'atteinte à la probité professionnelle.",
+    "Déontologie (INFAS) – Relation de l'Agent de Santé envers lui-même"],
+  ["QCM","devoirs_collegues_superieurs",2,"La délégation d'une tâche entre professionnels de santé est basée sur :",
+    ["Les compétences","Les instructions claires","Le suivi de l'exécution","L'improvisation, sans consigne précise"],[0,1,2],
+    "La délégation d'une tâche repose sur la vérification des compétences du délégataire, des instructions claires données, et un suivi de l'exécution ; elle ne peut reposer sur l'improvisation.",
+    "Déontologie (INFAS) – Rôle délégué de l'infirmier"],
+  ["QCU","secret_professionnel",2,"Le fait de discuter du dossier médical d'un patient dans un lieu public, permettant à des tiers non autorisés d'entendre des informations confidentielles, constitue une violation :",
+    ["De la confidentialité (secret professionnel)","Du seul respect hiérarchique","D'une simple règle de courtoisie sans portée déontologique","D'aucune règle particulière"],[0],
+    "Discuter d'informations confidentielles sur un patient dans un lieu public où des tiers non autorisés peuvent entendre constitue une violation de la confidentialité, c'est-à-dire du secret professionnel.",
+    "Déontologie (INFAS) – Le secret professionnel"],
+  ["QCM","vocation_valeurs",1,"Les valeurs éthiques de la profession infirmière incluent :",
+    ["L'honnêteté","L'intégrité","La responsabilité","La corruption"],[0,1,2],
+    "Les valeurs éthiques de la profession infirmière incluent l'honnêteté, l'intégrité et la responsabilité ; la corruption est à l'opposé de ces valeurs et constitue une faute grave.",
+    "Déontologie (INFAS) – Les valeurs professionnelles"],
+  ["QCU","devoirs_malade_famille",2,"Le consentement éclairé n'est pas impératif pour admettre une personne malade.",
+    ["Faux","Vrai","Vrai uniquement en cas d'urgence vitale","Vrai uniquement pour les mineurs"],[0],
+    "C'est faux : le consentement éclairé du patient (ou de son représentant légal) est en principe impératif avant toute admission ou tout acte de soin, sauf situations d'urgence vitale où l'intérêt du patient prime.",
+    "Déontologie (INFAS) – Le consentement éclairé"],
+  ["QCU","devoirs_collegues_superieurs",2,"Un agent de santé qui refuse systématiquement de rendre compte de ses actes à sa hiérarchie et ignore les procédures établies commet une violation :",
+    ["Du respect de la hiérarchie","Du secret professionnel uniquement","D'une règle sans importance déontologique","D'aucune règle, car il agit dans l'intérêt du patient"],[0],
+    "Le non-respect systématique de la hiérarchie et des procédures établies constitue une violation du devoir de respect de la hiérarchie, l'un des devoirs de l'agent de santé envers ses supérieurs.",
+    "Déontologie (INFAS) – Les devoirs de l'Agent de Santé envers ses supérieurs"],
+  ["QCU","morale_deontologie",1,"La déontologie permet notamment de :",
+    ["Encadrer les relations professionnelles et renforcer la confiance du public","Augmenter les revenus des professionnels","Supprimer les lois en vigueur","Remplacer entièrement la morale personnelle"],[0],
+    "La déontologie permet d'encadrer les relations professionnelles et de renforcer la confiance du public envers la profession ; elle ne vise ni à augmenter les revenus, ni à supprimer les lois.",
+    "Déontologie (INFAS) – Définition et rôle de la déontologie"],
+  ["QCU","morale_deontologie",1,"La déontologie est :",
+    ["Un ensemble de règles, une théorie des devoirs propres à une profession","Une loi pénale à portée générale","Une sanction judiciaire automatique","Un simple règlement intérieur d'entreprise"],[0],
+    "La déontologie est un ensemble de règles, une théorie des devoirs et sanctions propres à une profession donnée ; elle se distingue d'une loi pénale à portée générale.",
+    "Déontologie (INFAS) – Définition de la déontologie"],
+  ["QCM","dilemmes_ethiques",2,"Pour éviter une situation d'immoralité dans la relation soignant-soigné, les attitudes recommandées comprennent :",
+    ["L'empathie","La discrétion","L'écoute","L'indifférence face aux besoins du patient"],[0,1,2],
+    "Pour éviter une situation d'immoralité, les attitudes recommandées sont l'empathie, la discrétion et l'écoute ; l'indifférence face aux besoins du patient est à l'inverse une attitude à proscrire.",
+    "Déontologie (INFAS) – Qualités morales de l'Agent de Santé"],
+  ["QCU","devoirs_collegues_superieurs",2,"Les infirmiers peuvent être autorisés par une autorité qualifiée à participer à certaines missions spécifiques (missions humanitaires, campagnes sanitaires, etc.) :",
+    ["Vrai, sous réserve d'une autorisation de l'autorité compétente","Faux, cela leur est toujours interdit","Vrai, sans aucune condition ni autorisation","Faux, seuls les médecins peuvent participer à ces missions"],[0],
+    "Les infirmiers peuvent être autorisés par une autorité qualifiée à participer à certaines missions spécifiques, sous réserve d'une autorisation formelle de l'autorité compétente, respectant ainsi le cadre réglementaire de la profession.",
+    "Déontologie (INFAS) – Cadre réglementaire de la profession infirmière"],
+  ["QCU","devoirs_envers_soi",2,"Une autorisation peut être requise pour un infirmier qui souhaite créer un cabinet privé.",
+    ["Vrai","Faux","Vrai uniquement pour les sages-femmes","Faux, l'ouverture est totalement libre"],[0],
+    "C'est vrai : l'ouverture d'un cabinet privé par un infirmier est généralement soumise à autorisation administrative, garantissant le respect des normes réglementaires et déontologiques de la profession.",
+    "Déontologie (INFAS) – Cadre réglementaire de l'exercice professionnel"],
+  ["QCU","secret_professionnel",1,"Le respect de la confidentialité des informations est facultatif pour les infirmiers.",
+    ["Faux","Vrai","Vrai uniquement pour les informations mineures","Vrai uniquement en dehors de l'hôpital"],[0],
+    "C'est faux : le respect de la confidentialité des informations (secret professionnel) est une obligation pour les infirmiers, et non une option laissée à leur appréciation.",
+    "Déontologie (INFAS) – Le secret professionnel"],
+  ["QCM","morale_deontologie",1,"La déontologie permet notamment :",
+    ["D'encadrer les relations professionnelles","De renforcer la confiance du public","De supprimer les lois","D'augmenter systématiquement les revenus"],[0,1],
+    "La déontologie permet d'encadrer les relations professionnelles et de renforcer la confiance du public ; elle ne vise ni à supprimer les lois ni à garantir une augmentation des revenus.",
+    "Déontologie (INFAS) – Rôle de la déontologie"],
+];
 function buildQuestions(raw, subjectId, prefix) {
   return raw.map((r, i) => {
     const [type, chapterId, level, stem, options, correct, explanation, reference] = r;
@@ -4812,6 +5699,10 @@ function buildQuestions(raw, subjectId, prefix) {
 }
 const QUESTIONS = [
   ...buildQuestions(RAW, "hematologie", "q"),
+  ...buildQuestions(GYNECO_RAW, "gyneco-obstetrique", "gy"),
+  ...buildQuestions(CONCEPTS_RAW, "concepts-sciences-inf", "cn"),
+  ...buildQuestions(NUTRITION_SCOLAIRE_RAW, "sante-publique", "nt"),
+  ...buildQuestions(DEONTO_EXAM_RAW, "deontologie", "dx"),
   ...buildQuestions(SANTEPUB_RAW, "sante-publique", "sp"),
   ...buildQuestions(SANTECOMMU_RAW, "sante-communautaire", "sc"),
   ...buildQuestions(BACTERIO_RAW, "bacteriologie", "bq"),
@@ -4823,7 +5714,6 @@ const QUESTIONS = [
   ...buildQuestions(SEMIOCHIR_RAW, "semio-chir", "sq"),
   ...buildQuestions(SEMIOMED_RAW, "semio-medicale", "mq"),
   ...buildQuestions(SECOURISME_RAW, "secourisme", "rq"),
-  ...buildQuestions(CONCEPTSINF_RAW, "concepts-sciences-inf", "cq"),
 ];
 
 /* ---------------- Clinical cases (QCD) ---------------- */
@@ -5200,7 +6090,7 @@ async function saveSeen(matricule, seen) {
 
 /* ---- Comptes étudiants (matricule = identifiant, année de naissance = mot de passe) ---- */
 const STUDENT_PREFIX = "infas-hemato:student:";
-const TRIAL_DAYS = 45;
+const TRIAL_DAYS = 15;
 const PAID_DAYS = 365; // repli si un compte "paid" existant n'a pas de plan enregistré
 
 const SUBSCRIPTION_PLANS = [
@@ -5260,6 +6150,26 @@ async function touchStudentLastSeen(matricule) {
   } catch (e) {
     console.error("Erreur mise à jour compte", e);
   }
+}
+
+// Réinitialisation ponctuelle (une seule fois par compte) : au passage de l'essai gratuit de
+// 45 à 15 jours, chaque étudiant déjà inscrit, non-VIP et non-payant, reçoit un nouveau départ
+// de compteur de 15 jours à partir de sa prochaine connexion, au lieu de subir la réduction
+// rétroactive sur son ancienne date d'inscription. Ne s'applique qu'une seule fois par compte
+// (marqueur trialReset15Applied), pour ne jamais réinitialiser le compteur à chaque connexion.
+async function applyTrialReset15IfNeeded(student) {
+  if (!student) return student;
+  if (student.paymentStatus === "paid" && student.paidAt) return student;
+  if (isVIPMatricule(student.matricule)) return student;
+  if (student.trialReset15Applied) return student;
+  const now = new Date().toISOString();
+  const updated = { ...student, trialResetAt: now, trialReset15Applied: true };
+  try {
+    await storage.set(studentKey(student.matricule), JSON.stringify(updated), true);
+  } catch (e) {
+    console.error("Erreur réinitialisation essai 15 jours", e);
+  }
+  return updated;
 }
 
 async function incrementStudentExamCount(matricule) {
@@ -5340,7 +6250,11 @@ function computeAccess(student) {
   }
   const now = Date.now();
   const isPaid = student.paymentStatus === "paid" && student.paidAt;
-  const start = isPaid ? new Date(student.paidAt).getTime() : new Date(student.createdAt).getTime();
+  // La bascule de l'essai gratuit à 15 jours (contre 45 auparavant) a été appliquée à tous les
+  // comptes non-VIP et non-payants au moment de la mise à jour : trialResetAt marque ce nouveau
+  // départ de compteur, prioritaire sur la date d'inscription d'origine (createdAt).
+  const trialStart = student.trialResetAt || student.createdAt;
+  const start = isPaid ? new Date(student.paidAt).getTime() : new Date(trialStart).getTime();
   const totalDays = isPaid ? (student.paidDays || PAID_DAYS) : TRIAL_DAYS;
   const elapsedDays = (now - start) / 86400000;
   const daysLeft = Math.max(0, Math.ceil(totalDays - elapsedDays));
@@ -5375,6 +6289,1055 @@ function announcementMatches(a, student) {
 
 /* ================= UI PIECES ================= */
 
+/* ---------------- Dictionnaire médical ---------------- */
+// Chaque entrée : { id, terme, categorie, definition, causes, symptomes, diagnostic,
+// examens, traitement, prevention, complications, conseils, references }
+// Catégories utilisées : Hématologie, Anatomie-Physiologie, Cardiologie, Endocrinologie,
+// Gynéco-Obstétrique, Pédiatrie, Infectiologie-Bactériologie, Pharmacologie,
+// Dermatologie, Neurologie, Sémiologie, Abréviations, Soins infirmiers
+const MEDICAL_DICT = [
+  { id:"anemie", terme:"Anémie", categorie:"Hématologie",
+    definition:"Diminution du taux d'hémoglobine dans le sang, réduisant le transport de l'oxygène vers les tissus.",
+    causes:"Carence en fer, hémorragie, maladies chroniques, carence en vitamine B12 ou folates, hémolyse.",
+    symptomes:"Fatigue, pâleur cutanéo-muqueuse, essoufflement à l'effort, vertiges, palpitations.",
+    diagnostic:"Numération formule sanguine (NFS), dosage de la ferritine si suspicion de carence martiale.",
+    examens:"NFS, taux de réticulocytes, VGM, TCMH, bilan martial, électrophorèse de l'hémoglobine si suspicion de drépanocytose.",
+    traitement:"Supplémentation en fer per os, traitement de la cause sous-jacente, transfusion si anémie sévère mal tolérée.",
+    prevention:"Alimentation équilibrée riche en fer, supplémentation systématique chez la femme enceinte.",
+    complications:"Insuffisance cardiaque en cas d'anémie sévère non traitée, retard de croissance chez l'enfant.",
+    conseils:"Surveiller les signes de mauvaise tolérance (tachycardie, dyspnée), éduquer sur la prise du fer à distance du thé/café.",
+    references:"Hémogramme normal ; Anémies (INFAS)" },
+  { id:"tachycardie", terme:"Tachycardie", categorie:"Cardiologie",
+    definition:"Fréquence cardiaque supérieure à 100 battements par minute chez l'adulte au repos.",
+    causes:"Stress, fièvre, effort physique, anémie, hyperthyroïdie, maladies cardiaques, certains médicaments.",
+    symptomes:"Palpitations, sensation de cœur qui bat vite, parfois asymptomatique, malaise, essoufflement.",
+    diagnostic:"Prise du pouls, électrocardiogramme (ECG) pour préciser le type de tachycardie.",
+    examens:"ECG, ionogramme sanguin, bilan thyroïdien, NFS (recherche d'anémie ou fièvre).",
+    traitement:"Dépend de la cause identifiée ; traitement symptomatique si bénigne, antiarythmiques ou cardioversion si pathologique.",
+    prevention:"Limiter les excitants (café, tabac), gérer le stress, traiter les causes sous-jacentes.",
+    complications:"Insuffisance cardiaque, syncope, dans les formes sévères et prolongées.",
+    conseils:"Compter et noter la fréquence cardiaque, rassurer le patient, alerter le médecin si tachycardie mal tolérée.",
+    references:"Sémiologie médicale (INFAS)" },
+  { id:"bradycardie", terme:"Bradycardie", categorie:"Cardiologie",
+    definition:"Fréquence cardiaque inférieure à 60 battements par minute chez l'adulte au repos.",
+    causes:"Sportifs entraînés (physiologique), hypothyroïdie, certains médicaments (bêtabloquants), troubles de conduction cardiaque.",
+    symptomes:"Fatigue, vertiges, malaises, parfois asymptomatique chez le sportif.",
+    diagnostic:"Prise du pouls, ECG.",
+    examens:"ECG, bilan thyroïdien, ionogramme.",
+    traitement:"Aucun si physiologique ; sinon traitement de la cause, pacemaker dans les formes sévères symptomatiques.",
+    prevention:"Surveillance des traitements bradycardisants.",
+    complications:"Syncope, arrêt cardiaque dans les formes extrêmes.",
+    conseils:"Vérifier la tolérance clinique avant d'alerter en urgence.",
+    references:"Sémiologie médicale (INFAS)" },
+  { id:"hypertension_arterielle", terme:"Hypertension artérielle (HTA)", categorie:"Cardiologie",
+    definition:"Élévation anormale et persistante de la pression artérielle, généralement définie par une TA ≥ 14/9.",
+    causes:"HTA essentielle (la plus fréquente, sans cause identifiée), maladies rénales, troubles endocriniens, grossesse (pré-éclampsie).",
+    symptomes:"Souvent asymptomatique, parfois céphalées, bourdonnements d'oreille, troubles visuels.",
+    diagnostic:"Mesure répétée de la tension artérielle.",
+    examens:"Bilan rénal, ionogramme, ECG, fond d'œil dans les formes sévères.",
+    traitement:"Règles hygiéno-diététiques, traitement antihypertenseur selon les recommandations.",
+    prevention:"Réduction du sel, activité physique régulière, gestion du poids, arrêt du tabac.",
+    complications:"AVC, infarctus du myocarde, insuffisance rénale, éclampsie chez la femme enceinte.",
+    conseils:"Éduquer à l'automesure tensionnelle, insister sur l'observance du traitement.",
+    references:"Sémiologie médicale ; Gynéco-Obstétrique (INFAS)" },
+  { id:"paludisme", terme:"Paludisme", categorie:"Infectiologie-Bactériologie",
+    definition:"Maladie parasitaire transmise par la piqûre d'un moustique femelle (Anophèle) infecté par un Plasmodium, principalement Plasmodium falciparum.",
+    causes:"Piqûre d'anophèle infecté ; plus rarement transmission materno-fœtale ou transfusionnelle.",
+    symptomes:"Fièvre, frissons, sueurs, céphalées, courbatures ; dans les formes graves : troubles de conscience, convulsions.",
+    diagnostic:"Test de diagnostic rapide (TDR), goutte épaisse et frottis sanguin.",
+    examens:"TDR, goutte épaisse/frottis sanguin, NFS, glycémie en cas de forme grave.",
+    traitement:"CTA (Combinaison Thérapeutique à base d'Artémisinine) pour le paludisme simple ; Artésunate injectable pour le paludisme grave.",
+    prevention:"Moustiquaire imprégnée, assainissement du milieu, vaccination antipaludique chez le nourrisson.",
+    complications:"Neuropaludisme, anémie sévère, insuffisance rénale, décès si non traité.",
+    conseils:"Reconnaître les signes de gravité, référer en urgence un enfant fébrile qui convulse ou qui est inconscient.",
+    references:"Paludisme chez l'enfant et l'adulte (INFAS)" },
+  { id:"tuberculose", terme:"Tuberculose", categorie:"Infectiologie-Bactériologie",
+    definition:"Maladie infectieuse due à Mycobacterium tuberculosis (BK), transmise par voie aérienne.",
+    causes:"Inhalation de gouttelettes contaminées émises par un malade tuberculeux pulmonaire bacillifère.",
+    symptomes:"Toux chronique de plus de 2 semaines, amaigrissement, sueurs nocturnes, fièvre au long cours, hémoptysie.",
+    diagnostic:"Examen microscopique des crachats (BAAR), radiographie thoracique.",
+    examens:"Bacilloscopie, GeneXpert, radiographie pulmonaire.",
+    traitement:"Stratégie DOTS : chimiothérapie antituberculeuse standardisée de courte durée, supervisée.",
+    prevention:"Vaccination BCG à la naissance, dépistage des cas contacts.",
+    complications:"Destruction pulmonaire, dissémination extra-pulmonaire, décès si non traitée.",
+    conseils:"Assurer l'observance stricte du traitement, isoler le patient bacillifère au début du traitement.",
+    references:"Santé publique — PNLT (INFAS)" },
+  { id:"choleraterme", terme:"Choléra", categorie:"Infectiologie-Bactériologie",
+    definition:"Maladie diarrhéique aiguë due à Vibrio cholerae, pouvant entraîner une déshydratation sévère rapide.",
+    causes:"Ingestion d'eau ou d'aliments contaminés par Vibrio cholerae.",
+    symptomes:"Diarrhée aqueuse profuse (« eau de riz »), vomissements, déshydratation rapide.",
+    diagnostic:"Clinique, confirmé par coproculture en contexte épidémique.",
+    examens:"Coproculture, ionogramme sanguin (évaluation de la déshydratation).",
+    traitement:"Réhydratation orale ou intraveineuse en urgence, antibiothérapie dans les formes sévères.",
+    prevention:"Accès à l'eau potable, hygiène des mains, assainissement.",
+    complications:"Choc hypovolémique, décès en l'absence de réhydratation rapide.",
+    conseils:"Débuter la réhydratation immédiatement, ne pas attendre la confirmation biologique.",
+    references:"Bactériologie-Virologie (INFAS)" },
+  { id:"diabete", terme:"Diabète sucré", categorie:"Endocrinologie",
+    definition:"Maladie métabolique chronique caractérisée par une hyperglycémie chronique.",
+    causes:"Type 1 : destruction auto-immune des cellules bêta du pancréas. Type 2 : insulinorésistance associée à un déficit relatif en insuline.",
+    symptomes:"Polyurie, polydipsie, polyphagie, amaigrissement (type 1), fatigue, troubles visuels.",
+    diagnostic:"Glycémie à jeun ≥ 1,26 g/l à deux reprises, ou glycémie ≥ 2 g/l avec symptômes.",
+    examens:"Glycémie à jeun, hémoglobine glyquée (HbA1c), glycosurie.",
+    traitement:"Insulinothérapie (type 1), antidiabétiques oraux et/ou insuline (type 2), règles hygiéno-diététiques.",
+    prevention:"Activité physique régulière, alimentation équilibrée, contrôle du poids.",
+    complications:"Rétinopathie, néphropathie, neuropathie, pied diabétique, coma acido-cétosique.",
+    conseils:"Éduquer à l'autosurveillance glycémique, à la reconnaissance des signes d'hypoglycémie.",
+    references:"Anatomie Physiologie — Pancréas endocrine (INFAS)" },
+  { id:"goitre", terme:"Goitre", categorie:"Endocrinologie",
+    definition:"Augmentation de volume de la glande thyroïde, visible ou palpable au niveau du cou.",
+    causes:"Carence en iode le plus souvent ; peut aussi être lié à une hyperthyroïdie, une thyroïdite, ou une tumeur.",
+    symptomes:"Tuméfaction cervicale antérieure, parfois gêne à la déglutition ou à la respiration si volumineux.",
+    diagnostic:"Examen clinique (palpation cervicale), échographie thyroïdienne.",
+    examens:"Bilan thyroïdien (TSH, T3, T4), échographie cervicale.",
+    traitement:"Supplémentation iodée si carence, traitement de la cause sous-jacente, chirurgie si compressif.",
+    prevention:"Consommation de sel iodé.",
+    complications:"Compression des voies aériennes ou digestives dans les formes volumineuses.",
+    conseils:"Encourager la consommation de sel iodé en zone d'endémie goitreuse.",
+    references:"Santé publique ; Anatomie Physiologie — Thyroïde (INFAS)" },
+  { id:"epistaxis", terme:"Épistaxis", categorie:"Sémiologie",
+    definition:"Saignement provenant des fosses nasales.",
+    causes:"Traumatisme, hypertension artérielle, trouble de la coagulation, sécheresse des muqueuses.",
+    symptomes:"Écoulement de sang par une ou deux narines.",
+    diagnostic:"Examen clinique ORL.",
+    examens:"Bilan de coagulation si épistaxis récidivante ou abondante.",
+    traitement:"Compression bidigitale, mèche nasale, cautérisation si récidivante.",
+    prevention:"Traiter la cause sous-jacente (HTA, trouble de coagulation).",
+    complications:"Anémie en cas de saignement abondant ou répété.",
+    conseils:"Faire pencher la tête vers l'avant (et non en arrière) pour éviter l'inhalation de sang.",
+    references:"Sémiologie médicale (INFAS)" },
+  { id:"ictere", terme:"Ictère", categorie:"Sémiologie",
+    definition:"Coloration jaune de la peau et des muqueuses due à un excès de bilirubine dans le sang.",
+    causes:"Hémolyse, obstruction des voies biliaires, maladie hépatique, ictère physiologique du nouveau-né.",
+    symptomes:"Coloration jaune de la peau, des conjonctives, parfois urines foncées et selles décolorées.",
+    diagnostic:"Examen clinique, dosage de la bilirubine.",
+    examens:"Bilirubine totale et fractionnée, bilan hépatique, échographie abdominale.",
+    traitement:"Selon la cause : photothérapie (ictère néonatal), traitement de l'hémolyse, traitement de l'obstruction biliaire.",
+    prevention:"Dépistage systématique de l'ictère néonatal.",
+    complications:"Ictère nucléaire (encéphalopathie bilirubinique) chez le nouveau-né si non traité.",
+    conseils:"Surveiller l'intensité et l'évolution de l'ictère chez le nouveau-né, exposer à la lumière naturelle sans excès.",
+    references:"Sémiologie médicale ; Gynéco-Obstétrique (INFAS)" },
+  { id:"dyspnee", terme:"Dyspnée", categorie:"Sémiologie",
+    definition:"Sensation subjective de difficulté à respirer, ou essoufflement anormal.",
+    causes:"Maladies respiratoires (asthme, pneumonie), maladies cardiaques, anémie sévère, anxiété.",
+    symptomes:"Respiration rapide ou difficile, tirage, battement des ailes du nez chez l'enfant.",
+    diagnostic:"Examen clinique, mesure de la fréquence respiratoire et de la saturation en oxygène.",
+    examens:"Saturation en oxygène (SpO2), radiographie thoracique, NFS.",
+    traitement:"Selon la cause : oxygénothérapie, bronchodilatateurs, traitement cardiaque.",
+    prevention:"Traiter précocement les infections respiratoires.",
+    complications:"Détresse respiratoire aiguë, hypoxie sévère.",
+    conseils:"Installer le patient en position semi-assise, administrer de l'oxygène si prescrit, surveiller la coloration des extrémités.",
+    references:"Sémiologie médicale ; Secourisme (INFAS)" },
+  { id:"convulsion", terme:"Convulsion", categorie:"Neurologie",
+    definition:"Contraction musculaire involontaire, brutale et répétée, liée à une décharge électrique anormale du cerveau.",
+    causes:"Fièvre élevée chez l'enfant (convulsion fébrile), épilepsie, neuropaludisme, méningite, traumatisme crânien.",
+    symptomes:"Perte de connaissance, secousses musculaires, révulsion oculaire, parfois perte d'urine.",
+    diagnostic:"Clinique, recherche de la cause sous-jacente.",
+    examens:"Glycémie, ponction lombaire si suspicion de méningite, goutte épaisse si contexte palustre.",
+    traitement:"Diazépam par voie intra-rectale en urgence, traitement de la cause.",
+    prevention:"Contrôle rigoureux de la fièvre chez l'enfant à risque.",
+    complications:"État de mal convulsif, séquelles neurologiques si convulsions prolongées ou répétées.",
+    conseils:"Mettre le patient en position latérale de sécurité, protéger la tête, ne rien mettre dans la bouche.",
+    references:"Secourisme ; Paludisme chez l'enfant (INFAS)" },
+  { id:"cephalees", terme:"Céphalées", categorie:"Neurologie",
+    definition:"Douleur ressentie au niveau de la tête, très fréquente et le plus souvent bénigne.",
+    causes:"Migraine, tension nerveuse, fièvre, hypertension artérielle, méningite (dans les formes graves).",
+    symptomes:"Douleur crânienne, parfois accompagnée de nausées, photophobie, raideur de la nuque si méningite.",
+    diagnostic:"Interrogatoire, examen clinique, recherche de signes de gravité associés.",
+    examens:"Selon l'orientation clinique : ponction lombaire, imagerie cérébrale si signe de gravité.",
+    traitement:"Antalgiques simples si bénignes, traitement de la cause dans les formes secondaires.",
+    prevention:"Gestion du stress, hydratation suffisante, traitement des facteurs déclenchants de migraine.",
+    complications:"Retard diagnostique d'une cause grave (méningite, hémorragie méningée) si signes de gravité négligés.",
+    conseils:"Rechercher systématiquement fièvre, raideur de nuque et troubles de conscience associés.",
+    references:"Sémiologie médicale (INFAS)" },
+  { id:"drepanocytose", terme:"Drépanocytose", categorie:"Hématologie",
+    definition:"Maladie génétique de l'hémoglobine caractérisée par la présence d'hémoglobine S, entraînant une déformation des globules rouges en faucille.",
+    causes:"Anomalie génétique héréditaire, transmise selon un mode autosomique récessif.",
+    symptomes:"Crises douloureuses vaso-occlusives, anémie chronique, ictère, retard de croissance.",
+    diagnostic:"Électrophorèse de l'hémoglobine.",
+    examens:"Électrophorèse de l'hémoglobine, NFS, test de falciformation.",
+    traitement:"Prise en charge des crises douloureuses, hydratation, transfusion si nécessaire, hydroxyurée dans les formes sévères.",
+    prevention:"Conseil génétique, dépistage néonatal, vaccination et prophylaxie antipaludique.",
+    complications:"Séquestration splénique, syndrome thoracique aigu, accident vasculaire cérébral.",
+    conseils:"Encourager une hydratation abondante, éviter le froid et les efforts intenses déclencheurs de crise.",
+    references:"Hématologie (INFAS)" },
+  { id:"hemophilie", terme:"Hémophilie", categorie:"Hématologie",
+    definition:"Maladie héréditaire de la coagulation liée à un déficit en facteur VIII (hémophilie A) ou en facteur IX (hémophilie B).",
+    causes:"Anomalie génétique liée au chromosome X, touchant essentiellement les garçons.",
+    symptomes:"Hémorragies spontanées ou provoquées, hématomes, hémarthroses.",
+    diagnostic:"Bilan de la coagulation, dosage des facteurs de coagulation.",
+    examens:"TCA (temps de céphaline activée), dosage des facteurs VIII/IX.",
+    traitement:"Perfusion du facteur de coagulation déficient en cas de saignement.",
+    prevention:"Conseil génétique, éviter les injections intramusculaires et les traumatismes.",
+    complications:"Hémarthroses répétées entraînant des arthropathies, hémorragies graves.",
+    conseils:"Privilégier la voie orale ou sous-cutanée aux injections intramusculaires.",
+    references:"Hématologie — Hémostase (INFAS)" },
+  { id:"eclampsie", terme:"Éclampsie", categorie:"Gynéco-Obstétrique",
+    definition:"Complication grave de la pré-éclampsie, caractérisée par la survenue de convulsions chez la femme enceinte hypertendue.",
+    causes:"Aggravation d'une pré-éclampsie non contrôlée.",
+    symptomes:"Convulsions généralisées, céphalées intenses, troubles visuels, hypertension artérielle sévère.",
+    diagnostic:"Clinique, mesure de la tension artérielle, recherche de protéinurie.",
+    examens:"Tension artérielle, protéinurie, bilan biologique complet.",
+    traitement:"Sulfate de magnésium en urgence, contrôle de la tension artérielle, extraction fœtale si nécessaire.",
+    prevention:"Suivi prénatal régulier, dépistage précoce de la pré-éclampsie.",
+    complications:"Décès maternel et/ou fœtal, hématome rétroplacentaire, insuffisance rénale.",
+    conseils:"Reconnaître les signes annonciateurs (céphalées, troubles visuels, œdèmes) et référer en urgence.",
+    references:"Gynéco-Obstétrique — SONU (INFAS)" },
+  { id:"placenta_praevia", terme:"Placenta prævia", categorie:"Gynéco-Obstétrique",
+    definition:"Insertion anormalement basse du placenta, recouvrant partiellement ou totalement l'orifice interne du col utérin.",
+    causes:"Antécédent de césarienne, multiparité, grossesses multiples.",
+    symptomes:"Hémorragie génitale indolore, souvent au 3ème trimestre.",
+    diagnostic:"Échographie obstétricale.",
+    examens:"Échographie, NFS, groupe sanguin.",
+    traitement:"Repos, surveillance, césarienne programmée ou en urgence selon la sévérité.",
+    prevention:"Surveillance rapprochée en cas d'antécédent à risque.",
+    complications:"Hémorragie sévère, prématurité, décès maternel et/ou fœtal.",
+    conseils:"Ne jamais faire de toucher vaginal en cas de suspicion de placenta prævia avant confirmation échographique.",
+    references:"Gynéco-Obstétrique (INFAS)" },
+  { id:"hemorragie_du_post_partum", terme:"Hémorragie du post-partum", categorie:"Gynéco-Obstétrique",
+    definition:"Perte sanguine supérieure à 500 ml après un accouchement par voie basse, survenant dans les 24 heures suivant la délivrance.",
+    causes:"Atonie utérine, rétention placentaire, déchirures des voies génitales, troubles de la coagulation.",
+    symptomes:"Saignement vaginal abondant, signes de choc hypovolémique (pâleur, tachycardie, hypotension).",
+    diagnostic:"Clinique, estimation des pertes sanguines.",
+    examens:"NFS, bilan de coagulation, groupe sanguin.",
+    traitement:"Massage utérin, ocytociques, délivrance artificielle si besoin, transfusion si sévère.",
+    prevention:"Gestion active de la troisième phase de l'accouchement (délivrance dirigée).",
+    complications:"Choc hypovolémique, décès maternel.",
+    conseils:"Surveiller le globe de sécurité et les pertes sanguines dans les 2 heures suivant l'accouchement.",
+    references:"Gynéco-Obstétrique — Délivrance et SONU (INFAS)" },
+  { id:"rougeole", terme:"Rougeole", categorie:"Infectiologie-Bactériologie",
+    definition:"Maladie virale éruptive très contagieuse, faisant partie des maladies cibles du PEV.",
+    causes:"Virus de la rougeole, transmission par voie aérienne.",
+    symptomes:"Fièvre élevée, éruption cutanée maculo-papuleuse, toux, conjonctivite, signe de Koplik.",
+    diagnostic:"Clinique, sérologie en cas de doute.",
+    examens:"Sérologie rougeole si nécessaire.",
+    traitement:"Symptomatique (antipyrétiques, hydratation), supplémentation en vitamine A.",
+    prevention:"Vaccination RR (rougeole-rubéole) dans le cadre du PEV.",
+    complications:"Pneumonie, encéphalite, malnutrition chez l'enfant.",
+    conseils:"Isoler l'enfant malade, vérifier le statut vaccinal de l'entourage.",
+    references:"Santé publique — PEV (INFAS)" },
+  { id:"coqueluche", terme:"Coqueluche", categorie:"Infectiologie-Bactériologie",
+    definition:"Infection respiratoire bactérienne très contagieuse due à Bordetella pertussis, faisant partie des maladies cibles du PEV.",
+    causes:"Bactérie Bordetella pertussis, transmission par voie aérienne.",
+    symptomes:"Toux quinteuse caractéristique, chant du coq, vomissements post-tussifs.",
+    diagnostic:"Clinique, prélèvement nasopharyngé si besoin.",
+    examens:"PCR ou culture nasopharyngée en cas de doute diagnostique.",
+    traitement:"Antibiothérapie (macrolides), soins de soutien.",
+    prevention:"Vaccination dans le cadre du PEV (Penta).",
+    complications:"Pneumonie, apnées graves chez le nourrisson.",
+    conseils:"Isoler l'enfant, surveiller les apnées chez le nourrisson.",
+    references:"Santé publique — PEV (INFAS)" },
+  { id:"otite", terme:"Otite", categorie:"Sémiologie",
+    definition:"Inflammation de l'oreille, pouvant toucher l'oreille externe, moyenne ou interne.",
+    causes:"Infection bactérienne ou virale, souvent secondaire à une infection des voies respiratoires hautes.",
+    symptomes:"Douleur auriculaire, fièvre, parfois écoulement auriculaire, irritabilité chez le nourrisson.",
+    diagnostic:"Otoscopie.",
+    examens:"Otoscopie, prélèvement de l'écoulement si otite chronique.",
+    traitement:"Antalgiques, antibiothérapie si otite moyenne aiguë purulente.",
+    prevention:"Traitement précoce des infections ORL, éviter le tabagisme passif.",
+    complications:"Mastoïdite, perforation tympanique, surdité si non traitée.",
+    conseils:"Surveiller la fièvre et l'irritabilité chez le nourrisson qui se tire l'oreille.",
+    references:"Sémiologie médicale ; Bactériologie (INFAS)" },
+  { id:"panaris_dico", terme:"Panaris", categorie:"Sémiologie",
+    definition:"Infection aiguë de l'une des parties constituantes d'un doigt.",
+    causes:"Le plus souvent staphylocoque ou streptocoque, suite à une plaie ou piqûre minime.",
+    symptomes:"Douleur pulsatile, rougeur, chaleur, tuméfaction du doigt.",
+    diagnostic:"Clinique.",
+    examens:"Prélèvement bactériologique si forme compliquée.",
+    traitement:"Antibiothérapie au stade inflammatoire, incision-drainage au stade de collection.",
+    prevention:"Désinfection systématique des plaies minimes des doigts.",
+    complications:"Ostéite, arthrite, dissémination septicémique dans les formes hyperseptiques.",
+    conseils:"Ne jamais percer soi-même un panaris ; consulter dès les premiers signes.",
+    references:"Sémiologie chirurgicale (INFAS)" },
+  { id:"escarre", terme:"Escarre", categorie:"Soins infirmiers",
+    definition:"Lésion cutanée d'origine ischémique liée à une compression prolongée des tissus mous entre un plan dur et une saillie osseuse.",
+    causes:"Immobilisation prolongée, mauvaise nutrition, humidité cutanée, friction.",
+    symptomes:"Rougeur ne blanchissant pas à la pression (stade 1), puis ulcération progressive jusqu'à la nécrose profonde.",
+    diagnostic:"Examen clinique, classification en stades (1 à 4).",
+    examens:"Évaluation clinique régulière des points d'appui.",
+    traitement:"Soins locaux adaptés au stade, décharge de la zone, nutrition adaptée.",
+    prevention:"Changements de position réguliers, matelas anti-escarres, hygiène cutanée, nutrition adéquate.",
+    complications:"Infection locale, septicémie, retard de cicatrisation.",
+    conseils:"Mobiliser le patient alité toutes les 2 à 3 heures, inspecter quotidiennement les points d'appui.",
+    references:"Soins infirmiers — Prévention des complications de décubitus (INFAS)" },
+  { id:"sonde_urinaire", terme:"Sondage urinaire", categorie:"Soins infirmiers",
+    definition:"Acte de soin consistant à introduire une sonde dans la vessie par l'urètre pour évacuer ou recueillir l'urine.",
+    causes:"Indiqué en cas de rétention urinaire, avant certaines interventions, ou pour surveillance de la diurèse.",
+    symptomes:"Sans objet (acte de soin, non une pathologie).",
+    diagnostic:"Sans objet.",
+    examens:"Vérification de l'absence de contre-indication (sténose urétrale, infection urinaire non traitée).",
+    traitement:"Technique aseptique stricte lors de la pose.",
+    prevention:"Limiter la durée du sondage pour réduire le risque infectieux.",
+    complications:"Infection urinaire nosocomiale, traumatisme urétral.",
+    conseils:"Respecter l'asepsie rigoureuse, maintenir le sac collecteur en dessous du niveau de la vessie.",
+    references:"Soins infirmiers — Techniques de soins (INFAS)" },
+  { id:"injection_im", terme:"Injection intramusculaire (IM)", categorie:"Soins infirmiers",
+    definition:"Technique d'administration d'un médicament directement dans le tissu musculaire.",
+    causes:"Indiquée pour les médicaments à résorption plus lente que la voie IV, ou non administrables par voie orale.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Vérification de l'absence de trouble de la coagulation avant l'injection.",
+    traitement:"Sites recommandés : quadrant supéro-externe de la fesse, face externe de la cuisse, deltoïde.",
+    prevention:"Aspiration avant injection pour éviter une injection intravasculaire accidentelle.",
+    complications:"Douleur, hématome, abcès, lésion nerveuse (nerf sciatique) si mauvaise technique.",
+    conseils:"Respecter l'asepsie, varier les points d'injection en cas de traitements répétés.",
+    references:"Soins infirmiers — Techniques de soins (INFAS)" },
+  { id:"apgar", terme:"Score d'APGAR", categorie:"Gynéco-Obstétrique",
+    definition:"Score d'évaluation clinique de l'état du nouveau-né à la naissance, coté de 0 à 10.",
+    causes:"Sans objet (outil d'évaluation).",
+    symptomes:"Sans objet.",
+    diagnostic:"Évalué à la 1ère, 5ème et 10ème minute de vie, sur 5 critères : mouvements respiratoires, rythme cardiaque, coloration, tonus musculaire, réponse aux excitations.",
+    examens:"Sans objet.",
+    traitement:"Un score bas oriente vers une réanimation néonatale immédiate.",
+    prevention:"Sans objet.",
+    complications:"Un score bas persistant à 10 minutes est associé à un risque de séquelles neurologiques.",
+    conseils:"Ne jamais retarder la réanimation du nouveau-né en attendant le calcul complet du score.",
+    references:"Gynéco-Obstétrique — Soins au nouveau-né (INFAS)" },
+  { id:"colostrum", terme:"Colostrum", categorie:"Gynéco-Obstétrique",
+    definition:"Premier lait sécrété par les glandes mammaires dans les premiers jours suivant l'accouchement, avant la montée laiteuse.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Recommandé pour la première tétée du nouveau-né.",
+    prevention:"Encourager la mise au sein précoce dans l'heure suivant la naissance.",
+    complications:"Sans objet.",
+    conseils:"Le colostrum, riche en anticorps, ne doit jamais être jeté ni remplacé par un autre lait.",
+    references:"Gynéco-Obstétrique — Allaitement (INFAS)" },
+  { id:"antibiotique", terme:"Antibiotique", categorie:"Pharmacologie",
+    definition:"Substance capable de détruire ou d'inhiber la croissance des bactéries.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Prescrit selon le germe suspecté ou identifié, idéalement guidé par un antibiogramme.",
+    examens:"Antibiogramme pour orienter le choix thérapeutique.",
+    traitement:"Respect strict de la posologie et de la durée prescrite.",
+    prevention:"Éviter l'usage inapproprié pour limiter l'antibiorésistance.",
+    complications:"Allergie, résistance bactérienne, toxicité selon la famille (rénale, auditive, hématologique).",
+    conseils:"Éduquer le patient à terminer le traitement même en cas d'amélioration des symptômes.",
+    references:"Bactériologie-Virologie — Généralités sur les antibiotiques (INFAS)" },
+  { id:"antipaludique", terme:"Antipaludique", categorie:"Pharmacologie",
+    definition:"Médicament utilisé pour le traitement ou la prévention du paludisme.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"CTA en 1ère intention pour le paludisme simple, artésunate injectable pour le paludisme grave.",
+    prevention:"Chimioprophylaxie chez les sujets non immuns, vaccination antipaludique du nourrisson.",
+    complications:"Certains antipaludiques (quinine) exposent à un risque d'hypoglycémie.",
+    conseils:"Vérifier le poids exact du patient pour un dosage précis, surveiller la tolérance digestive.",
+    references:"Paludisme chez l'enfant et l'adulte (INFAS)" },
+  { id:"ocytocine", terme:"Ocytocine", categorie:"Pharmacologie",
+    definition:"Hormone/médicament utilisé pour stimuler les contractions utérines lors de l'accouchement ou pour prévenir/traiter l'hémorragie du post-partum.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Administrée en injection IM ou en perfusion IV selon l'indication (délivrance dirigée, hémorragie du post-partum).",
+    prevention:"Utilisée en prévention systématique de l'hémorragie du post-partum (gestion active de la 3ème phase).",
+    complications:"Hypertonie utérine, souffrance fœtale si mal dosée avant la naissance.",
+    conseils:"Surveiller étroitement le rythme cardiaque fœtal et l'intensité des contractions.",
+    references:"Gynéco-Obstétrique — Délivrance normale (INFAS)" },
+  { id:"vitamine_k", terme:"Vitamine K1", categorie:"Pharmacologie",
+    definition:"Vitamine essentielle à la coagulation sanguine, administrée systématiquement au nouveau-né.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Administrée par voie orale ou injectable à la naissance pour prévenir l'hémorragie du nouveau-né.",
+    prevention:"Administration systématique à tout nouveau-né dès la naissance.",
+    complications:"Sans objet aux doses recommandées.",
+    conseils:"Ne jamais omettre cette administration systématique, quelle que soit la voie d'accouchement.",
+    references:"Gynéco-Obstétrique — Soins au nouveau-né (INFAS)" },
+  { id:"paracetamol", terme:"Paracétamol", categorie:"Pharmacologie",
+    definition:"Médicament antalgique et antipyrétique de première intention.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Posologie usuelle chez l'enfant : 15 mg/kg par prise, toutes les 4 à 6 heures.",
+    prevention:"Sans objet.",
+    complications:"Toxicité hépatique en cas de surdosage.",
+    conseils:"Respecter scrupuleusement la posologie pondérale chez l'enfant, ne pas dépasser 4 prises par jour.",
+    references:"Paludisme chez l'enfant — Traitement adjuvant (INFAS)" },
+  { id:"asepsie_dico", terme:"Asepsie", categorie:"Soins infirmiers",
+    definition:"Ensemble des mesures visant à empêcher tout apport de micro-organismes dans un milieu donné.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Lavage des mains, port de gants stériles, utilisation de matériel stérilisé.",
+    prevention:"Application systématique lors de tout acte invasif.",
+    complications:"Infection nosocomiale en cas de non-respect de l'asepsie.",
+    conseils:"L'asepsie doit être respectée à chaque étape d'un soin invasif, sans exception.",
+    references:"Sémiologie chirurgicale — Notion d'asepsie (INFAS)" },
+  { id:"antisepsie", terme:"Antisepsie", categorie:"Soins infirmiers",
+    definition:"Opération au résultat momentané visant à éliminer ou réduire les micro-organismes présents sur les tissus vivants (peau, muqueuses).",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Application d'un antiseptique (alcool, chlorhexidine, polyvidone iodée) avant tout geste invasif.",
+    prevention:"Systématique avant toute injection, prélèvement ou pansement de plaie.",
+    complications:"Infection locale en cas d'antisepsie insuffisante.",
+    conseils:"Respecter le temps de contact recommandé de l'antiseptique avant le geste.",
+    references:"Sémiologie chirurgicale (INFAS)" },
+  { id:"fievre_typhoide", terme:"Fièvre typhoïde", categorie:"Infectiologie-Bactériologie",
+    definition:"Infection bactérienne systémique due à Salmonella typhi, transmise par voie oro-fécale.",
+    causes:"Ingestion d'eau ou d'aliments contaminés par Salmonella typhi.",
+    symptomes:"Fièvre prolongée en plateau, céphalées, diarrhée ou constipation, tuphos (état confusionnel).",
+    diagnostic:"Hémoculture, sérodiagnostic de Widal.",
+    examens:"Hémoculture, coproculture, sérologie de Widal.",
+    traitement:"Antibiothérapie adaptée (fluoroquinolones ou céphalosporines de 3ème génération).",
+    prevention:"Hygiène alimentaire et de l'eau, vaccination dans certains contextes.",
+    complications:"Perforation intestinale, hémorragie digestive, décès si non traitée.",
+    conseils:"Différencier du paludisme par la fièvre en plateau et les tâches rosées lenticulaires.",
+    references:"Bactériologie-Virologie ; Paludisme (INFAS)" },
+  { id:"meningite", terme:"Méningite", categorie:"Infectiologie-Bactériologie",
+    definition:"Inflammation des méninges, membranes enveloppant le cerveau et la moelle épinière, d'origine le plus souvent infectieuse.",
+    causes:"Bactérienne (Neisseria meningitidis, pneumocoque), virale, ou autre agent infectieux.",
+    symptomes:"Fièvre, céphalées intenses, raideur de la nuque, photophobie, vomissements, convulsions.",
+    diagnostic:"Ponction lombaire avec analyse du liquide céphalo-rachidien (LCR).",
+    examens:"Ponction lombaire, NFS, hémoculture.",
+    traitement:"Antibiothérapie en urgence pour les formes bactériennes.",
+    prevention:"Vaccination antiméningococcique dans le cadre du PEV.",
+    complications:"Séquelles neurologiques, surdité, décès si prise en charge tardive.",
+    conseils:"Considérer toute fièvre avec raideur de nuque comme une urgence à référer immédiatement.",
+    references:"Bactériologie-Virologie ; Santé publique — PEV (INFAS)" },
+  { id:"gonococcie", terme:"Gonococcie", categorie:"Infectiologie-Bactériologie",
+    definition:"Infection sexuellement transmissible due à Neisseria gonorrhoeae.",
+    causes:"Transmission sexuelle, ou transmission mère-enfant lors de l'accouchement.",
+    symptomes:"Écoulement urétral ou vaginal purulent, brûlures mictionnelles ; chez le nouveau-né : ophtalmie purulente.",
+    diagnostic:"Prélèvement génital avec examen direct et culture.",
+    examens:"Prélèvement urétral ou cervico-vaginal, examen direct au Gram.",
+    traitement:"Antibiothérapie ciblée (pénicilline ou alternative selon la résistance).",
+    prevention:"Usage du préservatif, dépistage et traitement des partenaires.",
+    complications:"Stérilité, rétrécissement urétral, ophtalmie néonatale cécitante si non traitée.",
+    conseils:"Instiller systématiquement un collyre antibiotique chez tout nouveau-né en prévention.",
+    references:"Bactériologie-Virologie ; Gynéco-Obstétrique (INFAS)" },
+  { id:"choc_hypovolemique", terme:"Choc hypovolémique", categorie:"Sémiologie",
+    definition:"État de défaillance circulatoire aiguë lié à une diminution importante du volume sanguin circulant.",
+    causes:"Hémorragie sévère, déshydratation majeure, brûlures étendues.",
+    symptomes:"Pâleur, tachycardie, hypotension artérielle, extrémités froides, troubles de conscience.",
+    diagnostic:"Clinique, évaluation de la tension artérielle et du pouls.",
+    examens:"NFS, groupe sanguin, ionogramme.",
+    traitement:"Remplissage vasculaire en urgence, transfusion si hémorragie, traitement de la cause.",
+    prevention:"Prise en charge précoce des hémorragies et déshydratations.",
+    complications:"Défaillance multiviscérale, décès en l'absence de prise en charge rapide.",
+    conseils:"Reconnaître précocement les signes de choc (pâleur, tachycardie, extrémités froides) pour une prise en charge immédiate.",
+    references:"Secourisme ; Gynéco-Obstétrique — SONU (INFAS)" },
+  { id:"deshydratation", terme:"Déshydratation", categorie:"Sémiologie",
+    definition:"Perte excessive d'eau et d'électrolytes de l'organisme.",
+    causes:"Diarrhée, vomissements, fièvre prolongée, insuffisance d'apport hydrique.",
+    symptomes:"Soif intense, sécheresse des muqueuses, pli cutané persistant, yeux excavés, oligurie.",
+    diagnostic:"Clinique, évaluation du degré de déshydratation (léger, modéré, sévère).",
+    examens:"Ionogramme sanguin dans les formes sévères.",
+    traitement:"Réhydratation orale (SRO) dans les formes légères à modérées, réhydratation IV dans les formes sévères.",
+    prevention:"Hydratation adéquate, prise en charge précoce des diarrhées.",
+    complications:"Choc hypovolémique, insuffisance rénale aiguë, décès si non traitée.",
+    conseils:"Encourager la réhydratation orale précoce dès les premiers signes de diarrhée.",
+    references:"Secourisme ; Santé communautaire (INFAS)" },
+  { id:"malnutrition", terme:"Malnutrition protéino-énergétique", categorie:"Endocrinologie",
+    definition:"État pathologique résultant d'une carence ou d'un déséquilibre en apports protéiques et énergétiques.",
+    causes:"Apport alimentaire insuffisant, infections répétées, mauvaises pratiques de sevrage.",
+    symptomes:"Marasme (amaigrissement extrême) ou Kwashiorkor (œdèmes, cheveux décolorés, troubles cutanés).",
+    diagnostic:"Mesure du périmètre brachial, indice poids/taille, courbe de croissance.",
+    examens:"Périmètre brachial (PB), rapport poids/taille, bilan biologique si sévère.",
+    traitement:"Réhabilitation nutritionnelle progressive, traitement des complications associées.",
+    prevention:"Promotion de l'allaitement exclusif, diversification alimentaire adaptée, supplémentation en micronutriments.",
+    complications:"Retard de croissance, déficit immunitaire, décès dans les formes sévères non prises en charge.",
+    conseils:"Dépister systématiquement lors de toute consultation d'un enfant de moins de 5 ans.",
+    references:"Santé publique — Nutrition (INFAS)" },
+  { id:"vih_sida", terme:"VIH / SIDA", categorie:"Infectiologie-Bactériologie",
+    definition:"Infection due au Virus de l'Immunodéficience Humaine (VIH), pouvant évoluer vers le Syndrome d'Immunodéficience Acquise (SIDA).",
+    causes:"Transmission sexuelle, sanguine, ou de la mère à l'enfant (grossesse, accouchement, allaitement).",
+    symptomes:"Longtemps asymptomatique ; au stade SIDA : infections opportunistes, amaigrissement majeur.",
+    diagnostic:"Test de dépistage sérologique VIH.",
+    examens:"Sérologie VIH, numération des CD4, charge virale.",
+    traitement:"Traitement antirétroviral (ARV) au long cours.",
+    prevention:"Usage du préservatif, dépistage systématique, prévention de la transmission mère-enfant (PTME).",
+    complications:"Infections opportunistes graves, décès en l'absence de traitement.",
+    conseils:"Respecter la confidentialité stricte du statut sérologique, encourager l'observance du traitement ARV.",
+    references:"Santé publique ; Gynéco-Obstétrique (INFAS)" },
+  { id:"vaccin", terme:"Vaccin", categorie:"Pharmacologie",
+    definition:"Substance qui détermine dans l'organisme un état de résistance à une maladie donnée en faisant appel à ses défenses propres.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Administré selon le calendrier vaccinal national (PEV).",
+    prevention:"Constitue lui-même une mesure de prévention primaire.",
+    complications:"Manifestations adverses post-immunisation (MAPI), généralement bénignes et transitoires.",
+    conseils:"Respecter la chaîne de froid (2 à 8°C) et le calendrier vaccinal recommandé.",
+    references:"Santé publique — PEV (INFAS)" },
+  { id:"chaine_de_froid", terme:"Chaîne de froid", categorie:"Abréviations",
+    definition:"Dispositif continu de conservation des vaccins à une température convenable (2 à 8°C), depuis leur fabrication jusqu'à leur administration.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Toute rupture de la chaîne de froid compromet l'efficacité du vaccin.",
+    complications:"Perte d'efficacité vaccinale en cas de rupture de la chaîne de froid.",
+    conseils:"Vérifier systématiquement la température du réfrigérateur à vaccins avant toute séance de vaccination.",
+    references:"Santé publique — PEV (INFAS)" },
+  { id:"pev", terme:"PEV (Programme Élargi de Vaccination)", categorie:"Abréviations",
+    definition:"Programme national visant à assurer la protection vaccinale de l'enfant, de la femme enceinte et de la jeune fille contre les maladies évitables par la vaccination.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Vaccination systématique selon le calendrier national.",
+    complications:"Sans objet.",
+    conseils:"Toujours vérifier le carnet de vaccination de l'enfant à chaque consultation.",
+    references:"Santé publique — PEV (INFAS)" },
+  { id:"cpn", terme:"CPN (Consultation prénatale)", categorie:"Abréviations",
+    definition:"Consultation médicale de suivi de la grossesse, visant à dépister précocement les facteurs de risque et à préparer l'accouchement.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Minimum de 4 CPN recommandées pour une grossesse normale (directives PMA Côte d'Ivoire).",
+    prevention:"Dépistage précoce des complications de la grossesse.",
+    complications:"Sans objet.",
+    conseils:"Encourager toute femme enceinte à débuter sa CPN avant la fin du 3ème mois.",
+    references:"Gynéco-Obstétrique — CPN recentrée (INFAS)" },
+  { id:"sonu", terme:"SONU (Soins Obstétricaux et Néonataux d'Urgence)", categorie:"Abréviations",
+    definition:"Ensemble des soins offerts en urgence à toute femme et/ou à son enfant présentant des complications au cours de la grossesse, du travail ou des suites de couches.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"SONU de base (SONUB) ou SONU complet (SONUC, incluant chirurgie et transfusion).",
+    prevention:"Sans objet.",
+    complications:"Sans objet.",
+    conseils:"Connaître le niveau de plateau technique de référence (SONUB ou SONUC) le plus proche.",
+    references:"Gynéco-Obstétrique — SONU (INFAS)" },
+  { id:"ssp", terme:"SSP (Soins de Santé Primaires)", categorie:"Abréviations",
+    definition:"Soins essentiels rendus universellement accessibles aux individus et familles dans la communauté, à un coût acceptable pour la communauté et le pays.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Approche fondamentale de la stratégie Santé pour tous, adoptée à Alma-Ata en 1978.",
+    complications:"Sans objet.",
+    conseils:"Sans objet.",
+    references:"Santé communautaire — SSP (INFAS)" },
+  { id:"tdr", terme:"TDR (Test de Diagnostic Rapide)", categorie:"Abréviations",
+    definition:"Test rapide permettant de détecter un antigène spécifique, notamment utilisé pour le diagnostic du paludisme.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Basé sur la détection de l'antigène HRP-2, spécifique de Plasmodium falciparum.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"L'antigène peut persister environ 14 jours après la clairance parasitaire, risquant un faux positif.",
+    conseils:"Toujours interpréter le résultat du TDR avec le tableau clinique du patient.",
+    references:"Paludisme chez l'adulte (INFAS)" },
+  { id:"nfs", terme:"NFS (Numération Formule Sanguine)", categorie:"Abréviations",
+    definition:"Examen biologique de base analysant les éléments figurés du sang (globules rouges, globules blancs, plaquettes).",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Comprend une partie quantitative (numérations, taux d'Hb) et une partie qualitative (formule leucocytaire).",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"Sans objet.",
+    conseils:"Examen de première intention devant toute suspicion d'anémie, d'infection ou de trouble hématologique.",
+    references:"Hématologie — Hémogramme normal (INFAS)" },
+  { id:"ecbu", terme:"ECBU (Examen Cytobactériologique des Urines)", categorie:"Abréviations",
+    definition:"Examen de laboratoire permettant de rechercher et d'identifier une infection urinaire.",
+    causes:"Sans objet.",
+    symptomes:"Sans objet.",
+    diagnostic:"Le premier jet d'urine est rejeté pour éliminer les germes de la flore urétrale.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"Sans objet.",
+    conseils:"Recueillir les urines du matin, milieu de jet, dans un flacon stérile.",
+    references:"Bactériologie-Virologie — Diagnostic d'une infection bactérienne (INFAS)" },
+  { id:"cataracte", terme:"Cataracte", categorie:"Anatomie-Physiologie",
+    definition:"Opacification du cristallin entraînant une baisse progressive de la vision.",
+    causes:"Vieillissement (cause la plus fréquente), diabète, traumatisme oculaire, exposition solaire prolongée.",
+    symptomes:"Baisse progressive de l'acuité visuelle, éblouissement, vision trouble comme à travers un brouillard.",
+    diagnostic:"Examen ophtalmologique à la lampe à fente.",
+    examens:"Examen ophtalmologique complet.",
+    traitement:"Chirurgie (extraction du cristallin avec pose d'implant) au stade évolué.",
+    prevention:"Protection solaire des yeux, contrôle glycémique chez le diabétique.",
+    complications:"Cécité si non traitée.",
+    conseils:"Encourager la consultation ophtalmologique dès les premiers signes de baisse visuelle chez le sujet âgé.",
+    references:"Anatomie Physiologie — Organes de sens, l'œil (INFAS)" },
+  { id:"glaucome", terme:"Glaucome", categorie:"Anatomie-Physiologie",
+    definition:"Neuropathie optique liée le plus souvent à une augmentation de la pression intraoculaire.",
+    causes:"Augmentation de la pression intraoculaire, prédisposition familiale.",
+    symptomes:"Longtemps asymptomatique, puis rétrécissement progressif du champ visuel.",
+    diagnostic:"Mesure de la pression intraoculaire, examen du fond d'œil.",
+    examens:"Tonométrie, champ visuel, fond d'œil.",
+    traitement:"Collyres hypotonisants, chirurgie dans les formes évoluées.",
+    prevention:"Dépistage systématique après 40 ans, surtout en cas d'antécédents familiaux.",
+    complications:"Cécité irréversible si non traité.",
+    conseils:"Insister sur l'observance stricte du traitement, souvent à vie et sans symptôme ressenti.",
+    references:"Anatomie Physiologie — Organes de sens, l'œil (INFAS)" },
+  { id:"eczema", terme:"Eczéma", categorie:"Dermatologie",
+    definition:"Dermatose inflammatoire prurigineuse, pouvant être allergique (eczéma de contact) ou constitutionnelle (dermatite atopique).",
+    causes:"Allergène de contact, terrain atopique, irritants chimiques.",
+    symptomes:"Prurit, rougeur, vésicules, suintement puis desquamation.",
+    diagnostic:"Clinique, tests allergologiques (patch-tests) si eczéma de contact suspecté.",
+    examens:"Patch-tests en cas de doute sur l'allergène.",
+    traitement:"Dermocorticoïdes, émollients, éviction de l'allergène identifié.",
+    prevention:"Éviter le contact avec l'allergène identifié, hydratation cutanée régulière.",
+    complications:"Surinfection bactérienne des lésions grattées.",
+    conseils:"Décourager le grattage, insister sur l'hydratation cutanée quotidienne.",
+    references:"Sémiologie médicale (INFAS)" },
+  { id:"gale", terme:"Gale", categorie:"Dermatologie",
+    definition:"Ectoparasitose cutanée due à un acarien, Sarcoptes scabiei, très contagieuse.",
+    causes:"Contact cutané prolongé avec une personne infestée, ou par le linge contaminé.",
+    symptomes:"Prurit à recrudescence nocturne, sillons scabieux, vésicules interdigitales.",
+    diagnostic:"Clinique, examen dermatologique.",
+    examens:"Examen parasitologique cutané si disponible.",
+    traitement:"Traitement scabicide (topique ou oral), traitement simultané de tout l'entourage.",
+    prevention:"Traitement du linge et de la literie, éviction scolaire pendant le traitement.",
+    complications:"Surinfection bactérienne des lésions de grattage.",
+    conseils:"Traiter systématiquement tous les sujets contacts, même asymptomatiques.",
+    references:"Sémiologie médicale ; Santé communautaire (INFAS)" },
+  { id:"otite_moyenne_aigue", terme:"Otite moyenne aiguë", categorie:"Pédiatrie",
+    definition:"Infection aiguë de l'oreille moyenne, très fréquente chez le jeune enfant.",
+    causes:"Infection bactérienne ou virale, favorisée par une infection ORL récente.",
+    symptomes:"Otalgie, fièvre, irritabilité, parfois écoulement auriculaire si perforation tympanique.",
+    diagnostic:"Otoscopie.",
+    examens:"Otoscopie.",
+    traitement:"Antalgiques, antibiothérapie selon les critères de gravité et l'âge.",
+    prevention:"Traitement précoce des rhinopharyngites, éviter le tabagisme passif.",
+    complications:"Mastoïdite, perforation tympanique.",
+    conseils:"Chez le nourrisson, penser à l'otite devant toute fièvre inexpliquée avec irritabilité.",
+    references:"Sémiologie médicale ; Pédiatrie (INFAS)" },
+  { id:"rhume", terme:"Rhinopharyngite (rhume)", categorie:"Pédiatrie",
+    definition:"Infection virale bénigne des voies respiratoires supérieures, très fréquente chez l'enfant.",
+    causes:"Virus respiratoires (rhinovirus principalement).",
+    symptomes:"Écoulement nasal, obstruction nasale, toux, fièvre modérée.",
+    diagnostic:"Clinique.",
+    examens:"Aucun examen nécessaire en l'absence de complication.",
+    traitement:"Symptomatique : désobstruction nasale au sérum physiologique, antipyrétique si besoin.",
+    prevention:"Lavage des mains, éviter les foyers de contamination.",
+    complications:"Otite moyenne aiguë, sinusite, surinfection bronchique.",
+    conseils:"Rassurer les parents sur le caractère bénin et l'absence de besoin d'antibiotique.",
+    references:"Sémiologie médicale ; Pédiatrie (INFAS)" },
+  { id:"diarrhee_aigue", terme:"Diarrhée aiguë", categorie:"Pédiatrie",
+    definition:"Émission de selles liquides ou molles, fréquentes (plus de 3 par jour), d'apparition brutale.",
+    causes:"Infection virale (rotavirus le plus souvent chez l'enfant), bactérienne ou parasitaire.",
+    symptomes:"Selles liquides fréquentes, parfois vomissements et fièvre associés, risque de déshydratation.",
+    diagnostic:"Clinique, évaluation du degré de déshydratation.",
+    examens:"Coproculture si signes de gravité ou persistance.",
+    traitement:"Réhydratation orale (SRO), zinc, poursuite de l'alimentation.",
+    prevention:"Vaccination contre le rotavirus (PEV), hygiène de l'eau et des mains.",
+    complications:"Déshydratation sévère, dénutrition.",
+    conseils:"Ne jamais interrompre l'allaitement pendant un épisode de diarrhée.",
+    references:"Santé publique — PEV ; Santé communautaire (INFAS)" },
+  { id:"bronchiolite", terme:"Bronchiolite", categorie:"Pédiatrie",
+    definition:"Infection virale des petites voies respiratoires (bronchioles), touchant surtout le nourrisson de moins de 2 ans.",
+    causes:"Virus respiratoire syncytial (VRS) le plus souvent.",
+    symptomes:"Toux, sifflement respiratoire (wheezing), difficulté respiratoire, difficultés alimentaires.",
+    diagnostic:"Clinique.",
+    examens:"Saturation en oxygène, radiographie thoracique si forme sévère.",
+    traitement:"Désobstruction nasale, fractionnement des repas, oxygénothérapie si besoin.",
+    prevention:"Lavage des mains, éviction des lieux à risque pour les nourrissons fragiles.",
+    complications:"Détresse respiratoire aiguë, apnées chez le très jeune nourrisson.",
+    conseils:"Surveiller les signes de détresse respiratoire (tirage, battement des ailes du nez, cyanose).",
+    references:"Sémiologie médicale ; Pédiatrie (INFAS)" },
+  { id:"asthme", terme:"Asthme", categorie:"Sémiologie",
+    definition:"Maladie inflammatoire chronique des voies aériennes, entraînant des épisodes récurrents de gêne respiratoire.",
+    causes:"Facteurs allergiques, génétiques, environnementaux (pollution, tabac).",
+    symptomes:"Dyspnée sifflante, toux, oppression thoracique, souvent nocturne ou à l'effort.",
+    diagnostic:"Clinique, exploration fonctionnelle respiratoire (EFR) chez l'adulte.",
+    examens:"EFR, radiographie thoracique pour éliminer un diagnostic différentiel.",
+    traitement:"Bronchodilatateurs de courte durée d'action en crise, corticoïdes inhalés en traitement de fond.",
+    prevention:"Éviction des allergènes et facteurs déclenchants identifiés.",
+    complications:"Crise d'asthme aiguë grave, pouvant engager le pronostic vital.",
+    conseils:"Éduquer à la technique d'inhalation correcte et à la reconnaissance des signes de crise sévère.",
+    references:"Sémiologie médicale (INFAS)" },
+  { id:"otite_externe", terme:"Otite externe", categorie:"Sémiologie",
+    definition:"Inflammation ou infection du conduit auditif externe.",
+    causes:"Infection bactérienne ou fongique, favorisée par la macération (baignade) ou un traumatisme local.",
+    symptomes:"Douleur auriculaire majorée à la traction du pavillon, prurit, parfois écoulement.",
+    diagnostic:"Otoscopie.",
+    examens:"Prélèvement si résistance au traitement initial.",
+    traitement:"Gouttes auriculaires antibiotiques ou antifongiques selon la cause.",
+    prevention:"Éviter l'introduction de coton-tige dans le conduit auditif, sécher les oreilles après la baignade.",
+    complications:"Extension infectieuse, otite externe maligne chez le diabétique.",
+    conseils:"Déconseiller le nettoyage agressif du conduit auditif.",
+    references:"Sémiologie médicale (INFAS)" },
+];
+
+/* ---------------- Dictionnaire médical — stockage favoris & historique ---------------- */
+function dictFavKey(matricule) {
+  return `infas-hemato:dict-fav:${sanitizeKeyPart(matricule)}`;
+}
+function dictHistKey(matricule) {
+  return `infas-hemato:dict-hist:${sanitizeKeyPart(matricule)}`;
+}
+async function loadDictFavorites(matricule) {
+  try {
+    const res = await storage.get(dictFavKey(matricule), true);
+    return res ? JSON.parse(res.value) : [];
+  } catch { return []; }
+}
+async function saveDictFavorites(matricule, favs) {
+  try { await storage.set(dictFavKey(matricule), JSON.stringify(favs), true); } catch (e) { console.error(e); }
+}
+async function loadDictHistory(matricule) {
+  try {
+    const res = await storage.get(dictHistKey(matricule), true);
+    return res ? JSON.parse(res.value) : [];
+  } catch { return []; }
+}
+async function saveDictHistory(matricule, hist) {
+  try { await storage.set(dictHistKey(matricule), JSON.stringify(hist), true); } catch (e) { console.error(e); }
+}
+
+const DICT_CATEGORIES = Array.from(new Set(MEDICAL_DICT.map((e) => e.categorie))).sort((a, b) => a.localeCompare(b, "fr"));
+const DICT_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+function normalizeForSearch(s) {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function DictionaryScreen({ onBack, student }) {
+  const [query, setQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("Toutes");
+  const [activeLetter, setActiveLetter] = useState(null);
+  const [selectedTerm, setSelectedTerm] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [view, setView] = useState("liste"); // liste | favoris | historique
+  const [loading, setLoading] = useState(true);
+  const searchBoxRef = useRef(null);
+
+  useEffect(() => {
+    if (!student?.matricule) return;
+    Promise.all([loadDictFavorites(student.matricule), loadDictHistory(student.matricule)]).then(
+      ([favs, hist]) => {
+        setFavorites(favs);
+        setHistory(hist);
+        setLoading(false);
+      }
+    );
+  }, [student]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) setShowSuggestions(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const normalizedQuery = normalizeForSearch(query);
+
+  const suggestions = useMemo(() => {
+    if (!normalizedQuery) return [];
+    return MEDICAL_DICT.filter((e) => normalizeForSearch(e.terme).includes(normalizedQuery)).slice(0, 6);
+  }, [normalizedQuery]);
+
+  const filteredTerms = useMemo(() => {
+    let list = MEDICAL_DICT;
+    if (activeCategory !== "Toutes") list = list.filter((e) => e.categorie === activeCategory);
+    if (activeLetter) list = list.filter((e) => normalizeForSearch(e.terme)[0] === activeLetter.toLowerCase());
+    if (normalizedQuery) {
+      list = list.filter(
+        (e) => normalizeForSearch(e.terme).includes(normalizedQuery) || normalizeForSearch(e.definition).includes(normalizedQuery)
+      );
+    }
+    return [...list].sort((a, b) => a.terme.localeCompare(b.terme, "fr"));
+  }, [activeCategory, activeLetter, normalizedQuery]);
+
+  const favoriteEntries = useMemo(
+    () => MEDICAL_DICT.filter((e) => favorites.includes(e.id)).sort((a, b) => a.terme.localeCompare(b.terme, "fr")),
+    [favorites]
+  );
+
+  const openTerm = (entry) => {
+    setSelectedTerm(entry);
+    setShowSuggestions(false);
+    if (student?.matricule) {
+      const newHist = [entry.id, ...history.filter((h) => h !== entry.id)].slice(0, 15);
+      setHistory(newHist);
+      saveDictHistory(student.matricule, newHist);
+    }
+  };
+
+  const toggleFavorite = (id) => {
+    const isFav = favorites.includes(id);
+    const newFavs = isFav ? favorites.filter((f) => f !== id) : [...favorites, id];
+    setFavorites(newFavs);
+    if (student?.matricule) saveDictFavorites(student.matricule, newFavs);
+  };
+
+  const historyEntries = useMemo(
+    () => history.map((id) => MEDICAL_DICT.find((e) => e.id === id)).filter(Boolean),
+    [history]
+  );
+
+  if (selectedTerm) {
+    const isFav = favorites.includes(selectedTerm.id);
+    const fields = [
+      ["Définition", selectedTerm.definition],
+      ["Causes", selectedTerm.causes],
+      ["Symptômes", selectedTerm.symptomes],
+      ["Diagnostic", selectedTerm.diagnostic],
+      ["Examens complémentaires", selectedTerm.examens],
+      ["Traitement", selectedTerm.traitement],
+      ["Prévention", selectedTerm.prevention],
+      ["Complications", selectedTerm.complications],
+      ["Conseils infirmiers", selectedTerm.conseils],
+    ];
+    return (
+      <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+        <TopBar onLogout={onBack} />
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "24px 18px 60px" }}>
+          <button onClick={() => setSelectedTerm(null)} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+            ← Retour au dictionnaire
+          </button>
+          <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 6 }}>
+              <div>
+                <Badge tone="blue">{selectedTerm.categorie}</Badge>
+                <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, color: COLORS.ink, margin: "10px 0 0" }}>
+                  {selectedTerm.terme}
+                </h1>
+              </div>
+              <button
+                onClick={() => toggleFavorite(selectedTerm.id)}
+                title={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+                style={{
+                  border: `1.5px solid ${isFav ? COLORS.amber : COLORS.line}`, background: isFav ? COLORS.amberSoft : "white",
+                  borderRadius: 10, width: 40, height: 40, fontSize: 18, cursor: "pointer", flexShrink: 0,
+                  color: isFav ? COLORS.amber : COLORS.inkSoft,
+                }}
+              >
+                {isFav ? "★" : "☆"}
+              </button>
+            </div>
+            <TraceDivider />
+            <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 16 }}>
+              {fields.map(([label, value]) => (
+                <div key={label}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4, marginBottom: 4, textTransform: "uppercase" }}>
+                    {label}
+                  </div>
+                  <div style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.6 }}>{value}</div>
+                </div>
+              ))}
+              <div style={{ fontSize: 11, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", borderTop: `1px dashed ${COLORS.line}`, paddingTop: 12 }}>
+                Réf. cours : {selectedTerm.references}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: "26px 18px 60px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
+        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 21, color: COLORS.ink, marginBottom: 4 }}>📖 Dictionnaire médical</h1>
+        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 18 }}>
+          Recherchez un terme médical, une maladie, un symptôme, un médicament ou une abréviation.
+        </p>
+
+        {/* Barre de recherche avec autocomplétion */}
+        <div ref={searchBoxRef} style={{ position: "relative", marginBottom: 16 }}>
+          <input
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setShowSuggestions(true); }}
+            onFocus={() => setShowSuggestions(true)}
+            placeholder="Rechercher un terme (ex : anémie, tachycardie, PEV…)"
+            style={{ ...inputStyle, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 14, padding: "12px 14px" }}
+          />
+          {showSuggestions && suggestions.length > 0 && (
+            <div
+              style={{
+                position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4, background: "white",
+                border: `1px solid ${COLORS.line}`, borderRadius: 10, boxShadow: "0 6px 18px rgba(15,39,51,0.12)",
+                zIndex: 20, overflow: "hidden",
+              }}
+            >
+              {suggestions.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => { setQuery(s.terme); openTerm(s); }}
+                  style={{
+                    display: "block", width: "100%", textAlign: "left", padding: "10px 14px", border: "none",
+                    background: "white", cursor: "pointer", fontSize: 13, color: COLORS.ink, borderBottom: `1px solid ${COLORS.line}`,
+                  }}
+                >
+                  <b>{s.terme}</b> <span style={{ color: COLORS.inkSoft, fontSize: 11 }}>· {s.categorie}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Onglets liste / favoris / historique */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+          {[
+            ["liste", "Tous les termes"],
+            ["favoris", `Favoris (${favorites.length})`],
+            ["historique", "Historique"],
+          ].map(([id, label]) => (
+            <button
+              key={id}
+              onClick={() => setView(id)}
+              style={{
+                padding: "7px 14px", borderRadius: 999, fontSize: 12.5, fontWeight: 600, cursor: "pointer",
+                border: view === id ? `1.5px solid ${COLORS.blue}` : `1px solid ${COLORS.line}`,
+                background: view === id ? COLORS.blueSoft : "white", color: view === id ? COLORS.blueDeep : COLORS.inkSoft,
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {view === "liste" && (
+          <>
+            {/* Filtres par catégorie */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
+              <button
+                onClick={() => setActiveCategory("Toutes")}
+                style={{
+                  padding: "5px 11px", borderRadius: 999, fontSize: 11.5, cursor: "pointer",
+                  border: activeCategory === "Toutes" ? `1.5px solid ${COLORS.green}` : `1px solid ${COLORS.line}`,
+                  background: activeCategory === "Toutes" ? COLORS.greenSoft : "white",
+                  color: activeCategory === "Toutes" ? COLORS.green : COLORS.inkSoft, fontWeight: 600,
+                }}
+              >
+                Toutes catégories
+              </button>
+              {DICT_CATEGORIES.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setActiveCategory(c)}
+                  style={{
+                    padding: "5px 11px", borderRadius: 999, fontSize: 11.5, cursor: "pointer",
+                    border: activeCategory === c ? `1.5px solid ${COLORS.green}` : `1px solid ${COLORS.line}`,
+                    background: activeCategory === c ? COLORS.greenSoft : "white",
+                    color: activeCategory === c ? COLORS.green : COLORS.inkSoft, fontWeight: 600,
+                  }}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+
+            {/* Index alphabétique */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 16 }}>
+              <button
+                onClick={() => setActiveLetter(null)}
+                style={{
+                  width: 26, height: 26, borderRadius: 6, fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", cursor: "pointer",
+                  border: !activeLetter ? `1.5px solid ${COLORS.blue}` : `1px solid ${COLORS.line}`,
+                  background: !activeLetter ? COLORS.blueSoft : "white", color: !activeLetter ? COLORS.blueDeep : COLORS.inkSoft,
+                }}
+              >
+                A-Z
+              </button>
+              {DICT_LETTERS.map((l) => {
+                const has = MEDICAL_DICT.some((e) => normalizeForSearch(e.terme)[0] === l.toLowerCase());
+                return (
+                  <button
+                    key={l}
+                    onClick={() => has && setActiveLetter(l)}
+                    disabled={!has}
+                    style={{
+                      width: 26, height: 26, borderRadius: 6, fontSize: 11, fontFamily: "'IBM Plex Mono', monospace",
+                      cursor: has ? "pointer" : "default",
+                      border: activeLetter === l ? `1.5px solid ${COLORS.blue}` : `1px solid ${COLORS.line}`,
+                      background: activeLetter === l ? COLORS.blueSoft : "white",
+                      color: !has ? "#CBD5DA" : activeLetter === l ? COLORS.blueDeep : COLORS.inkSoft,
+                    }}
+                  >
+                    {l}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginBottom: 8 }}>{filteredTerms.length} terme(s)</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {filteredTerms.map((e) => (
+                <DictTermRow key={e.id} entry={e} isFav={favorites.includes(e.id)} onOpen={() => openTerm(e)} onToggleFav={() => toggleFavorite(e.id)} />
+              ))}
+              {filteredTerms.length === 0 && (
+                <div style={{ fontSize: 13, color: COLORS.inkSoft, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18 }}>
+                  Aucun terme ne correspond à cette recherche.
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {view === "favoris" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {favoriteEntries.length === 0 ? (
+              <div style={{ fontSize: 13, color: COLORS.inkSoft, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18 }}>
+                Aucun terme favori pour l'instant — cliquez sur l'étoile ☆ d'un terme pour l'ajouter ici.
+              </div>
+            ) : (
+              favoriteEntries.map((e) => (
+                <DictTermRow key={e.id} entry={e} isFav={true} onOpen={() => openTerm(e)} onToggleFav={() => toggleFavorite(e.id)} />
+              ))
+            )}
+          </div>
+        )}
+
+        {view === "historique" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {historyEntries.length === 0 ? (
+              <div style={{ fontSize: 13, color: COLORS.inkSoft, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18 }}>
+                Aucune recherche récente.
+              </div>
+            ) : (
+              historyEntries.map((e) => (
+                <DictTermRow key={e.id} entry={e} isFav={favorites.includes(e.id)} onOpen={() => openTerm(e)} onToggleFav={() => toggleFavorite(e.id)} />
+              ))
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DictTermRow({ entry, isFav, onOpen, onToggleFav }) {
+  return (
+    <div
+      style={{
+        display: "flex", alignItems: "center", gap: 10, background: COLORS.surface, border: `1px solid ${COLORS.line}`,
+        borderRadius: 12, padding: "12px 14px",
+      }}
+    >
+      <button onClick={onOpen} style={{ flex: 1, textAlign: "left", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.ink }}>{entry.terme}</div>
+        <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginTop: 2 }}>{entry.categorie}</div>
+      </button>
+      <button
+        onClick={onToggleFav}
+        title={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+        style={{ border: "none", background: "none", cursor: "pointer", fontSize: 18, color: isFav ? COLORS.amber : "#CBD5DA", flexShrink: 0 }}
+      >
+        {isFav ? "★" : "☆"}
+      </button>
+    </div>
+  );
+}
 function Logo({ size = 34 }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -5441,8 +7404,11 @@ const VIP_ACCOUNTS = [
 function findVIP(matricule) {
   return VIP_ACCOUNTS.find((v) => v.matricule === matricule) || null;
 }
+// Matricules déjà inscrits normalement (mot de passe = leur propre année de naissance),
+// à qui on accorde en plus le statut VIP (accès illimité) sans toucher à leurs identifiants.
+const VIP_MATRICULES_EXTRA = ["25-01061", "25-00899"];
 function isVIPMatricule(matricule) {
-  return VIP_ACCOUNTS.some((v) => v.matricule === matricule);
+  return VIP_ACCOUNTS.some((v) => v.matricule === matricule) || VIP_MATRICULES_EXTRA.includes(matricule);
 }
 
 const INTRO_SEEN_KEY = "infas-hemato:intro-seen";
@@ -5524,12 +7490,13 @@ function LoginScreen({ onLogin }) {
     }
 
     setBusy(true);
-    const student = await findStudent(matricule.trim());
+    let student = await findStudent(matricule.trim());
     setBusy(false);
     if (!student || student.anneeNaissance !== pwd.trim()) {
       setError("Identifiant ou mot de passe incorrect. Si vous n'avez pas encore de compte, créez-en un.");
       return;
     }
+    student = await applyTrialReset15IfNeeded(student);
     onLogin("student", student);
   };
 
@@ -6310,7 +8277,7 @@ function AnnouncementsFeed({ student }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onLogout, student, onMarkPending }) {
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onLogout, student, onMarkPending }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -6375,20 +8342,27 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
               {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Ouvrir →"}
             </button>
           </div>
-          <div style={{ background: COLORS.amber, borderRadius: 16, padding: "20px 20px", color: "white", opacity: !access.isPaid ? 0.55 : 1, position: "relative" }}>
-            {!access.isPaid && <div style={{ position: "absolute", top: 12, right: 12, fontSize: 10.5, fontWeight: 700, background: "rgba(255,255,255,0.25)", borderRadius: 999, padding: "3px 9px" }}>🔒 Abonnement</div>}
+          <div style={{ background: COLORS.amber, borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1, position: "relative" }}>
+            {!access.isPaid && !access.isVIP && <div style={{ position: "absolute", top: 12, right: 12, fontSize: 10.5, fontWeight: 700, background: "rgba(255,255,255,0.25)", borderRadius: 999, padding: "3px 9px" }}>🎁 Essai</div>}
             <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🧠 Diagnostic infirmier</div>
             <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Aucune proposition affichée : répondez en texte libre (diagnostic, examens, conduite à tenir, soins). Une IA corrige et explique votre réponse.</div>
-            <button onClick={onDiagnosticInfirmier} disabled={access.isBlocked || !access.isPaid} style={{ ...primaryBtn, background: "white", color: COLORS.amber, width: "100%", cursor: (access.isBlocked || !access.isPaid) ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : !access.isPaid ? "Accessible sous abonnement" : "Commencer →"}
+            <button onClick={onDiagnosticInfirmier} disabled={access.isBlocked} style={{ ...primaryBtn, background: "white", color: COLORS.amber, width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
+              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Commencer →"}
             </button>
           </div>
-          <div style={{ background: "#6B4FA0", borderRadius: 16, padding: "20px 20px", color: "white", opacity: !access.isPaid ? 0.55 : 1, position: "relative" }}>
-            {!access.isPaid && <div style={{ position: "absolute", top: 12, right: 12, fontSize: 10.5, fontWeight: 700, background: "rgba(255,255,255,0.25)", borderRadius: 999, padding: "3px 9px" }}>🔒 Abonnement</div>}
+          <div style={{ background: "#6B4FA0", borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1, position: "relative" }}>
+            {!access.isPaid && !access.isVIP && <div style={{ position: "absolute", top: 12, right: 12, fontSize: 10.5, fontWeight: 700, background: "rgba(255,255,255,0.25)", borderRadius: 999, padding: "3px 9px" }}>🎁 Essai</div>}
             <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🧑‍⚕️ Patient virtuel</div>
             <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Discutez avec un patient simulé, demandez les examens utiles, puis posez votre diagnostic et votre prise en charge. Le plus immersif.</div>
-            <button onClick={onVirtualPatient} disabled={access.isBlocked || !access.isPaid} style={{ ...primaryBtn, background: "white", color: "#6B4FA0", width: "100%", cursor: (access.isBlocked || !access.isPaid) ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : !access.isPaid ? "Accessible sous abonnement" : "Commencer →"}
+            <button onClick={onVirtualPatient} disabled={access.isBlocked} style={{ ...primaryBtn, background: "white", color: "#6B4FA0", width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
+              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Commencer →"}
+            </button>
+          </div>
+          <div style={{ background: "#0E7C7B", borderRadius: 16, padding: "20px 20px", color: "white" }}>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📖 Dictionnaire médical</div>
+            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Recherchez un terme, une maladie, un médicament ou une abréviation. Filtres par catégorie, favoris et historique de recherche.</div>
+            <button onClick={onDictionary} style={{ ...primaryBtn, background: "white", color: "#0E7C7B", width: "100%" }}>
+              Rechercher un terme →
             </button>
           </div>
         </div>
@@ -7850,7 +9824,7 @@ function ResultsScreen({ result, levelId, durationSec, onBackToDashboard }) {
 /* ================= APP ================= */
 export default function App() {
   useGoogleFonts();
-  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training
+  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training | dictionary
   const [role, setRole] = useState(null); // "admin" | "student"
   const [history, setHistory] = useState([]);
   const [exam, setExam] = useState(null);
@@ -7996,8 +9970,10 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
   }
+
+  if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
 
   if (screen === "matieres") return <MatieresScreen onBack={handleAbort} onSelect={handleSelectSubject} />;
 
