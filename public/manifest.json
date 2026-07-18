@@ -1,32 +1,23 @@
 {
-  "name": "INFAS · Hémato — Préparation aux examens",
+  "id": "/",
+  "name": "INFAS Prépa - Agent de Santé Nouveau",
   "short_name": "INFAS Prépa",
-  "description": "Plateforme de préparation aux examens INFAS L1 IDE-SFM.",
+  "description": "Plateforme de préparation aux examens INFAS Licence 1 IDE-SFM : QCM, cas cliniques, examens blancs, dictionnaire médical et suivi de progression.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "portrait-primary",
   "background_color": "#F5F9FB",
   "theme_color": "#073A57",
   "lang": "fr",
+  "dir": "ltr",
+  "categories": ["education", "medical", "productivity"],
+  "prefer_related_applications": false,
   "icons": [
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "/icons/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/web-app-manifest-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/web-app-manifest-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

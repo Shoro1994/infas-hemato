@@ -5680,6 +5680,368 @@ const DEONTO_EXAM_RAW = [
     "La déontologie permet d'encadrer les relations professionnelles et de renforcer la confiance du public ; elle ne vise ni à supprimer les lois ni à garantir une augmentation des revenus.",
     "Déontologie (INFAS) – Rôle de la déontologie"],
 ];
+/* ---- Anatomie Physiologie — compléments issus des exercices d'application officiels INFAS ---- */
+const ANATPHYSIO_EXO_RAW = [
+  ["QCU","cellule_organites",2,"Parmi les éléments suivants, lequel ne fait PAS partie du noyau d'une cellule ?",
+    ["Les mitochondries","Le nucléole","Le suc nucléaire","La chromatine"],[0],
+    "Le noyau d'une cellule est constitué du nucléole, du suc nucléaire et de la chromatine ; les mitochondries sont des organites cytoplasmiques, extérieurs au noyau.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°1, Cellule"],
+  ["QCM","urinaire_physio",2,"La formation des urines passe par trois mécanismes parmi les suivants, lesquels ?",
+    ["La filtration glomérulaire","La réabsorption tubulaire","La sécrétion tubulaire","L'évaporation tubulaire"],[0,1,2],
+    "La formation des urines passe par la filtration glomérulaire, la réabsorption tubulaire et la sécrétion tubulaire ; l'évaporation tubulaire n'existe pas en physiologie rénale.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°1, Appareil urinaire"],
+  ["QCU","gyneco_cycle",2,"Les règles durent en moyenne :",
+    ["4 à 5 jours","2 à 3 jours","6 à 7 jours","10 jours"],[0],
+    "Selon les exercices officiels du cours, les règles durent en moyenne 4 à 5 jours.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°1, Cycle menstruel"],
+  ["QCM","urinaire_reins",1,"L'utérus non gravide comprend trois parties parmi les suivantes ; laquelle N'EN fait PAS partie ?",
+    ["Le segment inférieur","Le corps de l'utérus","L'isthme utérin","Le col utérin"],[0],
+    "L'utérus non gravide comprend trois parties : le corps de l'utérus, l'isthme utérin et le col utérin ; le segment inférieur est une structure qui n'apparaît que pendant la grossesse (utérus gravide).",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°1, Appareil génital"],
+  ["QCM","gonades_testicule",1,"Les testicules ont deux fonctions principales parmi les suivantes, lesquelles ?",
+    ["La production de testostérone","La production de spermatozoïdes","Permettre l'acte sexuel","Acheminer l'urine"],[0,1],
+    "Les deux fonctions principales des testicules sont la production de testostérone (fonction endocrine) et la production de spermatozoïdes (fonction exocrine) ; l'acte sexuel et l'acheminement de l'urine ne sont pas des fonctions testiculaires propres.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°1, Appareil génital masculin"],
+  ["QCU","glandes_endocrines_gen",2,"Ce sont les cellules bêta des îlots de Langerhans qui sécrètent l'insuline, et non les cellules alpha, lesquelles sécrètent :",
+    ["Le glucagon","La somatostatine","L'adrénaline","La calcitonine"],[0],
+    "Contrairement à une confusion fréquente, ce sont les cellules bêta des îlots de Langerhans qui sécrètent l'insuline ; les cellules alpha sécrètent le glucagon, hormone hyperglycémiante.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Pancréas endocrine"],
+  ["QCU","respiratoire_mecanique",2,"Le diaphragme est le muscle essentiel de :",
+    ["L'inspiration","L'expiration","La phonation exclusivement","La déglutition exclusivement"],[0],
+    "Le diaphragme est le muscle inspirateur essentiel (et non expirateur) ; les muscles élévateurs des côtes sont, quant à eux, des muscles inspirateurs accessoires.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Appareil respiratoire"],
+  ["QCU","cellule_gen",1,"Une cellule est constituée principalement de :",
+    ["Trois parties (membrane, cytoplasme, noyau)","Une seule partie indivisible","Cinq parties distinctes","Deux parties uniquement"],[0],
+    "Une cellule est constituée principalement de trois parties : la membrane cellulaire, le cytoplasme et le noyau.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Cellule"],
+  ["QCU","osteologie_structure",2,"Concernant les trois dimensions des os longs (longueur, largeur, épaisseur), il est correct de dire qu'elles sont :",
+    ["De grandeur inégale, la longueur prédominant nettement","De grandeur strictement comparable","Toutes égales à la largeur","Sans rapport avec la classification de l'os"],[0],
+    "Dans un os long, les trois dimensions ne sont pas de grandeur comparable : la longueur prédomine nettement sur la largeur et l'épaisseur, ce qui définit précisément la catégorie des os longs.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Ostéologie"],
+  ["QCU","tissus_epithelium",2,"Un épithélium simple est formé de :",
+    ["Une seule couche de cellules reposant sur une membrane basale","Plusieurs couches de cellules superposées","Cellules exclusivement kératinisées","Cellules dépourvues de membrane basale"],[0],
+    "Un épithélium simple est formé d'une seule couche de cellules qui repose sur une membrane (matrice) basale ; un épithélium stratifié comporte au contraire plusieurs couches.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Tissus"],
+  ["QCU","tissus_conjonctif",2,"Le tissu adipeux est un type de :",
+    ["Tissu conjonctif","Tissu épithélial","Tissu nerveux","Tissu musculaire strié"],[0],
+    "Le tissu adipeux est un tissu conjonctif spécialisé dans le stockage des graisses.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Tissus"],
+  ["QCU","osteologie_face",2,"La dent numérotée 47 dans la nomenclature dentaire correspond à :",
+    ["La 2ème molaire inférieure droite","La 1ère incisive supérieure gauche","La canine supérieure droite","La 3ème molaire (dent de sagesse) inférieure gauche"],[0],
+    "Selon la nomenclature dentaire internationale utilisée dans le cours, la dent n°47 correspond à la 2ème molaire inférieure droite.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Système dentaire"],
+  ["QCU","oreille_interne",2,"La cavité de l'oreille moyenne s'ouvre dans le pharynx par :",
+    ["La trompe d'Eustache","Le conduit auditif externe","La fenêtre ovale","La fenêtre ronde"],[0],
+    "La cavité de l'oreille moyenne (et non l'oreille interne) communique avec le pharynx (rhinopharynx) par la trompe d'Eustache, ce qui permet l'équilibrage des pressions.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Organes des sens"],
+  ["QCM","tissus_conjonctif",2,"Concernant le tissu conjonctif, toutes les assertions suivantes sont exactes SAUF une, laquelle ?",
+    ["Il active directement la mitose des cellules voisines","C'est un tissu de soutien","Il a un rôle nutritif","Il intervient dans la défense de l'organisme"],[0],
+    "Le tissu conjonctif est un tissu de soutien, ayant un rôle nutritif, constituant une réserve d'énergie (tissu adipeux) et intervenant dans la défense de l'organisme ; il n'a en revanche pas pour fonction propre d'activer la mitose des cellules.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Tissus"],
+  ["QCU","digestif_estomac",2,"Le cardia est l'orifice :",
+    ["D'entrée de l'estomac (jonction œso-gastrique)","De sortie de l'estomac vers le duodénum","De communication entre les deux ventricules cardiaques","Du canal cystique"],[0],
+    "Le cardia est l'orifice d'entrée de l'estomac (jonction avec l'œsophage), et non l'orifice de sortie ; l'orifice de sortie de l'estomac vers le duodénum est le pylore.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Appareil digestif"],
+  ["QCU","digestif_absorption",2,"Les lipides digérés sont principalement absorbés par diffusion dans :",
+    ["Les chylifères (vaisseaux lymphatiques intestinaux)","Les capillaires sanguins directement","Les voies biliaires","Le canal cystique"],[0],
+    "Les protides et les glucides diffusent dans les capillaires sanguins, tandis que les lipides diffusent principalement dans les chylifères, vaisseaux lymphatiques de la muqueuse intestinale.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Absorption digestive"],
+  ["QCU","tissus_epithelium",2,"Parmi les types d'épithéliums, celui qui supporte le mieux les frictions (frottements répétés) est l'épithélium :",
+    ["Stratifié squameux","Simple squameux","Simple cuboïde","Simple prismatique"],[0],
+    "L'épithélium stratifié squameux, formé de plusieurs couches de cellules, est celui qui résiste le mieux aux frictions répétées (c'est le type retrouvé notamment dans l'épiderme et la muqueuse buccale).",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Tissus"],
+  ["QCU","tissus_conjonctif",2,"Parmi les tissus conjonctifs suivants, celui qui agit comme une éponge en absorbant les liquides en cas d'œdème est le tissu :",
+    ["Aréolaire","Osseux","Cartilagineux","Adipeux"],[0],
+    "Le tissu conjonctif aréolaire (lâche) agit comme une éponge, capable d'absorber les liquides en excès en cas d'œdème.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Tissus"],
+  ["QCM","osteologie_face",2,"La mâchoire supérieure (massif facial) est constituée par plusieurs os, à l'EXCEPTION d'un seul ; lequel n'en fait pas partie ?",
+    ["L'os malaire (zygomatique)","Le cornet supérieur","Le vomer","Le cornet inférieur"],[0],
+    "Selon l'exercice officiel, la mâchoire supérieure regroupe le cornet supérieur, le vomer, le cornet inférieur et le palatin ; l'os malaire (zygomatique), bien qu'osseux facial, n'est pas comptabilisé dans ce sous-ensemble précis de l'exercice.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Ostéologie de la face"],
+  ["QCM","osteologie_structure",2,"Le tissu osseux compact est constitué de deux éléments principaux parmi les suivants, lesquels ?",
+    ["Les ostéoblastes","Les ostéoclastes","La membrane fibroblastique","La substance fondamentale seule"],[0,1],
+    "Selon l'exercice, le tissu osseux compact est notamment constitué des ostéoblastes (cellules formatrices) et des ostéoclastes (cellules qui résorbent l'os), acteurs du remodelage osseux permanent.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Structure de l'os"],
+  ["QCM","osteologie_crane",1,"Parmi les os suivants, lesquels participent à la formation de la voûte et de la base du crâne ?",
+    ["L'ethmoïde","Le frontal","Le pariétal","L'occipital"],[0,1,2,3],
+    "La voûte et la base du crâne sont formées notamment par l'ethmoïde, le frontal, le pariétal, l'occipital et le temporal.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Ostéologie du crâne"],
+  ["QCM","osteologie_croissance",2,"L'accroissement en longueur d'un os long résulte de deux processus simultanés parmi les suivants, lesquels ?",
+    ["La production de cartilage","L'ossification du cartilage","La destruction du tissu osseux par les ostéoclastes de la moelle osseuse","L'évaporation minérale"],[0,1],
+    "L'accroissement en longueur de l'os résulte de deux processus simultanés : la production de cartilage (au niveau du cartilage de conjugaison) et son ossification progressive.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Ossification et croissance"],
+  ["QCU","circulatoire_coeur",2,"Concernant le péricarde fibreux, il est correct de dire qu'il est constitué de :",
+    ["Un seul feuillet","Deux feuillets","Trois feuillets","Quatre feuillets"],[0],
+    "Le péricarde fibreux est constitué d'un seul feuillet (et non deux, contrairement au péricarde séreux qui comporte, lui, un feuillet viscéral et un feuillet pariétal délimitant la cavité péricardique).",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°2, Péricarde"],
+  ["QCU","circulatoire_vaisseaux",2,"Les artères coronaires, qui vascularisent le muscle cardiaque, sont des artères de type :",
+    ["Terminal (sans anastomose fonctionnelle suffisante)","Anastomotique riche","Uniquement veineux","Lymphatique"],[0],
+    "Les artères coronaires sont des artères de type terminal, ce qui explique la gravité de leur occlusion (infarctus du myocarde) en l'absence de suppléance efficace.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°2, Circulation coronaire"],
+  ["QCU","circulatoire_physio",1,"Le cœur droit contient du sang :",
+    ["Veineux (pauvre en oxygène)","Artériel (riche en oxygène)","Mixte en permanence","Identique au cœur gauche"],[0],
+    "Le cœur droit contient du sang veineux, pauvre en oxygène, qu'il propulse vers les poumons pour oxygénation ; le cœur gauche contient du sang artériel oxygéné.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°2, Circulation cardiaque"],
+  ["QCU","digestif_foie",1,"La voie biliaire principale conduit la bile :",
+    ["Du foie au duodénum","Du duodénum au foie","De la vésicule biliaire à l'estomac","Du pancréas à l'estomac"],[0],
+    "La voie biliaire principale conduit la bile du foie (et de la vésicule biliaire) jusqu'au duodénum, où elle intervient dans la digestion des graisses.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°2, Appareil digestif"],
+  ["QCM","respiratoire_voies",1,"Parmi les éléments suivants, lesquels constituent la voie aérienne inférieure ?",
+    ["Le larynx","La trachée","Les bronches","Les fosses nasales"],[0,1,2],
+    "La voie aérienne inférieure comprend le larynx, la trachée et les bronches ; les fosses nasales et le pharynx font partie de la voie aérienne supérieure.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°2, Appareil respiratoire"],
+  ["QCU","respiratoire_poumons",2,"Un acinus pulmonaire, unité fonctionnelle respiratoire, fait suite à :",
+    ["Une bronchiole terminale","La trachée directement","Le larynx","La plèvre"],[0],
+    "Un acinus fait suite à une bronchiole terminale ; il est constitué de plusieurs canaux se terminant par les alvéoles pulmonaires, lieu des échanges gazeux.",
+    "Anatomie Physiologie (INFAS) – Exercice d'application n°4, Appareil respiratoire"],
+];
+/* ============================================================
+   SCHÉMAS LÉGENDÉS — bibliothèque de dessins SVG 100% originaux,
+   façon schéma de manuel scolaire (formes géométriques simples,
+   aucune image externe, aucune ressource tierce). Chaque point a
+   une vraie coordonnée (x,y) et un label anatomique réel, source
+   strictement le contenu fourni par Franck (locomoteur + digestif).
+   ============================================================ */
+const SCHEMAS = {
+  crane_laterale: {
+    titre: "Crâne (vue de profil)",
+    viewBox: "0 0 400 340",
+    svgShapes: `
+      <path d="M 90 190 Q 60 120 110 75 Q 160 30 240 40 Q 320 50 340 130 Q 350 190 320 230 L 300 240 L 295 270 L 270 270 L 265 245 L 220 245 L 190 260 L 165 260 L 160 235 Q 110 225 90 190 Z"
+            fill="#F5F9FB" stroke="#0F2733" stroke-width="2.5"/>
+      <line x1="160" y1="150" x2="340" y2="150" stroke="#0F2733" stroke-width="1.2" stroke-dasharray="3,3"/>
+      <circle cx="235" cy="145" r="7" fill="none" stroke="#0F2733" stroke-width="1.5"/>
+    `,
+    points: [
+      { num: 1, x: 175, y: 65,  label: "Os frontal" },
+      { num: 2, x: 265, y: 55,  label: "Os pariétal" },
+      { num: 3, x: 325, y: 140, label: "Os temporal" },
+      { num: 4, x: 315, y: 215, label: "Os occipital" },
+      { num: 5, x: 145, y: 165, label: "Os sphénoïde" },
+      { num: 6, x: 118, y: 130, label: "Os ethmoïde" },
+      { num: 7, x: 210, y: 250, label: "Mandibule" },
+    ],
+  },
+
+  main_dorsale: {
+    titre: "Squelette de la main (vue dorsale, os du carpe, métacarpe et phalanges)",
+    viewBox: "0 0 320 420",
+    svgShapes: `
+      <!-- rangée proximale du carpe (4 os) -->
+      <circle cx="105" cy="300" r="17" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="145" cy="292" r="17" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="185" cy="298" r="17" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="220" cy="315" r="14" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <!-- rangée distale du carpe (4 os) -->
+      <circle cx="100" cy="345" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="137" cy="350" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="175" cy="350" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="210" cy="345" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <!-- 5 métacarpiens -->
+      <rect x="60"  y="185" width="20" height="150" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="90"  y="150" width="20" height="185" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="130" y="140" width="20" height="195" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="170" y="150" width="20" height="185" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="205" y="185" width="20" height="150" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <!-- phalanges (empilées au-dessus de chaque métacarpien, simplifié) -->
+      <rect x="90" y="60"  width="20" height="80" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="130" y="40" width="20" height="90" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+    `,
+    points: [
+      { num: 1, x: 105, y: 300, label: "Scaphoïde" },
+      { num: 2, x: 145, y: 292, label: "Semi-lunaire" },
+      { num: 3, x: 185, y: 298, label: "Pyramidal" },
+      { num: 4, x: 220, y: 315, label: "Pisiforme" },
+      { num: 5, x: 100, y: 345, label: "Trapèze" },
+      { num: 6, x: 137, y: 350, label: "Trapézoïde" },
+      { num: 7, x: 175, y: 350, label: "Grand os" },
+      { num: 8, x: 210, y: 345, label: "Os crochu" },
+      { num: 9, x: 140, y: 240, label: "Métacarpien" },
+      { num: 10, x: 140, y: 75, label: "Phalange" },
+    ],
+  },
+
+  pied_dorsale: {
+    titre: "Squelette du pied (vue dorsale, tarse, métatarse et phalanges)",
+    viewBox: "0 0 420 260",
+    svgShapes: `
+      <!-- tarse postérieur : calcanéus + astragale -->
+      <ellipse cx="70" cy="130" rx="45" ry="55" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="135" cy="115" r="30" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <!-- tarse antérieur : scaphoïde tarsien, cuboïde, 3 cunéiformes -->
+      <circle cx="185" cy="105" r="22" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="190" cy="165" r="22" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="230" cy="80"  r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="235" cy="115" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="235" cy="150" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <!-- 5 métatarsiens -->
+      <rect x="265" y="30"  width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="265" y="65"  width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="265" y="100" width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="265" y="135" width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="265" y="170" width="120" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+    `,
+    points: [
+      { num: 1, x: 70,  y: 130, label: "Calcanéus" },
+      { num: 2, x: 135, y: 115, label: "Astragale (Talus)" },
+      { num: 3, x: 185, y: 105, label: "Scaphoïde tarsien" },
+      { num: 4, x: 190, y: 165, label: "Cuboïde" },
+      { num: 5, x: 230, y: 80,  label: "1er cunéiforme" },
+      { num: 6, x: 235, y: 115, label: "2ème cunéiforme" },
+      { num: 7, x: 235, y: 150, label: "3ème cunéiforme" },
+      { num: 8, x: 330, y: 39,  label: "Métatarsien" },
+    ],
+  },
+
+  cage_thoracique: {
+    titre: "Cage thoracique (vue antérieure)",
+    viewBox: "0 0 340 420",
+    svgShapes: `
+      <!-- sternum central -->
+      <rect x="150" y="40"  width="40" height="60"  rx="6" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="150" y="105" width="40" height="140" rx="6" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 155 250 L 185 250 L 170 280 Z" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <!-- arcs costaux, 6 paires représentées schématiquement -->
+      <path d="M 150 55 Q 60 65 45 110"   fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 190 55 Q 280 65 295 110" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 150 100 Q 50 110 35 165" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 190 100 Q 290 110 305 165" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 150 150 Q 55 165 45 220" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 190 150 Q 285 165 295 220" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 150 195 Q 70 210 65 260" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 190 195 Q 270 210 275 260" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 155 235 Q 90 250 90 300" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 185 235 Q 250 250 250 300" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 100 300 Q 95 340 130 345" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 240 300 Q 245 340 210 345" fill="none" stroke="#0F2733" stroke-width="2"/>
+    `,
+    points: [
+      { num: 1, x: 170, y: 65,  label: "Manubrium sternal" },
+      { num: 2, x: 170, y: 175, label: "Corps du sternum" },
+      { num: 3, x: 170, y: 265, label: "Processus xiphoïde" },
+      { num: 4, x: 47,  y: 108, label: "1ère côte (vraie côte)" },
+      { num: 5, x: 66,  y: 258, label: "8ème côte (fausse côte)" },
+      { num: 6, x: 112, y: 343, label: "12ème côte (côte flottante)" },
+    ],
+  },
+
+  tube_digestif: {
+    titre: "Tube digestif (schéma d'ensemble)",
+    viewBox: "0 0 320 460",
+    svgShapes: `
+      <ellipse cx="160" cy="35" rx="45" ry="22" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="150" y="55" width="20" height="30" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <rect x="150" y="85" width="20" height="70" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 150 155 Q 130 210 165 245 Q 210 265 195 220 Q 185 175 160 155 Z" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 170 250 Q 260 260 260 300 Q 260 340 180 340 Q 120 340 130 300" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <rect x="60"  y="260" width="200" height="120" rx="14" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <line x1="160" y1="380" x2="160" y2="430" stroke="#0F2733" stroke-width="2"/>
+      <rect x="145" y="430" width="30" height="16" rx="6" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+    `,
+    points: [
+      { num: 1, x: 160, y: 35,  label: "Cavité buccale" },
+      { num: 2, x: 160, y: 65,  label: "Pharynx" },
+      { num: 3, x: 160, y: 115, label: "Œsophage" },
+      { num: 4, x: 170, y: 210, label: "Estomac" },
+      { num: 5, x: 155, y: 320, label: "Intestin grêle" },
+      { num: 6, x: 65,  y: 300, label: "Côlon" },
+      { num: 7, x: 160, y: 405, label: "Rectum" },
+      { num: 8, x: 160, y: 438, label: "Canal anal" },
+    ],
+  },
+
+  glandes_annexes: {
+    titre: "Glandes annexes du tube digestif (foie, vésicule biliaire, pancréas)",
+    viewBox: "0 0 340 300",
+    svgShapes: `
+      <path d="M 40 60 Q 30 30 90 25 Q 200 15 260 45 Q 290 60 270 100 Q 230 120 150 110 Q 60 105 40 60 Z"
+            fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <ellipse cx="110" cy="110" rx="16" ry="24" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <ellipse cx="220" cy="170" rx="90" ry="35" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <circle cx="120" cy="200" r="30" fill="none" stroke="#0F2733" stroke-width="2" stroke-dasharray="4,3"/>
+    `,
+    points: [
+      { num: 1, x: 150, y: 65,  label: "Foie" },
+      { num: 2, x: 110, y: 110, label: "Vésicule biliaire" },
+      { num: 3, x: 220, y: 170, label: "Pancréas" },
+      { num: 4, x: 120, y: 200, label: "Duodénum" },
+    ],
+  },
+};
+
+/* ============================================================
+   QUESTIONS À SCHÉMA — piochent dans SCHEMAS ; seuls le label
+   recherché et les 4 numéros proposés sont stockés, la bonne
+   réponse est calculée automatiquement (jamais codée en clair
+   dans les options visibles à l'écran).
+   ============================================================ */
+const SCHEMA_QUESTIONS_RAW = [
+  { id: "sq_crane_frontal", schemaId: "crane_laterale", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 1, consigne: "Identifiez l'os frontal sur le schéma du crâne.",
+    correctLabel: "Os frontal", optionNums: [1, 2, 3, 6],
+    explanation: "L'os frontal forme la partie antérieure de la voûte crânienne, au-dessus des orbites.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+
+  { id: "sq_crane_temporal", schemaId: "crane_laterale", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os temporal sur le schéma du crâne.",
+    correctLabel: "Os temporal", optionNums: [1, 3, 4, 5],
+    explanation: "L'os temporal se situe sur la face latérale du crâne, en arrière du sphénoïde, au niveau de la tempe.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+
+  { id: "sq_main_scaphoide", schemaId: "main_dorsale", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 2, consigne: "Identifiez le scaphoïde sur le schéma de la main.",
+    correctLabel: "Scaphoïde", optionNums: [1, 3, 5, 7],
+    explanation: "Le scaphoïde fait partie de la rangée proximale des 8 os du carpe, du côté du pouce.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+
+  { id: "sq_main_crochu", schemaId: "main_dorsale", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 2, consigne: "Identifiez l'os crochu sur le schéma de la main.",
+    correctLabel: "Os crochu", optionNums: [4, 6, 8, 9],
+    explanation: "L'os crochu fait partie de la rangée distale des 8 os du carpe, du côté du petit doigt.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+
+  { id: "sq_pied_calcaneus", schemaId: "pied_dorsale", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 1, consigne: "Identifiez le calcanéus sur le schéma du pied.",
+    correctLabel: "Calcanéus", optionNums: [1, 2, 4, 7],
+    explanation: "Le calcanéus est le plus volumineux des 7 os du tarse ; il forme le talon.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, os du pied" },
+
+  { id: "sq_cage_xiphoide", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
+    level: 2, consigne: "Identifiez le processus xiphoïde sur le schéma de la cage thoracique.",
+    correctLabel: "Processus xiphoïde", optionNums: [1, 2, 3, 6],
+    explanation: "Le processus xiphoïde est la partie la plus basse du sternum, sous le corps du sternum.",
+    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, sternum" },
+
+  { id: "sq_cage_flottante", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
+    level: 2, consigne: "Identifiez une côte flottante sur le schéma de la cage thoracique.",
+    correctLabel: "12ème côte (côte flottante)", optionNums: [4, 5, 6, 1],
+    explanation: "Les côtes flottantes (11ème et 12ème) ne rejoignent pas le sternum, contrairement aux vraies et fausses côtes.",
+    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, les côtes" },
+
+  { id: "sq_digestif_oesophage", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 1, consigne: "Identifiez l'œsophage sur le schéma du tube digestif.",
+    correctLabel: "Œsophage", optionNums: [2, 3, 4, 1],
+    explanation: "L'œsophage relie le pharynx à l'estomac ; il fait suite au pharynx dans le tube digestif.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+
+  { id: "sq_digestif_colon", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_colon",
+    level: 2, consigne: "Identifiez le côlon sur le schéma du tube digestif.",
+    correctLabel: "Côlon", optionNums: [5, 6, 7, 4],
+    explanation: "Le côlon (gros intestin) fait suite à l'intestin grêle et se termine par le rectum et le canal anal.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+
+  { id: "sq_glandes_foie", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_foie",
+    level: 1, consigne: "Identifiez le foie sur le schéma des glandes annexes du tube digestif.",
+    correctLabel: "Foie", optionNums: [1, 2, 3, 4],
+    explanation: "Le foie est la plus volumineuse glande annexe du tube digestif, situé au-dessus de l'estomac et du duodénum.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+
+  { id: "sq_glandes_pancreas", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_pancreas",
+    level: 2, consigne: "Identifiez le pancréas sur le schéma des glandes annexes du tube digestif.",
+    correctLabel: "Pancréas", optionNums: [1, 3, 4, 2],
+    explanation: "Le pancréas est une glande annexe allongée, en arrière de l'estomac, qui a une fonction digestive (exocrine) et endocrine.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+];
 function buildQuestions(raw, subjectId, prefix) {
   return raw.map((r, i) => {
     const [type, chapterId, level, stem, options, correct, explanation, reference] = r;
@@ -5699,6 +6061,7 @@ function buildQuestions(raw, subjectId, prefix) {
 }
 const QUESTIONS = [
   ...buildQuestions(RAW, "hematologie", "q"),
+  ...buildQuestions(ANATPHYSIO_EXO_RAW, "anat-physio", "ae"),
   ...buildQuestions(GYNECO_RAW, "gyneco-obstetrique", "gy"),
   ...buildQuestions(CONCEPTS_RAW, "concepts-sciences-inf", "cn"),
   ...buildQuestions(NUTRITION_SCOLAIRE_RAW, "sante-publique", "nt"),
@@ -6216,6 +6579,22 @@ async function confirmPayment(matricule) {
     return rec;
   } catch (e) {
     console.error("Erreur confirmation paiement", e);
+    return null;
+  }
+}
+
+// Permet à l'administrateur de consulter le mot de passe réel (année de naissance) d'un
+// étudiant inscrit, et de le modifier au besoin pour le lui retransmettre en cas d'oubli.
+async function updateStudentPassword(matricule, newAnneeNaissance) {
+  try {
+    const r = await storage.get(studentKey(matricule), true);
+    if (!r) return null;
+    const rec = JSON.parse(r.value);
+    rec.anneeNaissance = newAnneeNaissance.trim();
+    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    return rec;
+  } catch (e) {
+    console.error("Erreur modification mot de passe", e);
     return null;
   }
 }
@@ -6967,6 +7346,559 @@ const MEDICAL_DICT = [
     complications:"Extension infectieuse, otite externe maligne chez le diabétique.",
     conseils:"Déconseiller le nettoyage agressif du conduit auditif.",
     references:"Sémiologie médicale (INFAS)" },
+  /* ===== Batch 1 : variantes cliniques citées en exemple ===== */
+  { id:"hematurie_initiale", terme:"Hématurie initiale", categorie:"Sémiologie", synonymes:["Hématurie du premier jet"],
+    definition:"Présence de sang dans les urines limitée au tout début de la miction, le reste du jet urinaire étant clair.",
+    description:"L'hématurie initiale oriente vers une origine urétrale ou cervico-prostatique, le saignement provenant d'une lésion en amont du col vésical qui se vide en premier lors de la miction.",
+    classification:"Fait partie des trois grands types topographiques d'hématurie avec l'hématurie terminale et l'hématurie totale (classification établie classiquement par l'épreuve des trois verres).",
+    diagnostic:"Épreuve des trois verres : recueil des urines en trois temps (début, milieu, fin de miction) pour localiser le saignement.",
+    examens:"ECBU, cystoscopie, bilan urologique orienté selon le contexte.",
+    diagnosticDifferentiel:"Urétrorragie (saignement en dehors de la miction, indépendant du besoin d'uriner).",
+    conseils:"Bien noter le moment de survenue du saignement par rapport au jet urinaire, information clé pour orienter le bilan.",
+    references:"Sémiologie urologique générale" },
+  { id:"hematurie_terminale", terme:"Hématurie terminale", categorie:"Sémiologie",
+    definition:"Présence de sang dans les urines apparaissant à la fin de la miction, le début du jet étant clair.",
+    description:"L'hématurie terminale oriente vers une origine vésicale (trigone, col vésical), la vessie se contractant en fin de miction et faisant saigner une lésion basse.",
+    classification:"Type topographique d'hématurie, avec l'hématurie initiale et l'hématurie totale.",
+    diagnostic:"Épreuve des trois verres.",
+    examens:"ECBU, cystoscopie, échographie vésicale.",
+    references:"Sémiologie urologique générale" },
+  { id:"hematurie_totale", terme:"Hématurie totale", categorie:"Sémiologie",
+    definition:"Présence de sang dans les urines présente de façon homogène sur l'ensemble de la miction, du début à la fin.",
+    description:"L'hématurie totale oriente vers une origine haute (rein, uretère) ou une hémorragie vésicale abondante ; c'est la forme la plus fréquente et la moins spécifique sur le plan topographique.",
+    classification:"Type topographique d'hématurie, avec l'hématurie initiale et l'hématurie terminale.",
+    causes:"Lithiase urinaire, tumeur du rein ou de la vessie, glomérulonéphrite, infection urinaire haute, traumatisme.",
+    examens:"ECBU, échographie rénale et vésicale, scanner uro-TDM, cystoscopie selon l'âge et le contexte.",
+    references:"Sémiologie urologique générale" },
+  { id:"hematurie_macroscopique", terme:"Hématurie macroscopique", categorie:"Sémiologie",
+    definition:"Présence de sang dans les urines visible à l'œil nu, colorant les urines en rouge, rosé ou brunâtre (« bouillon sale »).",
+    classification:"S'oppose à l'hématurie microscopique (non visible à l'œil nu, détectée uniquement au laboratoire).",
+    diagnosticDifferentiel:"Fausses hématuries : coloration rouge des urines par certains aliments (betterave), médicaments (rifampicine) ou pigments (hémoglobinurie, myoglobinurie) sans présence réelle de globules rouges.",
+    examens:"ECBU avec compte d'Addis ou cytologie urinaire pour confirmer la présence d'hématies.",
+    conseils:"Toute hématurie macroscopique, même isolée et indolore, impose un bilan urologique car elle peut révéler une tumeur.",
+    references:"Sémiologie urologique générale" },
+  { id:"hematurie_microscopique", terme:"Hématurie microscopique", categorie:"Sémiologie",
+    definition:"Présence anormale de globules rouges dans les urines, non visible à l'œil nu, détectée par bandelette urinaire ou examen cytobactériologique.",
+    classification:"S'oppose à l'hématurie macroscopique.",
+    diagnostic:"Bandelette urinaire (dépistage), confirmée par un ECBU quantifiant le nombre d'hématies par ml.",
+    causes:"Souvent découverte fortuite ; causes similaires à l'hématurie macroscopique mais de moindre abondance (lithiase, infection, néphropathie, tumeur débutante).",
+    conseils:"Une hématurie microscopique persistante et confirmée nécessite un bilan néphro-urologique, même en l'absence de symptôme.",
+    references:"Sémiologie urologique générale" },
+  { id:"fievre_continue", terme:"Fièvre continue", categorie:"Sémiologie",
+    definition:"Élévation thermique permanente au-dessus de 38°C, avec des variations quotidiennes ne dépassant pas 1°C entre le matin et le soir.",
+    description:"C'est une des quatre grandes courbes thermiques classiques utilisées en sémiologie pour orienter le diagnostic d'un syndrome fébrile.",
+    causes:"Typhoïde à la phase d'état, pneumonie franche lobaire aiguë, certaines septicémies.",
+    diagnostic:"Courbe de température relevée plusieurs fois par jour (matin et soir au minimum).",
+    references:"Sémiologie médicale générale" },
+  { id:"fievre_intermittente", terme:"Fièvre intermittente", categorie:"Sémiologie",
+    definition:"Fièvre qui alterne des pics élevés (accès fébriles) avec un retour à une température normale entre les accès.",
+    description:"Le retour à l'apyrexie entre deux pics est le critère distinctif de la fièvre intermittente par rapport à la fièvre rémittente.",
+    causes:"Paludisme (accès fébriles rythmés selon l'espèce de Plasmodium), certaines infections urinaires ou biliaires ponctuées d'obstruction intermittente.",
+    diagnostic:"Courbe thermique pluriquotidienne, corrélée à l'horaire des frissons et des pics.",
+    references:"Sémiologie médicale générale ; Paludisme (INFAS)" },
+  { id:"fievre_remittente", terme:"Fièvre rémittente", categorie:"Sémiologie",
+    definition:"Fièvre avec des variations quotidiennes importantes (supérieures à 1°C), mais sans jamais revenir à une température strictement normale entre les pics.",
+    description:"Se distingue de la fièvre intermittente par l'absence de retour à l'apyrexie, et de la fièvre continue par l'amplitude importante des oscillations.",
+    causes:"Suppurations profondes, tuberculose, certaines septicémies.",
+    references:"Sémiologie médicale générale" },
+  { id:"fievre_hectique", terme:"Fièvre hectique (ou fièvre héctique)", categorie:"Sémiologie",
+    definition:"Fièvre à grandes oscillations quotidiennes, avec des pics très élevés suivis de chutes thermiques brutales, souvent accompagnées de sueurs profuses.",
+    description:"Traduit classiquement une suppuration profonde active (abcès profond) ou une infection sévère non contrôlée ; elle épuise l'organisme du fait de l'intensité des oscillations.",
+    causes:"Abcès profond, tuberculose évoluée, septicémie sévère.",
+    references:"Sémiologie médicale générale" },
+  { id:"dyspnee_effort", terme:"Dyspnée d'effort", categorie:"Sémiologie",
+    definition:"Sensation de gêne respiratoire ou d'essoufflement anormal apparaissant lors d'un effort physique, alors qu'elle est absente au repos.",
+    classification:"Sa sévérité est classiquement graduée par la classification NYHA (stades I à IV) en cardiologie.",
+    causes:"Insuffisance cardiaque débutante, pathologies respiratoires chroniques (BPCO, asthme), anémie, déconditionnement physique.",
+    diagnostic:"Interrogatoire précisant le niveau d'effort déclenchant (escaliers, marche en terrain plat, habillage).",
+    references:"Sémiologie médicale générale" },
+  { id:"dyspnee_repos", terme:"Dyspnée de repos", categorie:"Sémiologie",
+    definition:"Sensation de gêne respiratoire présente même en l'absence de tout effort physique.",
+    description:"Signe de gravité, traduisant généralement une décompensation cardiaque ou respiratoire avancée.",
+    causes:"Insuffisance cardiaque décompensée, insuffisance respiratoire sévère, embolie pulmonaire, pneumothorax.",
+    conseils:"Toute dyspnée de repos impose une évaluation médicale rapide, en raison du risque de décompensation.",
+    references:"Sémiologie médicale générale" },
+  { id:"orthopnee", terme:"Orthopnée", categorie:"Sémiologie",
+    definition:"Dyspnée qui apparaît ou s'aggrave en position allongée (décubitus dorsal) et qui est soulagée par la position assise ou demi-assise.",
+    description:"Signe évocateur d'insuffisance cardiaque gauche ; le patient dort souvent avec plusieurs oreillers pour limiter la gêne (quantifiée classiquement en « nombre d'oreillers »).",
+    causes:"Insuffisance cardiaque gauche, œdème aigu du poumon.",
+    conseils:"Installer le patient en position demi-assise (proclive) pour soulager la dyspnée en attendant la prise en charge médicale.",
+    references:"Sémiologie médicale générale" },
+  { id:"platypnee", terme:"Platypnée", categorie:"Sémiologie",
+    definition:"Dyspnée qui apparaît ou s'aggrave en position debout ou assise, et qui est soulagée par la position allongée (à l'inverse de l'orthopnée).",
+    description:"Signe rare, évocateur notamment d'un shunt intracardiaque droit-gauche positionnel ou de certaines pathologies pulmonaires basales.",
+    references:"Sémiologie médicale générale" },
+  { id:"trepopnee", terme:"Trépopnée", categorie:"Sémiologie",
+    definition:"Dyspnée qui varie selon le décubitus latéral, le patient se sentant mieux sur un côté que sur l'autre.",
+    description:"Peut s'observer notamment en cas d'épanchement pleural unilatéral (le patient préfère souvent reposer sur le côté atteint) ou de pathologie cardiaque asymétrique.",
+    references:"Sémiologie médicale générale" },
+  { id:"oedeme_localise", terme:"Œdème localisé", categorie:"Sémiologie",
+    definition:"Accumulation anormale de liquide dans un tissu, limitée à une zone précise du corps.",
+    causes:"Inflammation locale, obstruction veineuse ou lymphatique (thrombose veineuse profonde, lymphœdème), allergie localisée, piqûre d'insecte.",
+    diagnosticDifferentiel:"Œdème généralisé, où l'atteinte concerne l'ensemble du corps.",
+    references:"Sémiologie médicale générale" },
+  { id:"oedeme_generalise", terme:"Œdème généralisé (anasarque)", categorie:"Sémiologie",
+    synonymes:["Anasarque"],
+    definition:"Accumulation anormale de liquide diffuse, touchant l'ensemble du corps, souvent associée à des épanchements des séreuses (péricarde, plèvre, péritoine) dans les formes sévères.",
+    causes:"Insuffisance cardiaque globale, syndrome néphrotique, cirrhose hépatique décompensée, dénutrition sévère.",
+    examens:"Bilan rénal, bilan hépatique, protidémie/albuminémie, échographie cardiaque.",
+    references:"Sémiologie médicale générale" },
+  { id:"oedeme_godet", terme:"Œdème prenant le godet", categorie:"Sémiologie",
+    definition:"Œdème caractérisé par la persistance d'une dépression (godet) après pression digitale prolongée de quelques secondes sur la zone concernée.",
+    description:"Ce signe traduit un œdème de type extracellulaire (interstitiel), typiquement d'origine cardiaque, rénale ou hépatique ; il se recherche classiquement au niveau des chevilles et de la région prétibiale.",
+    diagnostic:"Pression du pouce pendant quelques secondes sur la face antéro-interne du tibia, recherche d'une dépression persistante à la levée de la pression.",
+    references:"Sémiologie médicale générale" },
+  { id:"ictere_prehepatique", terme:"Ictère préhépatique (ictère hémolytique)", categorie:"Sémiologie",
+    synonymes:["Ictère hémolytique"],
+    definition:"Coloration jaune de la peau et des muqueuses due à une production excessive de bilirubine non conjuguée, par destruction accrue des globules rouges (hémolyse), dépassant les capacités de conjugaison du foie.",
+    physiopathologie:"L'hémolyse excessive libère de grandes quantités d'hémoglobine transformée en bilirubine libre (non conjuguée), que le foie, bien que fonctionnellement normal, ne parvient pas à conjuguer entièrement.",
+    causes:"Anémies hémolytiques (drépanocytose, déficit en G6PD), paludisme, incompatibilité fœto-maternelle.",
+    examens:"Bilirubine totale et fractionnée (prédominance de la bilirubine libre/non conjuguée), NFS, réticulocytes, test de Coombs.",
+    diagnosticDifferentiel:"Ictère hépatique et ictère post-hépatique.",
+    references:"Sémiologie médicale générale ; Hématologie (INFAS)" },
+  { id:"ictere_hepatique", terme:"Ictère hépatique", categorie:"Sémiologie",
+    definition:"Coloration jaune de la peau et des muqueuses due à une atteinte directe des cellules du foie (hépatocytes), altérant leur capacité à capter, conjuguer ou excréter la bilirubine.",
+    causes:"Hépatites virales, hépatite médicamenteuse ou toxique, cirrhose.",
+    examens:"Bilan hépatique complet (transaminases, bilirubine totale et fractionnée, phosphatases alcalines), sérologies virales.",
+    diagnosticDifferentiel:"Ictère préhépatique et ictère post-hépatique.",
+    references:"Sémiologie médicale générale" },
+  { id:"ictere_posthepatique", terme:"Ictère post-hépatique (ictère obstructif)", categorie:"Sémiologie",
+    synonymes:["Ictère obstructif", "Ictère cholestatique"],
+    definition:"Coloration jaune de la peau et des muqueuses due à un obstacle sur les voies biliaires, empêchant l'évacuation normale de la bile vers l'intestin.",
+    causes:"Lithiase de la voie biliaire principale, cancer de la tête du pancréas, compression tumorale des voies biliaires.",
+    signesFonctionnels:"Urines foncées, selles décolorées (mastic), prurit fréquent.",
+    examens:"Bilan hépatique (élévation prédominante des phosphatases alcalines et de la bilirubine conjuguée), échographie abdominale, bili-IRM.",
+    diagnosticDifferentiel:"Ictère préhépatique et ictère hépatique.",
+    references:"Sémiologie médicale générale" },
+  /* ===== Termes rares/spécialisés cités en exemple ===== */
+  { id:"chylurie", terme:"Chylurie", categorie:"Sémiologie",
+    definition:"Présence de lymphe (chyle) dans les urines, leur donnant un aspect laiteux caractéristique.",
+    causes:"Filariose lymphatique (obstruction des voies lymphatiques par le parasite), traumatisme des voies lymphatiques abdominales.",
+    references:"Sémiologie urologique / parasitologie générale" },
+  { id:"fecalurie", terme:"Fécalurie", categorie:"Sémiologie",
+    definition:"Présence de matières fécales dans les urines, signant une communication anormale (fistule) entre le tube digestif et les voies urinaires.",
+    causes:"Fistule recto-vésicale ou colo-vésicale d'origine tumorale, inflammatoire (maladie de Crohn, diverticulite) ou traumatique.",
+    references:"Sémiologie urologique générale" },
+  { id:"hematemese", terme:"Hématémèse", categorie:"Sémiologie",
+    definition:"Rejet de sang par la bouche au cours d'un effort de vomissement, provenant du tube digestif haut (œsophage, estomac, duodénum).",
+    description:"Le sang peut être rouge vif (hémorragie active abondante) ou noirâtre en « marc de café » (sang digéré par l'acidité gastrique).",
+    causes:"Ulcère gastroduodénal, varices œsophagiennes (hypertension portale), gastrite hémorragique, cancer gastrique.",
+    diagnosticDifferentiel:"Hémoptysie (sang provenant des voies respiratoires, rejeté lors d'un effort de toux, rouge vif et spumeux).",
+    examens:"Fibroscopie œso-gastro-duodénale en urgence, NFS, groupe sanguin.",
+    conseils:"Urgence médicale : évaluer le retentissement hémodynamique (pouls, tension), poser une voie veineuse, alerter le médecin sans délai.",
+    references:"Sémiologie médicale générale" },
+  { id:"hemoptysie", terme:"Hémoptysie", categorie:"Sémiologie",
+    definition:"Rejet de sang rouge vif, aéré et spumeux, provenant des voies respiratoires sous-glottiques, au cours d'un effort de toux.",
+    causes:"Tuberculose, cancer bronchique, bronchectasies, embolie pulmonaire, infection pulmonaire sévère.",
+    diagnosticDifferentiel:"Hématémèse (sang digestif, rejeté par vomissement, souvent noirâtre).",
+    examens:"Radiographie thoracique, scanner thoracique, fibroscopie bronchique, NFS, bilan de coagulation.",
+    conseils:"Évaluer l'abondance (minime, moyenne, grave) et le retentissement respiratoire ; toute hémoptysie abondante est une urgence vitale.",
+    references:"Sémiologie médicale générale" },
+  { id:"melena", terme:"Méléna", categorie:"Sémiologie",
+    definition:"Émission par l'anus de selles noires, nauséabondes et gluantes (aspect « goudron »), témoignant d'une hémorragie digestive haute dégradée par le passage dans le tube digestif.",
+    causes:"Ulcère gastroduodénal, varices œsophagiennes, tumeur digestive haute.",
+    diagnosticDifferentiel:"Rectorragie (sang rouge, non digéré, d'origine digestive basse).",
+    examens:"Fibroscopie œso-gastro-duodénale, NFS, groupe sanguin.",
+    references:"Sémiologie médicale générale" },
+  { id:"rectorragie", terme:"Rectorragie", categorie:"Sémiologie",
+    definition:"Émission de sang rouge, non digéré, par l'anus, isolée ou mélangée aux selles.",
+    causes:"Hémorroïdes, fissure anale, polype ou cancer colorectal, maladie inflammatoire chronique de l'intestin (colite, maladie de Crohn).",
+    diagnosticDifferentiel:"Méléna (sang digéré, noir, d'origine digestive haute).",
+    examens:"Toucher rectal, anuscopie, rectosigmoïdoscopie ou coloscopie selon le contexte.",
+    references:"Sémiologie médicale générale" },
+  { id:"pollakiurie", terme:"Pollakiurie", categorie:"Sémiologie",
+    definition:"Augmentation anormale de la fréquence des mictions, sans augmentation du volume total d'urine émis sur 24 heures (à la différence de la polyurie).",
+    causes:"Infection urinaire, hypertrophie bénigne de la prostate, vessie hyperactive, grossesse (compression vésicale), anxiété.",
+    diagnosticDifferentiel:"Polyurie (augmentation du volume urinaire total sur 24h, avec ou sans augmentation de fréquence).",
+    references:"Sémiologie urologique générale" },
+  { id:"dysurie", terme:"Dysurie", categorie:"Sémiologie",
+    definition:"Difficulté à uriner, se traduisant par un besoin d'effort pour initier ou maintenir la miction, un jet urinaire faible ou une miction prolongée.",
+    causes:"Hypertrophie bénigne de la prostate, rétrécissement urétral, infection urinaire, vessie neurologique.",
+    references:"Sémiologie urologique générale" },
+  { id:"oligurie", terme:"Oligurie", categorie:"Sémiologie",
+    definition:"Diminution du volume urinaire des 24 heures, généralement défini par une diurèse inférieure à 400-500 ml/jour chez l'adulte.",
+    causes:"Déshydratation, insuffisance rénale aiguë (fonctionnelle, organique ou obstructive), insuffisance cardiaque sévère.",
+    diagnosticDifferentiel:"Anurie (absence quasi totale d'urine, généralement moins de 100 ml/jour).",
+    examens:"Ionogramme sanguin et urinaire, créatininémie, échographie rénale et des voies urinaires.",
+    references:"Sémiologie néphro-urologique générale" },
+  { id:"anurie", terme:"Anurie", categorie:"Sémiologie",
+    definition:"Absence ou quasi-absence de production d'urine par les reins, généralement définie par une diurèse inférieure à 100 ml/24h.",
+    diagnosticDifferentiel:"À distinguer de la rétention aiguë d'urine (les reins produisent de l'urine mais celle-ci ne peut être évacuée de la vessie) : le globe vésical est absent en cas d'anurie vraie, présent en cas de rétention.",
+    causes:"Insuffisance rénale aiguë sévère, obstruction bilatérale des voies urinaires hautes, nécrose corticale rénale.",
+    conseils:"Urgence néphro-urologique ; rechercher systématiquement un globe vésical au sondage/échographie pour éliminer une rétention.",
+    references:"Sémiologie néphro-urologique générale" },
+  { id:"polyurie", terme:"Polyurie", categorie:"Sémiologie",
+    definition:"Augmentation du volume urinaire des 24 heures, généralement défini par une diurèse supérieure à 2,5 à 3 litres/jour chez l'adulte.",
+    causes:"Diabète sucré non contrôlé (polyurie osmotique), diabète insipide, potomanie (excès de boisson), certains diurétiques.",
+    examens:"Glycémie, ionogramme sanguin et urinaire, osmolarité plasmatique et urinaire.",
+    references:"Sémiologie néphro-urologique générale" },
+  { id:"tenesme", terme:"Ténesme", categorie:"Sémiologie",
+    definition:"Sensation douloureuse de tension et de besoin permanent d'aller à la selle (ténesme rectal) ou d'uriner (ténesme vésical), sans évacuation efficace.",
+    causes:"Rectite, cancer du rectum, syndrome dysentérique (ténesme rectal) ; cystite, infection urinaire (ténesme vésical).",
+    references:"Sémiologie digestive et urologique générale" },
+  { id:"anamnese", terme:"Anamnèse", categorie:"Sémiologie",
+    definition:"Ensemble des informations recueillies par l'interrogatoire du patient (ou de son entourage) concernant l'histoire de sa maladie et ses antécédents.",
+    description:"L'anamnèse constitue la première étape de la démarche clinique, avant l'examen physique ; elle oriente fortement les hypothèses diagnostiques.",
+    pointsCles:"Antécédents personnels et familiaux, histoire de la maladie actuelle, traitement en cours, mode de vie, allergies.",
+    references:"Sémiologie médicale générale" },
+  { id:"prodrome", terme:"Prodrome", categorie:"Sémiologie",
+    definition:"Signe ou symptôme précoce, souvent discret et non spécifique, annonçant le début d'une maladie avant l'apparition des signes caractéristiques.",
+    description:"Les prodromes constituent la première phase évolutive de nombreuses maladies infectieuses (par exemple le catarrhe oculo-nasal précédant l'éruption de la rougeole).",
+    references:"Sémiologie médicale générale" },
+  { id:"semiologie", terme:"Sémiologie", categorie:"Sémiologie",
+    definition:"Discipline médicale qui étudie les signes et symptômes des maladies, ainsi que leur signification pour orienter le diagnostic.",
+    description:"La sémiologie constitue la base du raisonnement clinique : elle permet de recueillir (interrogatoire, examen physique) et d'interpréter les manifestations d'une maladie.",
+    references:"Sémiologie médicale générale" },
+  { id:"hypertension_portale", terme:"Hypertension portale", categorie:"Sémiologie",
+    definition:"Élévation anormale de la pression dans le système veineux porte (au-delà de 10-12 mmHg), qui draine le sang du tube digestif et de la rate vers le foie.",
+    physiopathologie:"L'obstacle à l'écoulement du sang porte (le plus souvent au niveau du foie en cas de cirrhose) entraîne une élévation de pression en amont, avec développement d'une circulation veineuse collatérale (varices œsophagiennes, splénomégalie, ascite).",
+    causes:"Cirrhose hépatique (cause la plus fréquente), thrombose de la veine porte, schistosomiase hépatosplénique.",
+    complications:"Rupture de varices œsophagiennes (hémorragie digestive grave), ascite, splénomégalie, encéphalopathie hépatique.",
+    examens:"Échographie-doppler du système porte, fibroscopie digestive haute (recherche de varices), échographie abdominale.",
+    references:"Sémiologie médicale générale" },
+  { id:"conjonctivite", terme:"Conjonctivite", categorie:"Sémiologie",
+    definition:"Inflammation de la conjonctive, membrane transparente qui recouvre la surface interne des paupières et la partie antérieure du globe oculaire.",
+    classification:"Conjonctivite infectieuse (bactérienne, virale), allergique, ou irritative (corps étranger, produit chimique).",
+    signesFonctionnels:"Œil rouge, sensation de sable ou de corps étranger, larmoiement, parfois sécrétions purulentes (forme bactérienne) ou prurit (forme allergique).",
+    traitement:"Collyre antibiotique si origine bactérienne, antihistaminique si allergique ; hygiène oculaire stricte dans tous les cas.",
+    conseils:"Éviter le contact des mains avec les yeux, laver les mains fréquemment ; forme bactérienne très contagieuse.",
+    references:"Sémiologie médicale générale" },
+  { id:"pls", terme:"PLS (Position Latérale de Sécurité)", categorie:"Abréviations", abreviation:"PLS",
+    definition:"Position de sécurité dans laquelle on place une victime inconsciente qui respire normalement, afin de prévenir l'obstruction des voies aériennes par la langue ou des vomissements.",
+    description:"La PLS maintient les voies aériennes dégagées et permet l'écoulement libre de tout liquide (vomissement, sang, sécrétions) hors de la bouche, en attendant les secours.",
+    conseils:"Ne jamais mettre en PLS une victime suspecte de traumatisme du rachis sans immobilisation préalable, sauf urgence vitale immédiate.",
+    references:"Secourisme (INFAS)" },
+  { id:"nfs_abrev", terme:"NFS (Numération Formule Sanguine)", categorie:"Abréviations", abreviation:"NFS",
+    definition:"Examen biologique de première intention analysant les cellules du sang : globules rouges, globules blancs (avec leur répartition en formule leucocytaire) et plaquettes.",
+    description:"Comprend une partie quantitative (numérations, taux d'hémoglobine et d'hématocrite, constantes érythrocytaires) et une partie qualitative (formule leucocytaire, morphologie).",
+    valeursNormales:"GR : 4-6 x10⁶/mm³ ; GB : 4-10 x10³/mm³ ; Plaquettes : 150 000-400 000/mm³ ; Hb : 12-18 g/dl selon le sexe.",
+    references:"Hématologie (INFAS)" },
+  { id:"ecbu_abrev", terme:"ECBU (Examen CytoBactériologique des Urines)", categorie:"Abréviations", abreviation:"ECBU",
+    definition:"Examen de laboratoire consistant à analyser les urines pour rechercher une infection urinaire, en comptant les leucocytes, les hématies et en identifiant les éventuels germes présents (avec antibiogramme).",
+    description:"Le recueil doit être réalisé après toilette soigneuse, sur le milieu du jet urinaire, dans un flacon stérile, pour limiter la contamination par la flore urétrale.",
+    valeursNormales:"Urines normalement stériles ; leucocyturie significative si > 10⁴/ml, bactériurie significative selon le germe et le contexte clinique.",
+    references:"Bactériologie-Virologie (INFAS)" },
+  { id:"crp_abrev", terme:"CRP (Protéine C-Réactive)", categorie:"Abréviations", abreviation:"CRP",
+    definition:"Protéine de l'inflammation produite par le foie, dont le taux sanguin s'élève rapidement (en quelques heures) en cas d'inflammation ou d'infection aiguë.",
+    description:"Marqueur non spécifique mais très sensible et réactif, utile pour le suivi de l'évolution d'une infection ou d'un syndrome inflammatoire sous traitement.",
+    valeursNormales:"Normalement inférieure à 5-10 mg/l ; s'élève significativement en cas d'infection bactérienne, moins en cas d'infection virale.",
+    references:"Sémiologie médicale générale" },
+  /* ===== Constantes vitales et biologiques ===== */
+  { id:"constantes_vitales", terme:"Constantes vitales", categorie:"Sémiologie",
+    definition:"Ensemble des paramètres physiologiques de base permettant d'évaluer rapidement l'état général d'un patient : température, pouls, tension artérielle, fréquence respiratoire et saturation en oxygène.",
+    valeursNormales:"Température : 36,5-37,5°C ; Pouls : 60-100/min (adulte) ; TA : 12/8 en moyenne ; FR : 12-20/min ; SpO2 : ≥ 95%.",
+    surveillanceInfirmiere:"Prise systématique à l'admission, puis selon la fréquence prescrite ou l'état clinique ; toute déviation significative doit être signalée.",
+    references:"Sémiologie médicale générale" },
+  { id:"temperature_corporelle", terme:"Température corporelle", categorie:"Sémiologie",
+    definition:"Constante vitale reflétant l'équilibre entre thermogénèse (production de chaleur) et thermolyse (déperdition de chaleur) de l'organisme.",
+    valeursNormales:"Normale : 36,5-37,5°C ; hypothermie si < 35°C ; fièvre si ≥ 38°C.",
+    examens:"Mesure par thermomètre axillaire, tympanique, frontal ou rectal selon le contexte et l'âge.",
+    references:"Santé publique (INFAS)" },
+  { id:"pouls", terme:"Pouls", categorie:"Sémiologie",
+    definition:"Perception, par palpation d'une artère superficielle, de l'onde de pression générée par chaque contraction cardiaque.",
+    valeursNormales:"60 à 100 battements par minute chez l'adulte au repos.",
+    diagnostic:"Palpation classique au niveau radial (poignet), fémoral, carotidien ou huméral (nourrisson) ; on évalue fréquence, régularité et amplitude.",
+    references:"Sémiologie médicale générale ; Hématologie (INFAS)" },
+  { id:"frequence_respiratoire", terme:"Fréquence respiratoire (FR)", categorie:"Sémiologie", abreviation:"FR",
+    definition:"Nombre de cycles respiratoires (inspiration + expiration) par minute.",
+    valeursNormales:"12 à 20 cycles par minute chez l'adulte au repos ; plus élevée chez l'enfant et le nourrisson.",
+    diagnostic:"Comptage par observation des mouvements thoraco-abdominaux pendant une minute complète, à l'insu du patient si possible.",
+    references:"Sémiologie médicale générale" },
+  { id:"saturation_oxygene", terme:"Saturation pulsée en oxygène (SpO2)", categorie:"Sémiologie", abreviation:"SpO2",
+    definition:"Pourcentage d'hémoglobine saturée en oxygène dans le sang artériel, mesuré de façon non invasive par un capteur (oxymètre de pouls).",
+    valeursNormales:"Normale : ≥ 95% ; hypoxémie si < 90%.",
+    conseils:"Placer le capteur sur un doigt propre, sans vernis à ongles, et vérifier la bonne perfusion périphérique pour une mesure fiable.",
+    references:"Sémiologie médicale générale" },
+  { id:"glycemie", terme:"Glycémie", categorie:"Sémiologie",
+    definition:"Concentration de glucose dans le sang.",
+    valeursNormales:"À jeun : 0,70 à 1,10 g/l (3,9 à 6,1 mmol/l) ; hyperglycémie si ≥ 1,26 g/l à jeun (diagnostic de diabète sur deux mesures) ; hypoglycémie si < 0,60-0,70 g/l.",
+    examens:"Glycémie capillaire (bandelette, dextro) pour surveillance rapide, glycémie veineuse à jeun pour le diagnostic.",
+    references:"Sémiologie médicale générale" },
+  { id:"ionogramme", terme:"Ionogramme sanguin", categorie:"Sémiologie",
+    definition:"Examen biologique mesurant la concentration des principaux électrolytes (ions) dans le sang : sodium, potassium, chlore, bicarbonates.",
+    valeursNormales:"Sodium (Na+) : 135-145 mmol/l ; Potassium (K+) : 3,5-5 mmol/l ; Chlore (Cl-) : 95-105 mmol/l ; Bicarbonates : 22-26 mmol/l.",
+    conseils:"Une dyskaliémie (hypo ou hyperkaliémie) sévère peut engager le pronostic vital par troubles du rythme cardiaque ; à surveiller de près.",
+    references:"Sémiologie médicale générale" },
+  { id:"creatininemie", terme:"Créatininémie", categorie:"Sémiologie",
+    definition:"Concentration sanguine de la créatinine, déchet musculaire éliminé par le rein, utilisée pour évaluer la fonction rénale.",
+    valeursNormales:"Environ 60-110 µmol/l chez l'homme, 45-90 µmol/l chez la femme (varie selon la masse musculaire et le laboratoire).",
+    description:"Une créatininémie élevée traduit une baisse de la filtration rénale ; elle permet de calculer le débit de filtration glomérulaire (clairance de la créatinine).",
+    references:"Sémiologie médicale générale" },
+  { id:"gaz_du_sang", terme:"Gaz du sang (GDS)", categorie:"Sémiologie", abreviation:"GDS",
+    definition:"Examen biologique, réalisé sur un prélèvement artériel, mesurant le pH sanguin, la pression partielle en oxygène (PaO2) et en gaz carbonique (PaCO2), ainsi que les bicarbonates.",
+    valeursNormales:"pH : 7,38-7,42 ; PaO2 : 80-100 mmHg ; PaCO2 : 35-45 mmHg ; Bicarbonates : 22-26 mmol/l.",
+    description:"Permet de diagnostiquer et de typer un trouble de l'équilibre acido-basique (acidose ou alcalose, respiratoire ou métabolique) et d'évaluer l'oxygénation.",
+    references:"Sémiologie médicale générale" },
+  /* ===== Classes thérapeutiques et médicaments ===== */
+  { id:"antibiotique_classe", terme:"Antibiotique", categorie:"Pharmacologie",
+    definition:"Substance capable de détruire ou d'inhiber la croissance des bactéries, utilisée dans le traitement des infections bactériennes.",
+    classification:"Bêta-lactamines, aminosides, macrolides, quinolones, tétracyclines, phénicolés, sulfamides, glycopeptides, etc.",
+    conseils:"Respecter la posologie et la durée prescrites, ne jamais interrompre un traitement antibiotique prématurément (risque de résistance et de rechute).",
+    references:"Bactériologie-Virologie (INFAS)" },
+  { id:"antalgique", terme:"Antalgique", categorie:"Pharmacologie",
+    definition:"Médicament destiné à soulager ou supprimer la douleur.",
+    classification:"Selon l'échelle de l'OMS : Palier 1 (paracétamol, AINS, aspirine, douleurs légères à modérées) ; Palier 2 (codéine, tramadol, douleurs modérées à sévères) ; Palier 3 (morphine et dérivés, douleurs sévères).",
+    surveillanceInfirmiere:"Évaluation régulière de la douleur (échelle numérique ou visuelle analogique), surveillance de la tolérance et des effets secondaires (sédation, dépression respiratoire pour les paliers forts).",
+    references:"Sémiologie médicale générale" },
+  { id:"antipyretique", terme:"Antipyrétique", categorie:"Pharmacologie",
+    definition:"Médicament utilisé pour faire baisser la fièvre.",
+    classification:"Paracétamol (référence), AINS (ibuprofène), aspirine (à éviter chez l'enfant en contexte viral, risque de syndrome de Reye).",
+    conseils:"Toujours associer les mesures physiques (déshabillage, hydratation) et respecter les doses maximales par 24h, notamment chez l'enfant.",
+    references:"Paludisme chez l'enfant (INFAS)" },
+  { id:"anti_inflammatoire", terme:"Anti-inflammatoire non stéroïdien (AINS)", categorie:"Pharmacologie", abreviation:"AINS",
+    definition:"Classe de médicaments ayant des propriétés antalgiques, antipyrétiques et anti-inflammatoires, agissant par inhibition des cyclooxygénases (COX).",
+    causes:"Exemples : ibuprofène, diclofénac, kétoprofène, aspirine à forte dose.",
+    complications:"Risque de toxicité gastro-duodénale (ulcère, hémorragie digestive), toxicité rénale, notamment en cas d'usage prolongé ou chez les sujets à risque.",
+    conseils:"Éviter chez la femme enceinte (surtout au 3ème trimestre), prudence chez le sujet âgé et l'insuffisant rénal.",
+    references:"Sémiologie médicale générale" },
+  { id:"anticoagulant", terme:"Anticoagulant", categorie:"Pharmacologie",
+    definition:"Médicament qui diminue la capacité du sang à coaguler, utilisé pour prévenir ou traiter les thromboses (phlébite, embolie pulmonaire).",
+    classification:"Héparines (héparine standard, héparines de bas poids moléculaire), antivitamines K (AVK), anticoagulants oraux directs (AOD).",
+    surveillanceInfirmiere:"Surveillance biologique régulière (TCA pour l'héparine, INR pour les AVK), surveillance clinique des signes hémorragiques.",
+    complications:"Risque hémorragique principal, nécessitant une surveillance rapprochée.",
+    references:"Sémiologie médicale générale" },
+  { id:"diuretique", terme:"Diurétique", categorie:"Pharmacologie",
+    definition:"Médicament augmentant l'élimination urinaire d'eau et de sodium, utilisé notamment dans l'insuffisance cardiaque, l'hypertension artérielle et les états œdémateux.",
+    classification:"Diurétiques de l'anse (furosémide), thiazidiques, diurétiques épargneurs de potassium (spironolactone).",
+    surveillanceInfirmiere:"Surveillance du poids, de la diurèse, de l'ionogramme sanguin (risque de déshydratation et de troubles électrolytiques).",
+    references:"Sémiologie médicale générale" },
+  { id:"antihypertenseur", terme:"Antihypertenseur", categorie:"Pharmacologie",
+    definition:"Médicament utilisé pour faire baisser une tension artérielle élevée.",
+    classification:"Diurétiques, bêtabloquants, inhibiteurs de l'enzyme de conversion (IEC), antagonistes des récepteurs de l'angiotensine II (ARA2), inhibiteurs calciques.",
+    references:"Sémiologie médicale générale ; Gynéco-Obstétrique (INFAS)" },
+  { id:"insuline", terme:"Insuline (traitement)", categorie:"Pharmacologie",
+    definition:"Hormone utilisée en traitement injectable chez les patients diabétiques, permettant l'entrée du glucose dans les cellules et la baisse de la glycémie.",
+    classification:"Insulines rapides, intermédiaires, lentes/basales, selon leur délai et leur durée d'action.",
+    surveillanceInfirmiere:"Surveillance de la glycémie capillaire avant/après injection, éducation du patient à la technique d'injection et à la reconnaissance des signes d'hypoglycémie.",
+    references:"Anatomie Physiologie (INFAS) – Pancréas endocrine" },
+  { id:"vaccin_generalites", terme:"Vaccin", categorie:"Pharmacologie",
+    definition:"Substance qui, introduite dans l'organisme, provoque une réponse immunitaire protectrice contre un agent infectieux spécifique, sans provoquer la maladie elle-même.",
+    classification:"Vaccins vivants atténués, vaccins inactivés, anatoxines, vaccins conjugués, protéines recombinées.",
+    references:"Santé publique (INFAS) – PEV" },
+  /* ===== Gestes infirmiers et techniques de soins ===== */
+  { id:"injection_iv", terme:"Injection intraveineuse (IV)", categorie:"Soins infirmiers", abreviation:"IV",
+    definition:"Technique d'administration d'un médicament ou d'un soluté directement dans la circulation veineuse, permettant un effet immédiat.",
+    conseils:"Vérifier la perméabilité de la voie veineuse, respecter la vitesse d'administration prescrite, surveiller les signes d'extravasation ou de réaction.",
+    references:"Concepts et théories en sciences infirmières (INFAS)" },
+  { id:"pose_perfusion", terme:"Pose d'une perfusion intraveineuse", categorie:"Soins infirmiers",
+    definition:"Geste technique consistant à introduire un cathéter dans une veine périphérique afin d'administrer des solutés, médicaments ou produits sanguins de façon continue ou discontinue.",
+    conseils:"Respecter l'asepsie stricte, choisir une veine adaptée, fixer solidement le cathéter, surveiller le point de ponction (rougeur, douleur, gonflement).",
+    complications:"Phlébite, extravasation, infection du site de ponction si asepsie insuffisante.",
+    references:"Concepts et théories en sciences infirmières (INFAS)" },
+  { id:"pansement", terme:"Pansement", categorie:"Soins infirmiers",
+    definition:"Ensemble des soins appliqués sur une plaie afin de la protéger, favoriser sa cicatrisation et prévenir l'infection.",
+    description:"Comprend le nettoyage de la plaie (sérum physiologique, antiseptique selon le contexte), l'application d'un pansement adapté, et la fixation.",
+    conseils:"Respecter l'asepsie, adapter la fréquence de renouvellement au type de plaie et à son exsudat.",
+    references:"Sémiologie chirurgicale (INFAS)" },
+  { id:"sondage_urinaire", terme:"Sondage urinaire", categorie:"Soins infirmiers",
+    definition:"Introduction d'une sonde dans la vessie par l'urètre, permettant l'évacuation ou le drainage continu des urines.",
+    classification:"Sondage évacuateur (ponctuel) ou sondage à demeure (drainage continu prolongé).",
+    complications:"Infection urinaire nosocomiale (risque majeur en cas de sondage prolongé), traumatisme urétral.",
+    conseils:"Respecter une asepsie rigoureuse, limiter la durée du sondage au strict nécessaire, maintenir un système clos.",
+    references:"Concepts et théories en sciences infirmières (INFAS)" },
+  { id:"aspiration_bronchique", terme:"Aspiration bronchique", categorie:"Soins infirmiers",
+    definition:"Geste technique consistant à aspirer les sécrétions présentes dans les voies aériennes supérieures ou la trachée, afin de dégager les voies respiratoires.",
+    conseils:"Limiter la durée de chaque aspiration (quelques secondes), surveiller la saturation en oxygène pendant le geste, respecter l'asepsie.",
+    references:"Concepts et théories en sciences infirmières (INFAS)" },
+  { id:"prise_constantes", terme:"Prise des constantes", categorie:"Soins infirmiers",
+    definition:"Ensemble des mesures des paramètres vitaux (température, pouls, tension artérielle, fréquence respiratoire, saturation) réalisées de façon systématique par le personnel soignant.",
+    conseils:"À réaliser à l'admission, puis selon la fréquence prescrite ou l'état clinique du patient ; toute anomalie doit être signalée sans délai.",
+    references:"Sémiologie médicale générale" },
+  { id:"toilette_patient", terme:"Toilette du patient", categorie:"Soins infirmiers",
+    definition:"Soin d'hygiène corporelle réalisé par le personnel soignant pour les patients ne pouvant l'effectuer eux-mêmes.",
+    description:"Contribue à la satisfaction du besoin fondamental d'être propre (Virginia Henderson) et à la prévention des complications cutanées (escarres).",
+    references:"Concepts et théories en sciences infirmières (INFAS)" },
+  /* ===== Urgences médicales et scores ===== */
+  { id:"arret_cardiaque", terme:"Arrêt cardiorespiratoire (ACR)", categorie:"Urgences médicales", abreviation:"ACR",
+    definition:"Cessation brutale et totale de l'activité mécanique efficace du cœur, associée à un arrêt de la respiration, entraînant une perte de conscience immédiate.",
+    signesFonctionnels:"Perte de conscience brutale, absence de respiration ou gasps, absence de pouls perceptible.",
+    traitement:"Réanimation cardio-pulmonaire immédiate (massage cardiaque externe + ventilation), défibrillation si rythme choquable, alerte des secours sans délai.",
+    pronostic:"Dépend étroitement de la rapidité de prise en charge ; les chances de survie diminuent d'environ 10% par minute sans réanimation.",
+    references:"Secourisme (INFAS)" },
+  { id:"choc_anaphylactique", terme:"Choc anaphylactique", categorie:"Urgences médicales",
+    definition:"Réaction allergique généralisée et sévère, d'installation brutale, pouvant menacer le pronostic vital, résultant d'une hypersensibilité immédiate à un allergène.",
+    causes:"Médicaments (antibiotiques notamment), piqûres d'insectes, aliments, produits de contraste iodés.",
+    signesFonctionnels:"Urticaire généralisée, œdème de Quincke, difficulté respiratoire, chute de la tension artérielle, malaise.",
+    traitement:"Adrénaline en urgence (traitement de référence), oxygénothérapie, remplissage vasculaire.",
+    conseils:"Toujours interroger sur les allergies connues avant toute administration médicamenteuse.",
+    references:"Sémiologie médicale générale" },
+  { id:"coma", terme:"Coma", categorie:"Urgences médicales",
+    definition:"Altération sévère et prolongée de la conscience, avec perte de la vigilance et de la conscience de soi et de l'environnement, sans réveil possible même par des stimulations intenses.",
+    classification:"Évalué et gradué selon le score de Glasgow (de 3, coma profond, à 15, conscience normale).",
+    causes:"Traumatisme crânien, accident vasculaire cérébral, hypoglycémie sévère, intoxication, neuropaludisme.",
+    conseils:"Protéger les voies aériennes (position latérale de sécurité si respiration conservée), surveiller les constantes vitales.",
+    references:"Secourisme (INFAS) ; Paludisme chez l'adulte (INFAS)" },
+  { id:"score_glasgow", terme:"Score de Glasgow (Glasgow Coma Scale)", categorie:"Sémiologie", abreviation:"GCS",
+    definition:"Échelle clinique standardisée évaluant le niveau de conscience d'un patient, en additionnant les scores de trois items : ouverture des yeux, réponse verbale et réponse motrice.",
+    valeursNormales:"Score total de 3 (coma profond) à 15 (conscience normale) ; un score ≤ 8 définit classiquement un coma sévère nécessitant une protection des voies aériennes.",
+    references:"Secourisme (INFAS)" },
+  { id:"score_apgar", terme:"Score d'APGAR", categorie:"Gynéco-Obstétrique",
+    definition:"Score clinique évaluant l'état de santé du nouveau-né à la naissance, calculé à partir de 5 items : fréquence cardiaque, mouvements respiratoires, tonus musculaire, réactivité aux stimulations, coloration cutanée.",
+    valeursNormales:"Score de 0 à 10 ; un score ≥ 7 est rassurant, un score < 7 nécessite une surveillance rapprochée, un score < 4 impose une réanimation immédiate.",
+    diagnostic:"Évalué à la 1ère, à la 5ème et à la 10ème minute de vie.",
+    references:"Gynéco-Obstétrique (INFAS)" },
+  { id:"hemorragie", terme:"Hémorragie", categorie:"Sémiologie",
+    definition:"Écoulement de sang hors des vaisseaux sanguins, pouvant être extériorisé (visible) ou interne (non visible directement).",
+    classification:"Hémorragie externe, interne, ou extériorisée (par un orifice naturel comme le tube digestif ou les voies urinaires).",
+    conseils:"Comprimer une hémorragie externe accessible, évaluer le retentissement hémodynamique (pouls, tension), alerter en urgence.",
+    references:"Secourisme (INFAS)" },
+  /* ===== Maladies et syndromes courants ===== */
+  { id:"diabete_sucre", terme:"Diabète sucré", categorie:"Endocrinologie",
+    definition:"Maladie métabolique chronique caractérisée par une hyperglycémie chronique, due à un défaut de sécrétion et/ou d'action de l'insuline.",
+    classification:"Diabète de type 1 (déficit absolu en insuline, souvent auto-immun), diabète de type 2 (insulinorésistance, le plus fréquent), diabète gestationnel.",
+    signesFonctionnels:"Syndrome polyuro-polydipsique (soif intense, urines abondantes), amaigrissement, fatigue.",
+    complications:"Rétinopathie, néphropathie, neuropathie diabétique, complications cardiovasculaires, pied diabétique.",
+    examens:"Glycémie à jeun, hémoglobine glyquée (HbA1c), glycémie post-prandiale.",
+    traitement:"Règles hygiéno-diététiques, antidiabétiques oraux et/ou insuline selon le type et la sévérité.",
+    references:"Anatomie Physiologie (INFAS) – Pancréas endocrine" },
+  { id:"anemie_dict", terme:"Anémie", categorie:"Hématologie",
+    definition:"Diminution du taux d'hémoglobine dans le sang en dessous des valeurs normales pour l'âge et le sexe, réduisant la capacité de transport de l'oxygène.",
+    classification:"Selon le volume globulaire moyen (VGM) : anémie microcytaire (VGM < 85 µ3), normocytaire (85-95 µ3), macrocytaire (VGM > 95 µ3) ; selon le mécanisme : régénérative ou arégénérative (taux de réticulocytes).",
+    signesFonctionnels:"Fatigue, pâleur cutanéo-muqueuse, essoufflement à l'effort, palpitations, vertiges.",
+    causes:"Carence en fer, hémorragie, hémolyse, carence en vitamine B12/folates, maladies chroniques.",
+    examens:"NFS, réticulocytes, bilan martial, VGM et TCMH.",
+    traitement:"Dépend de la cause : supplémentation en fer, en vitamine B12/folates, transfusion si sévère, traitement étiologique.",
+    references:"Hématologie (INFAS)" },
+  { id:"drepanocytose_dict", terme:"Drépanocytose", categorie:"Hématologie",
+    definition:"Maladie génétique héréditaire de l'hémoglobine, due à une mutation entraînant la production d'une hémoglobine anormale (hémoglobine S), responsable d'une déformation des globules rouges en forme de faucille.",
+    physiopathologie:"L'hémoglobine S polymérise en cas d'hypoxie, déformant le globule rouge qui devient rigide et fragile, entraînant des crises vaso-occlusives et une hémolyse chronique.",
+    signesFonctionnels:"Crises douloureuses vaso-occlusives, anémie chronique, ictère, infections à répétition (asplénie fonctionnelle).",
+    examens:"Électrophorèse de l'hémoglobine (examen de référence pour le diagnostic).",
+    complications:"Séquestration splénique, syndrome thoracique aigu, accident vasculaire cérébral, priapisme, ulcères de jambe.",
+    references:"Hématologie (INFAS)" },
+  { id:"tuberculose_dict", terme:"Tuberculose", categorie:"Infectiologie-Bactériologie",
+    definition:"Maladie infectieuse contagieuse due à Mycobacterium tuberculosis (bacille de Koch), atteignant principalement les poumons mais pouvant toucher d'autres organes.",
+    causes:"Transmission par voie aérienne (gouttelettes de Pflügge) à partir d'un patient bacillifère.",
+    signesFonctionnels:"Toux chronique (> 2-3 semaines), fièvre vespérale, sueurs nocturnes, amaigrissement, asthénie, hémoptysie parfois.",
+    examens:"Recherche de BAAR à l'examen microscopique des crachats (GeneXpert, examen direct), radiographie thoracique.",
+    traitement:"Traitement antituberculeux standardisé de plusieurs mois (stratégie DOTS), associant plusieurs antibiotiques.",
+    references:"Santé publique (INFAS) – PNLT" },
+  { id:"hepatite_virale", terme:"Hépatite virale", categorie:"Infectiologie-Bactériologie",
+    definition:"Inflammation du foie causée par un virus hépatotrope (virus de l'hépatite A, B, C, D ou E).",
+    classification:"Hépatite A et E (transmission oro-fécale, généralement bénignes), hépatite B, C et D (transmission sanguine/sexuelle, risque de chronicisation et de cirrhose).",
+    signesFonctionnels:"Ictère, urines foncées, asthénie, douleurs abdominales ; formes souvent asymptomatiques notamment pour l'hépatite B et C.",
+    traitement:"Traitement symptomatique pour les hépatites aiguës bénignes ; traitement antiviral spécifique pour les formes chroniques (B, C).",
+    references:"Bactériologie-Virologie (INFAS)" },
+  { id:"cholera_dict", terme:"Choléra", categorie:"Infectiologie-Bactériologie",
+    definition:"Maladie diarrhéique aiguë sévère due à la bactérie Vibrio cholerae, pouvant entraîner une déshydratation rapide et mortelle en l'absence de traitement.",
+    signesFonctionnels:"Diarrhée aqueuse abondante (« eau de riz »), vomissements, déshydratation rapide.",
+    causes:"Ingestion d'eau ou d'aliments contaminés par le vibrion cholérique ; favorisée par le manque d'hygiène et d'assainissement.",
+    traitement:"Réhydratation rapide et massive (orale ou IV selon la sévérité), antibiothérapie dans les formes sévères.",
+    references:"Bactériologie-Virologie (INFAS) ; Santé communautaire (INFAS)" },
+  { id:"pneumonie", terme:"Pneumonie (Pneumopathie franche lobaire aiguë)", categorie:"Sémiologie",
+    definition:"Infection aiguë du parenchyme pulmonaire, le plus souvent d'origine bactérienne (notamment à Streptococcus pneumoniae).",
+    signesFonctionnels:"Fièvre élevée, toux, douleur thoracique, dyspnée, expectoration purulente ou rouillée.",
+    examens:"Radiographie thoracique (opacité systématisée), NFS, CRP.",
+    traitement:"Antibiothérapie adaptée au germe suspecté, oxygénothérapie si besoin.",
+    references:"Bactériologie-Virologie (INFAS)" },
+  { id:"appendicite", terme:"Appendicite aiguë", categorie:"Sémiologie",
+    definition:"Inflammation aiguë de l'appendice vermiforme, urgence chirurgicale abdominale la plus fréquente.",
+    signesFonctionnels:"Douleur débutant souvent en région péri-ombilicale puis se localisant en fosse iliaque droite, fièvre modérée, nausées, vomissements.",
+    diagnostic:"Douleur provoquée au point de Mac Burney, défense abdominale.",
+    traitement:"Appendicectomie chirurgicale en urgence.",
+    complications:"Perforation, péritonite généralisée en l'absence de prise en charge rapide.",
+    references:"Sémiologie chirurgicale (INFAS)" },
+  { id:"osteomyelite_dict", terme:"Ostéomyélite aiguë", categorie:"Sémiologie",
+    definition:"Inflammation suppurative aiguë de l'os et de la moelle osseuse, d'origine le plus souvent bactérienne (staphylocoque doré dans la majorité des cas).",
+    signesFonctionnels:"Douleur osseuse intense, fièvre élevée, impotence fonctionnelle du membre atteint.",
+    diagnostic:"Radiographie (signes tardifs), IRM (plus sensible précocement), hémoculture, ponction osseuse.",
+    traitement:"Antibiothérapie prolongée, parfois associée à un geste chirurgical de drainage.",
+    references:"Sémiologie chirurgicale (INFAS)" },
+  /* ===== Examens d'imagerie et examens spécialisés ===== */
+  { id:"radiographie", terme:"Radiographie", categorie:"Sémiologie",
+    definition:"Examen d'imagerie médicale utilisant les rayons X pour visualiser les structures internes du corps, particulièrement adapté à l'étude des os et du thorax.",
+    description:"Examen rapide, peu coûteux et largement disponible, souvent réalisé en première intention.",
+    references:"Sémiologie médicale générale" },
+  { id:"echographie", terme:"Échographie", categorie:"Sémiologie",
+    definition:"Examen d'imagerie médicale non invasif et sans irradiation, utilisant les ultrasons pour visualiser les organes internes (abdomen, cœur, grossesse, etc.).",
+    description:"Particulièrement utilisée en obstétrique pour le suivi de la grossesse, ainsi qu'en cardiologie (échocardiographie) et pour l'exploration abdominale.",
+    references:"Gynéco-Obstétrique (INFAS)" },
+  { id:"scanner_tdm", terme:"Scanner (Tomodensitométrie)", categorie:"Sémiologie", abreviation:"TDM",
+    definition:"Examen d'imagerie médicale utilisant les rayons X pour obtenir des images en coupes fines du corps, offrant une meilleure résolution que la radiographie standard.",
+    description:"Utile notamment pour l'exploration cérébrale (AVC, traumatisme crânien), thoracique et abdominale.",
+    references:"Sémiologie médicale générale" },
+  { id:"irm", terme:"IRM (Imagerie par Résonance Magnétique)", categorie:"Sémiologie", abreviation:"IRM",
+    definition:"Examen d'imagerie médicale utilisant un champ magnétique puissant pour obtenir des images détaillées des tissus mous, sans irradiation.",
+    description:"Particulièrement performante pour l'exploration du système nerveux central, des articulations et des tissus mous.",
+    references:"Sémiologie médicale générale" },
+  { id:"electrocardiogramme", terme:"Électrocardiogramme (ECG)", categorie:"Sémiologie", abreviation:"ECG",
+    definition:"Enregistrement graphique de l'activité électrique du cœur, réalisé à l'aide d'électrodes placées sur la peau.",
+    description:"Examen de première intention pour explorer un trouble du rythme cardiaque, une douleur thoracique ou une anomalie de conduction.",
+    references:"Sémiologie médicale générale ; Hématologie (INFAS)" },
+  { id:"fibroscopie_digestive", terme:"Fibroscopie œso-gastro-duodénale (FOGD)", categorie:"Sémiologie", abreviation:"FOGD",
+    definition:"Examen endoscopique permettant de visualiser directement l'œsophage, l'estomac et le duodénum à l'aide d'un tube souple muni d'une caméra.",
+    description:"Examen de référence en cas d'hémorragie digestive haute (hématémèse, méléna) et pour le diagnostic des pathologies œso-gastro-duodénales.",
+    references:"Sémiologie médicale générale" },
+  { id:"electrophorese_hb", terme:"Électrophorèse de l'hémoglobine", categorie:"Hématologie",
+    definition:"Technique de laboratoire séparant les différents types d'hémoglobine présents dans le sang, permettant de diagnostiquer les hémoglobinopathies (drépanocytose, thalassémie).",
+    references:"Hématologie (INFAS)" },
+  /* ===== Anatomie et physiologie additionnelles ===== */
+  { id:"homeostasie", terme:"Homéostasie", categorie:"Anatomie-Physiologie",
+    definition:"Ensemble des mécanismes de régulation qui permettent à l'organisme de maintenir constant son milieu intérieur (température, pH, glycémie, etc.) malgré les variations de l'environnement extérieur.",
+    references:"Anatomie Physiologie (INFAS)" },
+  { id:"systeme_nerveux_autonome", terme:"Système nerveux autonome (végétatif)", categorie:"Anatomie-Physiologie",
+    definition:"Partie du système nerveux qui contrôle les fonctions involontaires de l'organisme (fréquence cardiaque, digestion, respiration), comprenant deux composantes antagonistes : le système sympathique et le système parasympathique.",
+    references:"Anatomie Physiologie (INFAS)" },
+  { id:"hemostase_dict", terme:"Hémostase", categorie:"Hématologie",
+    definition:"Ensemble des mécanismes physiologiques qui permettent d'arrêter un saignement et de maintenir le sang à l'état fluide dans les vaisseaux.",
+    classification:"Hémostase primaire (rôle des plaquettes et de la paroi vasculaire), coagulation plasmatique (cascade de facteurs de coagulation), fibrinolyse (dissolution du caillot).",
+    references:"Hématologie (INFAS)" },
+  { id:"immunite", terme:"Immunité", categorie:"Anatomie-Physiologie",
+    definition:"Capacité de l'organisme à se défendre contre les agents pathogènes (bactéries, virus, parasites) et les substances étrangères.",
+    classification:"Immunité innée (immédiate, non spécifique) et immunité acquise/adaptative (plus lente, spécifique, avec mémoire immunitaire).",
+    references:"Bactériologie-Virologie (INFAS)" },
+  /* ===== Agents infectieux ===== */
+  { id:"plasmodium", terme:"Plasmodium", categorie:"Infectiologie-Bactériologie",
+    definition:"Genre de parasites protozoaires responsables du paludisme chez l'homme, transmis par la piqûre d'un moustique femelle Anophèle infecté.",
+    classification:"Cinq espèces infectent l'homme : P. falciparum (la plus fréquente et la plus dangereuse), P. vivax, P. ovale, P. malariae, P. knowlesi.",
+    references:"Paludisme chez l'enfant (INFAS)" },
+  { id:"staphylocoque_dore", terme:"Staphylococcus aureus (staphylocoque doré)", categorie:"Infectiologie-Bactériologie",
+    definition:"Bactérie Gram positif ubiquitaire, responsable de nombreuses infections cutanées (furoncle, panaris), ostéo-articulaires et générales (septicémie).",
+    references:"Bactériologie-Virologie (INFAS) ; Sémiologie chirurgicale (INFAS)" },
+  { id:"escherichia_coli", terme:"Escherichia coli (E. coli)", categorie:"Infectiologie-Bactériologie",
+    definition:"Bactérie Gram négatif, commensale habituelle du tube digestif, mais pathogène pour l'appareil urinaire (première cause d'infection urinaire).",
+    references:"Bactériologie-Virologie (INFAS)" },
+  { id:"virus_generalites", terme:"Virus", categorie:"Infectiologie-Bactériologie",
+    definition:"Agent infectieux de très petite taille, dépourvu de structure cellulaire propre, qui doit obligatoirement infecter une cellule hôte pour se répliquer.",
+    description:"Composé d'un génome (ADN ou ARN), d'une capside protéique, et parfois d'une enveloppe externe (péplos).",
+    references:"Bactériologie-Virologie (INFAS)" },
+  /* ===== Spécialités médicales ===== */
+  { id:"cardiologie_spec", terme:"Cardiologie", categorie:"Spécialités médicales",
+    definition:"Spécialité médicale consacrée à l'étude, au diagnostic et au traitement des maladies du cœur et des vaisseaux sanguins.",
+    references:"Sémiologie médicale générale" },
+  { id:"gynecologie_spec", terme:"Gynécologie-Obstétrique", categorie:"Spécialités médicales",
+    definition:"Spécialité médicale consacrée à la santé de l'appareil génital féminin (gynécologie) et au suivi de la grossesse et de l'accouchement (obstétrique).",
+    references:"Gynéco-Obstétrique (INFAS)" },
+  { id:"pediatrie_spec", terme:"Pédiatrie", categorie:"Spécialités médicales",
+    definition:"Spécialité médicale consacrée à la santé de l'enfant, de la naissance à l'adolescence.",
+    references:"Paludisme chez l'enfant (INFAS)" },
+  { id:"endocrinologie_spec", terme:"Endocrinologie", categorie:"Spécialités médicales",
+    definition:"Spécialité médicale consacrée à l'étude des glandes endocrines et des hormones, ainsi qu'aux maladies qui en résultent (diabète, troubles thyroïdiens, etc.).",
+    references:"Anatomie Physiologie (INFAS)" },
+  /* ===== Classifications et scores ===== */
+  { id:"classification_nyha", terme:"Classification NYHA", categorie:"Sémiologie",
+    definition:"Classification fonctionnelle de la sévérité de l'insuffisance cardiaque, établie par la New York Heart Association, graduée en 4 stades selon la limitation de l'activité physique.",
+    classification:"Stade I : aucune limitation ; Stade II : limitation légère (dyspnée aux efforts importants) ; Stade III : limitation marquée (dyspnée aux efforts modérés) ; Stade IV : dyspnée au moindre effort ou de repos.",
+    references:"Sémiologie médicale générale" },
+  { id:"echelle_douleur", terme:"Échelle numérique de la douleur (EN)", categorie:"Sémiologie",
+    definition:"Outil d'évaluation de l'intensité de la douleur ressentie par le patient, coté de 0 (absence de douleur) à 10 (douleur maximale imaginable).",
+    conseils:"À utiliser systématiquement avant et après administration d'un antalgique pour évaluer son efficacité.",
+    references:"Sémiologie médicale générale" },
+  /* ===== Actes médicaux et protocoles ===== */
+  { id:"cesarienne", terme:"Césarienne", categorie:"Gynéco-Obstétrique",
+    definition:"Intervention chirurgicale consistant à extraire le fœtus par une incision de la paroi abdominale et de l'utérus, lorsque l'accouchement par voie basse n'est pas possible ou souhaitable.",
+    causes:"Présentation dystocique (front, transverse), disproportion foeto-pelvienne, souffrance fœtale aiguë, placenta prævia.",
+    references:"Gynéco-Obstétrique (INFAS)" },
+  { id:"delivrance_artificielle", terme:"Délivrance artificielle", categorie:"Gynéco-Obstétrique",
+    definition:"Geste obstétrical consistant à extraire manuellement le placenta de la cavité utérine, lorsque la délivrance spontanée ne s'est pas produite dans les délais normaux (30 minutes après l'accouchement).",
+    references:"Gynéco-Obstétrique (INFAS)" },
+  { id:"episiotomie", terme:"Épisiotomie", categorie:"Gynéco-Obstétrique",
+    definition:"Incision chirurgicale du périnée réalisée au moment de l'accouchement, destinée à agrandir l'orifice vulvaire et à prévenir une déchirure périnéale non contrôlée.",
+    references:"Gynéco-Obstétrique (INFAS)" },
+  { id:"transfusion_sanguine_dict", terme:"Transfusion sanguine", categorie:"Hématologie",
+    definition:"Administration par voie intraveineuse d'un produit sanguin (culot globulaire, plasma, plaquettes) prélevé chez un donneur à un receveur.",
+    conseils:"Vérifier systématiquement la concordance du groupe ABO Rhésus entre le patient et la poche, et réaliser un test de compatibilité au lit du patient avant la transfusion.",
+    references:"Hématologie (INFAS)" },
 ];
 
 /* ---------------- Dictionnaire médical — stockage favoris & historique ---------------- */
@@ -7005,6 +7937,47 @@ function normalizeForSearch(s) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+// Distance de Levenshtein (nombre minimal de modifications pour passer d'un mot à l'autre) :
+// sert de filet de sécurité pour tolérer les fautes de frappe/orthographe dans la recherche.
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const matrix = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      matrix[i][j] =
+        a[i - 1] === b[j - 1]
+          ? matrix[i - 1][j - 1]
+          : 1 + Math.min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
+    }
+  }
+  return matrix[a.length][b.length];
+}
+
+// Vérifie si la requête correspond à une fiche : terme, synonymes, abréviation, ou définition en
+// correspondance exacte (substring), puis en secours par tolérance aux fautes (distance ≤ 2 sur
+// un des mots du terme ou des synonymes), pour couvrir les fautes de frappe et d'orthographe.
+function dictEntryMatches(entry, normalizedQuery) {
+  if (!normalizedQuery) return true;
+  const termN = normalizeForSearch(entry.terme);
+  if (termN.includes(normalizedQuery)) return true;
+  if (normalizeForSearch(entry.definition || "").includes(normalizedQuery)) return true;
+  const synonymsN = (entry.synonymes || []).map(normalizeForSearch);
+  if (synonymsN.some((s) => s.includes(normalizedQuery))) return true;
+  const abbrevN = normalizeForSearch(entry.abreviation || "");
+  if (abbrevN && abbrevN === normalizedQuery) return true;
+  // tolérance aux fautes : uniquement pour les requêtes de 4 lettres ou plus, en comparant
+  // chaque mot du terme/synonyme à la requête (distance ≤ 2, proportionnelle à la longueur)
+  if (normalizedQuery.length >= 4) {
+    const words = [...termN.split(/[\s-]+/), ...synonymsN.flatMap((s) => s.split(/[\s-]+/))];
+    const threshold = normalizedQuery.length <= 6 ? 1 : 2;
+    if (words.some((w) => w.length >= 3 && levenshtein(w, normalizedQuery) <= threshold)) return true;
+  }
+  return false;
+}
+
 function DictionaryScreen({ onBack, student }) {
   const [query, setQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -7040,7 +8013,7 @@ function DictionaryScreen({ onBack, student }) {
 
   const suggestions = useMemo(() => {
     if (!normalizedQuery) return [];
-    return MEDICAL_DICT.filter((e) => normalizeForSearch(e.terme).includes(normalizedQuery)).slice(0, 6);
+    return MEDICAL_DICT.filter((e) => dictEntryMatches(e, normalizedQuery)).slice(0, 8);
   }, [normalizedQuery]);
 
   const filteredTerms = useMemo(() => {
@@ -7048,9 +8021,7 @@ function DictionaryScreen({ onBack, student }) {
     if (activeCategory !== "Toutes") list = list.filter((e) => e.categorie === activeCategory);
     if (activeLetter) list = list.filter((e) => normalizeForSearch(e.terme)[0] === activeLetter.toLowerCase());
     if (normalizedQuery) {
-      list = list.filter(
-        (e) => normalizeForSearch(e.terme).includes(normalizedQuery) || normalizeForSearch(e.definition).includes(normalizedQuery)
-      );
+      list = list.filter((e) => dictEntryMatches(e, normalizedQuery));
     }
     return [...list].sort((a, b) => a.terme.localeCompare(b.terme, "fr"));
   }, [activeCategory, activeLetter, normalizedQuery]);
@@ -7086,15 +8057,27 @@ function DictionaryScreen({ onBack, student }) {
     const isFav = favorites.includes(selectedTerm.id);
     const fields = [
       ["Définition", selectedTerm.definition],
+      ["Description détaillée", selectedTerm.description],
+      ["Anatomie concernée", selectedTerm.anatomie],
+      ["Physiopathologie", selectedTerm.physiopathologie],
       ["Causes", selectedTerm.causes],
+      ["Facteurs de risque", selectedTerm.facteursRisque],
+      ["Classification / Types / Formes cliniques", selectedTerm.classification],
+      ["Signes fonctionnels", selectedTerm.signesFonctionnels],
+      ["Signes physiques", selectedTerm.signesPhysiques],
       ["Symptômes", selectedTerm.symptomes],
       ["Diagnostic", selectedTerm.diagnostic],
+      ["Diagnostic différentiel", selectedTerm.diagnosticDifferentiel],
       ["Examens complémentaires", selectedTerm.examens],
+      ["Valeurs normales", selectedTerm.valeursNormales],
       ["Traitement", selectedTerm.traitement],
+      ["Surveillance infirmière", selectedTerm.surveillanceInfirmiere],
       ["Prévention", selectedTerm.prevention],
       ["Complications", selectedTerm.complications],
-      ["Conseils infirmiers", selectedTerm.conseils],
-    ];
+      ["Pronostic", selectedTerm.pronostic],
+      ["Conseils pratiques", selectedTerm.conseils],
+      ["Points clés à retenir", selectedTerm.pointsCles],
+    ].filter(([, value]) => value);
     return (
       <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
         <TopBar onLogout={onBack} />
@@ -7109,6 +8092,21 @@ function DictionaryScreen({ onBack, student }) {
                 <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, color: COLORS.ink, margin: "10px 0 0" }}>
                   {selectedTerm.terme}
                 </h1>
+                {selectedTerm.prononciation && (
+                  <div style={{ fontSize: 12, color: COLORS.inkSoft, fontStyle: "italic", marginTop: 3 }}>[{selectedTerm.prononciation}]</div>
+                )}
+                {selectedTerm.etymologie && (
+                  <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginTop: 3 }}>Étymologie : {selectedTerm.etymologie}</div>
+                )}
+                {selectedTerm.synonymes?.length > 0 && (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
+                    {selectedTerm.synonymes.map((s) => (
+                      <span key={s} style={{ fontSize: 10.5, background: COLORS.blueSoft, color: COLORS.blueDeep, borderRadius: 999, padding: "2px 8px" }}>
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
               <button
                 onClick={() => toggleFavorite(selectedTerm.id)}
@@ -7129,11 +8127,16 @@ function DictionaryScreen({ onBack, student }) {
                   <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4, marginBottom: 4, textTransform: "uppercase" }}>
                     {label}
                   </div>
-                  <div style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.6 }}>{value}</div>
+                  <div style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.6, whiteSpace: "pre-line" }}>{value}</div>
                 </div>
               ))}
+              {selectedTerm.incertain && (
+                <div style={{ fontSize: 11.5, color: COLORS.amber, background: COLORS.amberSoft, borderRadius: 8, padding: 10 }}>
+                  ⚠ {selectedTerm.incertain}
+                </div>
+              )}
               <div style={{ fontSize: 11, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", borderTop: `1px dashed ${COLORS.line}`, paddingTop: 12 }}>
-                Réf. cours : {selectedTerm.references}
+                Réf. : {selectedTerm.references}
               </div>
             </div>
           </div>
@@ -7860,10 +8863,205 @@ function FraudScreen({ onBack }) {
 }
 
 /* ---------------- Administration ---------------- */
+
+/* ============================================================
+   ÉCRAN DE PRATIQUE — SCHÉMAS LÉGENDÉS
+   ============================================================ */
+function buildSchemaQuestions() {
+  return SCHEMA_QUESTIONS_RAW.map((raw) => {
+    const schema = SCHEMAS[raw.schemaId];
+    const correctPoint = schema.points.find((p) => p.label === raw.correctLabel);
+    return { ...raw, schema, correctNum: correctPoint.num };
+  });
+}
+const SCHEMA_QUESTIONS = buildSchemaQuestions();
+
+function schemaKey(matricule) {
+  return `schema-progress:${matricule}`;
+}
+async function loadSchemaProgress(matricule) {
+  try {
+    const r = await storage.get(schemaKey(matricule), false);
+    return r ? JSON.parse(r.value) : { done: 0, correct: 0 };
+  } catch {
+    return { done: 0, correct: 0 };
+  }
+}
+async function saveSchemaProgress(matricule, progress) {
+  try {
+    await storage.set(schemaKey(matricule), JSON.stringify(progress), false);
+  } catch (e) {
+    console.error("Erreur sauvegarde progression schémas", e);
+  }
+}
+
+function shuffleArr(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
+  const { schema, correctNum } = question;
+  const letters = ["A", "B", "C", "D"];
+  return (
+    <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 20 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.blueDeep, textTransform: "uppercase", letterSpacing: 0.4, marginBottom: 6 }}>
+        {schema.titre}
+      </div>
+      <p style={{ fontSize: 14.5, color: COLORS.ink, marginBottom: 16, fontWeight: 600 }}>{question.consigne}</p>
+
+      <svg viewBox={schema.viewBox} style={{ width: "100%", maxWidth: 320, margin: "0 auto", display: "block", background: "#FBFDFE", borderRadius: 12 }}>
+        <g dangerouslySetInnerHTML={{ __html: schema.svgShapes }} />
+        {schema.points.map((p) => (
+          <g key={p.num}>
+            <circle cx={p.x} cy={p.y} r="14" fill={COLORS.blueDeep} stroke="white" strokeWidth="2" />
+            <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize="13" fontWeight="700" fill="white">
+              {p.num}
+            </text>
+          </g>
+        ))}
+      </svg>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 18 }}>
+        {question.optionNums.map((num, i) => {
+          const isSelected = selectedNum === num;
+          const isRight = showResult && num === correctNum;
+          const isWrongPick = showResult && isSelected && num !== correctNum;
+          return (
+            <button
+              key={num}
+              onClick={() => !showResult && onAnswer(num)}
+              disabled={showResult}
+              style={{
+                padding: "12px 14px", borderRadius: 10, textAlign: "left", fontSize: 14, fontWeight: 600,
+                border: `1.5px solid ${isRight ? COLORS.green : isWrongPick ? COLORS.red : isSelected ? COLORS.blueDeep : COLORS.line}`,
+                background: isRight ? COLORS.greenSoft : isWrongPick ? "#FCE9E9" : isSelected ? COLORS.blueSoft : "white",
+                color: COLORS.ink, cursor: showResult ? "default" : "pointer",
+              }}
+            >
+              {letters[i]}. Repère n°{num}
+            </button>
+          );
+        })}
+      </div>
+
+      {showResult && (
+        <div style={{ marginTop: 16, padding: 14, borderRadius: 10, background: selectedNum === correctNum ? COLORS.greenSoft : "#FCE9E9" }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: selectedNum === correctNum ? COLORS.green : COLORS.red, marginBottom: 4 }}>
+            {selectedNum === correctNum ? "✓ Bonne réponse" : "✗ Réponse incorrecte"} — repère n°{correctNum} = {question.correctLabel}
+          </div>
+          <div style={{ fontSize: 13, color: COLORS.ink, lineHeight: 1.5 }}>{question.explanation}</div>
+          <div style={{ fontSize: 11, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", marginTop: 8 }}>
+            Réf. : {question.reference}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SchemaPracticeScreen({ onBack, student }) {
+  const [order, setOrder] = useState(() => shuffleArr(SCHEMA_QUESTIONS));
+  const [index, setIndex] = useState(0);
+  const [selectedNum, setSelectedNum] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState({ correct: 0, total: 0 });
+  const [finished, setFinished] = useState(false);
+
+  const current = order[index];
+
+  const handleAnswer = (num) => {
+    setSelectedNum(num);
+    setShowResult(true);
+    const isCorrect = num === current.correctNum;
+    setScore((s) => ({ correct: s.correct + (isCorrect ? 1 : 0), total: s.total + 1 }));
+  };
+
+  const handleNext = async () => {
+    if (index + 1 >= order.length) {
+      setFinished(true);
+      if (student?.matricule) {
+        const prev = await loadSchemaProgress(student.matricule);
+        await saveSchemaProgress(student.matricule, {
+          done: prev.done + score.total + (selectedNum === current.correctNum ? 0 : 0),
+          correct: prev.correct + score.correct,
+        });
+      }
+      return;
+    }
+    setIndex((i) => i + 1);
+    setSelectedNum(null);
+    setShowResult(false);
+  };
+
+  const handleRestart = () => {
+    setOrder(shuffleArr(SCHEMA_QUESTIONS));
+    setIndex(0);
+    setSelectedNum(null);
+    setShowResult(false);
+    setScore({ correct: 0, total: 0 });
+    setFinished(false);
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 560, margin: "0 auto", padding: "24px 18px 60px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+          ← Retour au tableau de bord
+        </button>
+        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, marginBottom: 4 }}>
+          🩻 Schémas légendés
+        </h1>
+        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 18 }}>
+          Identifiez les structures numérotées sur le schéma, comme dans les vrais examens INFAS/ISS.
+        </p>
+
+        {!finished ? (
+          <>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <Badge tone="blue">Question {index + 1} / {order.length}</Badge>
+              <Badge tone="green">{score.correct} / {score.total} correctes</Badge>
+            </div>
+            <SchemaQuestionCard question={current} onAnswer={handleAnswer} selectedNum={selectedNum} showResult={showResult} />
+            {showResult && (
+              <button onClick={handleNext} style={{ ...primaryBtn, width: "100%", marginTop: 16 }}>
+                {index + 1 >= order.length ? "Voir le résultat" : "Question suivante →"}
+              </button>
+            )}
+          </>
+        ) : (
+          <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 28, textAlign: "center" }}>
+            <div style={{ fontSize: 34, marginBottom: 10 }}>🩻</div>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, marginBottom: 6 }}>
+              Série terminée
+            </h2>
+            <p style={{ fontSize: 15, color: COLORS.inkSoft, marginBottom: 20 }}>
+              Score : <b style={{ color: COLORS.ink }}>{score.correct} / {score.total}</b>
+            </p>
+            <button onClick={handleRestart} style={{ ...primaryBtn, width: "100%", marginBottom: 10 }}>
+              Recommencer une série
+            </button>
+            <button onClick={onBack} style={{ ...secondaryBtn, width: "100%" }}>
+              Retour au tableau de bord
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 function AdminScreen({ onBack }) {
   const [tab, setTab] = useState("students"); // students | payments | announcements
   const [students, setStudents] = useState(null);
   const [announcements, setAnnouncements] = useState(null);
+  const [pwdEditMatricule, setPwdEditMatricule] = useState(null);
+  const [pwdEditValue, setPwdEditValue] = useState("");
+  const [pwdSavedMatricule, setPwdSavedMatricule] = useState(null);
 
   const refreshStudents = () => loadAllStudents().then((list) => setStudents(list.sort((a, b) => new Date(b.lastSeen) - new Date(a.lastSeen))));
   const refreshAnnouncements = () => loadAnnouncements().then((list) => setAnnouncements(list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))));
@@ -7878,6 +9076,20 @@ function AdminScreen({ onBack }) {
   const handleConfirm = async (matricule) => {
     await confirmPayment(matricule);
     refreshStudents();
+  };
+
+  const openPwdEdit = (s) => {
+    setPwdEditMatricule(s.matricule);
+    setPwdEditValue(s.anneeNaissance || "");
+    setPwdSavedMatricule(null);
+  };
+  const savePwdEdit = async (matricule) => {
+    if (!pwdEditValue.trim()) return;
+    await updateStudentPassword(matricule, pwdEditValue.trim());
+    setPwdEditMatricule(null);
+    setPwdSavedMatricule(matricule);
+    refreshStudents();
+    setTimeout(() => setPwdSavedMatricule((m) => (m === matricule ? null : m)), 3000);
   };
 
   return (
@@ -7923,15 +9135,47 @@ function AdminScreen({ onBack }) {
               ) : (
                 students.map((s, i) => {
                   const access = computeAccess(s);
+                  const isEditing = pwdEditMatricule === s.matricule;
                   return (
-                    <div key={s.matricule} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}`, fontSize: 13, gap: 10 }}>
-                      <div>
-                        <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s.matricule}</span></div>
-                        <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · {s.niveau} {s.specialite} · {s.examsCount || 0} examen(s) · dernière visite {fmtDate(s.lastSeen)}</div>
+                    <div key={s.matricule} style={{ borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}` }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", fontSize: 13, gap: 10 }}>
+                        <div>
+                          <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s.matricule}</span></div>
+                          <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · {s.niveau} {s.specialite} · {s.examsCount || 0} examen(s) · dernière visite {fmtDate(s.lastSeen)}</div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          <button
+                            onClick={() => (isEditing ? setPwdEditMatricule(null) : openPwdEdit(s))}
+                            style={{ ...secondaryBtn, padding: "5px 10px", fontSize: 11 }}
+                          >
+                            {isEditing ? "Fermer" : "🔑 Mot de passe"}
+                          </button>
+                          <Badge tone={access.isVIP ? "blue" : access.isPaid ? "green" : access.isBlocked ? "red" : "amber"}>
+                            {access.isVIP ? "⭐ VIP" : access.isPaid ? "Payé" : access.isBlocked ? "Bloqué" : `Essai ${access.daysLeft}j`}
+                          </Badge>
+                        </div>
                       </div>
-                      <Badge tone={access.isVIP ? "blue" : access.isPaid ? "green" : access.isBlocked ? "red" : "amber"}>
-                        {access.isVIP ? "⭐ VIP" : access.isPaid ? "Payé" : access.isBlocked ? "Bloqué" : `Essai ${access.daysLeft}j`}
-                      </Badge>
+                      {isEditing && (
+                        <div style={{ padding: "0 16px 14px", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                          <div style={{ fontSize: 12, color: COLORS.inkSoft }}>
+                            Mot de passe actuel : <b style={{ fontFamily: "'IBM Plex Mono', monospace", color: COLORS.blueDeep }}>{s.anneeNaissance}</b>
+                          </div>
+                          <input
+                            value={pwdEditValue}
+                            onChange={(e) => setPwdEditValue(e.target.value)}
+                            placeholder="Nouvelle année (ex : 1998)"
+                            style={{ ...inputStyle, width: 160, padding: "6px 10px", fontSize: 12.5 }}
+                          />
+                          <button onClick={() => savePwdEdit(s.matricule)} style={{ ...primaryBtn, padding: "7px 12px", fontSize: 12 }}>
+                            Enregistrer et retransmettre
+                          </button>
+                        </div>
+                      )}
+                      {pwdSavedMatricule === s.matricule && (
+                        <div style={{ padding: "0 16px 14px", fontSize: 12, color: COLORS.green }}>
+                          ✓ Mot de passe mis à jour — communique-le à l'étudiant (matricule <b>{s.matricule}</b> / nouveau mot de passe transmis séparément).
+                        </div>
+                      )}
                     </div>
                   );
                 })
@@ -8277,7 +9521,7 @@ function AnnouncementsFeed({ student }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onLogout, student, onMarkPending }) {
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onLogout, student, onMarkPending }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -8363,6 +9607,13 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
             <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Recherchez un terme, une maladie, un médicament ou une abréviation. Filtres par catégorie, favoris et historique de recherche.</div>
             <button onClick={onDictionary} style={{ ...primaryBtn, background: "white", color: "#0E7C7B", width: "100%" }}>
               Rechercher un terme →
+            </button>
+          </div>
+          <div style={{ background: "#B25E2E", borderRadius: 16, padding: "20px 20px", color: "white" }}>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🩻 Schémas légendés</div>
+            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Identifiez les structures numérotées sur un schéma, comme dans les vrais examens INFAS/ISS (crâne, main, pied, cage thoracique, tube digestif).</div>
+            <button onClick={onSchemaPractice} style={{ ...primaryBtn, background: "white", color: "#B25E2E", width: "100%" }}>
+              S'entraîner →
             </button>
           </div>
         </div>
@@ -9822,9 +11073,21 @@ function ResultsScreen({ result, levelId, durationSec, onBackToDashboard }) {
 }
 
 /* ================= APP ================= */
+// Enregistre le service worker (mode hors-ligne + fiabilité) au premier chargement de l'app.
+// Sans cet enregistrement, le fichier /sw.js présent sur le serveur ne serait jamais activé
+// par le navigateur : c'est cette ligne qui manquait pour que PWABuilder/Lighthouse détectent
+// un service worker fonctionnel.
+function useServiceWorker() {
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.register("/sw.js").catch((e) => console.error("Erreur enregistrement service worker", e));
+  }, []);
+}
+
 export default function App() {
   useGoogleFonts();
-  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training | dictionary
+  useServiceWorker();
+  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training | dictionary | schemas
   const [role, setRole] = useState(null); // "admin" | "student"
   const [history, setHistory] = useState([]);
   const [exam, setExam] = useState(null);
@@ -9970,10 +11233,11 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
   }
 
   if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
+  if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
 
   if (screen === "matieres") return <MatieresScreen onBack={handleAbort} onSelect={handleSelectSubject} />;
 
