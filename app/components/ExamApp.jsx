@@ -889,6 +889,9 @@ const CHAPTERS = [
   { id: "hemoptysie", label: "Hémoptysie", subjectId: "semio-medicale" },
   { id: "dyspnee", label: "Dyspnée", subjectId: "semio-medicale" },
   { id: "semio_cardiovasculaire", label: "Symptômes cardio-vasculaires", subjectId: "semio-medicale" },
+  { id: "semio_uro_genital", label: "Symptômes uro-génitaux", subjectId: "semio-medicale" },
+  { id: "semio_digestif", label: "Symptômes digestifs", subjectId: "semio-medicale" },
+  { id: "semio_respiratoire_types", label: "Types de bruits et déformations respiratoires", subjectId: "semio-medicale" },
 
   { id: "secourisme_def", label: "Définitions et principes fondamentaux", subjectId: "secourisme" },
   { id: "degagement_urgence", label: "Dégagement d'urgence", subjectId: "secourisme" },
@@ -5803,204 +5806,238 @@ const ANATPHYSIO_EXO_RAW = [
    strictement le contenu fourni par Franck (locomoteur + digestif).
    ============================================================ */
 const SCHEMAS = {
-  crane_laterale: {
+  crane_profil: {
     titre: "Crâne (vue de profil)",
     viewBox: "0 0 400 340",
     svgShapes: `
-      <path d="M 90 190 Q 60 120 110 75 Q 160 30 240 40 Q 320 50 340 130 Q 350 190 320 230 L 300 240 L 295 270 L 270 270 L 265 245 L 220 245 L 190 260 L 165 260 L 160 235 Q 110 225 90 190 Z"
-            fill="#F5F9FB" stroke="#0F2733" stroke-width="2.5"/>
-      <line x1="160" y1="150" x2="340" y2="150" stroke="#0F2733" stroke-width="1.2" stroke-dasharray="3,3"/>
-      <circle cx="235" cy="145" r="7" fill="none" stroke="#0F2733" stroke-width="1.5"/>
+      <path d="M 85 165 C 68 115, 85 70, 130 45 C 165 25, 210 20, 250 30 C 285 40, 315 60, 330 95 C 342 122, 345 155, 335 190 C 328 212, 312 228, 292 235 L 292 260 L 270 262 L 266 278 L 246 278 L 240 258 C 222 262, 202 260, 186 252 L 168 270 L 148 270 L 150 244 C 118 232, 96 205, 85 165 Z"
+            fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
+      <path d="M 335 150 Q 275 152 210 158 Q 165 162 138 178" fill="none" stroke="#8B6914" stroke-width="1.2"/>
+      <path d="M 245 32 Q 252 90 240 158" fill="none" stroke="#8B6914" stroke-width="1.2"/>
+      <path d="M 330 100 Q 295 118 275 155 Q 260 190 248 232" fill="none" stroke="#8B6914" stroke-width="1.2"/>
+      <ellipse cx="278" cy="152" rx="10" ry="9" fill="#FFFFFF" stroke="#8B6914" stroke-width="1.5"/>
+      <line x1="204" y1="260" x2="284" y2="262" stroke="#8B6914" stroke-width="0.8" stroke-dasharray="3,3"/>
     `,
     points: [
-      { num: 1, x: 175, y: 65,  label: "Os frontal" },
-      { num: 2, x: 265, y: 55,  label: "Os pariétal" },
-      { num: 3, x: 325, y: 140, label: "Os temporal" },
-      { num: 4, x: 315, y: 215, label: "Os occipital" },
-      { num: 5, x: 145, y: 165, label: "Os sphénoïde" },
-      { num: 6, x: 118, y: 130, label: "Os ethmoïde" },
-      { num: 7, x: 210, y: 250, label: "Mandibule" },
+      { num: 1, x: 175, y: 42,  label: "Os frontal" },
+      { num: 2, x: 262, y: 32,  label: "Os pariétal" },
+      { num: 3, x: 322, y: 118, label: "Os temporal" },
+      { num: 4, x: 320, y: 195, label: "Os occipital" },
+      { num: 5, x: 155, y: 175, label: "Os sphénoïde" },
+      { num: 6, x: 122, y: 128, label: "Os ethmoïde" },
+      { num: 7, x: 210, y: 265, label: "Mandibule" },
     ],
   },
 
-  main_dorsale: {
-    titre: "Squelette de la main (vue dorsale, os du carpe, métacarpe et phalanges)",
-    viewBox: "0 0 320 420",
+  crane_face: {
+    titre: "Crâne (vue de face)",
+    viewBox: "0 0 320 360",
     svgShapes: `
-      <!-- rangée proximale du carpe (4 os) -->
-      <circle cx="105" cy="300" r="17" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="145" cy="292" r="17" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="185" cy="298" r="17" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="220" cy="315" r="14" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <!-- rangée distale du carpe (4 os) -->
-      <circle cx="100" cy="345" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="137" cy="350" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="175" cy="350" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="210" cy="345" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <!-- 5 métacarpiens -->
-      <rect x="60"  y="185" width="20" height="150" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="90"  y="150" width="20" height="185" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="130" y="140" width="20" height="195" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="170" y="150" width="20" height="185" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="205" y="185" width="20" height="150" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <!-- phalanges (empilées au-dessus de chaque métacarpien, simplifié) -->
-      <rect x="90" y="60"  width="20" height="80" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="130" y="40" width="20" height="90" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 95 45 C 62 48, 40 85, 42 130 C 43 165, 52 188, 66 205 C 56 222, 54 248, 68 270 C 84 295, 112 308, 160 312 C 208 308, 236 295, 252 270 C 266 248, 264 222, 254 205 C 268 188, 277 165, 278 130 C 280 85, 258 48, 225 45 C 205 22, 115 22, 95 45 Z"
+            fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
+      <ellipse cx="112" cy="152" rx="28" ry="22" fill="#FFFFFF" stroke="#8B6914" stroke-width="1.6"/>
+      <ellipse cx="208" cy="152" rx="28" ry="22" fill="#FFFFFF" stroke="#8B6914" stroke-width="1.6"/>
+      <path d="M 160 178 L 148 222 Q 160 232 172 222 Z" fill="none" stroke="#8B6914" stroke-width="1.3"/>
+      <path d="M 95 262 Q 160 250 225 262 Q 218 292 160 300 Q 102 292 95 262 Z" fill="none" stroke="#8B6914" stroke-width="1.5"/>
+      <line x1="112" y1="278" x2="208" y2="278" stroke="#8B6914" stroke-width="0.8"/>
     `,
     points: [
-      { num: 1, x: 105, y: 300, label: "Scaphoïde" },
-      { num: 2, x: 145, y: 292, label: "Semi-lunaire" },
-      { num: 3, x: 185, y: 298, label: "Pyramidal" },
-      { num: 4, x: 220, y: 315, label: "Pisiforme" },
-      { num: 5, x: 100, y: 345, label: "Trapèze" },
-      { num: 6, x: 137, y: 350, label: "Trapézoïde" },
-      { num: 7, x: 175, y: 350, label: "Grand os" },
-      { num: 8, x: 210, y: 345, label: "Os crochu" },
-      { num: 9, x: 140, y: 240, label: "Métacarpien" },
-      { num: 10, x: 140, y: 75, label: "Phalange" },
+      { num: 1, x: 160, y: 48,  label: "Os frontal" },
+      { num: 2, x: 55,  y: 130, label: "Os temporal" },
+      { num: 3, x: 265, y: 130, label: "Os pariétal" },
+      { num: 4, x: 112, y: 152, label: "Orbite" },
+      { num: 5, x: 160, y: 296, label: "Mandibule" },
+      { num: 6, x: 160, y: 262, label: "Maxillaire" },
     ],
   },
 
-  pied_dorsale: {
-    titre: "Squelette du pied (vue dorsale, tarse, métatarse et phalanges)",
+  main_palmaire: {
+    titre: "Squelette de la main et de l'avant-bras",
+    viewBox: "0 0 300 460",
+    svgShapes: `
+      <rect x="118" y="20" width="26" height="150" rx="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
+      <rect x="150" y="24" width="24" height="146" rx="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
+      <path d="M 108 168 Q 100 178 105 195 Q 130 210 148 200 Q 168 210 185 195 Q 190 178 182 168
+               Q 165 178 148 176 Q 128 178 108 168 Z"
+            fill="#8FB8D6" stroke="#4A7A9E" stroke-width="1.8"/>
+      <circle cx="108" cy="196" r="14" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <circle cx="142" cy="200" r="14" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <circle cx="176" cy="196" r="13" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <circle cx="200" cy="212" r="10" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.5"/>
+      <circle cx="100" cy="228" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <circle cx="128" cy="234" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <circle cx="156" cy="234" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <circle cx="184" cy="228" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <rect x="95"  y="248" width="16" height="90" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
+      <rect x="122" y="252" width="16" height="98" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
+      <rect x="149" y="252" width="16" height="100" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
+      <rect x="176" y="248" width="16" height="94" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
+      <rect x="95"  y="345" width="16" height="55" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <rect x="122" y="356" width="16" height="60" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <rect x="149" y="358" width="16" height="60" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+      <rect x="176" y="348" width="16" height="55" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
+    `,
+    points: [
+      { num: 1, x: 108, y: 196, label: "Scaphoïde" },
+      { num: 2, x: 142, y: 200, label: "Semi-lunaire" },
+      { num: 3, x: 176, y: 196, label: "Pyramidal" },
+      { num: 4, x: 200, y: 212, label: "Pisiforme" },
+      { num: 5, x: 100, y: 228, label: "Trapèze" },
+      { num: 6, x: 128, y: 234, label: "Trapézoïde" },
+      { num: 7, x: 156, y: 234, label: "Grand os" },
+      { num: 8, x: 184, y: 228, label: "Os crochu" },
+      { num: 9, x: 103, y: 290, label: "Métacarpien" },
+      { num: 10, x: 103, y: 370, label: "Phalange" },
+    ],
+  },
+
+  pied_profil: {
+    titre: "Squelette du pied (vue de profil)",
     viewBox: "0 0 420 260",
     svgShapes: `
-      <!-- tarse postérieur : calcanéus + astragale -->
-      <ellipse cx="70" cy="130" rx="45" ry="55" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="135" cy="115" r="30" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <!-- tarse antérieur : scaphoïde tarsien, cuboïde, 3 cunéiformes -->
-      <circle cx="185" cy="105" r="22" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="190" cy="165" r="22" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="230" cy="80"  r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="235" cy="115" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="235" cy="150" r="16" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <!-- 5 métatarsiens -->
-      <rect x="265" y="30"  width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="265" y="65"  width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="265" y="100" width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="265" y="135" width="130" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="265" y="170" width="120" height="18" rx="8" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 52 68 L 62 58 C 74 55 84 63 85 78 L 90 96 C 102 88 108 98 102 112 L 335 142 C 372 146 398 156 404 172 C 407 183 398 191 382 193 L 258 202 L 258 218 L 238 218 L 232 202 L 148 208 L 96 198 C 65 192 46 172 46 145 C 42 118 40 90 52 68 Z"
+            fill="#F5D9A8" stroke="#8B6914" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M 102 112 Q 148 118 172 132" fill="none" stroke="#8B6914" stroke-width="1.2"/>
+      <path d="M 172 132 Q 198 142 258 152" fill="none" stroke="#8B6914" stroke-width="1.2"/>
+      <line x1="258" y1="152" x2="258" y2="202" stroke="#8B6914" stroke-width="1.2"/>
+      <line x1="298" y1="150" x2="298" y2="196" stroke="#8B6914" stroke-width="1"/>
+      <path d="M 65 78 Q 68 90 70 105" fill="none" stroke="#8FB8D6" stroke-width="8" opacity="0.6"/>
     `,
     points: [
-      { num: 1, x: 70,  y: 130, label: "Calcanéus" },
-      { num: 2, x: 135, y: 115, label: "Astragale (Talus)" },
-      { num: 3, x: 185, y: 105, label: "Scaphoïde tarsien" },
-      { num: 4, x: 190, y: 165, label: "Cuboïde" },
-      { num: 5, x: 230, y: 80,  label: "1er cunéiforme" },
-      { num: 6, x: 235, y: 115, label: "2ème cunéiforme" },
-      { num: 7, x: 235, y: 150, label: "3ème cunéiforme" },
-      { num: 8, x: 330, y: 39,  label: "Métatarsien" },
+      { num: 1, x: 65,  y: 105, label: "Calcanéus" },
+      { num: 2, x: 96,  y: 100, label: "Astragale (Talus)" },
+      { num: 3, x: 140, y: 118, label: "Scaphoïde tarsien" },
+      { num: 4, x: 158, y: 178, label: "Cuboïde" },
+      { num: 5, x: 188, y: 137, label: "1er cunéiforme" },
+      { num: 6, x: 218, y: 142, label: "2ème cunéiforme" },
+      { num: 7, x: 238, y: 147, label: "3ème cunéiforme" },
+      { num: 8, x: 318, y: 150, label: "Métatarsien" },
     ],
   },
 
   cage_thoracique: {
     titre: "Cage thoracique (vue antérieure)",
-    viewBox: "0 0 340 420",
+    viewBox: "0 0 380 420",
     svgShapes: `
-      <!-- sternum central -->
-      <rect x="150" y="40"  width="40" height="60"  rx="6" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="150" y="105" width="40" height="140" rx="6" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 155 250 L 185 250 L 170 280 Z" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <!-- arcs costaux, 6 paires représentées schématiquement -->
-      <path d="M 150 55 Q 60 65 45 110"   fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 190 55 Q 280 65 295 110" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 150 100 Q 50 110 35 165" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 190 100 Q 290 110 305 165" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 150 150 Q 55 165 45 220" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 190 150 Q 285 165 295 220" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 150 195 Q 70 210 65 260" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 190 195 Q 270 210 275 260" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 155 235 Q 90 250 90 300" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 185 235 Q 250 250 250 300" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 100 300 Q 95 340 130 345" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 240 300 Q 245 340 210 345" fill="none" stroke="#0F2733" stroke-width="2"/>
+      <rect x="178" y="50" width="24" height="55" rx="6" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
+      <rect x="178" y="112" width="24" height="140" rx="6" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
+      <path d="M 182 260 L 198 260 L 190 292 Z" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
+      <path d="M 178 62 Q 100 66 78 100 Q 62 128 68 160" fill="none" stroke="#F5D9A8" stroke-width="10"/>
+      <path d="M 178 62 Q 100 66 78 100 Q 62 128 68 160" fill="none" stroke="#8B6914" stroke-width="1.5"/>
+      <path d="M 202 62 Q 280 66 302 100 Q 318 128 312 160" fill="none" stroke="#F5D9A8" stroke-width="10"/>
+      <path d="M 202 62 Q 280 66 302 100 Q 318 128 312 160" fill="none" stroke="#8B6914" stroke-width="1.5"/>
+      <path d="M 178 108 Q 92 116 72 155 Q 58 188 68 220" fill="none" stroke="#F5D9A8" stroke-width="10"/>
+      <path d="M 178 108 Q 92 116 72 155 Q 58 188 68 220" fill="none" stroke="#8B6914" stroke-width="1.5"/>
+      <path d="M 202 108 Q 288 116 308 155 Q 322 188 312 220" fill="none" stroke="#F5D9A8" stroke-width="10"/>
+      <path d="M 202 108 Q 288 116 308 155 Q 322 188 312 220" fill="none" stroke="#8B6914" stroke-width="1.5"/>
+      <path d="M 178 155 Q 100 163 82 205 Q 70 240 88 268" fill="none" stroke="#8FB8D6" stroke-width="8"/>
+      <path d="M 178 155 Q 100 163 82 205 Q 70 240 88 268" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
+      <path d="M 202 155 Q 280 163 298 205 Q 310 240 292 268" fill="none" stroke="#8FB8D6" stroke-width="8"/>
+      <path d="M 202 155 Q 280 163 298 205 Q 310 240 292 268" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
+      <path d="M 182 212 Q 118 220 106 258 Q 98 290 122 310" fill="none" stroke="#8FB8D6" stroke-width="7"/>
+      <path d="M 182 212 Q 118 220 106 258 Q 98 290 122 310" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
+      <path d="M 198 212 Q 262 220 274 258 Q 282 290 258 310" fill="none" stroke="#8FB8D6" stroke-width="7"/>
+      <path d="M 198 212 Q 262 220 274 258 Q 282 290 258 310" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
+      <path d="M 108 298 Q 104 330 132 340" fill="none" stroke="#8B6914" stroke-width="1.5"/>
+      <path d="M 272 298 Q 276 330 248 340" fill="none" stroke="#8B6914" stroke-width="1.5"/>
     `,
     points: [
-      { num: 1, x: 170, y: 65,  label: "Manubrium sternal" },
-      { num: 2, x: 170, y: 175, label: "Corps du sternum" },
-      { num: 3, x: 170, y: 265, label: "Processus xiphoïde" },
-      { num: 4, x: 47,  y: 108, label: "1ère côte (vraie côte)" },
-      { num: 5, x: 66,  y: 258, label: "8ème côte (fausse côte)" },
-      { num: 6, x: 112, y: 343, label: "12ème côte (côte flottante)" },
+      { num: 1, x: 190, y: 78,  label: "Manubrium sternal" },
+      { num: 2, x: 190, y: 185, label: "Corps du sternum" },
+      { num: 3, x: 190, y: 278, label: "Processus xiphoïde" },
+      { num: 4, x: 68,  y: 105, label: "1ère côte (vraie côte)" },
+      { num: 5, x: 88,  y: 262, label: "8ème côte (fausse côte)" },
+      { num: 6, x: 135, y: 337, label: "12ème côte (côte flottante)" },
     ],
   },
 
   tube_digestif: {
-    titre: "Tube digestif (schéma d'ensemble)",
-    viewBox: "0 0 320 460",
+    titre: "Appareil digestif complet",
+    viewBox: "0 0 320 480",
     svgShapes: `
-      <ellipse cx="160" cy="35" rx="45" ry="22" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="150" y="55" width="20" height="30" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <rect x="150" y="85" width="20" height="70" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 150 155 Q 130 210 165 245 Q 210 265 195 220 Q 185 175 160 155 Z" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <path d="M 170 250 Q 260 260 260 300 Q 260 340 180 340 Q 120 340 130 300" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <rect x="60"  y="260" width="200" height="120" rx="14" fill="none" stroke="#0F2733" stroke-width="2"/>
-      <line x1="160" y1="380" x2="160" y2="430" stroke="#0F2733" stroke-width="2"/>
-      <rect x="145" y="430" width="30" height="16" rx="6" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
+      <path d="M 160 15 Q 130 15 122 45 Q 118 60 128 72 L 122 85 C 100 90 88 108 88 130 L 84 200"
+            fill="none" stroke="#8B6914" stroke-width="1" opacity="0.4"/>
+      <ellipse cx="160" cy="35" rx="20" ry="15" fill="#E8B4A8" stroke="#B5766A" stroke-width="1.8"/>
+      <path d="M 155 50 L 152 85" stroke="#D9A87A" stroke-width="8"/>
+      <path d="M 155 50 L 152 85" stroke="#8B6914" stroke-width="1.5"/>
+      <path d="M 100 90 Q 65 100 55 140 Q 48 175 75 195 Q 110 210 130 190 Q 140 165 120 140 Q 130 110 100 90 Z"
+            fill="#A85A4A" stroke="#5A2E22" stroke-width="2"/>
+      <path d="M 118 178 Q 122 195 132 192 Q 136 172 128 165 Z" fill="#6E8F5A" stroke="#3E5A32" stroke-width="1.6"/>
+      <path d="M 152 90 Q 130 130 148 168 Q 190 190 198 150 Q 198 115 165 100 Z"
+            fill="#E8A9A0" stroke="#B5645A" stroke-width="2"/>
+      <ellipse cx="205" cy="165" rx="55" ry="20" fill="#E8B98A" stroke="#8A5A2E" stroke-width="1.8"/>
+      <path d="M 155 195 Q 250 205 250 260 Q 250 300 175 300 Q 95 302 95 260 Q 95 220 155 195 Z"
+            fill="none" stroke="#D9A87A" stroke-width="9"/>
+      <path d="M 155 195 Q 250 205 250 260 Q 250 300 175 300 Q 95 302 95 260 Q 95 220 155 195 Z"
+            fill="none" stroke="#8B6914" stroke-width="1.5"/>
+      <rect x="60" y="250" width="220" height="140" rx="20" fill="none" stroke="#C9A25A" stroke-width="10"/>
+      <rect x="60" y="250" width="220" height="140" rx="20" fill="none" stroke="#8B6914" stroke-width="1.6"/>
+      <line x1="170" y1="390" x2="170" y2="440" stroke="#8B6914" stroke-width="1.8"/>
+      <rect x="155" y="440" width="30" height="16" rx="7" fill="#D9A87A" stroke="#8B6914" stroke-width="1.6"/>
     `,
     points: [
       { num: 1, x: 160, y: 35,  label: "Cavité buccale" },
-      { num: 2, x: 160, y: 65,  label: "Pharynx" },
-      { num: 3, x: 160, y: 115, label: "Œsophage" },
-      { num: 4, x: 170, y: 210, label: "Estomac" },
-      { num: 5, x: 155, y: 320, label: "Intestin grêle" },
-      { num: 6, x: 65,  y: 300, label: "Côlon" },
-      { num: 7, x: 160, y: 405, label: "Rectum" },
-      { num: 8, x: 160, y: 438, label: "Canal anal" },
+      { num: 2, x: 155, y: 65,  label: "Pharynx" },
+      { num: 3, x: 152, y: 100, label: "Œsophage" },
+      { num: 4, x: 165, y: 145, label: "Estomac" },
+      { num: 5, x: 170, y: 260, label: "Intestin grêle" },
+      { num: 6, x: 90,  y: 270, label: "Côlon" },
+      { num: 7, x: 170, y: 420, label: "Rectum" },
+      { num: 8, x: 170, y: 448, label: "Canal anal" },
     ],
   },
 
   glandes_annexes: {
-    titre: "Glandes annexes du tube digestif (foie, vésicule biliaire, pancréas)",
+    titre: "Glandes annexes du tube digestif",
     viewBox: "0 0 340 300",
     svgShapes: `
       <path d="M 40 60 Q 30 30 90 25 Q 200 15 260 45 Q 290 60 270 100 Q 230 120 150 110 Q 60 105 40 60 Z"
-            fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <ellipse cx="110" cy="110" rx="16" ry="24" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <ellipse cx="220" cy="170" rx="90" ry="35" fill="#F5F9FB" stroke="#0F2733" stroke-width="2"/>
-      <circle cx="120" cy="200" r="30" fill="none" stroke="#0F2733" stroke-width="2" stroke-dasharray="4,3"/>
+            fill="#A85A4A" stroke="#5A2E22" stroke-width="2"/>
+      <path d="M 100 100 Q 108 130 118 128 Q 122 105 112 98 Z" fill="#6E8F5A" stroke="#3E5A32" stroke-width="1.8"/>
+      <ellipse cx="220" cy="170" rx="90" ry="32" fill="#E8B98A" stroke="#8A5A2E" stroke-width="2"/>
+      <circle cx="120" cy="205" r="28" fill="none" stroke="#8B6914" stroke-width="1.6" stroke-dasharray="4,3"/>
     `,
     points: [
       { num: 1, x: 150, y: 65,  label: "Foie" },
-      { num: 2, x: 110, y: 110, label: "Vésicule biliaire" },
+      { num: 2, x: 110, y: 112, label: "Vésicule biliaire" },
       { num: 3, x: 220, y: 170, label: "Pancréas" },
-      { num: 4, x: 120, y: 200, label: "Duodénum" },
+      { num: 4, x: 120, y: 205, label: "Duodénum" },
     ],
   },
 };
 
-/* ============================================================
-   QUESTIONS À SCHÉMA — piochent dans SCHEMAS ; seuls le label
-   recherché et les 4 numéros proposés sont stockés, la bonne
-   réponse est calculée automatiquement (jamais codée en clair
-   dans les options visibles à l'écran).
-   ============================================================ */
 const SCHEMA_QUESTIONS_RAW = [
-  { id: "sq_crane_frontal", schemaId: "crane_laterale", subjectId: "anat-physio", chapterId: "osteologie_crane",
+  { id: "sq_crane_frontal", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
     level: 1, consigne: "Identifiez l'os frontal sur le schéma du crâne.",
     correctLabel: "Os frontal", optionNums: [1, 2, 3, 6],
     explanation: "L'os frontal forme la partie antérieure de la voûte crânienne, au-dessus des orbites.",
     reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
 
-  { id: "sq_crane_temporal", schemaId: "crane_laterale", subjectId: "anat-physio", chapterId: "osteologie_crane",
-    level: 2, consigne: "Identifiez l'os temporal sur le schéma du crâne.",
+  { id: "sq_crane_temporal", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os temporal sur le schéma du crâne (vue de profil).",
     correctLabel: "Os temporal", optionNums: [1, 3, 4, 5],
     explanation: "L'os temporal se situe sur la face latérale du crâne, en arrière du sphénoïde, au niveau de la tempe.",
     reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
 
-  { id: "sq_main_scaphoide", schemaId: "main_dorsale", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+  { id: "sq_crane_orbite", schemaId: "crane_face", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 1, consigne: "Identifiez l'orbite sur le schéma du crâne (vue de face).",
+    correctLabel: "Orbite", optionNums: [4, 1, 5, 6],
+    explanation: "L'orbite est la cavité osseuse qui loge le globe oculaire ; elle est formée par plusieurs os de la face et du crâne.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+
+  { id: "sq_main_scaphoide", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
     level: 2, consigne: "Identifiez le scaphoïde sur le schéma de la main.",
     correctLabel: "Scaphoïde", optionNums: [1, 3, 5, 7],
     explanation: "Le scaphoïde fait partie de la rangée proximale des 8 os du carpe, du côté du pouce.",
     reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
 
-  { id: "sq_main_crochu", schemaId: "main_dorsale", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+  { id: "sq_main_crochu", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
     level: 2, consigne: "Identifiez l'os crochu sur le schéma de la main.",
     correctLabel: "Os crochu", optionNums: [4, 6, 8, 9],
     explanation: "L'os crochu fait partie de la rangée distale des 8 os du carpe, du côté du petit doigt.",
     reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
 
-  { id: "sq_pied_calcaneus", schemaId: "pied_dorsale", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+  { id: "sq_pied_calcaneus", schemaId: "pied_profil", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
     level: 1, consigne: "Identifiez le calcanéus sur le schéma du pied.",
     correctLabel: "Calcanéus", optionNums: [1, 2, 4, 7],
     explanation: "Le calcanéus est le plus volumineux des 7 os du tarse ; il forme le talon.",
@@ -6042,6 +6079,172 @@ const SCHEMA_QUESTIONS_RAW = [
     explanation: "Le pancréas est une glande annexe allongée, en arrière de l'estomac, qui a une fonction digestive (exocrine) et endocrine.",
     reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
 ];
+/* ---- Sémiologie médicale — questions issues de l'examen réel du jour ---- */
+const SEMIO_EXAM_RAW = [
+  ["QCU","semio_uro_genital",2,"Associez : A. Nycturie · B. Énurésie, à leur définition : 1. Émission d'urine plus importante la nuit que le jour · 2. Miction involontaire pendant le sommeil.",
+    ["A1 – B2","A2 – B1","A1 – B1 (les deux définitions concernent la nycturie)","A2 – B2 (les deux définitions concernent l'énurésie)"],[0],
+    "La nycturie est l'émission d'urine plus importante la nuit que le jour (inversion du rythme habituel) ; l'énurésie est la miction involontaire pendant le sommeil (incontinence urinaire nocturne).",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 1"],
+  ["QCU","semio_digestif",2,"Un patient présente une douleur abdominale, des vomissements et un arrêt des matières et des gaz. Le médecin conclut à :",
+    ["Une occlusion intestinale","Un ulcère gastroduodénal","Une colique simple","Une colite"],[2],
+    "L'association douleur abdominale, vomissements et arrêt des matières et des gaz constitue la triade classique évocatrice d'une occlusion intestinale.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 3"],
+  ["QCU","semio_digestif",2,"Le fœtor hepaticus se définit comme une odeur douceâtre de l'haleine due à des substances aromatiques d'origine intestinale non détruites par le foie.",
+    ["Vrai","Faux","Vrai, mais uniquement chez l'enfant","Faux, il s'agit d'une odeur d'origine pulmonaire"],[0],
+    "Le fœtor hepaticus est bien une odeur douceâtre caractéristique de l'haleine, due à des substances aromatiques d'origine intestinale que le foie insuffisant ne parvient plus à détruire ; il traduit une insuffisance hépatocellulaire sévère.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 4"],
+  ["QCU","semio_uro_genital",2,"Toute hématurie abondante est totale, quelle qu'en soit l'origine.",
+    ["Vrai","Faux","Vrai, sauf si l'origine est urétrale","Faux, seule l'hématurie d'origine rénale peut être totale"],[0],
+    "Toute hématurie abondante est totale quelle qu'en soit son origine (rénale, vésicale ou autre), car l'abondance du saignement se mélange à l'ensemble du jet urinaire.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 5"],
+  ["QCU","semio_respiratoire_types",2,"Dans les pneumopathies, on parle de pectus excavatum lorsque le sternum est creusé, et de pectus carinatum lorsqu'il est projeté en avant.",
+    ["Vrai","Faux","Vrai, mais ces termes ne s'appliquent qu'à l'enfant","Faux, les deux définitions sont inversées"],[0],
+    "Le pectus excavatum correspond à un sternum creusé (en entonnoir) ; le pectus carinatum correspond à un sternum projeté en avant (en carène) ; ce sont deux déformations thoraciques observables notamment lors de l'examen du thorax.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 6"],
+  ["QCU","semio_digestif",2,"L'intestin grêle est le lieu principal :",
+    ["D'absorption des nutriments","De rejet des aliments non digérés uniquement","D'absorption des acides aminés exclusivement, à l'exclusion des autres nutriments","De production de la bile"],[0],
+    "L'intestin grêle (duodénum, jéjunum, iléon) est le lieu principal de l'absorption des nutriments issus de la digestion.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 7"],
+  ["QCM","hemoptysie",2,"Devant une hémoptysie de faible ou moyenne abondance, parmi les gestes suivants, lesquels sont corrects ?",
+    ["Donner un récipient pour recueillir et quantifier les crachats","Assurer la surveillance des signes hémodynamiques","Servir des aliments chauds","Demander au malade de tousser tête baissée"],[0,1],
+    "Devant une hémoptysie de faible ou moyenne abondance, il faut donner un récipient pour recueillir et quantifier les crachats, et assurer la surveillance des signes hémodynamiques ; il ne faut ni servir d'aliments chauds ni faire tousser tête baissée, gestes qui ne sont pas recommandés dans ce contexte.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 8"],
+  ["QCM","semio_digestif",2,"Les deux mécanismes principaux de l'occlusion intestinale sont :",
+    ["L'occlusion mécanique","L'occlusion fonctionnelle","L'occlusion organique","L'occlusion structurelle"],[0,1],
+    "Les deux mécanismes principaux de l'occlusion intestinale sont l'occlusion mécanique (obstacle physique) et l'occlusion fonctionnelle (paralysie de la motricité intestinale, iléus).",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 10"],
+  ["QCM","semio_digestif",1,"Les deux fonctions essentielles du pancréas sont :",
+    ["La fonction exocrine","La fonction endocrine","La fonction régulatrice","La fonction hétérocrite"],[0,1],
+    "Les deux fonctions essentielles du pancréas sont la fonction exocrine (sécrétion du suc pancréatique digestif) et la fonction endocrine (sécrétion d'insuline et de glucagon par les îlots de Langerhans).",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 11"],
+  ["QCU","examen_clinique",2,"Les étapes de la consultation clinique se déroulent, dans l'ordre correct, ainsi :",
+    ["Interrogatoire → Inspection → Auscultation → Palpation → Percussion","Interrogatoire → Percussion → Inspection → Palpation → Auscultation","Interrogatoire → Auscultation → Inspection → Percussion → Palpation","Interrogatoire → Palpation → Auscultation → Percussion → Inspection"],[0],
+    "L'ordre correct de la consultation clinique est : interrogatoire, puis inspection, auscultation, percussion, palpation (C → E → A → D → B selon la numérotation de l'énoncé original).",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 12"],
+  ["QCU","semio_cardiovasculaire",2,"Associez : A. Lipothymie · B. Syncope · C. Palpitation, à leur définition : 1. Sensation pénible des battements du cœur · 2. Sensation passagère de malaise sans perte de connaissance · 3. Perte de connaissance complète avec récupération spontanée.",
+    ["A2 – B3 – C1","A1 – B2 – C3","A3 – B1 – C2","A2 – B1 – C3"],[0],
+    "La lipothymie est une sensation passagère de malaise sans perte de connaissance ; la syncope est une perte de connaissance complète avec récupération spontanée ; la palpitation est une sensation pénible des battements du cœur.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 13 (terme « lipothymie », corrigé d'une coquille de transcription)"],
+  ["QCU","hemoptysie",2,"L'hémoptysie de petite abondance possède la même valeur sémiologique que les hémoptysies de grande abondance.",
+    ["Vrai","Faux","Vrai, uniquement en cas de tuberculose","Faux, seule l'hémoptysie de grande abondance a une valeur sémiologique"],[0],
+    "Une hémoptysie de petite abondance a la même valeur sémiologique qu'une hémoptysie de grande abondance : même minime, elle doit alerter et faire rechercher sa cause, car elle peut annoncer une hémoptysie plus grave.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 14"],
+  ["QCU","semio_generalites",1,"Les signes fonctionnels sont les manifestations de la maladie perçues et exprimées par le malade.",
+    ["Vrai","Faux","Vrai, mais uniquement lors de l'examen physique","Faux, ce sont des constatations objectives de l'examinateur"],[0],
+    "Les signes fonctionnels sont bien les manifestations de la maladie perçues et exprimées par le malade lui-même (par opposition aux signes physiques, constatés par l'examinateur).",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 15"],
+  ["QCU","semio_digestif",2,"La hernie hiatale est une ascension permanente ou intermittente de l'estomac dans le thorax à travers le hiatus œsophagien.",
+    ["Vrai","Faux","Vrai, mais uniquement de façon permanente","Faux, il s'agit d'une hernie de l'intestin grêle"],[0],
+    "La hernie hiatale est bien une ascension, permanente ou intermittente, d'une partie de l'estomac dans le thorax à travers le hiatus œsophagien du diaphragme.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 16"],
+  ["QCU","semio_respiratoire_toux",2,"Associez : A. Dyspnée · B. Hémoptysie · C. Toux · D. Expectoration, à leur définition : 1. Expulsion de sécrétions bronchiques par la bouche · 2. Rejet de sang provenant des voies respiratoires · 3. Expiration brusque et sonore, réflexe de défense · 4. Difficulté à respirer avec sensation de manque d'air.",
+    ["A4 – B2 – C3 – D1","A1 – B2 – C3 – D4","A4 – B3 – C2 – D1","A2 – B4 – C1 – D3"],[0],
+    "La dyspnée est la difficulté à respirer avec sensation de manque d'air ; l'hémoptysie est le rejet de sang provenant des voies respiratoires ; la toux est une expiration brusque et sonore, réflexe de défense ; l'expectoration est l'expulsion de sécrétions bronchiques par la bouche.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 17"],
+  ["QCU","semio_respiratoire_types",1,"Le stridor est :",
+    ["Un bruit respiratoire inspiratoire","Un bruit digestif","Un souffle cardiaque","Une douleur thoracique"],[0],
+    "Le stridor est un bruit respiratoire inspiratoire, traduisant un obstacle sur les voies aériennes supérieures.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 18"],
+  ["QCU","dyspnee",2,"La dyspnée expiratoire est observée préférentiellement dans :",
+    ["L'asthme","La pleurésie","Le pneumothorax","L'hémoptysie"],[0],
+    "La dyspnée expiratoire, avec allongement du temps expiratoire, est observée préférentiellement dans l'asthme, en raison du bronchospasme et de l'obstruction bronchique.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 19"],
+  ["QCU","semio_digestif",1,"Le pyrosis correspond à :",
+    ["Une brûlure rétrosternale","Une douleur de la fosse iliaque droite","Une douleur hépatique","Une douleur lombaire"],[0],
+    "Le pyrosis est une sensation de brûlure rétrosternale ascendante, typique du reflux gastro-œsophagien.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 20"],
+  ["QCU","semio_digestif",1,"La rectorragie correspond à :",
+    ["Des selles noires","Une émission de sang rouge par l'anus","Un vomissement de sang","Une hématurie"],[0],
+    "La rectorragie est une émission de sang rouge, non digéré, par l'anus.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 21"],
+  ["QCU","semio_digestif",1,"L'hématémèse est :",
+    ["Une émission de sang dans les urines","Un vomissement de sang","Une expectoration de sang","Des selles noires"],[0],
+    "L'hématémèse est un vomissement de sang, provenant du tube digestif haut.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 22"],
+  ["QCU","semio_digestif",1,"Le méléna correspond à :",
+    ["Une émission de selles noires contenant du sang digéré","Une émission de sang rouge par l'anus","Une hémoptysie","Une hématurie"],[0],
+    "Le méléna est une émission de selles noires, nauséabondes, contenant du sang digéré, témoignant d'une hémorragie digestive haute.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 23"],
+  ["QCU","semio_digestif",2,"La triade évocatrice d'une occlusion intestinale comprend :",
+    ["Diarrhée – douleur – rectorragie","Douleur abdominale – vomissements – arrêt des matières et des gaz","Pyrosis – vomissements – hématémèse","Constipation – rectorragie – ténesme"],[1],
+    "La triade classique évocatrice d'une occlusion intestinale associe douleur abdominale, vomissements et arrêt des matières et des gaz.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 24"],
+  ["QCU","semio_digestif",2,"Le signe de Murphy positif est recherché dans :",
+    ["La cholécystite aiguë","L'appendicite","La pancréatite","La gastrite"],[0],
+    "Le signe de Murphy (arrêt inspiratoire douloureux à la palpation de l'hypochondre droit) est recherché dans la cholécystite aiguë.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 25"],
+  ["QCU","semio_digestif",1,"Les fonctions essentielles du pancréas sont :",
+    ["Endocrine et exocrine","Endocrine et respiratoire","Digestive et motrice","Endocrine et urinaire"],[0],
+    "Les fonctions essentielles du pancréas sont la fonction endocrine (insuline, glucagon) et la fonction exocrine (suc pancréatique digestif).",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 26"],
+  ["QCU","semio_digestif",1,"L'hépatomégalie correspond à :",
+    ["Une augmentation du volume du foie","Une diminution du volume du foie","Une augmentation du volume de la rate","Une augmentation du volume du pancréas"],[0],
+    "L'hépatomégalie est une augmentation du volume du foie.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 27"],
+  ["QCU","semio_generalites",2,"Le signe pathognomonique est :",
+    ["Un signe spécifique dont la présence permet d'affirmer une maladie","Un signe fonctionnel","Un signe général","Un signe subjectif"],[0],
+    "Un signe pathognomonique est un signe spécifique dont la seule présence permet d'affirmer le diagnostic d'une maladie donnée.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 28"],
+  ["QCU","semio_generalites",1,"Les signes fonctionnels sont :",
+    ["Exprimés par le malade","Constatés uniquement par les examens biologiques","Observés uniquement à la radiographie","Visibles uniquement à l'autopsie"],[0],
+    "Les signes fonctionnels sont exprimés par le malade lui-même, par opposition aux signes physiques constatés par l'examinateur ou aux signes paracliniques révélés par les examens complémentaires.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 29"],
+  ["QCU","semio_digestif",2,"Associez : A. Hématémèse · B. Rectorragie · C. Méléna · D. Vomique, à leur définition : 1. Vomissement de sang · 2. Émission de sang rouge par l'anus · 3. Émission de selles noires contenant du sang digéré · 4. Expulsion brutale de pus provenant du poumon par la bouche.",
+    ["A1 – B2 – C3 – D4","A2 – B1 – C4 – D3","A4 – B3 – C1 – D2","A3 – B4 – C2 – D1"],[0],
+    "L'hématémèse est le vomissement de sang ; la rectorragie est l'émission de sang rouge par l'anus ; le méléna est l'émission de selles noires contenant du sang digéré ; la vomique est l'expulsion brutale de pus provenant du poumon par la bouche.",
+    "Sémiologie médicale (INFAS) – Examen du jour, Question 30"],
+];
+/* ---- Sémiologie chirurgicale — enrichissement inspiré du même esprit d'examen ---- */
+const SEMIO_CHIR_ENRICHI_RAW = [
+  ["QCU","asepsie_inflammation",1,"Les quatre signes cardinaux de l'inflammation aiguë sont :",
+    ["Rougeur – chaleur – douleur – tuméfaction","Pâleur – froideur – anesthésie – rétraction","Fièvre – toux – dyspnée – cyanose","Ictère – ascite – œdème – prurit"],[0],
+    "Les quatre signes cardinaux de l'inflammation aiguë, décrits depuis l'Antiquité, sont la rougeur, la chaleur, la douleur et la tuméfaction (gonflement) ; un cinquième signe, l'impotence fonctionnelle, y est parfois ajouté.",
+    "Sémiologie chirurgicale (INFAS) – Asepsie et inflammation"],
+  ["QCU","panaris",2,"Le panaris se définit comme :",
+    ["Une infection aiguë d'un doigt ou d'un orteil","Une infection d'un follicule pilo-sébacé","Une inflammation d'une bourse séreuse","Une infection profonde de l'os"],[0],
+    "Le panaris est une infection aiguë d'un doigt ou d'un orteil, le plus souvent d'origine staphylococcique, faisant suite à une lésion cutanée minime (piqûre, écharde).",
+    "Sémiologie chirurgicale (INFAS) – Panaris"],
+  ["QCU","furoncle",2,"Le furoncle, contrairement au panaris, correspond à :",
+    ["Une infection d'un follicule pilo-sébacé","Une infection d'un doigt","Une infection osseuse","Une infection d'une bourse séreuse"],[0],
+    "Le furoncle est une infection aiguë d'un follicule pilo-sébacé, généralement due au staphylocoque doré, alors que le panaris touche spécifiquement un doigt ou un orteil.",
+    "Sémiologie chirurgicale (INFAS) – Furoncle"],
+  ["QCU","abces_chaud",2,"Le signe clinique caractéristique qui permet d'affirmer la présence de pus dans un abcès chaud collecté, à la palpation, est :",
+    ["La fluctuation","La crépitation neigeuse","Le signe du flot ascitique","Le signe de Murphy"],[0],
+    "La fluctuation, sensation de liquide sous tension mobilisable à la palpation entre deux doigts, est le signe clinique caractéristique de la collection purulente d'un abcès chaud.",
+    "Sémiologie chirurgicale (INFAS) – Abcès chaud"],
+  ["QCM","asepsie_inflammation",1,"Parmi les propositions suivantes concernant l'asepsie et l'antisepsie, lesquelles sont exactes ?",
+    ["L'asepsie vise à empêcher l'introduction de micro-organismes","L'antisepsie vise à détruire ou inhiber les micro-organismes déjà présents","L'asepsie et l'antisepsie désignent exactement la même chose","L'asepsie s'applique uniquement aux plaies déjà infectées"],[0,1],
+    "L'asepsie est l'ensemble des mesures préventives visant à empêcher l'introduction de micro-organismes dans un milieu donné (avant contamination) ; l'antisepsie vise à détruire ou inhiber les micro-organismes déjà présents (après contamination).",
+    "Sémiologie chirurgicale (INFAS) – Asepsie et inflammation"],
+  ["QCU","plaies",1,"Une plaie est dite pénétrante lorsqu'elle :",
+    ["Traverse la paroi et pénètre dans une cavité naturelle de l'organisme","Reste limitée à la peau uniquement","Ne concerne que le tissu sous-cutané","Est causée exclusivement par une arme blanche"],[0],
+    "Une plaie pénétrante traverse la paroi et pénètre dans une cavité naturelle de l'organisme (abdominale, thoracique, crânienne), ce qui en fait une urgence chirurgicale potentielle du fait du risque de lésion des organes internes.",
+    "Sémiologie chirurgicale (INFAS) – Plaies"],
+  ["QCU","plaies",2,"Une plaie contuse se caractérise par des bords :",
+    ["Irréguliers, déchiquetés, souvent contusionnés","Nets et linéaires","Parfaitement propres, sans risque infectieux","Cicatrisés spontanément en 24 heures"],[0],
+    "La plaie contuse, provoquée par un choc ou un écrasement, présente des bords irréguliers, déchiquetés et souvent contusionnés, contrairement à la plaie par instrument tranchant qui présente des bords nets et linéaires.",
+    "Sémiologie chirurgicale (INFAS) – Plaies"],
+  ["QCU","osteomyelite",2,"L'ostéomyélite aiguë touche préférentiellement :",
+    ["Les enfants et les adolescents","Exclusivement les personnes âgées","Exclusivement les nouveau-nés","Exclusivement les femmes enceintes"],[0],
+    "L'ostéomyélite aiguë touche préférentiellement les enfants et les adolescents, en raison de la forte vascularisation des zones de croissance osseuse (métaphyses), plus propices à la fixation bactérienne.",
+    "Sémiologie chirurgicale (INFAS) – Ostéomyélite aiguë"],
+  ["QCU","abces_chaud",1,"Associez : A. Abcès chaud · B. Abcès froid, à leur caractéristique : 1. Évolution rapide avec signes inflammatoires marqués (rougeur, chaleur, douleur) · 2. Évolution lente et torpide, sans signes inflammatoires francs, typiquement d'origine tuberculeuse.",
+    ["A1 – B2","A2 – B1","A1 – B1 (les deux évoluent rapidement)","A2 – B2 (les deux évoluent lentement)"],[0],
+    "L'abcès chaud évolue rapidement avec des signes inflammatoires marqués (rougeur, chaleur, douleur, fluctuation) ; l'abcès froid évolue lentement et de façon torpide, sans les signes inflammatoires francs, et est typiquement d'origine tuberculeuse.",
+    "Sémiologie chirurgicale (INFAS) – Abcès chaud, comparaison avec l'abcès froid"],
+  ["QCU","plaies",2,"Devant une plaie souillée, le risque infectieux majeur redouté, nécessitant une prévention systématique par sérovaccination si le statut vaccinal est incertain, est :",
+    ["Le tétanos","La rougeole","La coqueluche","La rubéole"],[0],
+    "Devant toute plaie souillée, le risque infectieux majeur redouté est le tétanos, dont le germe (Clostridium tetani) se développe en milieu anaérobie ; une prévention par sérovaccination antitétanique doit être envisagée si le statut vaccinal du patient est incertain ou incomplet.",
+    "Sémiologie chirurgicale (INFAS) – Plaies"],
+  ["QCU","panaris",2,"Le stade phlegmasique (inflammatoire) du panaris, avant collection purulente, doit être traité par :",
+    ["Des soins antiseptiques locaux et une surveillance rapprochée","Une incision chirurgicale immédiate systématique","Une amputation du doigt","Une antibiothérapie seule, sans aucun soin local"],[0],
+    "Au stade phlegmasique (inflammatoire), avant toute collection purulente, le panaris est traité par des soins antiseptiques locaux et une surveillance rapprochée ; l'incision chirurgicale n'est indiquée qu'au stade collecté (présence de pus).",
+    "Sémiologie chirurgicale (INFAS) – Panaris"],
+  ["QCU","furoncle",2,"L'anthrax, complication redoutée du furoncle, correspond à :",
+    ["L'agglomération de plusieurs furoncles contigus","Une infection osseuse isolée","Une infection virale de la peau","Un simple furoncle non compliqué"],[0],
+    "L'anthrax (staphylococcique, à ne pas confondre avec la maladie du charbon) correspond à l'agglomération de plusieurs furoncles contigus, réalisant une lésion plus étendue et plus sévère qu'un furoncle isolé.",
+    "Sémiologie chirurgicale (INFAS) – Furoncle"],
+];
 function buildQuestions(raw, subjectId, prefix) {
   return raw.map((r, i) => {
     const [type, chapterId, level, stem, options, correct, explanation, reference] = r;
@@ -6061,6 +6264,8 @@ function buildQuestions(raw, subjectId, prefix) {
 }
 const QUESTIONS = [
   ...buildQuestions(RAW, "hematologie", "q"),
+  ...buildQuestions(SEMIO_EXAM_RAW, "semio-medicale", "sm"),
+  ...buildQuestions(SEMIO_CHIR_ENRICHI_RAW, "semio-chir", "sc"),
   ...buildQuestions(ANATPHYSIO_EXO_RAW, "anat-physio", "ae"),
   ...buildQuestions(GYNECO_RAW, "gyneco-obstetrique", "gy"),
   ...buildQuestions(CONCEPTS_RAW, "concepts-sciences-inf", "cn"),
@@ -6457,9 +6662,9 @@ const TRIAL_DAYS = 15;
 const PAID_DAYS = 365; // repli si un compte "paid" existant n'a pas de plan enregistré
 
 const SUBSCRIPTION_PLANS = [
-  { id: "1mois", label: "1 mois", price: 200, days: 30, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=200", color: "#1E8F5E" },
-  { id: "3mois", label: "3 mois", price: 500, days: 90, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=500", color: "#0B5D8C" },
-  { id: "1an", label: "1 an", price: 1000, days: 365, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=1000", color: "#6B4FA0" },
+  { id: "1mois", label: "1 mois", price: 300, days: 30, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=300", color: "#1E8F5E" },
+  { id: "2mois", label: "2 mois", price: 500, days: 60, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=500", color: "#0B5D8C" },
+  { id: "6mois", label: "6 mois", price: 1000, days: 180, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=1000", color: "#6B4FA0" },
 ];
 
 function studentKey(matricule) {
@@ -6583,6 +6788,21 @@ async function confirmPayment(matricule) {
   }
 }
 
+// Suppression définitive d'un compte étudiant depuis l'espace admin (compte, historique
+// d'examens, notes personnelles et progression des schémas légendés associés).
+async function deleteStudentAccount(matricule) {
+  try {
+    await storage.delete(studentKey(matricule), true);
+    try { await storage.delete(historyKey(matricule), true); } catch {}
+    try { await storage.delete(schemaKey(matricule), true); } catch {}
+    try { await storage.delete(myNotesKey(matricule), true); } catch {}
+    return true;
+  } catch (e) {
+    console.error("Erreur suppression compte", e);
+    return false;
+  }
+}
+
 // Permet à l'administrateur de consulter le mot de passe réel (année de naissance) d'un
 // étudiant inscrit, et de le modifier au besoin pour le lui retransmettre en cas d'oubli.
 async function updateStudentPassword(matricule, newAnneeNaissance) {
@@ -6596,6 +6816,24 @@ async function updateStudentPassword(matricule, newAnneeNaissance) {
   } catch (e) {
     console.error("Erreur modification mot de passe", e);
     return null;
+  }
+}
+
+// Supprime définitivement un compte étudiant et toutes les données associées
+// (fiche, historique d'examens, suivi anti-répétition, progression schémas, notes).
+async function deleteStudentAccount(matricule) {
+  try {
+    await Promise.all([
+      storage.delete(studentKey(matricule), true),
+      storage.delete(historyKey(matricule), true),
+      storage.delete(seenKey(matricule), true),
+      storage.delete(schemaKey(matricule), false),
+      storage.delete(myNotesKey(matricule), false),
+    ]);
+    return true;
+  } catch (e) {
+    console.error("Erreur suppression compte", e);
+    return false;
   }
 }
 
@@ -8538,7 +8776,7 @@ function LoginScreen({ onLogin }) {
       record = { ...profile, createdAt: now, lastSeen: now, examsCount: 0, paymentStatus: "trial", paidAt: null, pendingSince: null };
     }
     setBusy(false);
-    onLogin("student", record);
+    onLogin("student", record, true);
   };
 
   return (
@@ -8895,6 +9133,26 @@ async function saveSchemaProgress(matricule, progress) {
   }
 }
 
+/* ---- Mes notes personnelles (par étudiant, privées) ---- */
+function myNotesKey(matricule) {
+  return `my-notes:${matricule}`;
+}
+async function loadMyNotes(matricule) {
+  try {
+    const r = await storage.get(myNotesKey(matricule), false);
+    return r ? JSON.parse(r.value) : [];
+  } catch {
+    return [];
+  }
+}
+async function saveMyNotes(matricule, notes) {
+  try {
+    await storage.set(myNotesKey(matricule), JSON.stringify(notes), false);
+  } catch (e) {
+    console.error("Erreur sauvegarde des notes", e);
+  }
+}
+
 function shuffleArr(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -9055,18 +9313,360 @@ function SchemaPracticeScreen({ onBack, student }) {
     </div>
   );
 }
+
+/* ============================================================
+   MES NOTES — prise de notes personnelles par l'étudiant, privées,
+   avec export PDF via l'impression du navigateur (aucune librairie
+   PDF nécessaire : window.print() sur une mise en page dédiée).
+   ============================================================ */
+function fmtNoteDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+
+function MyNotesScreen({ onBack, student }) {
+  const [notes, setNotes] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [titre, setTitre] = useState("");
+  const [contenu, setContenu] = useState("");
+  const [printMode, setPrintMode] = useState(false);
+
+  const refresh = () => loadMyNotes(student.matricule).then((list) => setNotes(list.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))));
+  useEffect(() => { refresh(); }, []);
+
+  const startNew = () => {
+    setEditingId("new");
+    setTitre("");
+    setContenu("");
+  };
+  const startEdit = (n) => {
+    setEditingId(n.id);
+    setTitre(n.titre);
+    setContenu(n.contenu);
+  };
+  const cancelEdit = () => {
+    setEditingId(null);
+    setTitre("");
+    setContenu("");
+  };
+
+  const save = async () => {
+    if (!titre.trim() && !contenu.trim()) return;
+    const now = new Date().toISOString();
+    let updated;
+    if (editingId === "new") {
+      updated = [...(notes || []), { id: `note-${Date.now()}`, titre: titre.trim() || "Sans titre", contenu: contenu.trim(), createdAt: now, updatedAt: now }];
+    } else {
+      updated = (notes || []).map((n) => (n.id === editingId ? { ...n, titre: titre.trim() || "Sans titre", contenu: contenu.trim(), updatedAt: now } : n));
+    }
+    setNotes(updated);
+    await saveMyNotes(student.matricule, updated);
+    cancelEdit();
+  };
+
+  const remove = async (id) => {
+    const updated = (notes || []).filter((n) => n.id !== id);
+    setNotes(updated);
+    await saveMyNotes(student.matricule, updated);
+  };
+
+  const exportPdf = () => {
+    setPrintMode(true);
+    setTimeout(() => {
+      window.print();
+      setPrintMode(false);
+    }, 150);
+  };
+
+  if (printMode) {
+    return (
+      <div style={{ padding: 30, fontFamily: "'IBM Plex Sans', sans-serif", color: "#0F2733" }}>
+        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, marginBottom: 4 }}>
+          Mes notes — {student.prenom} {student.nom}
+        </h1>
+        <div style={{ fontSize: 11, color: "#4C6472", marginBottom: 24 }}>
+          Matricule {student.matricule} · Exporté le {fmtNoteDate(new Date().toISOString())}
+        </div>
+        {(notes || []).map((n) => (
+          <div key={n.id} style={{ marginBottom: 22, pageBreakInside: "avoid" }}>
+            <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>{n.titre}</div>
+            <div style={{ fontSize: 10.5, color: "#4C6472", marginBottom: 8 }}>Dernière modification : {fmtNoteDate(n.updatedAt)}</div>
+            <div style={{ fontSize: 12.5, lineHeight: 1.6, whiteSpace: "pre-line" }}>{n.contenu}</div>
+            <hr style={{ marginTop: 16, border: "none", borderTop: "1px dashed #ccc" }} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "24px 18px 60px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+          ← Retour au tableau de bord
+        </button>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+          <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: 0 }}>📝 Mes notes</h1>
+          {notes && notes.length > 0 && (
+            <button onClick={exportPdf} style={{ ...secondaryBtn, padding: "7px 14px", fontSize: 12.5 }}>
+              ⬇ Exporter en PDF
+            </button>
+          )}
+        </div>
+        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 18 }}>
+          Vos notes personnelles, privées, consultables et exportables en PDF à tout moment.
+        </p>
+
+        {editingId ? (
+          <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: 18, marginBottom: 20 }}>
+            <input
+              value={titre}
+              onChange={(e) => setTitre(e.target.value)}
+              placeholder="Titre de la note"
+              style={{ ...inputStyle, fontWeight: 600, marginBottom: 10 }}
+              autoFocus
+            />
+            <textarea
+              value={contenu}
+              onChange={(e) => setContenu(e.target.value)}
+              placeholder="Écrivez votre note ici…"
+              rows={8}
+              style={{ ...inputStyle, fontFamily: "'IBM Plex Sans', sans-serif", resize: "vertical" }}
+            />
+            <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
+              <button onClick={save} style={primaryBtn}>Enregistrer</button>
+              <button onClick={cancelEdit} style={secondaryBtn}>Annuler</button>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={startNew}
+            style={{
+              width: "100%", padding: "14px", borderRadius: 12, marginBottom: 20, cursor: "pointer",
+              border: `1.5px dashed ${COLORS.blue}`, background: COLORS.blueSoft, color: COLORS.blueDeep,
+              fontSize: 13.5, fontWeight: 600,
+            }}
+          >
+            + Nouvelle note
+          </button>
+        )}
+
+        {notes === null ? (
+          <div style={{ color: COLORS.inkSoft, fontSize: 13 }}>Chargement…</div>
+        ) : notes.length === 0 ? (
+          <div style={{ color: COLORS.inkSoft, fontSize: 13, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18, textAlign: "center" }}>
+            Aucune note pour l'instant — créez-en une pour commencer.
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {notes.map((n) => (
+              <div key={n.id} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+                  <div style={{ fontSize: 14.5, fontWeight: 600, color: COLORS.ink }}>{n.titre}</div>
+                  <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+                    <button onClick={() => startEdit(n)} style={{ ...secondaryBtn, padding: "4px 10px", fontSize: 11 }}>Modifier</button>
+                    <button onClick={() => remove(n.id)} style={{ ...secondaryBtn, padding: "4px 10px", fontSize: 11, color: COLORS.red }}>Suppr.</button>
+                  </div>
+                </div>
+                <div style={{ fontSize: 11, color: COLORS.inkSoft, margin: "4px 0 8px" }}>{fmtNoteDate(n.updatedAt)}</div>
+                <div style={{ fontSize: 13, color: COLORS.ink, lineHeight: 1.55, whiteSpace: "pre-line" }}>
+                  {n.contenu.length > 220 ? n.contenu.slice(0, 220) + "…" : n.contenu}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   ANIMATIONS PREMIUM — injectées une seule fois dans le <head>,
+   réutilisables via des classes CSS sur n'importe quel écran.
+   ============================================================ */
+function useAppAnimations() {
+  useEffect(() => {
+    if (document.getElementById("infas-anim-styles")) return;
+    const style = document.createElement("style");
+    style.id = "infas-anim-styles";
+    style.textContent = `
+      @keyframes infasFadeInUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes infasFadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes infasPopIn { 0% { opacity: 0; transform: scale(0.92); } 60% { opacity: 1; transform: scale(1.02); } 100% { transform: scale(1); } }
+      @keyframes infasSlideDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+      .anim-screen { animation: infasFadeIn 0.35s ease both; }
+      .anim-fade-up { animation: infasFadeInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+      .anim-pop { animation: infasPopIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+      .anim-slide-down { animation: infasSlideDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+      .anim-stagger > * { animation: infasFadeInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+      .anim-stagger > *:nth-child(1) { animation-delay: 0.02s; }
+      .anim-stagger > *:nth-child(2) { animation-delay: 0.07s; }
+      .anim-stagger > *:nth-child(3) { animation-delay: 0.12s; }
+      .anim-stagger > *:nth-child(4) { animation-delay: 0.17s; }
+      .anim-stagger > *:nth-child(5) { animation-delay: 0.22s; }
+      .anim-stagger > *:nth-child(6) { animation-delay: 0.27s; }
+      .anim-stagger > *:nth-child(7) { animation-delay: 0.32s; }
+      .anim-stagger > *:nth-child(8) { animation-delay: 0.37s; }
+      .anim-stagger > *:nth-child(n+9) { animation-delay: 0.4s; }
+      button { transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease; }
+      button:hover:not(:disabled) { transform: translateY(-1px); }
+      button:active:not(:disabled) { transform: translateY(0); }
+      .card-hover { transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease; }
+      .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(15,39,51,0.12); }
+    `;
+    document.head.appendChild(style);
+  }, []);
+}
+
+/* ============================================================
+   AVIS / NOTES DE L'APPLICATION — un avis par étudiant (partagé,
+   visible par l'équipe admin), avec note en étoiles + commentaire.
+   ============================================================ */
+function ratingKey(matricule) {
+  return `app-rating:${matricule}`;
+}
+async function saveAppRating(matricule, note, commentaire, prenom, nom) {
+  try {
+    const payload = { matricule, note, commentaire: commentaire.trim(), prenom, nom, createdAt: new Date().toISOString() };
+    await storage.set(ratingKey(matricule), JSON.stringify(payload), true);
+    return payload;
+  } catch (e) {
+    console.error("Erreur enregistrement avis", e);
+    return null;
+  }
+}
+async function loadMyAppRating(matricule) {
+  try {
+    const r = await storage.get(ratingKey(matricule), true);
+    return r ? JSON.parse(r.value) : null;
+  } catch {
+    return null;
+  }
+}
+async function loadAllAppRatings() {
+  try {
+    const list = await storage.list("app-rating:", true);
+    if (!list || !list.keys) return [];
+    const results = await Promise.all(
+      list.keys.map(async (k) => {
+        try {
+          const r = await storage.get(k.replace("app-rating:", ""), true);
+          return r ? JSON.parse(r.value) : null;
+        } catch {
+          return null;
+        }
+      })
+    );
+    return results.filter(Boolean);
+  } catch (e) {
+    console.error("Erreur chargement avis", e);
+    return [];
+  }
+}
+
+function StarPicker({ value, onChange, readOnly, size = 28 }) {
+  const [hover, setHover] = useState(0);
+  return (
+    <div style={{ display: "flex", gap: 4 }}>
+      {[1, 2, 3, 4, 5].map((n) => {
+        const filled = (hover || value) >= n;
+        return (
+          <span
+            key={n}
+            onClick={() => !readOnly && onChange(n)}
+            onMouseEnter={() => !readOnly && setHover(n)}
+            onMouseLeave={() => !readOnly && setHover(0)}
+            style={{ fontSize: size, cursor: readOnly ? "default" : "pointer", color: filled ? COLORS.amber : COLORS.line, transition: "color 0.15s ease, transform 0.1s ease", transform: filled && !readOnly ? "scale(1.08)" : "scale(1)" }}
+          >
+            ★
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function RateAppScreen({ onBack, student }) {
+  const [note, setNote] = useState(0);
+  const [commentaire, setCommentaire] = useState("");
+  const [existing, setExisting] = useState(null);
+  const [saved, setSaved] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    loadMyAppRating(student.matricule).then((r) => {
+      if (r) {
+        setExisting(r);
+        setNote(r.note);
+        setCommentaire(r.commentaire || "");
+      }
+    });
+  }, []);
+
+  const submit = async () => {
+    if (note === 0) return;
+    setBusy(true);
+    await saveAppRating(student.matricule, note, commentaire, student.prenom, student.nom);
+    setBusy(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 520, margin: "0 auto", padding: "24px 18px 60px" }} className="anim-screen">
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+          ← Retour au tableau de bord
+        </button>
+        <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 26, textAlign: "center" }} className="anim-pop">
+          <div style={{ fontSize: 32, marginBottom: 8 }}>⭐</div>
+          <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, marginBottom: 6 }}>
+            {existing ? "Modifier mon avis" : "Donner mon avis"}
+          </h1>
+          <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 20 }}>
+            Votre avis aide à améliorer la plateforme et est visible par l'équipe.
+          </p>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 18 }}>
+            <StarPicker value={note} onChange={setNote} />
+          </div>
+          <textarea
+            value={commentaire}
+            onChange={(e) => setCommentaire(e.target.value)}
+            placeholder="Un commentaire à ajouter ? (facultatif)"
+            rows={4}
+            style={{ ...inputStyle, fontFamily: "'IBM Plex Sans', sans-serif", resize: "vertical", marginBottom: 16, textAlign: "left" }}
+          />
+          <button onClick={submit} disabled={note === 0 || busy} style={{ ...primaryBtn, width: "100%", opacity: note === 0 ? 0.5 : 1, cursor: note === 0 ? "not-allowed" : "pointer" }}>
+            {busy ? "Envoi…" : existing ? "Mettre à jour mon avis" : "Envoyer mon avis"}
+          </button>
+          {saved && (
+            <div className="anim-fade-up" style={{ marginTop: 14, fontSize: 13, color: COLORS.green, fontWeight: 600 }}>
+              ✓ Merci pour votre avis !
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 function AdminScreen({ onBack }) {
-  const [tab, setTab] = useState("students"); // students | payments | announcements
+  const [tab, setTab] = useState("students"); // students | payments | announcements | ratings
   const [students, setStudents] = useState(null);
   const [announcements, setAnnouncements] = useState(null);
+  const [ratings, setRatings] = useState(null);
   const [pwdEditMatricule, setPwdEditMatricule] = useState(null);
   const [pwdEditValue, setPwdEditValue] = useState("");
   const [pwdSavedMatricule, setPwdSavedMatricule] = useState(null);
+  const [deleteConfirmMatricule, setDeleteConfirmMatricule] = useState(null);
 
   const refreshStudents = () => loadAllStudents().then((list) => setStudents(list.sort((a, b) => new Date(b.lastSeen) - new Date(a.lastSeen))));
   const refreshAnnouncements = () => loadAnnouncements().then((list) => setAnnouncements(list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))));
+  const refreshRatings = () => loadAllAppRatings().then((list) => setRatings(list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))));
 
-  useEffect(() => { refreshStudents(); refreshAnnouncements(); }, []);
+  useEffect(() => { refreshStudents(); refreshAnnouncements(); refreshRatings(); }, []);
 
   const total = students?.length ?? null;
   const totalExams = students ? students.reduce((a, s) => a + (s.examsCount || 0), 0) : 0;
@@ -9075,6 +9675,20 @@ function AdminScreen({ onBack }) {
 
   const handleConfirm = async (matricule) => {
     await confirmPayment(matricule);
+    refreshStudents();
+  };
+
+  // Suppression protégée par une double confirmation : le premier clic arme le bouton
+  // (il devient "Confirmer la suppression ?"), le second clic, dans les 5 secondes,
+  // supprime réellement le compte et toutes ses données associées.
+  const handleDeleteClick = async (matricule) => {
+    if (deleteConfirmMatricule !== matricule) {
+      setDeleteConfirmMatricule(matricule);
+      setTimeout(() => setDeleteConfirmMatricule((m) => (m === matricule ? null : m)), 5000);
+      return;
+    }
+    setDeleteConfirmMatricule(null);
+    await deleteStudentAccount(matricule);
     refreshStudents();
   };
 
@@ -9103,7 +9717,7 @@ function AdminScreen({ onBack }) {
         </p>
 
         <div style={{ display: "flex", gap: 6, marginBottom: 20, background: "#E9EFF2", borderRadius: 10, padding: 4, maxWidth: 460 }}>
-          {[["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"]].map(([id, label]) => (
+          {[["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
             <button
               key={id}
               onClick={() => setTab(id)}
@@ -9149,6 +9763,12 @@ function AdminScreen({ onBack }) {
                             style={{ ...secondaryBtn, padding: "5px 10px", fontSize: 11 }}
                           >
                             {isEditing ? "Fermer" : "🔑 Mot de passe"}
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(s.matricule)}
+                            style={{ ...secondaryBtn, padding: "5px 10px", fontSize: 11, color: deleteConfirmMatricule === s.matricule ? "white" : COLORS.red, background: deleteConfirmMatricule === s.matricule ? COLORS.red : "white", borderColor: COLORS.red }}
+                          >
+                            {deleteConfirmMatricule === s.matricule ? "Confirmer la suppression ?" : "🗑 Supprimer"}
                           </button>
                           <Badge tone={access.isVIP ? "blue" : access.isPaid ? "green" : access.isBlocked ? "red" : "amber"}>
                             {access.isVIP ? "⭐ VIP" : access.isPaid ? "Payé" : access.isBlocked ? "Bloqué" : `Essai ${access.daysLeft}j`}
@@ -9209,6 +9829,44 @@ function AdminScreen({ onBack }) {
         )}
 
         {tab === "announcements" && <AnnouncementsAdmin announcements={announcements} onChanged={refreshAnnouncements} />}
+
+        {tab === "ratings" && (
+          <div>
+            {ratings === null ? (
+              <div style={{ color: COLORS.inkSoft, fontSize: 13 }}>Chargement…</div>
+            ) : ratings.length === 0 ? (
+              <div style={{ color: COLORS.inkSoft, fontSize: 13, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18, textAlign: "center" }}>
+                Aucun avis pour l'instant.
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18 }}>
+                  <div style={{ fontSize: 30, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: COLORS.ink }}>
+                    {(ratings.reduce((a, r) => a + r.note, 0) / ratings.length).toFixed(1)}
+                  </div>
+                  <div>
+                    <StarPicker value={Math.round(ratings.reduce((a, r) => a + r.note, 0) / ratings.length)} onChange={() => {}} readOnly size={18} />
+                    <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 2 }}>{ratings.length} avis au total</div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {ratings.map((r) => (
+                    <div key={r.matricule} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, flexWrap: "wrap", gap: 6 }}>
+                        <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>
+                          {r.prenom} {r.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {r.matricule}</span>
+                        </div>
+                        <StarPicker value={r.note} onChange={() => {}} readOnly size={16} />
+                      </div>
+                      {r.commentaire && <div style={{ fontSize: 13, color: COLORS.ink, lineHeight: 1.5, marginBottom: 6 }}>{r.commentaire}</div>}
+                      <div style={{ fontSize: 11, color: COLORS.inkSoft }}>{fmtDate(r.createdAt)}</div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -9521,7 +10179,7 @@ function AnnouncementsFeed({ student }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onLogout, student, onMarkPending }) {
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onMyNotes, onRateApp, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -9531,10 +10189,44 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
   const toReview = CHAPTERS.filter((c) => mastery[c.id] && mastery[c.id].total >= 2 && mastery[c.id].correct / mastery[c.id].total < 0.5);
   const access = computeAccess(student);
 
+  useEffect(() => {
+    if (!welcomeInfo) return;
+    const t = setTimeout(() => onDismissWelcome(), 5000);
+    return () => clearTimeout(t);
+  }, [welcomeInfo]);
+
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onLogout} />
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "26px 18px 60px" }}>
+        {welcomeInfo && (
+          <div
+            className="anim-slide-down"
+            style={{
+              marginBottom: 18, borderRadius: 14, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+              background: welcomeInfo.isNew ? "linear-gradient(90deg, #1E8F5E, #24A86E)" : "linear-gradient(90deg, #0B5D8C, #1478B0)",
+              color: "white", boxShadow: "0 8px 20px rgba(15,39,51,0.15)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontSize: 26 }}>{welcomeInfo.isNew ? "🎉" : "👋"}</div>
+              <div>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15.5, fontWeight: 700 }}>
+                  {welcomeInfo.isNew ? `Bienvenue à bord, ${welcomeInfo.prenom} !` : `Content de vous revoir, ${welcomeInfo.prenom} !`}
+                </div>
+                <div style={{ fontSize: 12.5, opacity: 0.92 }}>
+                  {welcomeInfo.isNew ? "Votre inscription est réussie — bonne préparation !" : "Prêt(e) à continuer votre préparation ?"}
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={onDismissWelcome}
+              style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 8, width: 28, height: 28, cursor: "pointer", fontSize: 14, flexShrink: 0 }}
+            >
+              ✕
+            </button>
+          </div>
+        )}
         <div style={{ marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10 }}>
           <div>
             <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, color: COLORS.ink, margin: 0 }}>Tableau de bord</h1>
@@ -9550,14 +10242,14 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
 
         <AnnouncementsFeed student={student} />
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 22 }}>
+        <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 22 }}>
           <StatCard label="Examens réalisés" value={examCount} />
           <StatCard label="Moyenne" value={examCount ? `${avg.toFixed(1)}/20` : "—"} />
           <StatCard label="Meilleur score" value={examCount ? `${best.toFixed(1)}/20` : "—"} tone="green" />
           <StatCard label="Chapitres maîtrisés" value={mastered.length} tone="green" />
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14, marginBottom: 26 }}>
+        <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14, marginBottom: 26 }}>
           <div style={{ background: COLORS.blueDeep, borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1 }}>
             <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📚 Apprendre</div>
             <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Un résumé des notions à maîtriser par chapitre, avec des explications simples, avant de passer à l'entraînement.</div>
@@ -9614,6 +10306,20 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
             <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Identifiez les structures numérotées sur un schéma, comme dans les vrais examens INFAS/ISS (crâne, main, pied, cage thoracique, tube digestif).</div>
             <button onClick={onSchemaPractice} style={{ ...primaryBtn, background: "white", color: "#B25E2E", width: "100%" }}>
               S'entraîner →
+            </button>
+          </div>
+          <div style={{ background: "#3E5A7A", borderRadius: 16, padding: "20px 20px", color: "white" }}>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📝 Mes notes</div>
+            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Prenez des notes personnelles au fil de vos révisions, consultables et exportables en PDF à tout moment.</div>
+            <button onClick={onMyNotes} style={{ ...primaryBtn, background: "white", color: "#3E5A7A", width: "100%" }}>
+              Ouvrir mes notes →
+            </button>
+          </div>
+          <div style={{ background: "linear-gradient(135deg, #D9A441, #C4841E)", borderRadius: 16, padding: "20px 20px", color: "white" }}>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>⭐ Donner mon avis</div>
+            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Votre avis compte ! Notez l'application et laissez un commentaire pour aider à l'améliorer.</div>
+            <button onClick={onRateApp} style={{ ...primaryBtn, background: "white", color: "#B5701A", width: "100%" }}>
+              Laisser un avis →
             </button>
           </div>
         </div>
@@ -11087,8 +11793,10 @@ function useServiceWorker() {
 export default function App() {
   useGoogleFonts();
   useServiceWorker();
-  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training | dictionary | schemas
+  useAppAnimations();
+  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training | dictionary | schemas | mynotes | rateapp
   const [role, setRole] = useState(null); // "admin" | "student"
+  const [welcomeInfo, setWelcomeInfo] = useState(null); // { prenom, isNew } — pilote la bannière de bienvenue/félicitations
   const [history, setHistory] = useState([]);
   const [exam, setExam] = useState(null);
   const [trainingSession, setTrainingSession] = useState(null);
@@ -11116,16 +11824,20 @@ export default function App() {
     }
   }, [screen, student]);
 
-  const handleLogin = (loggedRole, studentRecord) => {
+  const handleLogin = (loggedRole, studentRecord, isNew) => {
     setRole(loggedRole);
     if (loggedRole === "admin") {
       setScreen("admin");
     } else {
       setStudent(studentRecord);
       touchStudentLastSeen(studentRecord.matricule);
+      setWelcomeInfo({ prenom: studentRecord.prenom, isNew: !!isNew });
       setScreen("dashboard");
     }
   };
+  const handleDismissWelcome = () => setWelcomeInfo(null);
+  const handleMyNotes = () => setScreen("mynotes");
+  const handleRateApp = () => setScreen("rateapp");
   const handleLogout = () => {
     setScreen("login"); setExam(null); setTrainingSession(null);
     setLastResult(null); setStudent(null); setRole(null);
@@ -11233,11 +11945,13 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
   }
 
   if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
+  if (screen === "mynotes") return <MyNotesScreen onBack={() => setScreen("dashboard")} student={student} />;
+  if (screen === "rateapp") return <RateAppScreen onBack={() => setScreen("dashboard")} student={student} />;
 
   if (screen === "matieres") return <MatieresScreen onBack={handleAbort} onSelect={handleSelectSubject} />;
 
