@@ -1269,6 +1269,128 @@ const UE_COLOR = Object.fromEntries(UE_LIST.map((u, i) => [u.id, UE_PALETTE[i % 
 
 const SUBJ = Object.fromEntries(ECUE_LIST.filter((e) => e.subjectId).map((e) => [e.subjectId, e.label]));
 
+/* ============================================================
+   DÉFI INFIRMIER MODEL — espace détaché, classement pondéré par les
+   coefficients (crédits) officiels de chaque matière, actualisé en direct.
+   ============================================================ */
+
+// Poids (coefficient) de chaque matière = somme des crédits de ses ECUE dans le
+// programme officiel — exactement la logique de pondération réelle du cursus.
+const SUBJECT_CREDITS = ECUE_LIST.filter((e) => e.subjectId).reduce((acc, e) => {
+  acc[e.subjectId] = (acc[e.subjectId] || 0) + (e.credits || 1);
+  return acc;
+}, {});
+
+// Mois courant (ex. "2026-07"), sert de clé de cycle mensuel du défi. La répartition
+// des tentatives par matière au fil du mois est laissée entièrement libre à l'étudiant ;
+// le nombre de matières tentées est affiché en toute transparence à côté de chaque score
+// du classement plutôt que d'imposer un minimum obligatoire.
+function currentIsoMonth(d = new Date()) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function defiKey(matricule, isoMonth) {
+  return `defi:${isoMonth}:${matricule}`;
+}
+
+// Enregistre la meilleure tentative du mois pour UNE matière (si le nouveau
+// score est meilleur que l'ancien, sinon on ne touche à rien — "meilleure tentative").
+// Semaine du mois en cours (1 à 4/5, selon le jour du mois) : sert de repère pour le
+// quota de coefficient suggéré chaque semaine — un guide de rythme, jamais un blocage.
+function currentWeekOfMonth(d = new Date()) {
+  return Math.min(4, Math.ceil(d.getDate() / 7));
+}
+
+// Coefficient total de toutes les matières du programme, et quota hebdomadaire suggéré
+// (coefficient total ÷ 4 semaines) — l'étudiant compose librement son propre combo de
+// matières pour atteindre ce quota chaque semaine, à son idée.
+const TOTAL_COEF = Object.values(SUBJECT_CREDITS).reduce((a, b) => a + b, 0);
+const WEEKLY_COEF_TARGET = Math.ceil(TOTAL_COEF / 4);
+
+async function saveDefiAttempt(student, subjectId, note20) {
+  const isoMonth = currentIsoMonth();
+  const key = defiKey(student.matricule, isoMonth);
+  let record;
+  try {
+    const r = await storage.get(key, true);
+    record = r ? JSON.parse(r.value) : null;
+  } catch {
+    record = null;
+  }
+  if (!record) {
+    record = { matricule: student.matricule, prenom: student.prenom, nom: student.nom, isoMonth, scores: {} };
+  }
+  const prevBest = record.scores[subjectId];
+  const weekNow = currentWeekOfMonth();
+  if (!prevBest || note20 > prevBest.note20) {
+    // on garde la semaine de la toute première tentative de cette matière (celle qui a
+    // compté pour le quota), même si le score est ensuite amélioré une autre semaine
+    const week = prevBest ? prevBest.week : weekNow;
+    record.scores[subjectId] = { note20, week };
+  }
+  await storage.set(key, JSON.stringify(record), true);
+  return record;
+}
+
+// Moyenne pondérée par les coefficients, uniquement sur les matières que l'étudiant
+// a déjà tentées ce mois (ne pénalise pas les matières pas encore couvertes) ; le
+// nombre de matières tentées reste affiché en clair pour garder le classement transparent.
+function computeWeightedAverage(scores) {
+  const entries = Object.entries(scores || {});
+  if (entries.length === 0) return null;
+  let totalPoints = 0;
+  let totalCoef = 0;
+  entries.forEach(([subjectId, entry]) => {
+    const note20 = typeof entry === "number" ? entry : entry.note20; // rétrocompatibilité ancien format
+    const coef = SUBJECT_CREDITS[subjectId] || 1;
+    totalPoints += note20 * coef;
+    totalCoef += coef;
+  });
+  return totalCoef > 0 ? totalPoints / totalCoef : null;
+}
+
+// Coefficient cumulé atteint par l'étudiant POUR LA SEMAINE EN COURS du mois (somme des
+// coefficients des matières dont la première tentative date de cette semaine-là).
+function computeWeekCoefProgress(scores, week) {
+  return Object.entries(scores || {}).reduce((sum, [subjectId, entry]) => {
+    const entryWeek = typeof entry === "number" ? 1 : entry.week; // rétrocompatibilité
+    if (entryWeek !== week) return sum;
+    return sum + (SUBJECT_CREDITS[subjectId] || 1);
+  }, 0);
+}
+
+// Classement du mois en cours : tous les étudiants ayant au moins une tentative,
+// triés par moyenne pondérée décroissante.
+async function loadDefiLeaderboard(isoMonth = currentIsoMonth()) {
+  try {
+    const list = await storage.list(`defi:${isoMonth}:`, true);
+    if (!list || !list.keys) return [];
+    const records = await Promise.all(
+      list.keys.map(async (k) => {
+        const fullKey = k.startsWith("defi:") ? k : `defi:${isoMonth}:${k}`;
+        try {
+          const r = await storage.get(fullKey, true);
+          return r ? JSON.parse(r.value) : null;
+        } catch {
+          return null;
+        }
+      })
+    );
+    return records
+      .filter(Boolean)
+      .map((rec) => ({ ...rec, moyennePonderee: computeWeightedAverage(rec.scores), nbMatieres: Object.keys(rec.scores || {}).length }))
+      .filter((rec) => rec.moyennePonderee !== null)
+      .sort((a, b) => b.moyennePonderee - a.moyennePonderee);
+  } catch (e) {
+    console.error("Erreur chargement classement défi", e);
+    return [];
+  }
+}
+
+function displayName(prenom, nom) {
+  return `${prenom || ""} ${nom ? nom[0].toUpperCase() + "." : ""}`.trim();
+}
+
 /* ---------------- Question bank (grounded in the course PDF) ---------------- */
 // tuple: [type, chapterId, level, stem, options[], correctIdx[], explanation, reference]
 const RAW = [
@@ -8613,6 +8735,10 @@ function LoginScreen({ onLogin }) {
     // Le mot de passe admin n'est jamais comparé côté client : on interroge la route
     // serveur /api/admin-auth, qui seule connaît les vraies valeurs (variables
     // d'environnement Netlify), et qui renvoie un jeton à usage unique de session.
+    // Debug temporaire : si l'identifiant ressemble à un identifiant admin (comparaison
+    // insensible à la casse) mais que la connexion échoue, on affiche la cause précise
+    // au lieu du message générique — à retirer une fois le problème résolu.
+    const looksLikeAdminAttempt = matricule.trim().toLowerCase().includes("shoro");
     try {
       const adminRes = await fetch("/api/admin-auth", {
         method: "POST",
@@ -8625,7 +8751,18 @@ function LoginScreen({ onLogin }) {
         onLogin("admin", null);
         return;
       }
-    } catch {
+      if (looksLikeAdminAttempt) {
+        const errBody = await adminRes.json().catch(() => ({}));
+        setError(`[Debug admin] Statut ${adminRes.status} — ${errBody.error || "réponse sans détail"}`);
+        setBusy(false);
+        return;
+      }
+    } catch (adminErr) {
+      if (looksLikeAdminAttempt) {
+        setError(`[Debug admin] Requête échouée : ${adminErr?.message || "erreur réseau inconnue"}`);
+        setBusy(false);
+        return;
+      }
       /* pas un compte admin, ou route indisponible — on continue vers la connexion étudiante */
     }
 
@@ -9606,6 +9743,140 @@ function RateAppScreen({ onBack, student }) {
     </div>
   );
 }
+
+function DefiScreen({ onBack, student, onLaunchDefi }) {
+  const [leaderboard, setLeaderboard] = useState(null);
+  const [myRecord, setMyRecord] = useState(null);
+  const isoMonth = currentIsoMonth();
+  const MOIS_NOMS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const moisLabel = MOIS_NOMS[Number(isoMonth.split("-")[1]) - 1];
+
+  const refresh = async () => {
+    const board = await loadDefiLeaderboard(isoMonth);
+    setLeaderboard(board);
+    setMyRecord(board.find((r) => r.matricule === student.matricule) || null);
+  };
+  useEffect(() => { refresh(); }, []);
+
+  const myRank = myRecord ? leaderboard.findIndex((r) => r.matricule === student.matricule) + 1 : null;
+  // Une fois tentée, une matière disparaît du choix pour le reste du mois : ça force à
+  // couvrir progressivement tout le programme sur les 4 semaines, et garantit que la
+  // comparaison entre étudiants porte sur un total de coefficient comparable.
+  const attemptedIds = new Set(Object.keys(myRecord?.scores || {}));
+  const subjectsWithContent = Object.keys(SUBJ).filter((id) => !attemptedIds.has(id));
+  const allSubjectsDone = Object.keys(SUBJ).length > 0 && subjectsWithContent.length === 0;
+
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "24px 18px 60px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+          ← Retour au tableau de bord
+        </button>
+        <div className="anim-pop" style={{ background: "linear-gradient(135deg, #6B4FA0, #4A2E7A)", borderRadius: 16, padding: 22, color: "white", marginBottom: 20 }}>
+          <div style={{ fontSize: 28, marginBottom: 6 }}>🏆</div>
+          <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, marginBottom: 4 }}>Défi Infirmier Model</h1>
+          <p style={{ fontSize: 12.5, opacity: 0.92, marginBottom: 0 }}>
+            Classement de {moisLabel}, pondéré par les coefficients officiels de chaque matière. Le top 5 est visible de tous ; ta meilleure tentative du mois compte pour chaque matière — répartis tes tentatives comme tu veux au fil du mois, le nombre de matières couvertes reste affiché en toute transparence.
+          </p>
+        </div>
+
+        {myRecord && (
+          <div className="anim-fade-up" style={{ background: COLORS.blueSoft, border: `1px solid ${COLORS.blue}`, borderRadius: 12, padding: 16, marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <div style={{ fontSize: 12, color: COLORS.blueDeep, fontWeight: 700 }}>Ta position ce mois-ci</div>
+              <div style={{ fontSize: 13, color: COLORS.ink }}>{myRecord.nbMatieres} matière(s) tentée(s) · moyenne pondérée {myRecord.moyennePonderee.toFixed(2)}/20</div>
+            </div>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 26, fontWeight: 700, color: COLORS.blueDeep }}>
+              {myRank ? `#${myRank}` : "—"}
+            </div>
+          </div>
+        )}
+
+        <h2 style={{ fontSize: 15, fontWeight: 700, color: COLORS.ink, marginBottom: 10 }}>🥇 Top 5 du mois</h2>
+        {leaderboard === null ? (
+          <div style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 22 }}>Chargement…</div>
+        ) : leaderboard.length === 0 ? (
+          <div style={{ color: COLORS.inkSoft, fontSize: 13, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18, textAlign: "center", marginBottom: 22 }}>
+            Personne n'a encore tenté de défi ce mois-ci — soyez le premier !
+          </div>
+        ) : (
+          <div className="anim-stagger" style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 22 }}>
+            {leaderboard.slice(0, 5).map((r, i) => {
+              const medals = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"];
+              const isMe = r.matricule === student.matricule;
+              return (
+                <div
+                  key={r.matricule}
+                  className="card-hover"
+                  style={{
+                    display: "flex", alignItems: "center", gap: 12, background: isMe ? COLORS.blueSoft : COLORS.surface,
+                    border: `1px solid ${isMe ? COLORS.blue : COLORS.line}`, borderRadius: 12, padding: "12px 16px",
+                  }}
+                >
+                  <div style={{ fontSize: 22, width: 32, textAlign: "center" }}>{medals[i]}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.ink }}>{displayName(r.prenom, r.nom)} {isMe && "(toi)"}</div>
+                    <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{r.nbMatieres} matière(s) tentée(s)</div>
+                  </div>
+                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 700, color: COLORS.blueDeep }}>
+                    {r.moyennePonderee.toFixed(2)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {myRecord && (
+          <div className="anim-fade-up" style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 18 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <div style={{ fontSize: 12, color: COLORS.ink, fontWeight: 700 }}>🎯 Quota de la semaine {currentWeekOfMonth()}</div>
+              <div style={{ fontSize: 12.5, color: COLORS.inkSoft }}>{computeWeekCoefProgress(myRecord.scores, currentWeekOfMonth())} / {WEEKLY_COEF_TARGET} coef.</div>
+            </div>
+            <div style={{ height: 8, borderRadius: 999, background: COLORS.line, overflow: "hidden" }}>
+              <div style={{
+                height: "100%", borderRadius: 999, background: COLORS.green, transition: "width 0.4s ease",
+                width: `${Math.min(100, (computeWeekCoefProgress(myRecord.scores, currentWeekOfMonth()) / WEEKLY_COEF_TARGET) * 100)}%`,
+              }} />
+            </div>
+            <div style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 6 }}>
+              Compose ton propre combo de matières pour atteindre ce quota chaque semaine — libre à toi de choisir lesquelles.
+            </div>
+          </div>
+        )}
+
+        <h2 style={{ fontSize: 15, fontWeight: 700, color: COLORS.ink, marginBottom: 10 }}>Lancer une tentative</h2>
+        {allSubjectsDone ? (
+          <div className="anim-pop" style={{ background: COLORS.greenSoft, border: `1px solid ${COLORS.green}`, borderRadius: 12, padding: 18, textAlign: "center", marginBottom: 4 }}>
+            <div style={{ fontSize: 24, marginBottom: 6 }}>🎉</div>
+            <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>Toutes les matières du programme sont couvertes ce mois-ci !</div>
+            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Ta moyenne pondérée finale ci-dessus reflète l'ensemble du programme. Rendez-vous le mois prochain pour un nouveau cycle.</div>
+          </div>
+        ) : (
+          <>
+            <p style={{ fontSize: 12.5, color: COLORS.inkSoft, marginBottom: 14 }}>
+              Une matière tentée disparaît de cette liste jusqu'au mois prochain — choisis ton propre combo pour couvrir tout le programme au fil des 4 semaines.
+            </p>
+            <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 10 }}>
+              {subjectsWithContent.map((subjectId) => (
+                <button
+                  key={subjectId}
+                  onClick={() => onLaunchDefi(subjectId)}
+                  className="card-hover"
+                  style={{ textAlign: "left", padding: "12px 14px", borderRadius: 10, cursor: "pointer", border: `1.5px solid ${COLORS.line}`, background: "white" }}
+                >
+                  <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.ink }}>{SUBJ[subjectId]}</div>
+                  <div style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 2 }}>Coef. {SUBJECT_CREDITS[subjectId] || 1}</div>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 function AdminScreen({ onBack }) {
   const [tab, setTab] = useState("students"); // students | payments | announcements | ratings
   const [students, setStudents] = useState(null);
@@ -10133,7 +10404,7 @@ function AnnouncementsFeed({ student }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onMyNotes, onRateApp, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending }) {
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -10181,6 +10452,24 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
             </button>
           </div>
         )}
+        <button
+          onClick={onDefi}
+          className="anim-pop card-hover"
+          style={{
+            width: "100%", textAlign: "left", border: "none", cursor: "pointer", marginBottom: 18,
+            background: "linear-gradient(120deg, #6B4FA0, #4A2E7A)", borderRadius: 14, padding: "16px 20px",
+            color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ fontSize: 26 }}>🏆</div>
+            <div>
+              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15, fontWeight: 700 }}>Défi Infirmier Model</div>
+              <div style={{ fontSize: 12, opacity: 0.9 }}>Classement du mois, pondéré par les coefficients officiels — voir le top 5 →</div>
+            </div>
+          </div>
+          <div style={{ fontSize: 20 }}>→</div>
+        </button>
         <div style={{ marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10 }}>
           <div>
             <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, color: COLORS.ink, margin: 0 }}>Tableau de bord</h1>
@@ -11754,7 +12043,8 @@ export default function App() {
   const [history, setHistory] = useState([]);
   const [exam, setExam] = useState(null);
   const [trainingSession, setTrainingSession] = useState(null);
-  const [flowMode, setFlowMode] = useState("exam"); // "exam" | "training"
+  const [flowMode, setFlowMode] = useState("exam"); // "exam" | "training" | "lesson"
+  const [isDefiAttempt, setIsDefiAttempt] = useState(false);
   const [pendingSubject, setPendingSubject] = useState(null);
   const [pendingChapter, setPendingChapter] = useState(null);
   const [pendingCase, setPendingCase] = useState(null);
@@ -11834,6 +12124,13 @@ export default function App() {
     setScreen("dashboard");
   };
   const handleAbort = () => setScreen("dashboard");
+  const handleDefi = () => setScreen("defi");
+  const handleLaunchDefi = (subjectId) => {
+    setPendingSubject(subjectId);
+    setIsDefiAttempt(true);
+    setFlowMode("exam");
+    handleLaunch("avance"); // niveau fixe pour le défi : 30 questions, chronométré
+  };
 
   const handleMarkPending = async (planId) => {
     const updated = await markPaymentPending(student.matricule, planId);
@@ -11861,6 +12158,10 @@ export default function App() {
     setHistory(newHistory);
     await saveHistory(student.matricule, newHistory);
     if (student?.matricule) incrementStudentExamCount(student.matricule);
+    if (isDefiAttempt) {
+      await saveDefiAttempt(student, exam.subjectId, result.note20);
+      setIsDefiAttempt(false);
+    }
     setLastResult({ result, durationSec, levelId: exam.levelId });
     setScreen("results");
   };
@@ -11899,13 +12200,14 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} />;
   }
 
   if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "mynotes") return <MyNotesScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "rateapp") return <RateAppScreen onBack={() => setScreen("dashboard")} student={student} />;
+  if (screen === "defi") return <DefiScreen onBack={() => setScreen("dashboard")} student={student} onLaunchDefi={handleLaunchDefi} />;
 
   if (screen === "matieres") return <MatieresScreen onBack={handleAbort} onSelect={handleSelectSubject} />;
 
