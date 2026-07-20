@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import { storage } from "../../lib/storage";
+import { storage, setAdminToken } from "../../lib/storage";
 
 /* ============================================================
    INFAS – Préparation Hématologie
@@ -8543,7 +8543,9 @@ function Badge({ children, tone = "blue" }) {
 }
 
 /* ---------------- Login ---------------- */
-const ADMIN_ACCOUNT = { id: "Shoro1994", pwd: "Kx7#mQ2vT9pL" };
+// Le compte admin n'est plus défini ici : ses identifiants vivent uniquement dans les
+// variables d'environnement Netlify (ADMIN_ID, ADMIN_PASSWORD) et sont vérifiés par la
+// route serveur /api/admin-auth — jamais visibles dans le code envoyé au navigateur.
 
 // Comptes de l'équipe : accès illimité, création automatique dès la première connexion
 // (pas besoin de passer par "Créer un compte"). Antenne par défaut : Abidjan, à corriger si besoin.
@@ -8608,9 +8610,23 @@ function LoginScreen({ onLogin }) {
       setError("Merci de renseigner votre identifiant et votre mot de passe.");
       return;
     }
-    if (matricule.trim() === ADMIN_ACCOUNT.id && pwd === ADMIN_ACCOUNT.pwd) {
-      onLogin("admin", null);
-      return;
+    // Le mot de passe admin n'est jamais comparé côté client : on interroge la route
+    // serveur /api/admin-auth, qui seule connaît les vraies valeurs (variables
+    // d'environnement Netlify), et qui renvoie un jeton à usage unique de session.
+    try {
+      const adminRes = await fetch("/api/admin-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: matricule.trim(), password: pwd }),
+      });
+      if (adminRes.ok) {
+        const { token } = await adminRes.json();
+        setAdminToken(token);
+        onLogin("admin", null);
+        return;
+      }
+    } catch {
+      /* pas un compte admin, ou route indisponible — on continue vers la connexion étudiante */
     }
 
     // Comptes VIP (équipe) : priorité absolue. Si le matricule et l'année de naissance
