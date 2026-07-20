@@ -5808,24 +5808,17 @@ const ANATPHYSIO_EXO_RAW = [
 const SCHEMAS = {
   crane_profil: {
     titre: "Crâne (vue de profil)",
-    viewBox: "0 0 400 340",
-    svgShapes: `
-      <path d="M 85 165 C 68 115, 85 70, 130 45 C 165 25, 210 20, 250 30 C 285 40, 315 60, 330 95 C 342 122, 345 155, 335 190 C 328 212, 312 228, 292 235 L 292 260 L 270 262 L 266 278 L 246 278 L 240 258 C 222 262, 202 260, 186 252 L 168 270 L 148 270 L 150 244 C 118 232, 96 205, 85 165 Z"
-            fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
-      <path d="M 335 150 Q 275 152 210 158 Q 165 162 138 178" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-      <path d="M 245 32 Q 252 90 240 158" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-      <path d="M 330 100 Q 295 118 275 155 Q 260 190 248 232" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-      <ellipse cx="278" cy="152" rx="10" ry="9" fill="#FFFFFF" stroke="#8B6914" stroke-width="1.5"/>
-      <line x1="204" y1="260" x2="284" y2="262" stroke="#8B6914" stroke-width="0.8" stroke-dasharray="3,3"/>
-    `,
+    type: "image",
+    imageSrc: "/schemas/crane-profil.png",
+    aspectRatio: "612 / 517",
     points: [
-      { num: 1, x: 175, y: 42,  label: "Os frontal" },
-      { num: 2, x: 262, y: 32,  label: "Os pariétal" },
-      { num: 3, x: 322, y: 118, label: "Os temporal" },
-      { num: 4, x: 320, y: 195, label: "Os occipital" },
-      { num: 5, x: 155, y: 175, label: "Os sphénoïde" },
-      { num: 6, x: 122, y: 128, label: "Os ethmoïde" },
-      { num: 7, x: 210, y: 265, label: "Mandibule" },
+      { num: 1, xPct: 42, yPct: 8,  label: "Os frontal" },
+      { num: 2, xPct: 62, yPct: 6,  label: "Os pariétal" },
+      { num: 3, xPct: 80, yPct: 42, label: "Os temporal" },
+      { num: 4, xPct: 78, yPct: 68, label: "Os occipital" },
+      { num: 5, xPct: 30, yPct: 45, label: "Os sphénoïde" },
+      { num: 6, xPct: 33, yPct: 33, label: "Os ethmoïde" },
+      { num: 7, xPct: 55, yPct: 78, label: "Mandibule" },
     ],
   },
 
@@ -5852,138 +5845,70 @@ const SCHEMAS = {
   },
 
   main_palmaire: {
-    titre: "Squelette de la main et de l'avant-bras",
-    viewBox: "0 0 300 460",
-    svgShapes: `
-      <rect x="118" y="20" width="26" height="150" rx="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
-      <rect x="150" y="24" width="24" height="146" rx="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
-      <path d="M 108 168 Q 100 178 105 195 Q 130 210 148 200 Q 168 210 185 195 Q 190 178 182 168
-               Q 165 178 148 176 Q 128 178 108 168 Z"
-            fill="#8FB8D6" stroke="#4A7A9E" stroke-width="1.8"/>
-      <circle cx="108" cy="196" r="14" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <circle cx="142" cy="200" r="14" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <circle cx="176" cy="196" r="13" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <circle cx="200" cy="212" r="10" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.5"/>
-      <circle cx="100" cy="228" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <circle cx="128" cy="234" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <circle cx="156" cy="234" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <circle cx="184" cy="228" r="12" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <rect x="95"  y="248" width="16" height="90" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
-      <rect x="122" y="252" width="16" height="98" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
-      <rect x="149" y="252" width="16" height="100" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
-      <rect x="176" y="248" width="16" height="94" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.8"/>
-      <rect x="95"  y="345" width="16" height="55" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <rect x="122" y="356" width="16" height="60" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <rect x="149" y="358" width="16" height="60" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-      <rect x="176" y="348" width="16" height="55" rx="7" fill="#F5D9A8" stroke="#8B6914" stroke-width="1.6"/>
-    `,
+    titre: "Squelette de la main et de l'avant-bras (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
+    type: "image",
+    imageSrc: "/schemas/main.png",
+    aspectRatio: "1160 / 924",
     points: [
-      { num: 1, x: 108, y: 196, label: "Scaphoïde" },
-      { num: 2, x: 142, y: 200, label: "Semi-lunaire" },
-      { num: 3, x: 176, y: 196, label: "Pyramidal" },
-      { num: 4, x: 200, y: 212, label: "Pisiforme" },
-      { num: 5, x: 100, y: 228, label: "Trapèze" },
-      { num: 6, x: 128, y: 234, label: "Trapézoïde" },
-      { num: 7, x: 156, y: 234, label: "Grand os" },
-      { num: 8, x: 184, y: 228, label: "Os crochu" },
-      { num: 9, x: 103, y: 290, label: "Métacarpien" },
-      { num: 10, x: 103, y: 370, label: "Phalange" },
+      { num: 1, xPct: 40, yPct: 62, label: "Scaphoïde" },
+      { num: 2, xPct: 47, yPct: 60, label: "Semi-lunaire" },
+      { num: 3, xPct: 55, yPct: 62, label: "Pyramidal" },
+      { num: 4, xPct: 60, yPct: 66, label: "Pisiforme" },
+      { num: 5, xPct: 37, yPct: 70, label: "Trapèze" },
+      { num: 6, xPct: 44, yPct: 72, label: "Trapézoïde" },
+      { num: 7, xPct: 51, yPct: 72, label: "Grand os" },
+      { num: 8, xPct: 58, yPct: 71, label: "Os crochu" },
+      { num: 9, xPct: 45, yPct: 50, label: "Métacarpien" },
+      { num: 10, xPct: 45, yPct: 20, label: "Phalange" },
     ],
   },
 
   pied_profil: {
-    titre: "Squelette du pied (vue de profil)",
-    viewBox: "0 0 420 260",
-    svgShapes: `
-      <path d="M 52 68 L 62 58 C 74 55 84 63 85 78 L 90 96 C 102 88 108 98 102 112 L 335 142 C 372 146 398 156 404 172 C 407 183 398 191 382 193 L 258 202 L 258 218 L 238 218 L 232 202 L 148 208 L 96 198 C 65 192 46 172 46 145 C 42 118 40 90 52 68 Z"
-            fill="#F5D9A8" stroke="#8B6914" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M 102 112 Q 148 118 172 132" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-      <path d="M 172 132 Q 198 142 258 152" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-      <line x1="258" y1="152" x2="258" y2="202" stroke="#8B6914" stroke-width="1.2"/>
-      <line x1="298" y1="150" x2="298" y2="196" stroke="#8B6914" stroke-width="1"/>
-      <path d="M 65 78 Q 68 90 70 105" fill="none" stroke="#8FB8D6" stroke-width="8" opacity="0.6"/>
-    `,
+    titre: "Squelette du pied (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
+    type: "image",
+    imageSrc: "/schemas/pied.png",
+    aspectRatio: "1160 / 924",
     points: [
-      { num: 1, x: 65,  y: 105, label: "Calcanéus" },
-      { num: 2, x: 96,  y: 100, label: "Astragale (Talus)" },
-      { num: 3, x: 140, y: 118, label: "Scaphoïde tarsien" },
-      { num: 4, x: 158, y: 178, label: "Cuboïde" },
-      { num: 5, x: 188, y: 137, label: "1er cunéiforme" },
-      { num: 6, x: 218, y: 142, label: "2ème cunéiforme" },
-      { num: 7, x: 238, y: 147, label: "3ème cunéiforme" },
-      { num: 8, x: 318, y: 150, label: "Métatarsien" },
+      { num: 1, xPct: 14, yPct: 55, label: "Calcanéus" },
+      { num: 2, xPct: 22, yPct: 42, label: "Astragale (Talus)" },
+      { num: 3, xPct: 33, yPct: 40, label: "Scaphoïde tarsien" },
+      { num: 4, xPct: 34, yPct: 58, label: "Cuboïde" },
+      { num: 5, xPct: 42, yPct: 38, label: "1er cunéiforme" },
+      { num: 6, xPct: 45, yPct: 45, label: "2ème cunéiforme" },
+      { num: 7, xPct: 47, yPct: 52, label: "3ème cunéiforme" },
+      { num: 8, xPct: 65, yPct: 45, label: "Métatarsien" },
     ],
   },
 
   cage_thoracique: {
-    titre: "Cage thoracique (vue antérieure)",
-    viewBox: "0 0 380 420",
-    svgShapes: `
-      <rect x="178" y="50" width="24" height="55" rx="6" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
-      <rect x="178" y="112" width="24" height="140" rx="6" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
-      <path d="M 182 260 L 198 260 L 190 292 Z" fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
-      <path d="M 178 62 Q 100 66 78 100 Q 62 128 68 160" fill="none" stroke="#F5D9A8" stroke-width="10"/>
-      <path d="M 178 62 Q 100 66 78 100 Q 62 128 68 160" fill="none" stroke="#8B6914" stroke-width="1.5"/>
-      <path d="M 202 62 Q 280 66 302 100 Q 318 128 312 160" fill="none" stroke="#F5D9A8" stroke-width="10"/>
-      <path d="M 202 62 Q 280 66 302 100 Q 318 128 312 160" fill="none" stroke="#8B6914" stroke-width="1.5"/>
-      <path d="M 178 108 Q 92 116 72 155 Q 58 188 68 220" fill="none" stroke="#F5D9A8" stroke-width="10"/>
-      <path d="M 178 108 Q 92 116 72 155 Q 58 188 68 220" fill="none" stroke="#8B6914" stroke-width="1.5"/>
-      <path d="M 202 108 Q 288 116 308 155 Q 322 188 312 220" fill="none" stroke="#F5D9A8" stroke-width="10"/>
-      <path d="M 202 108 Q 288 116 308 155 Q 322 188 312 220" fill="none" stroke="#8B6914" stroke-width="1.5"/>
-      <path d="M 178 155 Q 100 163 82 205 Q 70 240 88 268" fill="none" stroke="#8FB8D6" stroke-width="8"/>
-      <path d="M 178 155 Q 100 163 82 205 Q 70 240 88 268" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
-      <path d="M 202 155 Q 280 163 298 205 Q 310 240 292 268" fill="none" stroke="#8FB8D6" stroke-width="8"/>
-      <path d="M 202 155 Q 280 163 298 205 Q 310 240 292 268" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
-      <path d="M 182 212 Q 118 220 106 258 Q 98 290 122 310" fill="none" stroke="#8FB8D6" stroke-width="7"/>
-      <path d="M 182 212 Q 118 220 106 258 Q 98 290 122 310" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
-      <path d="M 198 212 Q 262 220 274 258 Q 282 290 258 310" fill="none" stroke="#8FB8D6" stroke-width="7"/>
-      <path d="M 198 212 Q 262 220 274 258 Q 282 290 258 310" fill="none" stroke="#4A7A9E" stroke-width="1.5"/>
-      <path d="M 108 298 Q 104 330 132 340" fill="none" stroke="#8B6914" stroke-width="1.5"/>
-      <path d="M 272 298 Q 276 330 248 340" fill="none" stroke="#8B6914" stroke-width="1.5"/>
-    `,
+    titre: "Cage thoracique (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
+    type: "image",
+    imageSrc: "/schemas/cage-thoracique.png",
+    aspectRatio: "1160 / 858",
     points: [
-      { num: 1, x: 190, y: 78,  label: "Manubrium sternal" },
-      { num: 2, x: 190, y: 185, label: "Corps du sternum" },
-      { num: 3, x: 190, y: 278, label: "Processus xiphoïde" },
-      { num: 4, x: 68,  y: 105, label: "1ère côte (vraie côte)" },
-      { num: 5, x: 88,  y: 262, label: "8ème côte (fausse côte)" },
-      { num: 6, x: 135, y: 337, label: "12ème côte (côte flottante)" },
+      { num: 1, xPct: 22, yPct: 18, label: "Manubrium sternal" },
+      { num: 2, xPct: 22, yPct: 45, label: "Corps du sternum" },
+      { num: 3, xPct: 22, yPct: 75, label: "Processus xiphoïde" },
+      { num: 4, xPct: 63, yPct: 22, label: "1ère côte (vraie côte)" },
+      { num: 5, xPct: 58, yPct: 58, label: "8ème côte (fausse côte)" },
+      { num: 6, xPct: 63, yPct: 85, label: "12ème côte (côte flottante)" },
     ],
   },
 
   tube_digestif: {
-    titre: "Appareil digestif complet",
-    viewBox: "0 0 320 480",
-    svgShapes: `
-      <path d="M 160 15 Q 130 15 122 45 Q 118 60 128 72 L 122 85 C 100 90 88 108 88 130 L 84 200"
-            fill="none" stroke="#8B6914" stroke-width="1" opacity="0.4"/>
-      <ellipse cx="160" cy="35" rx="20" ry="15" fill="#E8B4A8" stroke="#B5766A" stroke-width="1.8"/>
-      <path d="M 155 50 L 152 85" stroke="#D9A87A" stroke-width="8"/>
-      <path d="M 155 50 L 152 85" stroke="#8B6914" stroke-width="1.5"/>
-      <path d="M 100 90 Q 65 100 55 140 Q 48 175 75 195 Q 110 210 130 190 Q 140 165 120 140 Q 130 110 100 90 Z"
-            fill="#A85A4A" stroke="#5A2E22" stroke-width="2"/>
-      <path d="M 118 178 Q 122 195 132 192 Q 136 172 128 165 Z" fill="#6E8F5A" stroke="#3E5A32" stroke-width="1.6"/>
-      <path d="M 152 90 Q 130 130 148 168 Q 190 190 198 150 Q 198 115 165 100 Z"
-            fill="#E8A9A0" stroke="#B5645A" stroke-width="2"/>
-      <ellipse cx="205" cy="165" rx="55" ry="20" fill="#E8B98A" stroke="#8A5A2E" stroke-width="1.8"/>
-      <path d="M 155 195 Q 250 205 250 260 Q 250 300 175 300 Q 95 302 95 260 Q 95 220 155 195 Z"
-            fill="none" stroke="#D9A87A" stroke-width="9"/>
-      <path d="M 155 195 Q 250 205 250 260 Q 250 300 175 300 Q 95 302 95 260 Q 95 220 155 195 Z"
-            fill="none" stroke="#8B6914" stroke-width="1.5"/>
-      <rect x="60" y="250" width="220" height="140" rx="20" fill="none" stroke="#C9A25A" stroke-width="10"/>
-      <rect x="60" y="250" width="220" height="140" rx="20" fill="none" stroke="#8B6914" stroke-width="1.6"/>
-      <line x1="170" y1="390" x2="170" y2="440" stroke="#8B6914" stroke-width="1.8"/>
-      <rect x="155" y="440" width="30" height="16" rx="7" fill="#D9A87A" stroke="#8B6914" stroke-width="1.6"/>
-    `,
+    titre: "Appareil digestif complet (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
+    type: "image",
+    imageSrc: "/schemas/digestif.png",
+    aspectRatio: "892 / 1138",
     points: [
-      { num: 1, x: 160, y: 35,  label: "Cavité buccale" },
-      { num: 2, x: 155, y: 65,  label: "Pharynx" },
-      { num: 3, x: 152, y: 100, label: "Œsophage" },
-      { num: 4, x: 165, y: 145, label: "Estomac" },
-      { num: 5, x: 170, y: 260, label: "Intestin grêle" },
-      { num: 6, x: 90,  y: 270, label: "Côlon" },
-      { num: 7, x: 170, y: 420, label: "Rectum" },
-      { num: 8, x: 170, y: 448, label: "Canal anal" },
+      { num: 1, xPct: 47, yPct: 5,  label: "Cavité buccale" },
+      { num: 2, xPct: 47, yPct: 10, label: "Pharynx" },
+      { num: 3, xPct: 47, yPct: 22, label: "Œsophage" },
+      { num: 4, xPct: 40, yPct: 38, label: "Estomac" },
+      { num: 5, xPct: 47, yPct: 62, label: "Intestin grêle" },
+      { num: 6, xPct: 25, yPct: 55, label: "Côlon" },
+      { num: 7, xPct: 47, yPct: 85, label: "Rectum" },
+      { num: 8, xPct: 47, yPct: 92, label: "Canal anal" },
     ],
   },
 
@@ -8302,7 +8227,7 @@ function DictionaryScreen({ onBack, student }) {
       ["Points clés à retenir", selectedTerm.pointsCles],
     ].filter(([, value]) => value);
     return (
-      <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
         <TopBar onLogout={onBack} />
         <div style={{ maxWidth: 720, margin: "0 auto", padding: "24px 18px 60px" }}>
           <button onClick={() => setSelectedTerm(null)} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
@@ -8618,7 +8543,7 @@ function Badge({ children, tone = "blue" }) {
 }
 
 /* ---------------- Login ---------------- */
-const ADMIN_ACCOUNT = { id: "Shoro", pwd: "merci" };
+const ADMIN_ACCOUNT = { id: "Shoro1994", pwd: "Kx7#mQ2vT9pL" };
 
 // Comptes de l'équipe : accès illimité, création automatique dès la première connexion
 // (pas besoin de passer par "Créer un compte"). Antenne par défaut : Abidjan, à corriger si besoin.
@@ -8647,7 +8572,7 @@ function IntroScreen({ onContinue }) {
     onContinue();
   };
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <div style={{ width: "100%", maxWidth: 380 }}>
         <div style={{ marginBottom: 22, display: "flex", justifyContent: "center" }}>
           <img src={CADUCEUS_ICON} alt="Caducée" style={{ width: 56, height: "auto" }} />
@@ -8765,7 +8690,7 @@ function LoginScreen({ onLogin }) {
   };
 
   return (
-    <div
+    <div className="anim-screen"
       style={{
         minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
         fontFamily: "'IBM Plex Sans', sans-serif", position: "relative",
@@ -9004,7 +8929,7 @@ function ProctorCheckScreen({ onReady }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <div style={{ background: COLORS.surface, borderBottom: `1px solid ${COLORS.line}`, padding: "12px 18px" }}>
         <div style={{ maxWidth: 520, margin: "0 auto" }}><Logo /></div>
       </div>
@@ -9072,7 +8997,7 @@ function ProctorCheckScreen({ onReady }) {
 /* ---------------- Examen interrompu (fraude) ---------------- */
 function FraudScreen({ onBack }) {
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <div style={{ maxWidth: 420, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 28, textAlign: "center" }}>
         <div style={{ fontSize: 32, marginBottom: 10 }}>⛔</div>
         <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.red, marginBottom: 8 }}>Examen interrompu</h1>
@@ -9157,18 +9082,41 @@ function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
       </div>
       <p style={{ fontSize: 14.5, color: COLORS.ink, marginBottom: 16, fontWeight: 600 }}>{question.consigne}</p>
 
-      <svg viewBox={schema.viewBox} style={{ width: "100%", maxWidth: 320, margin: "0 auto", display: "block", background: "#FBFDFE", borderRadius: 12 }}>
-        <g dangerouslySetInnerHTML={{ __html: schema.svgShapes }} />
-        {schema.points.map((p) => (
-          <g key={p.num}>
-            <circle cx={p.x} cy={p.y} r="14" fill={COLORS.blueDeep} stroke="white" strokeWidth="2" />
-            <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize="13" fontWeight="700" fill="white">
+      {schema.type === "image" ? (
+        <div style={{ position: "relative", width: "100%", maxWidth: 320, margin: "0 auto", aspectRatio: schema.aspectRatio, background: "#FBFDFE", borderRadius: 12, overflow: "hidden" }}>
+          <img src={schema.imageSrc} alt={schema.titre} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+          {schema.points.map((p) => (
+            <div
+              key={p.num}
+              style={{
+                position: "absolute", left: `${p.xPct}%`, top: `${p.yPct}%`, transform: "translate(-50%, -50%)",
+                width: 26, height: 26, borderRadius: "50%", background: COLORS.blueDeep, border: "2px solid white",
+                display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 12.5, fontWeight: 700,
+                boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
+              }}
+            >
               {p.num}
-            </text>
-          </g>
-        ))}
-      </svg>
-
+            </div>
+          ))}
+        </div>
+      ) : (
+        <svg viewBox={schema.viewBox} style={{ width: "100%", maxWidth: 320, margin: "0 auto", display: "block", background: "#FBFDFE", borderRadius: 12 }}>
+          <g dangerouslySetInnerHTML={{ __html: schema.svgShapes }} />
+          {schema.points.map((p) => (
+            <g key={p.num}>
+              <circle cx={p.x} cy={p.y} r="14" fill={COLORS.blueDeep} stroke="white" strokeWidth="2" />
+              <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize="13" fontWeight="700" fill="white">
+                {p.num}
+              </text>
+            </g>
+          ))}
+        </svg>
+      )}
+      {schema.type === "image" && (
+        <div style={{ textAlign: "center", fontSize: 10, color: COLORS.inkSoft, marginTop: 6 }}>
+          Illustration : <i>Anatomy &amp; Physiology 2e</i>, Open Oregon Educational Resources — licence CC BY-SA
+        </div>
+      )}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 18 }}>
         {question.optionNums.map((num, i) => {
           const isSelected = selectedNum === num;
@@ -9251,7 +9199,7 @@ function SchemaPracticeScreen({ onBack, student }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 560, margin: "0 auto", padding: "24px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
@@ -9365,7 +9313,7 @@ function MyNotesScreen({ onBack, student }) {
 
   if (printMode) {
     return (
-      <div style={{ padding: 30, fontFamily: "'IBM Plex Sans', sans-serif", color: "#0F2733" }}>
+      <div className="anim-screen" style={{ padding: 30, fontFamily: "'IBM Plex Sans', sans-serif", color: "#0F2733" }}>
         <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, marginBottom: 4 }}>
           Mes notes — {student.prenom} {student.nom}
         </h1>
@@ -9537,7 +9485,12 @@ async function loadAllAppRatings() {
     const results = await Promise.all(
       list.keys.map(async (k) => {
         try {
-          const r = await storage.get(k.replace("app-rating:", ""), true);
+          // storage.get() a besoin de la clé complète (avec préfixe). Selon que storage.list()
+          // renvoie la clé complète ou seulement le matricule, on s'assure ici du bon format
+          // dans les deux cas — l'ancienne version retirait toujours le préfixe à tort, ce qui
+          // empêchait les avis d'apparaître dans l'espace admin.
+          const fullKey = k.startsWith("app-rating:") ? k : `app-rating:${k}`;
+          const r = await storage.get(fullKey, true);
           return r ? JSON.parse(r.value) : null;
         } catch {
           return null;
@@ -9692,7 +9645,7 @@ function AdminScreen({ onBack }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 820, margin: "0 auto", padding: "26px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -10528,7 +10481,7 @@ function MatieresScreen({ onBack, onSelect }) {
         const ecues = ECUE_LIST.filter((e) => e.ueId === ue.id);
         const isOpen = expanded.has(ue.id);
         return (
-          <div key={ue.id} style={{ borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.line}` }}>
+          <div className="anim-fade-up" key={ue.id} style={{ borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.line}` }}>
             <button
               onClick={() => toggle(ue.id)}
               style={{
@@ -10586,7 +10539,7 @@ function MatieresScreen({ onBack, onSelect }) {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 820, margin: "0 auto", padding: "30px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -10610,7 +10563,7 @@ function SetupScreen({ subjectId, onBack, onLaunch }) {
   const [selected, setSelected] = useState("intermediaire");
   const cfg = LEVELS.find((l) => l.id === selected);
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "30px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -10664,7 +10617,7 @@ function TrainingSetupScreen({ subjectId, onBack, onLaunch, mode = "training" })
   const isLesson = mode === "lesson";
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "30px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -10784,7 +10737,7 @@ function DiagnosticScreen({ student, onBack }) {
   });
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "26px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -10836,7 +10789,7 @@ function DiagnosticInfirmierSetupScreen({ onBack, onLaunch }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "30px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -10891,7 +10844,7 @@ function DiagnosticInfirmierScreen({ levelId, onFinish }) {
 
   if (!current) {
     return (
-      <div style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
         <div style={{ maxWidth: 420, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 28, textAlign: "center" }}>
           <div style={{ fontSize: 13, color: COLORS.ink, marginBottom: 16 }}>Aucun défi disponible pour ce niveau.</div>
           <button onClick={onFinish} style={{ ...primaryBtn, width: "100%" }}>Retour au tableau de bord</button>
@@ -10994,7 +10947,7 @@ function DiagnosticInfirmierScreen({ levelId, onFinish }) {
 /* ---------------- Patient virtuel — choix du cas ---------------- */
 function VirtualPatientSetupScreen({ onBack, onLaunch }) {
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "30px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -11089,7 +11042,7 @@ function VirtualPatientScreen({ caseId, onFinish }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif", display: "flex", flexDirection: "column" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif", display: "flex", flexDirection: "column" }}>
       <div style={{ background: COLORS.surface, borderBottom: `1px solid ${COLORS.line}`, padding: "10px 18px" }}>
         <div style={{ maxWidth: 680, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ fontSize: 12.5, color: COLORS.inkSoft }}>🧑‍⚕️ <b style={{ color: COLORS.ink }}>{caseData.profil}</b> · {caseData.motif}</div>
@@ -11220,7 +11173,7 @@ function LessonScreen({ subjectId, chapterId, onBack, onStartTraining }) {
   const title = chapterId === "all" ? "Toute la matière" : CH[chapterId];
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBack} />
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "26px 18px 100px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
@@ -11281,7 +11234,7 @@ function TrainingScreen({ session, onFinish }) {
 
   if (!current) {
     return (
-      <div style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, fontFamily: "'IBM Plex Sans', sans-serif" }}>
         <div style={{ maxWidth: 420, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 28, textAlign: "center" }}>
           <div style={{ fontSize: 13, color: COLORS.ink, marginBottom: 16 }}>Aucune question disponible pour ce choix pour le moment.</div>
           <button onClick={() => onFinish(null)} style={{ ...primaryBtn, width: "100%" }}>Retour au tableau de bord</button>
@@ -11518,7 +11471,7 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
   const timerTone = qTimeLeft <= 5 ? COLORS.red : qTimeLeft <= 10 ? COLORS.amber : COLORS.green;
 
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <video ref={camVideoRef} muted playsInline style={{ display: "none" }} />
       {toast && (
         <div
@@ -11685,7 +11638,7 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
 function ResultsScreen({ result, levelId, durationSec, onBackToDashboard }) {
   const { note20, obtained, maxTotal, percent, bonnes, mauvaises, oubliees, details } = result;
   return (
-    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBackToDashboard} />
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "26px 18px 70px" }}>
         <div style={{ background: COLORS.blueDeep, borderRadius: 16, padding: 24, color: "white", marginBottom: 20 }}>
