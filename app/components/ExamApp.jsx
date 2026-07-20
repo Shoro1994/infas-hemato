@@ -6788,21 +6788,6 @@ async function confirmPayment(matricule) {
   }
 }
 
-// Suppression définitive d'un compte étudiant depuis l'espace admin (compte, historique
-// d'examens, notes personnelles et progression des schémas légendés associés).
-async function deleteStudentAccount(matricule) {
-  try {
-    await storage.delete(studentKey(matricule), true);
-    try { await storage.delete(historyKey(matricule), true); } catch {}
-    try { await storage.delete(schemaKey(matricule), true); } catch {}
-    try { await storage.delete(myNotesKey(matricule), true); } catch {}
-    return true;
-  } catch (e) {
-    console.error("Erreur suppression compte", e);
-    return false;
-  }
-}
-
 // Permet à l'administrateur de consulter le mot de passe réel (année de naissance) d'un
 // étudiant inscrit, et de le modifier au besoin pour le lui retransmettre en cas d'oubli.
 async function updateStudentPassword(matricule, newAnneeNaissance) {
