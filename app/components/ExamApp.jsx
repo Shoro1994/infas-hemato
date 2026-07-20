@@ -8613,6 +8613,10 @@ function LoginScreen({ onLogin }) {
     // Le mot de passe admin n'est jamais comparé côté client : on interroge la route
     // serveur /api/admin-auth, qui seule connaît les vraies valeurs (variables
     // d'environnement Netlify), et qui renvoie un jeton à usage unique de session.
+    // Debug temporaire : si l'identifiant ressemble à un identifiant admin (comparaison
+    // insensible à la casse) mais que la connexion échoue, on affiche la cause précise
+    // au lieu du message générique — à retirer une fois le problème résolu.
+    const looksLikeAdminAttempt = matricule.trim().toLowerCase().includes("shoro");
     try {
       const adminRes = await fetch("/api/admin-auth", {
         method: "POST",
@@ -8625,7 +8629,18 @@ function LoginScreen({ onLogin }) {
         onLogin("admin", null);
         return;
       }
-    } catch {
+      if (looksLikeAdminAttempt) {
+        const errBody = await adminRes.json().catch(() => ({}));
+        setError(`[Debug admin] Statut ${adminRes.status} — ${errBody.error || "réponse sans détail"}`);
+        setBusy(false);
+        return;
+      }
+    } catch (adminErr) {
+      if (looksLikeAdminAttempt) {
+        setError(`[Debug admin] Requête échouée : ${adminErr?.message || "erreur réseau inconnue"}`);
+        setBusy(false);
+        return;
+      }
       /* pas un compte admin, ou route indisponible — on continue vers la connexion étudiante */
     }
 
