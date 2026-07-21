@@ -5967,16 +5967,9 @@ const SCHEMAS = {
 
   crane_face: {
     titre: "Crâne (vue de face)",
-    viewBox: "0 0 320 360",
-    svgShapes: `
-      <path d="M 95 45 C 62 48, 40 85, 42 130 C 43 165, 52 188, 66 205 C 56 222, 54 248, 68 270 C 84 295, 112 308, 160 312 C 208 308, 236 295, 252 270 C 266 248, 264 222, 254 205 C 268 188, 277 165, 278 130 C 280 85, 258 48, 225 45 C 205 22, 115 22, 95 45 Z"
-            fill="#F5D9A8" stroke="#8B6914" stroke-width="2"/>
-      <ellipse cx="112" cy="152" rx="28" ry="22" fill="#FFFFFF" stroke="#8B6914" stroke-width="1.6"/>
-      <ellipse cx="208" cy="152" rx="28" ry="22" fill="#FFFFFF" stroke="#8B6914" stroke-width="1.6"/>
-      <path d="M 160 178 L 148 222 Q 160 232 172 222 Z" fill="none" stroke="#8B6914" stroke-width="1.3"/>
-      <path d="M 95 262 Q 160 250 225 262 Q 218 292 160 300 Q 102 292 95 262 Z" fill="none" stroke="#8B6914" stroke-width="1.5"/>
-      <line x1="112" y1="278" x2="208" y2="278" stroke="#8B6914" stroke-width="0.8"/>
-    `,
+    type: "image",
+    imageSrc: "/schemas/crane-face.png",
+    aspectRatio: "320 / 360",
     points: [
       { num: 1, x: 160, y: 48,  label: "Os frontal" },
       { num: 2, x: 55,  y: 130, label: "Os temporal" },
@@ -6057,14 +6050,9 @@ const SCHEMAS = {
 
   glandes_annexes: {
     titre: "Glandes annexes du tube digestif",
-    viewBox: "0 0 340 300",
-    svgShapes: `
-      <path d="M 40 60 Q 30 30 90 25 Q 200 15 260 45 Q 290 60 270 100 Q 230 120 150 110 Q 60 105 40 60 Z"
-            fill="#A85A4A" stroke="#5A2E22" stroke-width="2"/>
-      <path d="M 100 100 Q 108 130 118 128 Q 122 105 112 98 Z" fill="#6E8F5A" stroke="#3E5A32" stroke-width="1.8"/>
-      <ellipse cx="220" cy="170" rx="90" ry="32" fill="#E8B98A" stroke="#8A5A2E" stroke-width="2"/>
-      <circle cx="120" cy="205" r="28" fill="none" stroke="#8B6914" stroke-width="1.6" stroke-dasharray="4,3"/>
-    `,
+    type: "image",
+    imageSrc: "/schemas/glandes-annexes.png",
+    aspectRatio: "340 / 300",
     points: [
       { num: 1, x: 150, y: 65,  label: "Foie" },
       { num: 2, x: 110, y: 112, label: "Vésicule biliaire" },
