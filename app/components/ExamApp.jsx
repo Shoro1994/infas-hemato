@@ -1295,39 +1295,56 @@ function defiKey(matricule, isoMonth) {
 
 // Enregistre la meilleure tentative du mois pour UNE matière (si le nouveau
 // score est meilleur que l'ancien, sinon on ne touche à rien — "meilleure tentative").
-// Semaine du mois en cours (1 à 4/5, selon le jour du mois) : sert de repère pour le
-// quota de coefficient suggéré chaque semaine — un guide de rythme, jamais un blocage.
+// Semaine du mois en cours (1 à 4, selon le jour du mois) : sert de repère pour le
+// combo de matières à composer cette semaine-là — 1 seule tentative (= 1 seul combo
+// validé) par semaine, matière disponible une seule fois sur tout le mois.
 function currentWeekOfMonth(d = new Date()) {
   return Math.min(4, Math.ceil(d.getDate() / 7));
 }
 
-// Coefficient total de toutes les matières du programme, et quota hebdomadaire suggéré
-// (coefficient total ÷ 4 semaines) — l'étudiant compose librement son propre combo de
-// matières pour atteindre ce quota chaque semaine, à son idée.
 const TOTAL_COEF = Object.values(SUBJECT_CREDITS).reduce((a, b) => a + b, 0);
-const WEEKLY_COEF_TARGET = Math.ceil(TOTAL_COEF / 4);
+// Quotas précis par semaine (somme = coefficient total du programme, 26,5) : légèrement
+// dégressifs pour laisser plus de marge en fin de mois. L'étudiant choisit librement
+// quelles matières combiner pour atteindre le quota de chaque semaine.
+const WEEKLY_TARGETS = [7.5, 7, 6, 6];
 
-async function saveDefiAttempt(student, subjectId, note20) {
+async function loadDefiRecord(matricule, isoMonth = currentIsoMonth()) {
+  try {
+    const r = await storage.get(defiKey(matricule, isoMonth), true);
+    return r ? JSON.parse(r.value) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function saveDefiAttempt(student, subjectId, note20, week) {
   const isoMonth = currentIsoMonth();
   const key = defiKey(student.matricule, isoMonth);
-  let record;
-  try {
-    const r = await storage.get(key, true);
-    record = r ? JSON.parse(r.value) : null;
-  } catch {
-    record = null;
-  }
+  let record = await loadDefiRecord(student.matricule, isoMonth);
   if (!record) {
-    record = { matricule: student.matricule, prenom: student.prenom, nom: student.nom, isoMonth, scores: {} };
+    record = { matricule: student.matricule, prenom: student.prenom, nom: student.nom, isoMonth, scores: {}, weeksCompleted: [] };
   }
-  const prevBest = record.scores[subjectId];
-  const weekNow = currentWeekOfMonth();
-  if (!prevBest || note20 > prevBest.note20) {
-    // on garde la semaine de la toute première tentative de cette matière (celle qui a
-    // compté pour le quota), même si le score est ensuite amélioré une autre semaine
-    const week = prevBest ? prevBest.week : weekNow;
+  if (!record.weeksCompleted) record.weeksCompleted = [];
+  // Une matière tentée est définitive pour le mois (une seule chance, pas de retenter) :
+  // on n'écrase jamais un score déjà enregistré.
+  if (!record.scores[subjectId]) {
     record.scores[subjectId] = { note20, week };
   }
+  await storage.set(key, JSON.stringify(record), true);
+  return record;
+}
+
+// Marque la semaine en cours comme définitivement validée : une fois le combo de la
+// semaine lancé et terminé, impossible d'en relancer un autre la même semaine.
+async function markWeekCompleted(student, week) {
+  const isoMonth = currentIsoMonth();
+  const key = defiKey(student.matricule, isoMonth);
+  let record = await loadDefiRecord(student.matricule, isoMonth);
+  if (!record) {
+    record = { matricule: student.matricule, prenom: student.prenom, nom: student.nom, isoMonth, scores: {}, weeksCompleted: [] };
+  }
+  if (!record.weeksCompleted) record.weeksCompleted = [];
+  if (!record.weeksCompleted.includes(week)) record.weeksCompleted.push(week);
   await storage.set(key, JSON.stringify(record), true);
   return record;
 }
@@ -9744,10 +9761,13 @@ function RateAppScreen({ onBack, student }) {
   );
 }
 
-function DefiScreen({ onBack, student, onLaunchDefi }) {
+function DefiScreen({ onBack, student, onLaunchCombo }) {
   const [leaderboard, setLeaderboard] = useState(null);
   const [myRecord, setMyRecord] = useState(null);
+  const [selected, setSelected] = useState([]); // subjectIds cochés pour le combo en cours
   const isoMonth = currentIsoMonth();
+  const week = currentWeekOfMonth();
+  const weekTarget = WEEKLY_TARGETS[week - 1] || 6;
   const MOIS_NOMS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   const moisLabel = MOIS_NOMS[Number(isoMonth.split("-")[1]) - 1];
 
@@ -9759,12 +9779,18 @@ function DefiScreen({ onBack, student, onLaunchDefi }) {
   useEffect(() => { refresh(); }, []);
 
   const myRank = myRecord ? leaderboard.findIndex((r) => r.matricule === student.matricule) + 1 : null;
-  // Une fois tentée, une matière disparaît du choix pour le reste du mois : ça force à
-  // couvrir progressivement tout le programme sur les 4 semaines, et garantit que la
-  // comparaison entre étudiants porte sur un total de coefficient comparable.
   const attemptedIds = new Set(Object.keys(myRecord?.scores || {}));
-  const subjectsWithContent = Object.keys(SUBJ).filter((id) => !attemptedIds.has(id));
-  const allSubjectsDone = Object.keys(SUBJ).length > 0 && subjectsWithContent.length === 0;
+  const remainingSubjects = Object.keys(SUBJ).filter((id) => !attemptedIds.has(id));
+  const allSubjectsDone = Object.keys(SUBJ).length > 0 && remainingSubjects.length === 0;
+  const weekAlreadyDone = (myRecord?.weeksCompleted || []).includes(week);
+
+  const selectedCoef = selected.reduce((sum, id) => sum + (SUBJECT_CREDITS[id] || 1), 0);
+  const canLaunch = selected.length > 0 && selectedCoef >= weekTarget && !weekAlreadyDone;
+
+  const toggleSubject = (id) => {
+    if (weekAlreadyDone) return;
+    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  };
 
   return (
     <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -9777,7 +9803,7 @@ function DefiScreen({ onBack, student, onLaunchDefi }) {
           <div style={{ fontSize: 28, marginBottom: 6 }}>🏆</div>
           <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, marginBottom: 4 }}>Défi Infirmier Model</h1>
           <p style={{ fontSize: 12.5, opacity: 0.92, marginBottom: 0 }}>
-            Classement de {moisLabel}, pondéré par les coefficients officiels de chaque matière. Le top 5 est visible de tous ; ta meilleure tentative du mois compte pour chaque matière — répartis tes tentatives comme tu veux au fil du mois, le nombre de matières couvertes reste affiché en toute transparence.
+            Classement de {moisLabel}, pondéré par les coefficients officiels de chaque matière. Une seule tentative (un seul combo) par semaine ; chaque matière n'est disponible qu'une fois sur tout le mois.
           </p>
         </div>
 
@@ -9785,7 +9811,7 @@ function DefiScreen({ onBack, student, onLaunchDefi }) {
           <div className="anim-fade-up" style={{ background: COLORS.blueSoft, border: `1px solid ${COLORS.blue}`, borderRadius: 12, padding: 16, marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
               <div style={{ fontSize: 12, color: COLORS.blueDeep, fontWeight: 700 }}>Ta position ce mois-ci</div>
-              <div style={{ fontSize: 13, color: COLORS.ink }}>{myRecord.nbMatieres} matière(s) tentée(s) · moyenne pondérée {myRecord.moyennePonderee.toFixed(2)}/20</div>
+              <div style={{ fontSize: 13, color: COLORS.ink }}>{myRecord.nbMatieres ?? Object.keys(myRecord.scores || {}).length} matière(s) tentée(s) · moyenne pondérée {myRecord.moyennePonderee?.toFixed(2)}/20</div>
             </div>
             <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 26, fontWeight: 700, color: COLORS.blueDeep }}>
               {myRank ? `#${myRank}` : "—"}
@@ -9828,49 +9854,78 @@ function DefiScreen({ onBack, student, onLaunchDefi }) {
           </div>
         )}
 
-        {myRecord && (
-          <div className="anim-fade-up" style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 18 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <div style={{ fontSize: 12, color: COLORS.ink, fontWeight: 700 }}>🎯 Quota de la semaine {currentWeekOfMonth()}</div>
-              <div style={{ fontSize: 12.5, color: COLORS.inkSoft }}>{computeWeekCoefProgress(myRecord.scores, currentWeekOfMonth())} / {WEEKLY_COEF_TARGET} coef.</div>
-            </div>
-            <div style={{ height: 8, borderRadius: 999, background: COLORS.line, overflow: "hidden" }}>
-              <div style={{
-                height: "100%", borderRadius: 999, background: COLORS.green, transition: "width 0.4s ease",
-                width: `${Math.min(100, (computeWeekCoefProgress(myRecord.scores, currentWeekOfMonth()) / WEEKLY_COEF_TARGET) * 100)}%`,
-              }} />
-            </div>
-            <div style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 6 }}>
-              Compose ton propre combo de matières pour atteindre ce quota chaque semaine — libre à toi de choisir lesquelles.
-            </div>
-          </div>
-        )}
-
-        <h2 style={{ fontSize: 15, fontWeight: 700, color: COLORS.ink, marginBottom: 10 }}>Lancer une tentative</h2>
         {allSubjectsDone ? (
-          <div className="anim-pop" style={{ background: COLORS.greenSoft, border: `1px solid ${COLORS.green}`, borderRadius: 12, padding: 18, textAlign: "center", marginBottom: 4 }}>
+          <div className="anim-pop" style={{ background: COLORS.greenSoft, border: `1px solid ${COLORS.green}`, borderRadius: 12, padding: 18, textAlign: "center" }}>
             <div style={{ fontSize: 24, marginBottom: 6 }}>🎉</div>
             <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>Toutes les matières du programme sont couvertes ce mois-ci !</div>
-            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Ta moyenne pondérée finale ci-dessus reflète l'ensemble du programme. Rendez-vous le mois prochain pour un nouveau cycle.</div>
+            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Rendez-vous le mois prochain pour un nouveau cycle.</div>
+          </div>
+        ) : weekAlreadyDone ? (
+          <div className="anim-pop" style={{ background: COLORS.blueSoft, border: `1px solid ${COLORS.blue}`, borderRadius: 12, padding: 18, textAlign: "center" }}>
+            <div style={{ fontSize: 24, marginBottom: 6 }}>✓</div>
+            <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>Combo de la semaine {week} déjà validé</div>
+            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Reviens la semaine prochaine pour composer un nouveau combo.</div>
           </div>
         ) : (
           <>
+            <h2 style={{ fontSize: 15, fontWeight: 700, color: COLORS.ink, marginBottom: 4 }}>Compose ton combo — semaine {week}</h2>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, marginBottom: 14 }}>
-              Une matière tentée disparaît de cette liste jusqu'au mois prochain — choisis ton propre combo pour couvrir tout le programme au fil des 4 semaines.
+              Coche des matières jusqu'à atteindre le quota de la semaine. Une fois lancé, le combo s'enchaîne matière par matière — une seule tentative par semaine.
             </p>
-            <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 10 }}>
-              {subjectsWithContent.map((subjectId) => (
-                <button
-                  key={subjectId}
-                  onClick={() => onLaunchDefi(subjectId)}
-                  className="card-hover"
-                  style={{ textAlign: "left", padding: "12px 14px", borderRadius: 10, cursor: "pointer", border: `1.5px solid ${COLORS.line}`, background: "white" }}
-                >
-                  <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.ink }}>{SUBJ[subjectId]}</div>
-                  <div style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 2 }}>Coef. {SUBJECT_CREDITS[subjectId] || 1}</div>
-                </button>
-              ))}
+
+            <div className="card-hover" style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 16 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: COLORS.ink }}>🎯 Quota semaine {week}</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: canLaunch ? COLORS.green : COLORS.inkSoft }}>{selectedCoef} / {weekTarget} coef.</span>
+              </div>
+              <div style={{ height: 8, borderRadius: 999, background: COLORS.line, overflow: "hidden" }}>
+                <div style={{
+                  height: "100%", borderRadius: 999, background: canLaunch ? COLORS.green : COLORS.amber, transition: "width 0.3s ease",
+                  width: `${Math.min(100, (selectedCoef / weekTarget) * 100)}%`,
+                }} />
+              </div>
             </div>
+
+            <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 10, marginBottom: 16 }}>
+              {remainingSubjects.map((subjectId) => {
+                const isChecked = selected.includes(subjectId);
+                return (
+                  <button
+                    key={subjectId}
+                    onClick={() => toggleSubject(subjectId)}
+                    className="card-hover"
+                    style={{
+                      textAlign: "left", padding: "12px 14px", borderRadius: 10, cursor: "pointer",
+                      border: `1.5px solid ${isChecked ? COLORS.blueDeep : COLORS.line}`,
+                      background: isChecked ? COLORS.blueSoft : "white", display: "flex", alignItems: "flex-start", gap: 8,
+                    }}
+                  >
+                    <div style={{
+                      width: 18, height: 18, borderRadius: 5, flexShrink: 0, marginTop: 1,
+                      border: `1.5px solid ${isChecked ? COLORS.blueDeep : COLORS.inkSoft}`, background: isChecked ? COLORS.blueDeep : "white",
+                      display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 12,
+                    }}>
+                      {isChecked ? "✓" : ""}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.ink }}>{SUBJ[subjectId]}</div>
+                      <div style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 2 }}>Coef. {SUBJECT_CREDITS[subjectId] || 1}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => canLaunch && onLaunchCombo(selected, week)}
+              disabled={!canLaunch}
+              style={{
+                ...primaryBtn, width: "100%",
+                opacity: canLaunch ? 1 : 0.45, cursor: canLaunch ? "pointer" : "not-allowed",
+              }}
+            >
+              {canLaunch ? `Lancer le combo (${selected.length} matière${selected.length > 1 ? "s" : ""}) →` : `Sélectionne au moins ${weekTarget} de coefficient pour lancer`}
+            </button>
           </>
         )}
       </div>
@@ -12045,6 +12100,8 @@ export default function App() {
   const [trainingSession, setTrainingSession] = useState(null);
   const [flowMode, setFlowMode] = useState("exam"); // "exam" | "training" | "lesson"
   const [isDefiAttempt, setIsDefiAttempt] = useState(false);
+  const [defiQueue, setDefiQueue] = useState([]); // matières restantes du combo hebdomadaire en cours
+  const [defiWeek, setDefiWeek] = useState(null);
   const [pendingSubject, setPendingSubject] = useState(null);
   const [pendingChapter, setPendingChapter] = useState(null);
   const [pendingCase, setPendingCase] = useState(null);
@@ -12125,8 +12182,14 @@ export default function App() {
   };
   const handleAbort = () => setScreen("dashboard");
   const handleDefi = () => setScreen("defi");
-  const handleLaunchDefi = (subjectId) => {
-    setPendingSubject(subjectId);
+
+  // Lance le premier examen d'un combo hebdomadaire (plusieurs matières cochées) ; les
+  // suivantes s'enchaînent automatiquement dans handleSubmit, jusqu'à épuisement de la file.
+  const handleLaunchCombo = (subjectIds, week) => {
+    if (!subjectIds || subjectIds.length === 0) return;
+    setDefiQueue(subjectIds.slice(1));
+    setDefiWeek(week);
+    setPendingSubject(subjectIds[0]);
     setIsDefiAttempt(true);
     setFlowMode("exam");
     handleLaunch("avance"); // niveau fixe pour le défi : 30 questions, chronométré
@@ -12159,7 +12222,19 @@ export default function App() {
     await saveHistory(student.matricule, newHistory);
     if (student?.matricule) incrementStudentExamCount(student.matricule);
     if (isDefiAttempt) {
-      await saveDefiAttempt(student, exam.subjectId, result.note20);
+      await saveDefiAttempt(student, exam.subjectId, result.note20, defiWeek);
+      if (defiQueue.length > 0) {
+        // encore des matières dans le combo de la semaine : on enchaîne directement,
+        // sans repasser par l'écran de résultats intermédiaire
+        const [nextSubject, ...rest] = defiQueue;
+        setDefiQueue(rest);
+        setPendingSubject(nextSubject);
+        setFlowMode("exam");
+        handleLaunch("avance");
+        return;
+      }
+      // combo terminé : la semaine est définitivement validée
+      await markWeekCompleted(student, defiWeek);
       setIsDefiAttempt(false);
     }
     setLastResult({ result, durationSec, levelId: exam.levelId });
@@ -12207,7 +12282,7 @@ export default function App() {
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "mynotes") return <MyNotesScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "rateapp") return <RateAppScreen onBack={() => setScreen("dashboard")} student={student} />;
-  if (screen === "defi") return <DefiScreen onBack={() => setScreen("dashboard")} student={student} onLaunchDefi={handleLaunchDefi} />;
+  if (screen === "defi") return <DefiScreen onBack={() => setScreen("dashboard")} student={student} onLaunchCombo={handleLaunchCombo} />;
 
   if (screen === "matieres") return <MatieresScreen onBack={handleAbort} onSelect={handleSelectSubject} />;
 
