@@ -6727,8 +6727,6 @@ function buildQuestions(raw, subjectId, prefix) {
 }
 const QUESTIONS = [
   ...buildQuestions(RAW, "hematologie", "q"),
-  ...buildQuestions(SEMIO_EXAM_RAW, "semio-medicale", "sm"),
-  ...buildQuestions(SEMIO_CHIR_ENRICHI_RAW, "semio-chir", "sc"),
   ...buildQuestions(ANATPHYSIO_EXO_RAW, "anat-physio", "ae"),
   ...buildQuestions(SCHEMA_META_RAW, "anat-physio", "sme"),
   ...buildQuestions(GYNECO_RAW, "gyneco-obstetrique", "gy"),
