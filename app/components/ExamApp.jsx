@@ -1295,11 +1295,15 @@ function defiKey(matricule, isoMonth) {
 
 // Enregistre la meilleure tentative du mois pour UNE matière (si le nouveau
 // score est meilleur que l'ancien, sinon on ne touche à rien — "meilleure tentative").
-// Semaine du mois en cours (1 à 4, selon le jour du mois) : sert de repère pour le
-// combo de matières à composer cette semaine-là — 1 seule tentative (= 1 seul combo
-// validé) par semaine, matière disponible une seule fois sur tout le mois.
-function currentWeekOfMonth(d = new Date()) {
-  return Math.min(4, Math.ceil(d.getDate() / 7));
+// La "semaine en cours" pour un étudiant donné n'est PAS liée au calendrier : c'est la
+// prochaine semaine non encore validée (semaine 1 → 2 → 3 → 4, strictement dans l'ordre).
+// Ça permet à un étudiant qui commence en retard ou qui a manqué une semaine de
+// rattraper sans jamais pouvoir "sauter" une étape.
+function nextWeekToPlay(weeksCompleted = []) {
+  for (let w = 1; w <= 4; w++) {
+    if (!weeksCompleted.includes(w)) return w;
+  }
+  return null; // les 4 semaines sont validées pour ce mois
 }
 
 const TOTAL_COEF = Object.values(SUBJECT_CREDITS).reduce((a, b) => a + b, 0);
@@ -9254,20 +9258,26 @@ function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
 
       {schema.type === "image" ? (
         <div style={{ position: "relative", width: "100%", maxWidth: 320, margin: "0 auto", aspectRatio: schema.aspectRatio, background: "#FBFDFE", borderRadius: 12, overflow: "hidden" }}>
-          <img src={schema.imageSrc} alt={schema.titre} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
-          {schema.points.map((p) => (
-            <div
-              key={p.num}
-              style={{
-                position: "absolute", left: `${p.xPct}%`, top: `${p.yPct}%`, transform: "translate(-50%, -50%)",
-                width: 26, height: 26, borderRadius: "50%", background: COLORS.blueDeep, border: "2px solid white",
-                display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 12.5, fontWeight: 700,
-                boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
-              }}
-            >
-              {p.num}
-            </div>
-          ))}
+          <img
+            src={schema.imageSrc}
+            alt={schema.titre}
+            style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+              const fallback = e.currentTarget.parentElement.querySelector(".schema-img-error");
+              if (fallback) fallback.style.display = "flex";
+            }}
+          />
+          <div
+            className="schema-img-error"
+            style={{ display: "none", position: "absolute", inset: 0, alignItems: "center", justifyContent: "center", flexDirection: "column", padding: 16, textAlign: "center", background: "#FBFDFE" }}
+          >
+            <div style={{ fontSize: 24, marginBottom: 8 }}>🖼️</div>
+            <div style={{ fontSize: 12, color: COLORS.red, fontWeight: 600, marginBottom: 4 }}>Image introuvable</div>
+            <div style={{ fontSize: 11, color: COLORS.inkSoft }}>Fichier attendu : <code>public{schema.imageSrc}</code></div>
+          </div>
+          {/* Les numéros sont déjà dessinés directement sur l'image (annotée manuellement) :
+              plus besoin de cercles superposés ici, contrairement à l'ancienne version. */}
         </div>
       ) : (
         <svg viewBox={schema.viewBox} style={{ width: "100%", maxWidth: 320, margin: "0 auto", display: "block", background: "#FBFDFE", borderRadius: 12 }}>
@@ -9766,8 +9776,6 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
   const [myRecord, setMyRecord] = useState(null);
   const [selected, setSelected] = useState([]); // subjectIds cochés pour le combo en cours
   const isoMonth = currentIsoMonth();
-  const week = currentWeekOfMonth();
-  const weekTarget = WEEKLY_TARGETS[week - 1] || 6;
   const MOIS_NOMS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   const moisLabel = MOIS_NOMS[Number(isoMonth.split("-")[1]) - 1];
 
@@ -9779,16 +9787,27 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
   useEffect(() => { refresh(); }, []);
 
   const myRank = myRecord ? leaderboard.findIndex((r) => r.matricule === student.matricule) + 1 : null;
+  const weeksCompleted = myRecord?.weeksCompleted || [];
+  // La semaine à jouer est celle du prochain palier non validé, dans l'ordre strict
+  // 1 → 2 → 3 → 4 — jamais liée au calendrier, pour permettre le rattrapage.
+  const week = nextWeekToPlay(weeksCompleted);
+  const weekTarget = week ? WEEKLY_TARGETS[week - 1] : 0;
+  // Seules les matières qui ont déjà de vraies questions chargées sont proposées ; celles
+  // encore vides (cours pas encore intégré par l'admin) sont automatiquement mises de côté
+  // et n'apparaîtront que dès que du contenu y sera ajouté — recalculé à chaque affichage.
+  const subjectsWithQuestions = new Set(QUESTIONS.map((q) => q.subjectId));
   const attemptedIds = new Set(Object.keys(myRecord?.scores || {}));
-  const remainingSubjects = Object.keys(SUBJ).filter((id) => !attemptedIds.has(id));
-  const allSubjectsDone = Object.keys(SUBJ).length > 0 && remainingSubjects.length === 0;
-  const weekAlreadyDone = (myRecord?.weeksCompleted || []).includes(week);
+  const allSubjectIds = Object.keys(SUBJ);
+  const remainingSubjects = allSubjectIds.filter((id) => !attemptedIds.has(id) && subjectsWithQuestions.has(id));
+  const notYetReadyCount = allSubjectIds.filter((id) => !attemptedIds.has(id) && !subjectsWithQuestions.has(id)).length;
+  const allSubjectsDone = allSubjectIds.length > 0 && remainingSubjects.length === 0 && notYetReadyCount === 0;
+  const monthFullyCompleted = week === null;
 
   const selectedCoef = selected.reduce((sum, id) => sum + (SUBJECT_CREDITS[id] || 1), 0);
-  const canLaunch = selected.length > 0 && selectedCoef >= weekTarget && !weekAlreadyDone;
+  const canLaunch = selected.length > 0 && selectedCoef >= weekTarget && !monthFullyCompleted;
 
   const toggleSubject = (id) => {
-    if (weekAlreadyDone) return;
+    if (monthFullyCompleted) return;
     setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
@@ -9802,19 +9821,22 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
         <div className="anim-pop" style={{ background: "linear-gradient(135deg, #6B4FA0, #4A2E7A)", borderRadius: 16, padding: 22, color: "white", marginBottom: 20 }}>
           <div style={{ fontSize: 28, marginBottom: 6 }}>🏆</div>
           <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, marginBottom: 4 }}>Défi Infirmier Model</h1>
+          <p style={{ fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+            Bienvenue au défi mensuel Infirmier Model — reste top 1 et remporte le lot du mois !
+          </p>
           <p style={{ fontSize: 12.5, opacity: 0.92, marginBottom: 0 }}>
-            Classement de {moisLabel}, pondéré par les coefficients officiels de chaque matière. Une seule tentative (un seul combo) par semaine ; chaque matière n'est disponible qu'une fois sur tout le mois.
+            Classement de {moisLabel}, pondéré par les coefficients officiels de chaque matière. Une seule tentative (un seul combo) par semaine, dans l'ordre — semaine {week || 4} sur 4. Chaque matière n'est disponible qu'une fois sur tout le mois.
           </p>
         </div>
 
         {myRecord && (
           <div className="anim-fade-up" style={{ background: COLORS.blueSoft, border: `1px solid ${COLORS.blue}`, borderRadius: 12, padding: 16, marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <div style={{ fontSize: 12, color: COLORS.blueDeep, fontWeight: 700 }}>Ta position ce mois-ci</div>
+              <div style={{ fontSize: 12, color: COLORS.blueDeep, fontWeight: 700 }}>Ta position ce mois-ci (visible de toi seul)</div>
               <div style={{ fontSize: 13, color: COLORS.ink }}>{myRecord.nbMatieres ?? Object.keys(myRecord.scores || {}).length} matière(s) tentée(s) · moyenne pondérée {myRecord.moyennePonderee?.toFixed(2)}/20</div>
             </div>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 26, fontWeight: 700, color: COLORS.blueDeep }}>
-              {myRank ? `#${myRank}` : "—"}
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.blueDeep, whiteSpace: "nowrap" }}>
+              {myRank ? `${myRank} / ${leaderboard.length}` : "—"}
             </div>
           </div>
         )}
@@ -9860,14 +9882,23 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
             <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>Toutes les matières du programme sont couvertes ce mois-ci !</div>
             <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Rendez-vous le mois prochain pour un nouveau cycle.</div>
           </div>
-        ) : weekAlreadyDone ? (
+        ) : monthFullyCompleted ? (
           <div className="anim-pop" style={{ background: COLORS.blueSoft, border: `1px solid ${COLORS.blue}`, borderRadius: 12, padding: 18, textAlign: "center" }}>
             <div style={{ fontSize: 24, marginBottom: 6 }}>✓</div>
-            <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>Combo de la semaine {week} déjà validé</div>
-            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Reviens la semaine prochaine pour composer un nouveau combo.</div>
+            <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>Les 4 semaines du mois sont validées</div>
+            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>
+              {notYetReadyCount > 0
+                ? `${notYetReadyCount} matière(s) sans contenu pour l'instant restent en réserve — elles apparaîtront dès que le cours sera ajouté.`
+                : "Rendez-vous le mois prochain pour un nouveau cycle."}
+            </div>
           </div>
         ) : (
           <>
+            {notYetReadyCount > 0 && (
+              <div style={{ fontSize: 11.5, color: COLORS.amber, background: COLORS.amberSoft, borderRadius: 8, padding: "8px 12px", marginBottom: 12 }}>
+                ⏳ {notYetReadyCount} matière(s) sans questions pour l'instant sont mises de côté — elles rejoindront automatiquement la liste dès que leur contenu sera ajouté par l'administration.
+              </div>
+            )}
             <h2 style={{ fontSize: 15, fontWeight: 700, color: COLORS.ink, marginBottom: 4 }}>Compose ton combo — semaine {week}</h2>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, marginBottom: 14 }}>
               Coche des matières jusqu'à atteindre le quota de la semaine. Une fois lancé, le combo s'enchaîne matière par matière — une seule tentative par semaine.
@@ -12233,9 +12264,12 @@ export default function App() {
         handleLaunch("avance");
         return;
       }
-      // combo terminé : la semaine est définitivement validée
+      // combo terminé : la semaine est définitivement validée, et on retourne directement
+      // sur l'écran Défi pour que le rang mis à jour soit visible tout de suite.
       await markWeekCompleted(student, defiWeek);
       setIsDefiAttempt(false);
+      setScreen("defi");
+      return;
     }
     setLastResult({ result, durationSec, levelId: exam.levelId });
     setScreen("results");
