@@ -829,6 +829,9 @@ const CHAPTERS = [
   { id: "digestif_colon", label: "Gros intestin (côlon)", subjectId: "anat-physio" },
   { id: "digestif_foie", label: "Le foie", subjectId: "anat-physio" },
   { id: "digestif_pancreas", label: "Pancréas exocrine", subjectId: "anat-physio" },
+  { id: "dentition", label: "Dents et dentition", subjectId: "anat-physio" },
+  { id: "glandes_salivaires", label: "Glandes salivaires", subjectId: "anat-physio" },
+  { id: "squelette_gen", label: "Organisation générale du squelette", subjectId: "anat-physio" },
   { id: "digestif_physiologie", label: "Physiologie de la digestion", subjectId: "anat-physio" },
   { id: "digestif_absorption", label: "Absorption digestive", subjectId: "anat-physio" },
   { id: "digestif_aliments", label: "Aliments énergétiques", subjectId: "anat-physio" },
@@ -1404,6 +1407,55 @@ async function loadDefiLeaderboard(isoMonth = currentIsoMonth()) {
       .sort((a, b) => b.moyennePonderee - a.moyennePonderee);
   } catch (e) {
     console.error("Erreur chargement classement défi", e);
+    return [];
+  }
+}
+
+// Moyenne pondérée calculée UNIQUEMENT sur les matières tentées durant une semaine précise
+// (pas le cumul du mois) — sert au classement hebdomadaire archivé S1/S2/S3/S4.
+function computeWeekWeightedAverage(scores, week) {
+  const entries = Object.entries(scores || {}).filter(([, entry]) => {
+    const entryWeek = typeof entry === "number" ? 1 : entry.week;
+    return entryWeek === week;
+  });
+  if (entries.length === 0) return null;
+  let totalPoints = 0;
+  let totalCoef = 0;
+  entries.forEach(([subjectId, entry]) => {
+    const note20 = typeof entry === "number" ? entry : entry.note20;
+    const coef = SUBJECT_CREDITS[subjectId] || 1;
+    totalPoints += note20 * coef;
+    totalCoef += coef;
+  });
+  return totalCoef > 0 ? totalPoints / totalCoef : null;
+}
+
+// Classement archivé d'UNE semaine précise du mois — chaque mois garde ses 4 classements
+// hebdomadaires distincts en plus du classement final, tous recalculés à partir des mêmes
+// données déjà stockées (rien à archiver manuellement, la clé "defi:{mois}:..." fait déjà
+// tout le travail de conservation d'un mois à l'autre).
+async function loadDefiWeekLeaderboard(isoMonth, week) {
+  try {
+    const list = await storage.list(`defi:${isoMonth}:`, true);
+    if (!list || !list.keys) return [];
+    const records = await Promise.all(
+      list.keys.map(async (k) => {
+        const fullKey = k.startsWith("defi:") ? k : `defi:${isoMonth}:${k}`;
+        try {
+          const r = await storage.get(fullKey, true);
+          return r ? JSON.parse(r.value) : null;
+        } catch {
+          return null;
+        }
+      })
+    );
+    return records
+      .filter(Boolean)
+      .map((rec) => ({ ...rec, moyenneSemaine: computeWeekWeightedAverage(rec.scores, week) }))
+      .filter((rec) => rec.moyenneSemaine !== null)
+      .sort((a, b) => b.moyenneSemaine - a.moyenneSemaine);
+  } catch (e) {
+    console.error("Erreur chargement classement hebdomadaire", e);
     return [];
   }
 }
@@ -5948,193 +6000,6 @@ const ANATPHYSIO_EXO_RAW = [
    une vraie coordonnée (x,y) et un label anatomique réel, source
    strictement le contenu fourni par Franck (locomoteur + digestif).
    ============================================================ */
-const SCHEMAS = {
-  crane_profil: {
-    titre: "Crâne (vue de profil)",
-    type: "image",
-    imageSrc: "/schemas/crane-profil.png",
-    aspectRatio: "612 / 517",
-    points: [
-      { num: 1, xPct: 42, yPct: 8,  label: "Os frontal" },
-      { num: 2, xPct: 62, yPct: 6,  label: "Os pariétal" },
-      { num: 3, xPct: 80, yPct: 42, label: "Os temporal" },
-      { num: 4, xPct: 78, yPct: 68, label: "Os occipital" },
-      { num: 5, xPct: 30, yPct: 45, label: "Os sphénoïde" },
-      { num: 6, xPct: 33, yPct: 33, label: "Os ethmoïde" },
-      { num: 7, xPct: 55, yPct: 78, label: "Mandibule" },
-    ],
-  },
-
-  crane_face: {
-    titre: "Crâne (vue de face)",
-    type: "image",
-    imageSrc: "/schemas/crane-face.png",
-    aspectRatio: "320 / 360",
-    points: [
-      { num: 1, x: 160, y: 48,  label: "Os frontal" },
-      { num: 2, x: 55,  y: 130, label: "Os temporal" },
-      { num: 3, x: 265, y: 130, label: "Os pariétal" },
-      { num: 4, x: 112, y: 152, label: "Orbite" },
-      { num: 5, x: 160, y: 296, label: "Mandibule" },
-      { num: 6, x: 160, y: 262, label: "Maxillaire" },
-    ],
-  },
-
-  main_palmaire: {
-    titre: "Squelette de la main et de l'avant-bras (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
-    type: "image",
-    imageSrc: "/schemas/main.png",
-    aspectRatio: "1160 / 924",
-    points: [
-      { num: 1, xPct: 40, yPct: 62, label: "Scaphoïde" },
-      { num: 2, xPct: 47, yPct: 60, label: "Semi-lunaire" },
-      { num: 3, xPct: 55, yPct: 62, label: "Pyramidal" },
-      { num: 4, xPct: 60, yPct: 66, label: "Pisiforme" },
-      { num: 5, xPct: 37, yPct: 70, label: "Trapèze" },
-      { num: 6, xPct: 44, yPct: 72, label: "Trapézoïde" },
-      { num: 7, xPct: 51, yPct: 72, label: "Grand os" },
-      { num: 8, xPct: 58, yPct: 71, label: "Os crochu" },
-      { num: 9, xPct: 45, yPct: 50, label: "Métacarpien" },
-      { num: 10, xPct: 45, yPct: 20, label: "Phalange" },
-    ],
-  },
-
-  pied_profil: {
-    titre: "Squelette du pied (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
-    type: "image",
-    imageSrc: "/schemas/pied.png",
-    aspectRatio: "1160 / 924",
-    points: [
-      { num: 1, xPct: 14, yPct: 55, label: "Calcanéus" },
-      { num: 2, xPct: 22, yPct: 42, label: "Astragale (Talus)" },
-      { num: 3, xPct: 33, yPct: 40, label: "Scaphoïde tarsien" },
-      { num: 4, xPct: 34, yPct: 58, label: "Cuboïde" },
-      { num: 5, xPct: 42, yPct: 38, label: "1er cunéiforme" },
-      { num: 6, xPct: 45, yPct: 45, label: "2ème cunéiforme" },
-      { num: 7, xPct: 47, yPct: 52, label: "3ème cunéiforme" },
-      { num: 8, xPct: 65, yPct: 45, label: "Métatarsien" },
-    ],
-  },
-
-  cage_thoracique: {
-    titre: "Cage thoracique (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
-    type: "image",
-    imageSrc: "/schemas/cage-thoracique.png",
-    aspectRatio: "1160 / 858",
-    points: [
-      { num: 1, xPct: 22, yPct: 18, label: "Manubrium sternal" },
-      { num: 2, xPct: 22, yPct: 45, label: "Corps du sternum" },
-      { num: 3, xPct: 22, yPct: 75, label: "Processus xiphoïde" },
-      { num: 4, xPct: 63, yPct: 22, label: "1ère côte (vraie côte)" },
-      { num: 5, xPct: 58, yPct: 58, label: "8ème côte (fausse côte)" },
-      { num: 6, xPct: 63, yPct: 85, label: "12ème côte (côte flottante)" },
-    ],
-  },
-
-  tube_digestif: {
-    titre: "Appareil digestif complet (d'après Anatomy & Physiology 2e, Open Oregon, CC BY-SA)",
-    type: "image",
-    imageSrc: "/schemas/digestif.png",
-    aspectRatio: "892 / 1138",
-    points: [
-      { num: 1, xPct: 47, yPct: 5,  label: "Cavité buccale" },
-      { num: 2, xPct: 47, yPct: 10, label: "Pharynx" },
-      { num: 3, xPct: 47, yPct: 22, label: "Œsophage" },
-      { num: 4, xPct: 40, yPct: 38, label: "Estomac" },
-      { num: 5, xPct: 47, yPct: 62, label: "Intestin grêle" },
-      { num: 6, xPct: 25, yPct: 55, label: "Côlon" },
-      { num: 7, xPct: 47, yPct: 85, label: "Rectum" },
-      { num: 8, xPct: 47, yPct: 92, label: "Canal anal" },
-    ],
-  },
-
-  glandes_annexes: {
-    titre: "Glandes annexes du tube digestif",
-    type: "image",
-    imageSrc: "/schemas/glandes-annexes.png",
-    aspectRatio: "340 / 300",
-    points: [
-      { num: 1, x: 150, y: 65,  label: "Foie" },
-      { num: 2, x: 110, y: 112, label: "Vésicule biliaire" },
-      { num: 3, x: 220, y: 170, label: "Pancréas" },
-      { num: 4, x: 120, y: 205, label: "Duodénum" },
-    ],
-  },
-};
-
-const SCHEMA_QUESTIONS_RAW = [
-  { id: "sq_crane_frontal", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
-    level: 1, consigne: "Identifiez l'os frontal sur le schéma du crâne.",
-    correctLabel: "Os frontal", optionNums: [1, 2, 3, 6],
-    explanation: "L'os frontal forme la partie antérieure de la voûte crânienne, au-dessus des orbites.",
-    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
-
-  { id: "sq_crane_temporal", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
-    level: 2, consigne: "Identifiez l'os temporal sur le schéma du crâne (vue de profil).",
-    correctLabel: "Os temporal", optionNums: [1, 3, 4, 5],
-    explanation: "L'os temporal se situe sur la face latérale du crâne, en arrière du sphénoïde, au niveau de la tempe.",
-    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
-
-  { id: "sq_crane_orbite", schemaId: "crane_face", subjectId: "anat-physio", chapterId: "osteologie_face",
-    level: 1, consigne: "Identifiez l'orbite sur le schéma du crâne (vue de face).",
-    correctLabel: "Orbite", optionNums: [4, 1, 5, 6],
-    explanation: "L'orbite est la cavité osseuse qui loge le globe oculaire ; elle est formée par plusieurs os de la face et du crâne.",
-    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
-
-  { id: "sq_main_scaphoide", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
-    level: 2, consigne: "Identifiez le scaphoïde sur le schéma de la main.",
-    correctLabel: "Scaphoïde", optionNums: [1, 3, 5, 7],
-    explanation: "Le scaphoïde fait partie de la rangée proximale des 8 os du carpe, du côté du pouce.",
-    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
-
-  { id: "sq_main_crochu", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
-    level: 2, consigne: "Identifiez l'os crochu sur le schéma de la main.",
-    correctLabel: "Os crochu", optionNums: [4, 6, 8, 9],
-    explanation: "L'os crochu fait partie de la rangée distale des 8 os du carpe, du côté du petit doigt.",
-    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
-
-  { id: "sq_pied_calcaneus", schemaId: "pied_profil", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
-    level: 1, consigne: "Identifiez le calcanéus sur le schéma du pied.",
-    correctLabel: "Calcanéus", optionNums: [1, 2, 4, 7],
-    explanation: "Le calcanéus est le plus volumineux des 7 os du tarse ; il forme le talon.",
-    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, os du pied" },
-
-  { id: "sq_cage_xiphoide", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
-    level: 2, consigne: "Identifiez le processus xiphoïde sur le schéma de la cage thoracique.",
-    correctLabel: "Processus xiphoïde", optionNums: [1, 2, 3, 6],
-    explanation: "Le processus xiphoïde est la partie la plus basse du sternum, sous le corps du sternum.",
-    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, sternum" },
-
-  { id: "sq_cage_flottante", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
-    level: 2, consigne: "Identifiez une côte flottante sur le schéma de la cage thoracique.",
-    correctLabel: "12ème côte (côte flottante)", optionNums: [4, 5, 6, 1],
-    explanation: "Les côtes flottantes (11ème et 12ème) ne rejoignent pas le sternum, contrairement aux vraies et fausses côtes.",
-    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, les côtes" },
-
-  { id: "sq_digestif_oesophage", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_gen",
-    level: 1, consigne: "Identifiez l'œsophage sur le schéma du tube digestif.",
-    correctLabel: "Œsophage", optionNums: [2, 3, 4, 1],
-    explanation: "L'œsophage relie le pharynx à l'estomac ; il fait suite au pharynx dans le tube digestif.",
-    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
-
-  { id: "sq_digestif_colon", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_colon",
-    level: 2, consigne: "Identifiez le côlon sur le schéma du tube digestif.",
-    correctLabel: "Côlon", optionNums: [5, 6, 7, 4],
-    explanation: "Le côlon (gros intestin) fait suite à l'intestin grêle et se termine par le rectum et le canal anal.",
-    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
-
-  { id: "sq_glandes_foie", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_foie",
-    level: 1, consigne: "Identifiez le foie sur le schéma des glandes annexes du tube digestif.",
-    correctLabel: "Foie", optionNums: [1, 2, 3, 4],
-    explanation: "Le foie est la plus volumineuse glande annexe du tube digestif, situé au-dessus de l'estomac et du duodénum.",
-    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
-
-  { id: "sq_glandes_pancreas", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_pancreas",
-    level: 2, consigne: "Identifiez le pancréas sur le schéma des glandes annexes du tube digestif.",
-    correctLabel: "Pancréas", optionNums: [1, 3, 4, 2],
-    explanation: "Le pancréas est une glande annexe allongée, en arrière de l'estomac, qui a une fonction digestive (exocrine) et endocrine.",
-    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
-];
 /* ---- Sémiologie médicale — questions issues de l'examen réel du jour ---- */
 const SEMIO_EXAM_RAW = [
   ["QCU","semio_uro_genital",2,"Associez : A. Nycturie · B. Énurésie, à leur définition : 1. Émission d'urine plus importante la nuit que le jour · 2. Miction involontaire pendant le sommeil.",
@@ -6301,6 +6166,763 @@ const SEMIO_CHIR_ENRICHI_RAW = [
     "L'anthrax (staphylococcique, à ne pas confondre avec la maladie du charbon) correspond à l'agglomération de plusieurs furoncles contigus, réalisant une lésion plus étendue et plus sévère qu'un furoncle isolé.",
     "Sémiologie chirurgicale (INFAS) – Furoncle"],
 ];
+const SCHEMAS = {
+  crane_profil: {
+    titre: "Crâne (vue de profil)",
+    type: "image",
+    imageSrc: "/schemas/crane-profil.png",
+    aspectRatio: "612 / 517",
+    points: [
+      { num: 1, label: "Os frontal" },
+      { num: 2, label: "Os pariétal" },
+      { num: 3, label: "Os occipital" },
+      { num: 4, label: "Os temporal" },
+      { num: 5, label: "Os sphénoïde" },
+      { num: 6, label: "Os zygomatique" },
+      { num: 7, label: "Mandibule" },
+    ],
+  },
+  crane_face: {
+    titre: "Crâne (vue de face)",
+    type: "image",
+    imageSrc: "/schemas/crane-face.png",
+    aspectRatio: "320 / 360",
+    points: [
+      { num: 1, label: "Os frontal" },
+      { num: 2, label: "Os pariétal (droit)" },
+      { num: 3, label: "Os pariétal (gauche)" },
+      { num: 4, label: "Os zygomatique" },
+      { num: 5, label: "Mandibule" },
+      { num: 6, label: "Maxillaire" },
+    ],
+  },
+  main_palmaire: {
+    titre: "Squelette de la main (os du carpe)",
+    type: "image",
+    imageSrc: "/schemas/main.png",
+    aspectRatio: "1160 / 924",
+    points: [
+      { num: 1, label: "Scaphoïde" },
+      { num: 2, label: "Lunatum (semi-lunaire)" },
+      { num: 3, label: "Triquetrum (pyramidal)" },
+      { num: 4, label: "Hamatum (os crochu)" },
+      { num: 5, label: "Trapèze" },
+      { num: 6, label: "Trapézoïde" },
+      { num: 7, label: "Capitatum (grand os)" },
+      { num: 8, label: "Pisiforme" },
+      { num: 9, label: "Métacarpiens" },
+      { num: 10, label: "Phalanges" },
+    ],
+  },
+  pied_profil: {
+    titre: "Pied — schéma de réflexologie plantaire",
+    type: "image",
+    imageSrc: "/schemas/pied.png",
+    aspectRatio: "1160 / 924",
+    points: [
+      { num: 1, label: "Base des orteils (zone commune)" },
+      { num: 2, label: "Base du 5e orteil (petit orteil)" },
+      { num: 3, label: "Base du 1er orteil (gros orteil)" },
+      { num: 4, label: "Voûte plantaire (métatarse)" },
+      { num: 5, label: "Talon" },
+    ],
+  },
+  cage_thoracique: {
+    titre: "Cage thoracique",
+    type: "image",
+    imageSrc: "/schemas/cage-thoracique.png",
+    aspectRatio: "1160 / 858",
+    points: [
+      { num: 1, label: "Manubrium sternal" },
+      { num: 2, label: "Corps du sternum" },
+      { num: 3, label: "Processus xiphoïde" },
+      { num: 4, label: "Vraie côte" },
+      { num: 5, label: "Fausse côte" },
+      { num: 6, label: "Côte flottante" },
+    ],
+  },
+  tube_digestif: {
+    titre: "Tube digestif (schéma clinique complet)",
+    type: "image",
+    imageSrc: "/schemas/digestif.png",
+    aspectRatio: "892 / 1138",
+    points: [
+      { num: 1, label: "Œsophage" },
+      { num: 2, label: "Duodénum" },
+      { num: 3, label: "Côlon ascendant" },
+      { num: 4, label: "Cæcum / Appendice" },
+      { num: 5, label: "Estomac" },
+      { num: 6, label: "Angle colique gauche (splénique)" },
+      { num: 7, label: "Côlon descendant" },
+      { num: 8, label: "Côlon sigmoïde" },
+      { num: 9, label: "Rectum" },
+      { num: 10, label: "Canal anal" },
+      { num: 11, label: "Anus" },
+    ],
+  },
+  glandes_annexes: {
+    titre: "Glandes annexes du tube digestif",
+    type: "image",
+    imageSrc: "/schemas/glandes-annexes.png",
+    aspectRatio: "340 / 300",
+    points: [
+      { num: 1, label: "Foie" },
+      { num: 2, label: "Vésicule biliaire" },
+      { num: 3, label: "Pancréas" },
+      { num: 4, label: "Duodénum" },
+    ],
+  },
+  dents_permanentes: {
+    titre: "Dents permanentes",
+    type: "image",
+    imageSrc: "/schemas/dents-permanentes.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Incisive centrale sup." },
+      { num: 2, label: "Incisive latérale sup." },
+      { num: 3, label: "Canine sup." },
+      { num: 4, label: "1ère prémolaire sup." },
+      { num: 5, label: "2e prémolaire sup." },
+      { num: 6, label: "1ère molaire sup." },
+      { num: 7, label: "2e molaire sup." },
+      { num: 8, label: "3e molaire (partagée)" },
+      { num: 9, label: "2e molaire inf." },
+      { num: 10, label: "1ère molaire inf." },
+      { num: 11, label: "2e prémolaire inf." },
+      { num: 12, label: "1ère prémolaire inf." },
+      { num: 13, label: "Canine inf." },
+      { num: 14, label: "Incisive latérale inf." },
+      { num: 15, label: "Incisive centrale inf." },
+    ],
+  },
+  duodenum_detail: {
+    titre: "Duodénum et organes voisins",
+    type: "image",
+    imageSrc: "/schemas/duodenum.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Vésicule biliaire" },
+      { num: 2, label: "Duodénum (paroi interne)" },
+      { num: 3, label: "Duodénum (paroi externe)" },
+      { num: 4, label: "Foie" },
+      { num: 5, label: "Estomac" },
+      { num: 6, label: "Pancréas" },
+      { num: 7, label: "Tissu pancréatique accessoire" },
+      { num: 8, label: "Jonction canal cholédoque/canal pancréatique" },
+    ],
+  },
+  glandes_salivaires: {
+    titre: "Glandes salivaires",
+    type: "image",
+    imageSrc: "/schemas/glandes-salivaire.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Glande sublinguale" },
+      { num: 2, label: "Canal submandibulaire (Wharton)" },
+      { num: 3, label: "Canal parotidien (Sténon)" },
+      { num: 4, label: "Glande parotide" },
+      { num: 5, label: "Glande submandibulaire" },
+    ],
+  },
+  ordre_dents_lait: {
+    titre: "Ordre d'apparition des dents de lait",
+    type: "image",
+    imageSrc: "/schemas/ordre-apparutiondent.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Incisives centrales du bas (6-10 mois)" },
+      { num: 2, label: "Incisives centrales du haut (7-12 mois)" },
+      { num: 3, label: "Incisives latérales du bas (7-16 mois)" },
+      { num: 4, label: "Premières canines du haut (16-22 mois)" },
+      { num: 5, label: "Premières canines du bas (16-23 mois)" },
+      { num: 6, label: "Premières molaires du haut (13-19 mois)" },
+      { num: 7, label: "Incisives latérales du haut (9-13 mois)" },
+      { num: 8, label: "Premières molaires du bas (12-18 mois)" },
+      { num: 9, label: "Deuxièmes molaires du bas (20-31 mois)" },
+      { num: 10, label: "Deuxièmes molaires du haut (25-33 mois)" },
+    ],
+  },
+  tube_digestif_complet: {
+    titre: "Tube digestif humain (vue d'ensemble)",
+    type: "image",
+    imageSrc: "/schemas/tube-digestif-humain.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Œsophage" },
+      { num: 2, label: "Duodénum" },
+      { num: 3, label: "Côlon ascendant" },
+      { num: 4, label: "Cæcum / Appendice" },
+      { num: 5, label: "Estomac" },
+      { num: 6, label: "Angle colique gauche (splénique)" },
+      { num: 7, label: "Côlon descendant" },
+      { num: 8, label: "Côlon sigmoïde" },
+      { num: 9, label: "Rectum" },
+      { num: 10, label: "Canal anal" },
+      { num: 11, label: "Anus" },
+    ],
+  },
+  reflexo_pied: {
+    titre: "Os du pied — schéma de réflexologie plantaire",
+    type: "image",
+    imageSrc: "/schemas/os-dupied.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Base des orteils (zone commune)" },
+      { num: 2, label: "Base du 5e orteil (petit orteil)" },
+      { num: 3, label: "Base du 1er orteil (gros orteil)" },
+      { num: 4, label: "Voûte plantaire (métatarse)" },
+      { num: 5, label: "Talon" },
+    ],
+  },
+  os_craniens_coupe: {
+    titre: "Os crâniens — coupe sagittale",
+    type: "image",
+    imageSrc: "/schemas/os-craniens.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Glande/fosse lacrymale" },
+      { num: 2, label: "Os lacrymal" },
+      { num: 3, label: "Cornet nasal" },
+      { num: 4, label: "Os zygomatique" },
+      { num: 5, label: "Os maxillaire" },
+      { num: 6, label: "Ramus de la mandibule" },
+      { num: 7, label: "Corps de la mandibule" },
+    ],
+  },
+  squelette_facial_neuro: {
+    titre: "Squelette facial et neurocrâne",
+    type: "image",
+    imageSrc: "/schemas/squelette-facial.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Neurocrâne" },
+      { num: 2, label: "Massif facial (squelette facial)" },
+    ],
+  },
+  os_crane_lateral: {
+    titre: "Os du crâne — vue latérale colorée",
+    type: "image",
+    imageSrc: "/schemas/os-crane.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Os pariétal" },
+      { num: 2, label: "Os occipital" },
+      { num: 3, label: "Os temporal" },
+      { num: 4, label: "Os frontal" },
+      { num: 5, label: "Os sphénoïde" },
+      { num: 6, label: "Os nasal" },
+    ],
+  },
+  squelette_axial_appendiculaire: {
+    titre: "Squelette axial et appendiculaire",
+    type: "image",
+    imageSrc: "/schemas/squelette-axialapendiculaire.png",
+    aspectRatio: "4 / 3",
+    points: [
+      { num: 1, label: "Squelette axial (tête + tronc)" },
+      { num: 2, label: "Membres inférieurs (squelette appendiculaire)" },
+      { num: 3, label: "Os des pieds" },
+      { num: 4, label: "Ceinture scapulaire" },
+      { num: 5, label: "Ceinture pelvienne" },
+    ],
+  },
+};
+
+const SCHEMA_QUESTIONS_RAW = [
+  // ===== 1. dents-permanentes =====
+  { id: "sq_dents_canine_sup", schemaId: "dents_permanentes", subjectId: "anat-physio", chapterId: "dentition",
+    level: 2, consigne: "Identifiez la canine supérieure sur ce schéma.",
+    correctLabel: "Canine sup.", optionNums: [13, 3, 6, 1],
+    explanation: "La canine supérieure est le repère n°3 sur ce schéma de la dentition permanente.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition" },
+  { id: "sq_dents_sagesse", schemaId: "dents_permanentes", subjectId: "anat-physio", chapterId: "dentition",
+    level: 2, consigne: "Identifiez la troisième molaire (dent de sagesse) sur ce schéma.",
+    correctLabel: "3e molaire (partagée)", optionNums: [8, 7, 9, 1],
+    explanation: "La troisième molaire, ou dent de sagesse, est le repère n°8, partagé entre les arcades supérieure et inférieure sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition" },
+  { id: "sq_dents_1ere_molaire_inf", schemaId: "dents_permanentes", subjectId: "anat-physio", chapterId: "dentition",
+    level: 2, consigne: "Identifiez la première molaire inférieure sur ce schéma.",
+    correctLabel: "1ère molaire inf.", optionNums: [6, 9, 10, 12],
+    explanation: "La première molaire inférieure est le repère n°10 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition" },
+  { id: "sq_dents_incisive_centrale_sup", schemaId: "dents_permanentes", subjectId: "anat-physio", chapterId: "dentition",
+    level: 1, consigne: "Identifiez l'incisive centrale supérieure sur ce schéma.",
+    correctLabel: "Incisive centrale sup.", optionNums: [15, 1, 2, 8],
+    explanation: "L'incisive centrale supérieure est le repère n°1, au centre de l'arcade supérieure.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition" },
+  { id: "sq_dents_canine_inf", schemaId: "dents_permanentes", subjectId: "anat-physio", chapterId: "dentition",
+    level: 2, consigne: "Identifiez la canine inférieure sur ce schéma.",
+    correctLabel: "Canine inf.", optionNums: [3, 13, 14, 12],
+    explanation: "La canine inférieure est le repère n°13 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition" },
+
+  // ===== 2. duodenum =====
+  { id: "sq_duo_pancreas", schemaId: "duodenum_detail", subjectId: "anat-physio", chapterId: "digestif_pancreas",
+    level: 2, consigne: "Identifiez le pancréas sur ce schéma.",
+    correctLabel: "Pancréas", optionNums: [4, 6, 5, 8],
+    explanation: "Le pancréas est le repère n°6 sur ce schéma du duodénum et organes voisins.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+  { id: "sq_duo_vesicule", schemaId: "duodenum_detail", subjectId: "anat-physio", chapterId: "digestif_foie",
+    level: 2, consigne: "Identifiez la vésicule biliaire sur ce schéma.",
+    correctLabel: "Vésicule biliaire", optionNums: [1, 3, 7, 2],
+    explanation: "La vésicule biliaire est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+  { id: "sq_duo_foie", schemaId: "duodenum_detail", subjectId: "anat-physio", chapterId: "digestif_foie",
+    level: 1, consigne: "Identifiez le foie sur ce schéma.",
+    correctLabel: "Foie", optionNums: [5, 4, 6, 2],
+    explanation: "Le foie est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+  { id: "sq_duo_estomac", schemaId: "duodenum_detail", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 1, consigne: "Identifiez l'estomac sur ce schéma.",
+    correctLabel: "Estomac", optionNums: [5, 1, 3, 6],
+    explanation: "L'estomac est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_duo_paroi_interne", schemaId: "duodenum_detail", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 2, consigne: "Identifiez la paroi interne (ouverte) du duodénum sur ce schéma.",
+    correctLabel: "Duodénum (paroi interne)", optionNums: [3, 2, 8, 7],
+    explanation: "La paroi interne (ouverte) du duodénum est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_duo_jonction", schemaId: "duodenum_detail", subjectId: "anat-physio", chapterId: "digestif_pancreas",
+    level: 2, consigne: "Quel repère représente la jonction entre le canal cholédoque et le canal pancréatique ?",
+    correctLabel: "Jonction canal cholédoque/canal pancréatique", optionNums: [7, 8, 1, 4],
+    explanation: "La jonction entre le canal cholédoque (issu du foie/vésicule) et le canal pancréatique est le repère n°8.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+
+  // ===== 3. glandes-salivaire =====
+  { id: "sq_saliv_parotide", schemaId: "glandes_salivaires", subjectId: "anat-physio", chapterId: "glandes_salivaires",
+    level: 1, consigne: "Identifiez la glande parotide sur ce schéma.",
+    correctLabel: "Glande parotide", optionNums: [5, 2, 4, 1],
+    explanation: "La glande parotide, la plus volumineuse des glandes salivaires, est le repère n°4.",
+    reference: "Anatomie Physiologie (INFAS) – Glandes salivaires" },
+  { id: "sq_saliv_sublinguale", schemaId: "glandes_salivaires", subjectId: "anat-physio", chapterId: "glandes_salivaires",
+    level: 2, consigne: "Identifiez la glande sublinguale sur ce schéma.",
+    correctLabel: "Glande sublinguale", optionNums: [1, 3, 4, 2],
+    explanation: "La glande sublinguale est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Glandes salivaires" },
+  { id: "sq_saliv_submandibulaire", schemaId: "glandes_salivaires", subjectId: "anat-physio", chapterId: "glandes_salivaires",
+    level: 2, consigne: "Identifiez la glande submandibulaire sur ce schéma.",
+    correctLabel: "Glande submandibulaire", optionNums: [2, 5, 4, 3],
+    explanation: "La glande submandibulaire est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Glandes salivaires" },
+  { id: "sq_saliv_stenon", schemaId: "glandes_salivaires", subjectId: "anat-physio", chapterId: "glandes_salivaires",
+    level: 2, consigne: "Identifiez le canal parotidien (canal de Sténon) sur ce schéma.",
+    correctLabel: "Canal parotidien (Sténon)", optionNums: [5, 3, 1, 4],
+    explanation: "Le canal parotidien (canal de Sténon), qui draine la parotide, est le repère n°3.",
+    reference: "Anatomie Physiologie (INFAS) – Glandes salivaires" },
+  { id: "sq_saliv_wharton", schemaId: "glandes_salivaires", subjectId: "anat-physio", chapterId: "glandes_salivaires",
+    level: 2, consigne: "Identifiez le canal submandibulaire (canal de Wharton) sur ce schéma.",
+    correctLabel: "Canal submandibulaire (Wharton)", optionNums: [5, 1, 2, 4],
+    explanation: "Le canal submandibulaire (canal de Wharton) est le repère n°2.",
+    reference: "Anatomie Physiologie (INFAS) – Glandes salivaires" },
+
+  // ===== 4. ordre-apparutiondent =====
+  { id: "sq_ordre_premieres", schemaId: "ordre_dents_lait", subjectId: "anat-physio", chapterId: "dentition",
+    level: 1, consigne: "Quelles dents apparaissent en premier chez le nourrisson ?",
+    correctLabel: "Incisives centrales du bas (6-10 mois)", optionNums: [6, 1, 9, 4],
+    explanation: "Les incisives centrales du bas sont généralement les premières dents à apparaître, entre 6 et 10 mois.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition, dents de lait" },
+  { id: "sq_ordre_1eres_molaires_haut", schemaId: "ordre_dents_lait", subjectId: "anat-physio", chapterId: "dentition",
+    level: 2, consigne: "Identifiez les premières molaires du haut sur ce schéma.",
+    correctLabel: "Premières molaires du haut (13-19 mois)", optionNums: [8, 6, 4, 10],
+    explanation: "Les premières molaires du haut apparaissent entre 13 et 19 mois, repère n°6.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition, dents de lait" },
+  { id: "sq_ordre_2emes_molaires_haut", schemaId: "ordre_dents_lait", subjectId: "anat-physio", chapterId: "dentition",
+    level: 2, consigne: "Identifiez les deuxièmes molaires du haut sur ce schéma.",
+    correctLabel: "Deuxièmes molaires du haut (25-33 mois)", optionNums: [9, 10, 6, 2],
+    explanation: "Les deuxièmes molaires du haut apparaissent entre 25 et 33 mois, repère n°10.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition, dents de lait" },
+  { id: "sq_ordre_canines_haut", schemaId: "ordre_dents_lait", subjectId: "anat-physio", chapterId: "dentition",
+    level: 2, consigne: "Identifiez les premières canines du haut sur ce schéma.",
+    correctLabel: "Premières canines du haut (16-22 mois)", optionNums: [5, 4, 7, 9],
+    explanation: "Les premières canines du haut apparaissent entre 16 et 22 mois, repère n°4.",
+    reference: "Anatomie Physiologie (INFAS) – Dents et dentition, dents de lait" },
+
+  // ===== 5. tube digestif humain (tube_digestif_complet) =====
+  { id: "sq_tdh_oesophage", schemaId: "tube_digestif_complet", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 1, consigne: "Identifiez l'œsophage sur ce schéma du tube digestif.",
+    correctLabel: "Œsophage", optionNums: [5, 1, 9, 3],
+    explanation: "L'œsophage est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_tdh_estomac", schemaId: "tube_digestif_complet", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 1, consigne: "Identifiez l'estomac sur ce schéma.",
+    correctLabel: "Estomac", optionNums: [5, 2, 8, 11],
+    explanation: "L'estomac est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_tdh_duodenum", schemaId: "tube_digestif_complet", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 2, consigne: "Identifiez le duodénum sur ce schéma.",
+    correctLabel: "Duodénum", optionNums: [4, 7, 2, 10],
+    explanation: "Le duodénum est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_tdh_caecum", schemaId: "tube_digestif_complet", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 2, consigne: "Identifiez le cæcum (avec l'appendice) sur ce schéma.",
+    correctLabel: "Cæcum / Appendice", optionNums: [4, 6, 9, 1],
+    explanation: "Le cæcum, avec l'appendice, est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_tdh_rectum", schemaId: "tube_digestif_complet", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 2, consigne: "Identifiez le rectum sur ce schéma.",
+    correctLabel: "Rectum", optionNums: [9, 11, 7, 3],
+    explanation: "Le rectum est le repère n°9 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+
+  // ===== 6. os-dupied (reflexo_pied) =====
+  { id: "sq_refpied_zone1", schemaId: "reflexo_pied", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Sur ce schéma, quelle zone se trouve entre la base du gros orteil et la voûte plantaire ?",
+    correctLabel: "Base du 1er orteil (gros orteil)", optionNums: [3, 2, 1, 5],
+    explanation: "La base du gros orteil (repère n°3) se trouve juste avant la voûte plantaire sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_refpied_oppose_talon", schemaId: "reflexo_pied", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Quelle zone se trouve à l'opposé du talon sur ce schéma ?",
+    correctLabel: "Base des orteils (zone commune)", optionNums: [5, 1, 4, 2],
+    explanation: "La base des orteils (repère n°1) est la zone la plus éloignée du talon sur ce schéma plantaire.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_refpied_talon", schemaId: "reflexo_pied", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 1, consigne: "Identifiez la zone du talon sur ce schéma.",
+    correctLabel: "Talon", optionNums: [4, 2, 5, 3],
+    explanation: "Le talon est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_refpied_voute", schemaId: "reflexo_pied", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Identifiez la voûte plantaire (zone la plus large) sur ce schéma.",
+    correctLabel: "Voûte plantaire (métatarse)", optionNums: [4, 5, 1, 3],
+    explanation: "La voûte plantaire, correspondant au métatarse, est le repère n°4, la zone la plus large du schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_refpied_petit_orteil", schemaId: "reflexo_pied", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Identifiez la zone à la base du petit orteil sur ce schéma.",
+    correctLabel: "Base du 5e orteil (petit orteil)", optionNums: [3, 2, 1, 4],
+    explanation: "La base du petit orteil (5e orteil) est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+
+  // ===== 7. os-craniens (os_craniens_coupe) =====
+  { id: "sq_oscr_corps_mandibule", schemaId: "os_craniens_coupe", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez le corps de la mandibule sur ce schéma.",
+    correctLabel: "Corps de la mandibule", optionNums: [6, 5, 7, 2],
+    explanation: "Le corps de la mandibule est le repère n°7 sur cette coupe sagittale.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_oscr_zygomatique", schemaId: "os_craniens_coupe", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez l'os zygomatique sur ce schéma.",
+    correctLabel: "Os zygomatique", optionNums: [4, 1, 3, 6],
+    explanation: "L'os zygomatique est le repère n°4 sur cette coupe sagittale.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_oscr_maxillaire", schemaId: "os_craniens_coupe", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez l'os maxillaire sur ce schéma.",
+    correctLabel: "Os maxillaire", optionNums: [2, 5, 7, 4],
+    explanation: "L'os maxillaire est le repère n°5 sur cette coupe sagittale.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_oscr_ramus", schemaId: "os_craniens_coupe", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez le ramus de la mandibule sur ce schéma.",
+    correctLabel: "Ramus de la mandibule", optionNums: [7, 3, 6, 1],
+    explanation: "Le ramus de la mandibule, branche montante, est le repère n°6.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_oscr_lacrymal", schemaId: "os_craniens_coupe", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez l'os lacrymal sur ce schéma.",
+    correctLabel: "Os lacrymal", optionNums: [2, 4, 6, 5],
+    explanation: "L'os lacrymal, petit os proche de l'angle interne de l'œil, est le repère n°2.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_oscr_cornet", schemaId: "os_craniens_coupe", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez le cornet nasal sur ce schéma.",
+    correctLabel: "Cornet nasal", optionNums: [1, 3, 7, 4],
+    explanation: "Le cornet nasal est le repère n°3 sur cette coupe sagittale.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+
+  // ===== 8. squelette-facial (squelette_facial_neuro) =====
+  { id: "sq_sf_massif", schemaId: "squelette_facial_neuro", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 1, consigne: "Identifiez le massif facial sur ce schéma.",
+    correctLabel: "Massif facial (squelette facial)", optionNums: [1, 2],
+    explanation: "Le massif facial (squelette facial) est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_sf_neurocrane", schemaId: "squelette_facial_neuro", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 1, consigne: "Identifiez le neurocrâne sur ce schéma.",
+    correctLabel: "Neurocrâne", optionNums: [2, 1],
+    explanation: "Le neurocrâne est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+
+  // ===== 9. os-crane (os_crane_lateral) =====
+  { id: "sq_oscl_frontal", schemaId: "os_crane_lateral", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 1, consigne: "Identifiez l'os frontal sur ce schéma.",
+    correctLabel: "Os frontal", optionNums: [1, 4, 3, 6],
+    explanation: "L'os frontal est le repère n°4 sur ce schéma en vue latérale colorée.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_oscl_parietal", schemaId: "os_crane_lateral", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os pariétal sur ce schéma.",
+    correctLabel: "Os pariétal", optionNums: [1, 2, 5, 3],
+    explanation: "L'os pariétal est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_oscl_occipital", schemaId: "os_crane_lateral", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os occipital sur ce schéma.",
+    correctLabel: "Os occipital", optionNums: [3, 2, 4, 6],
+    explanation: "L'os occipital est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_oscl_temporal", schemaId: "os_crane_lateral", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os temporal sur ce schéma.",
+    correctLabel: "Os temporal", optionNums: [3, 5, 1, 4],
+    explanation: "L'os temporal est le repère n°3 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_oscl_sphenoide", schemaId: "os_crane_lateral", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os sphénoïde sur ce schéma.",
+    correctLabel: "Os sphénoïde", optionNums: [6, 5, 2, 4],
+    explanation: "L'os sphénoïde est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_oscl_nasal", schemaId: "os_crane_lateral", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez l'os nasal sur ce schéma.",
+    correctLabel: "Os nasal", optionNums: [6, 1, 3, 5],
+    explanation: "L'os nasal est le repère n°6 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+
+  // ===== 10. squelette-axialapendiculaire =====
+  { id: "sq_saxap_axial", schemaId: "squelette_axial_appendiculaire", subjectId: "anat-physio", chapterId: "squelette_gen",
+    level: 1, consigne: "Identifiez le squelette axial sur ce schéma.",
+    correctLabel: "Squelette axial (tête + tronc)", optionNums: [2, 1, 4, 5],
+    explanation: "Le squelette axial (tête, colonne vertébrale et cage thoracique) est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie (généralités)" },
+  { id: "sq_saxap_pelvienne", schemaId: "squelette_axial_appendiculaire", subjectId: "anat-physio", chapterId: "squelette_gen",
+    level: 2, consigne: "Identifiez la ceinture pelvienne sur ce schéma.",
+    correctLabel: "Ceinture pelvienne", optionNums: [5, 4, 3, 1],
+    explanation: "La ceinture pelvienne est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie (généralités)" },
+  { id: "sq_saxap_scapulaire", schemaId: "squelette_axial_appendiculaire", subjectId: "anat-physio", chapterId: "squelette_gen",
+    level: 2, consigne: "Identifiez la ceinture scapulaire sur ce schéma.",
+    correctLabel: "Ceinture scapulaire", optionNums: [4, 5, 2, 1],
+    explanation: "La ceinture scapulaire est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie (généralités)" },
+  { id: "sq_saxap_membres_inf", schemaId: "squelette_axial_appendiculaire", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Identifiez les membres inférieurs sur ce schéma.",
+    correctLabel: "Membres inférieurs (squelette appendiculaire)", optionNums: [1, 3, 2, 4],
+    explanation: "Les membres inférieurs, partie du squelette appendiculaire, sont le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur" },
+  { id: "sq_saxap_large_femme", schemaId: "squelette_axial_appendiculaire", subjectId: "anat-physio", chapterId: "squelette_gen",
+    level: 2, consigne: "Généralement, quelle structure est proportionnellement plus large chez le squelette féminin ?",
+    correctLabel: "Ceinture pelvienne", optionNums: [4, 1, 5, 2],
+    explanation: "La ceinture pelvienne (repère n°5) est généralement proportionnellement plus large chez la femme, adaptation liée à l'accouchement.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie (généralités)" },
+
+  // ===== 11. glandes-annexes =====
+  { id: "sq_ga2_foie", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_foie",
+    level: 1, consigne: "Identifiez le foie sur ce schéma.",
+    correctLabel: "Foie", optionNums: [2, 1, 3, 4],
+    explanation: "Le foie est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+  { id: "sq_ga2_vesicule", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_foie",
+    level: 2, consigne: "Identifiez la vésicule biliaire sur ce schéma.",
+    correctLabel: "Vésicule biliaire", optionNums: [2, 4, 1, 3],
+    explanation: "La vésicule biliaire est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+  { id: "sq_ga2_pancreas", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_pancreas",
+    level: 2, consigne: "Identifiez le pancréas sur ce schéma.",
+    correctLabel: "Pancréas", optionNums: [1, 4, 3, 2],
+    explanation: "Le pancréas est le repère n°3 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, glandes annexes" },
+  { id: "sq_ga2_duodenum", schemaId: "glandes_annexes", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 2, consigne: "Identifiez le duodénum sur ce schéma.",
+    correctLabel: "Duodénum", optionNums: [3, 4, 2, 1],
+    explanation: "Le duodénum est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+
+  // ===== 12. crane-face =====
+  { id: "sq_cf2_frontal", schemaId: "crane_face", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 1, consigne: "Identifiez l'os frontal sur ce schéma.",
+    correctLabel: "Os frontal", optionNums: [3, 1, 5, 6],
+    explanation: "L'os frontal est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_cf2_mandibule", schemaId: "crane_face", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 1, consigne: "Identifiez la mandibule sur ce schéma.",
+    correctLabel: "Mandibule", optionNums: [5, 6, 4, 1],
+    explanation: "La mandibule est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_cf2_maxillaire", schemaId: "crane_face", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez le maxillaire sur ce schéma.",
+    correctLabel: "Maxillaire", optionNums: [4, 6, 2, 5],
+    explanation: "Le maxillaire est le repère n°6 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+  { id: "sq_cf2_zygomatique", schemaId: "crane_face", subjectId: "anat-physio", chapterId: "osteologie_face",
+    level: 2, consigne: "Identifiez l'os zygomatique (pommette) sur ce schéma.",
+    correctLabel: "Os zygomatique", optionNums: [4, 3, 1, 6],
+    explanation: "L'os zygomatique (pommette) est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie de la face" },
+
+  // ===== 13. crane-profil =====
+  { id: "sq_cp2_frontal", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 1, consigne: "Identifiez l'os frontal sur ce schéma.",
+    correctLabel: "Os frontal", optionNums: [1, 2, 4, 7],
+    explanation: "L'os frontal est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_cp2_occipital", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os occipital sur ce schéma.",
+    correctLabel: "Os occipital", optionNums: [4, 1, 3, 2],
+    explanation: "L'os occipital est le repère n°3 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_cp2_temporal", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os temporal sur ce schéma.",
+    correctLabel: "Os temporal", optionNums: [4, 5, 3, 1],
+    explanation: "L'os temporal est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_cp2_sphenoide", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 2, consigne: "Identifiez l'os sphénoïde sur ce schéma.",
+    correctLabel: "Os sphénoïde", optionNums: [6, 5, 7, 2],
+    explanation: "L'os sphénoïde est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+  { id: "sq_cp2_mandibule", schemaId: "crane_profil", subjectId: "anat-physio", chapterId: "osteologie_crane",
+    level: 1, consigne: "Identifiez la mandibule sur ce schéma.",
+    correctLabel: "Mandibule", optionNums: [5, 6, 7, 4],
+    explanation: "La mandibule est le repère n°7 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du crâne" },
+
+  // ===== 14. main =====
+  { id: "sq_m2_scaphoide", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 2, consigne: "Identifiez le scaphoïde sur ce schéma.",
+    correctLabel: "Scaphoïde", optionNums: [2, 1, 5, 8],
+    explanation: "Le scaphoïde est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+  { id: "sq_m2_lunatum", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 2, consigne: "Identifiez le lunatum (semi-lunaire) sur ce schéma.",
+    correctLabel: "Lunatum (semi-lunaire)", optionNums: [2, 3, 7, 4],
+    explanation: "Le lunatum (semi-lunaire) est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+  { id: "sq_m2_hamatum", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 2, consigne: "Identifiez l'hamatum (os crochu) sur ce schéma.",
+    correctLabel: "Hamatum (os crochu)", optionNums: [4, 7, 1, 5],
+    explanation: "L'hamatum (os crochu) est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+  { id: "sq_m2_capitatum", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 2, consigne: "Identifiez le capitatum (grand os) sur ce schéma.",
+    correctLabel: "Capitatum (grand os)", optionNums: [4, 7, 2, 10],
+    explanation: "Le capitatum (grand os) est le repère n°7 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+  { id: "sq_m2_pisiforme", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 2, consigne: "Identifiez le pisiforme sur ce schéma.",
+    correctLabel: "Pisiforme", optionNums: [3, 9, 8, 1],
+    explanation: "Le pisiforme est le repère n°8 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+  { id: "sq_m2_metacarpiens", schemaId: "main_palmaire", subjectId: "anat-physio", chapterId: "osteologie_membre_sup",
+    level: 1, consigne: "Identifiez les métacarpiens sur ce schéma.",
+    correctLabel: "Métacarpiens", optionNums: [10, 9, 5, 7],
+    explanation: "Les métacarpiens sont le repère n°9 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main" },
+
+  // ===== 15. cage-thoracique =====
+  { id: "sq_ct2_manubrium", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
+    level: 1, consigne: "Identifiez le manubrium sternal sur ce schéma.",
+    correctLabel: "Manubrium sternal", optionNums: [2, 1, 3, 4],
+    explanation: "Le manubrium sternal est le repère n°1 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, sternum" },
+  { id: "sq_ct2_xiphoide", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
+    level: 2, consigne: "Identifiez le processus xiphoïde sur ce schéma.",
+    correctLabel: "Processus xiphoïde", optionNums: [3, 6, 2, 1],
+    explanation: "Le processus xiphoïde est le repère n°3 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, sternum" },
+  { id: "sq_ct2_vraie_cote", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
+    level: 2, consigne: "Identifiez une vraie côte sur ce schéma.",
+    correctLabel: "Vraie côte", optionNums: [5, 4, 6, 1],
+    explanation: "La vraie côte est le repère n°4 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, les côtes" },
+  { id: "sq_ct2_cote_flottante", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
+    level: 2, consigne: "Identifiez une côte flottante sur ce schéma.",
+    correctLabel: "Côte flottante", optionNums: [6, 4, 5, 3],
+    explanation: "La côte flottante est le repère n°6 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, les côtes" },
+  { id: "sq_ct2_corps_sternum", schemaId: "cage_thoracique", subjectId: "anat-physio", chapterId: "osteologie_gen",
+    level: 2, consigne: "Identifiez le corps du sternum sur ce schéma.",
+    correctLabel: "Corps du sternum", optionNums: [1, 3, 2, 5],
+    explanation: "Le corps du sternum est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Cage thoracique, sternum" },
+
+  // ===== 16. digestif (tube_digestif) =====
+  { id: "sq_dig2_colon_asc", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_colon",
+    level: 2, consigne: "Identifiez le côlon ascendant sur ce schéma.",
+    correctLabel: "Côlon ascendant", optionNums: [3, 7, 6, 9],
+    explanation: "Le côlon ascendant est le repère n°3 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_dig2_colon_desc", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_colon",
+    level: 2, consigne: "Identifiez le côlon descendant sur ce schéma.",
+    correctLabel: "Côlon descendant", optionNums: [3, 7, 5, 11],
+    explanation: "Le côlon descendant est le repère n°7 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_dig2_colon_sigmoide", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_colon",
+    level: 2, consigne: "Identifiez le côlon sigmoïde sur ce schéma.",
+    correctLabel: "Côlon sigmoïde", optionNums: [8, 4, 10, 6],
+    explanation: "Le côlon sigmoïde est le repère n°8 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_dig2_angle_gauche", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_colon",
+    level: 2, consigne: "Identifiez l'angle colique gauche (splénique) sur ce schéma.",
+    correctLabel: "Angle colique gauche (splénique)", optionNums: [6, 9, 2, 11],
+    explanation: "L'angle colique gauche (splénique) est le repère n°6 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+  { id: "sq_dig2_anus", schemaId: "tube_digestif", subjectId: "anat-physio", chapterId: "digestif_gen",
+    level: 1, consigne: "Identifiez l'anus, dernier repère de ce schéma.",
+    correctLabel: "Anus", optionNums: [11, 9, 10, 5],
+    explanation: "L'anus est le repère n°11, dernier repère du schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif" },
+
+  // ===== 17. pied (pied_profil) =====
+  { id: "sq_p2_voute", schemaId: "pied_profil", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Identifiez la grande zone centrale (voûte plantaire) sur ce schéma de réflexologie.",
+    correctLabel: "Voûte plantaire (métatarse)", optionNums: [2, 5, 4, 3],
+    explanation: "La voûte plantaire (métatarse) est le repère n°4, la plus grande zone centrale de ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_p2_talon", schemaId: "pied_profil", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 1, consigne: "Identifiez la zone du talon sur ce schéma.",
+    correctLabel: "Talon", optionNums: [4, 5, 1, 2],
+    explanation: "Le talon est le repère n°5 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_p2_gros_orteil", schemaId: "pied_profil", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Identifiez la zone à la base du gros orteil sur ce schéma.",
+    correctLabel: "Base du 1er orteil (gros orteil)", optionNums: [3, 2, 1, 4],
+    explanation: "La base du gros orteil est le repère n°3 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_p2_petit_orteil", schemaId: "pied_profil", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Identifiez la zone à la base du petit orteil sur ce schéma.",
+    correctLabel: "Base du 5e orteil (petit orteil)", optionNums: [1, 2, 3, 5],
+    explanation: "La base du petit orteil est le repère n°2 sur ce schéma.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+  { id: "sq_p2_sous_orteils", schemaId: "pied_profil", subjectId: "anat-physio", chapterId: "osteologie_membre_inf",
+    level: 2, consigne: "Quelle zone se situe directement sous les orteils centraux ?",
+    correctLabel: "Base des orteils (zone commune)", optionNums: [1, 4, 5, 3],
+    explanation: "La base des orteils (zone commune) est le repère n°1, directement sous les orteils centraux.",
+    reference: "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire" },
+];
+
+/* ---- Questions factuelles issues des schémas (pas de repère à cliquer, format QCU classique) ---- */
+const SCHEMA_META_RAW = [
+  ["QCU","dentition",1,"Combien de dents permanentes compte une dentition adulte complète ?",
+    ["20","28","32","24"],[2],
+    "Une dentition adulte complète compte 32 dents permanentes.",
+    "Anatomie Physiologie (INFAS) – Dents et dentition"],
+  ["QCU","dentition",1,"Combien de dents primaires (dents de lait) compte la denture complète de l'enfant ?",
+    ["32","24","20","16"],[2],
+    "La denture de lait complète compte 20 dents, contre 32 pour la dentition permanente adulte.",
+    "Anatomie Physiologie (INFAS) – Dents et dentition, dents de lait"],
+  ["QCU","dentition",2,"Quelles dents sont généralement les dernières dents de lait à apparaître, entre 25 et 33 mois ?",
+    ["Les premières canines du bas","Les incisives centrales du bas","Les deuxièmes molaires du haut","Les incisives latérales du haut"],[2],
+    "Les deuxièmes molaires du haut, apparaissant entre 25 et 33 mois, sont généralement les dernières dents de lait à faire éruption.",
+    "Anatomie Physiologie (INFAS) – Dents et dentition, dents de lait"],
+  ["QCU","digestif_gen",1,"Combien de repères anatomiques principaux compte un schéma détaillé complet du tube digestif (de l'œsophage à l'anus, incluant les différentes portions du côlon) ?",
+    ["8","10","11","12"],[2],
+    "Un schéma détaillé du tube digestif, incluant l'œsophage, l'estomac, le duodénum, le cæcum/appendice, les portions du côlon (ascendant, angle splénique, descendant, sigmoïde), le rectum, le canal anal et l'anus, comporte 11 repères distincts.",
+    "Anatomie Physiologie (INFAS) – Appareil digestif, tube digestif"],
+  ["QCU","osteologie_crane",1,"Quelle partie du crâne contient et protège l'encéphale ?",
+    ["Le massif facial","Le neurocrâne","Le maxillaire","La mandibule"],[1],
+    "Le neurocrâne est la partie du crâne qui contient et protège l'encéphale ; il s'oppose au massif facial, qui comprend la mâchoire et les orbites.",
+    "Anatomie Physiologie (INFAS) – Ostéologie du crâne"],
+  ["QCU","osteologie_face",1,"Quelle partie du crâne comprend la mâchoire et les orbites ?",
+    ["Le neurocrâne","Le massif facial","L'os occipital","L'os pariétal"],[1],
+    "Le massif facial (squelette facial) comprend la mâchoire et les orbites, par opposition au neurocrâne qui contient l'encéphale.",
+    "Anatomie Physiologie (INFAS) – Ostéologie de la face"],
+  ["QCU","osteologie_gen",1,"Combien de paires de côtes flottantes possède le corps humain ?",
+    ["2","5","3","12"],[0],
+    "Le corps humain possède 2 paires de côtes flottantes (11ème et 12ème paires), qui ne rejoignent pas le sternum, contrairement aux vraies et fausses côtes.",
+    "Anatomie Physiologie (INFAS) – Cage thoracique, les côtes"],
+  ["QCU","osteologie_membre_sup",1,"Combien d'os carpiens compte le poignet au total ?",
+    ["6","8","10","5"],[1],
+    "Le poignet compte 8 os carpiens, répartis en deux rangées de 4 : la rangée proximale (scaphoïde, lunatum, triquetrum, pisiforme) et la rangée distale (trapèze, trapézoïde, capitatum, hamatum).",
+    "Anatomie Physiologie (INFAS) – Ostéologie du membre supérieur, os de la main"],
+  ["QCU","osteologie_membre_inf",2,"Sur un schéma de réflexologie plantaire à 5 zones, combien de fois la zone \"base des orteils\" (zone commune) apparaît-elle généralement, sous les orteils centraux ?",
+    ["1","2","3","4"],[2],
+    "Sur un schéma de réflexologie plantaire classique à 5 zones, la zone « base des orteils » apparaît généralement 3 fois, sous les orteils centraux.",
+    "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire"],
+  ["QCU","osteologie_membre_inf",1,"Combien de zones colorées distinctes compte généralement un schéma de réflexologie plantaire de base ?",
+    ["4","6","5","3"],[2],
+    "Un schéma de réflexologie plantaire de base comporte généralement 5 zones colorées distinctes : base des orteils, base du gros orteil, base du petit orteil, voûte plantaire et talon.",
+    "Anatomie Physiologie (INFAS) – Ostéologie du membre inférieur, schéma plantaire"],
+];
+
 function buildQuestions(raw, subjectId, prefix) {
   return raw.map((r, i) => {
     const [type, chapterId, level, stem, options, correct, explanation, reference] = r;
@@ -6323,6 +6945,7 @@ const QUESTIONS = [
   ...buildQuestions(SEMIO_EXAM_RAW, "semio-medicale", "sm"),
   ...buildQuestions(SEMIO_CHIR_ENRICHI_RAW, "semio-chir", "sc"),
   ...buildQuestions(ANATPHYSIO_EXO_RAW, "anat-physio", "ae"),
+  ...buildQuestions(SCHEMA_META_RAW, "anat-physio", "sme"),
   ...buildQuestions(GYNECO_RAW, "gyneco-obstetrique", "gy"),
   ...buildQuestions(CONCEPTS_RAW, "concepts-sciences-inf", "cn"),
   ...buildQuestions(NUTRITION_SCOLAIRE_RAW, "sante-publique", "nt"),
@@ -9759,7 +10382,7 @@ function RateAppScreen({ onBack, student }) {
   );
 }
 
-function DefiScreen({ onBack, student, onLaunchCombo }) {
+function DefiScreen({ onBack, student, onLaunchCombo, onViewMonthly }) {
   const [leaderboard, setLeaderboard] = useState(null);
   const [myRecord, setMyRecord] = useState(null);
   const [selected, setSelected] = useState([]); // subjectIds cochés pour le combo en cours
@@ -9792,7 +10415,11 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
   const monthFullyCompleted = week === null;
 
   const selectedCoef = selected.reduce((sum, id) => sum + (SUBJECT_CREDITS[id] || 1), 0);
-  const canLaunch = selected.length > 0 && selectedCoef >= weekTarget && !monthFullyCompleted;
+  // Le quota doit être atteint EXACTEMENT (ni plus, ni moins) pour pouvoir lancer le combo —
+  // c'est ce qui garantit que tous les étudiants travaillent le même volume de coefficient
+  // chaque semaine, rendant le classement hebdomadaire directement comparable entre eux.
+  const canLaunch = selected.length > 0 && selectedCoef === weekTarget && !monthFullyCompleted;
+  const coefOverTarget = selectedCoef > weekTarget;
 
   const toggleSubject = (id) => {
     if (monthFullyCompleted) return;
@@ -9829,7 +10456,12 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
           </div>
         )}
 
-        <h2 style={{ fontSize: 15, fontWeight: 700, color: COLORS.ink, marginBottom: 10 }}>🥇 Top 5 du mois</h2>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: COLORS.ink, margin: 0 }}>🥇 Top 5 du mois</h2>
+          <button onClick={onViewMonthly} style={{ ...secondaryBtn, padding: "6px 12px", fontSize: 11.5 }}>
+            📅 Classement mensuel
+          </button>
+        </div>
         {leaderboard === null ? (
           <div style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 22 }}>Chargement…</div>
         ) : leaderboard.length === 0 ? (
@@ -9894,12 +10526,13 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
 
             <div className="card-hover" style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 16 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: COLORS.ink }}>🎯 Quota semaine {week}</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: canLaunch ? COLORS.green : COLORS.inkSoft }}>{selectedCoef} / {weekTarget} coef.</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: COLORS.ink }}>🎯 Quota semaine {week} (exact)</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: canLaunch ? COLORS.green : coefOverTarget ? COLORS.red : COLORS.inkSoft }}>{selectedCoef} / {weekTarget} coef.</span>
               </div>
               <div style={{ height: 8, borderRadius: 999, background: COLORS.line, overflow: "hidden" }}>
                 <div style={{
-                  height: "100%", borderRadius: 999, background: canLaunch ? COLORS.green : COLORS.amber, transition: "width 0.3s ease",
+                  height: "100%", borderRadius: 999,
+                  background: canLaunch ? COLORS.green : coefOverTarget ? COLORS.red : COLORS.amber, transition: "width 0.3s ease",
                   width: `${Math.min(100, (selectedCoef / weekTarget) * 100)}%`,
                 }} />
               </div>
@@ -9943,10 +10576,118 @@ function DefiScreen({ onBack, student, onLaunchCombo }) {
                 opacity: canLaunch ? 1 : 0.45, cursor: canLaunch ? "pointer" : "not-allowed",
               }}
             >
-              {canLaunch ? `Lancer le combo (${selected.length} matière${selected.length > 1 ? "s" : ""}) →` : `Sélectionne au moins ${weekTarget} de coefficient pour lancer`}
+              {canLaunch
+                ? `Lancer le combo (${selected.length} matière${selected.length > 1 ? "s" : ""}) →`
+                : coefOverTarget
+                ? `Trop de coefficient sélectionné (${selectedCoef}/${weekTarget}) — décoche une matière`
+                : `Sélectionne exactement ${weekTarget} de coefficient pour lancer (${selectedCoef}/${weekTarget})`}
             </button>
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+function WeekRankCard({ title, board, scoreKey, student, highlighted }) {
+  return (
+    <div
+      className="card-hover"
+      style={{
+        background: highlighted ? "linear-gradient(135deg, #6B4FA0, #4A2E7A)" : COLORS.surface,
+        border: `1px solid ${highlighted ? "transparent" : COLORS.line}`,
+        borderRadius: 14, padding: 16,
+      }}
+    >
+      <div style={{ fontSize: 12.5, fontWeight: 700, color: highlighted ? "white" : COLORS.blueDeep, marginBottom: 10 }}>
+        {highlighted ? "🏆 " : ""}{title}
+      </div>
+      {board === null ? (
+        <div style={{ fontSize: 12, color: highlighted ? "rgba(255,255,255,0.8)" : COLORS.inkSoft }}>Chargement…</div>
+      ) : board.length === 0 ? (
+        <div style={{ fontSize: 12, color: highlighted ? "rgba(255,255,255,0.8)" : COLORS.inkSoft }}>Aucune donnée pour l'instant</div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {board.slice(0, 5).map((r, i) => {
+            const isMe = r.matricule === student.matricule;
+            return (
+              <div
+                key={r.matricule}
+                style={{
+                  display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12.5,
+                  padding: "6px 8px", borderRadius: 8,
+                  background: isMe ? (highlighted ? "rgba(255,255,255,0.18)" : COLORS.blueSoft) : "transparent",
+                  color: highlighted ? "white" : COLORS.ink,
+                }}
+              >
+                <span>{i + 1}. {displayName(r.prenom, r.nom)} {isMe && "(toi)"}</span>
+                <b>{r[scoreKey].toFixed(2)}</b>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DefiMonthlyRankingScreen({ onBack, student }) {
+  const [weekBoards, setWeekBoards] = useState({ 1: null, 2: null, 3: null, 4: null });
+  const [finalBoard, setFinalBoard] = useState(null);
+  const isoMonth = currentIsoMonth();
+  const MOIS_NOMS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const [annee, moisNum] = isoMonth.split("-");
+  const moisLabel = MOIS_NOMS[Number(moisNum) - 1];
+
+  useEffect(() => {
+    (async () => {
+      const [s1, s2, s3, s4, final] = await Promise.all([
+        loadDefiWeekLeaderboard(isoMonth, 1),
+        loadDefiWeekLeaderboard(isoMonth, 2),
+        loadDefiWeekLeaderboard(isoMonth, 3),
+        loadDefiWeekLeaderboard(isoMonth, 4),
+        loadDefiLeaderboard(isoMonth),
+      ]);
+      setWeekBoards({ 1: s1, 2: s2, 3: s3, 4: s4 });
+      setFinalBoard(final);
+    })();
+  }, []);
+
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 18px 60px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+          ← Retour au défi
+        </button>
+
+        <div
+          className="anim-pop"
+          style={{
+            background: "linear-gradient(135deg, #C4841E, #A8650F)", borderRadius: 16, padding: "18px 22px",
+            color: "white", marginBottom: 20, textAlign: "center",
+          }}
+        >
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, fontWeight: 700, textTransform: "capitalize" }}>
+            {moisLabel} {annee}
+          </div>
+          <div style={{ fontSize: 12, opacity: 0.9, marginTop: 2 }}>Classement complet du mois en cours</div>
+        </div>
+
+        <div className="anim-fade-up" style={{ marginBottom: 16 }}>
+          <WeekRankCard title="Classement final du mois" board={finalBoard} scoreKey="moyennePonderee" student={student} highlighted />
+        </div>
+
+        <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 12 }}>
+          <WeekRankCard title="Semaine 1" board={weekBoards[1]} scoreKey="moyenneSemaine" student={student} />
+          <WeekRankCard title="Semaine 2" board={weekBoards[2]} scoreKey="moyenneSemaine" student={student} />
+          <WeekRankCard title="Semaine 3" board={weekBoards[3]} scoreKey="moyenneSemaine" student={student} />
+          <WeekRankCard title="Semaine 4" board={weekBoards[4]} scoreKey="moyenneSemaine" student={student} />
+        </div>
+
+        <p style={{ fontSize: 11, color: COLORS.inkSoft, textAlign: "center", marginTop: 20 }}>
+          Le mois prochain, un nouveau classement démarre automatiquement à zéro — celui-ci restera consultable tel quel comme archive.
+        </p>
       </div>
     </div>
   );
@@ -12304,7 +13045,8 @@ export default function App() {
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "mynotes") return <MyNotesScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "rateapp") return <RateAppScreen onBack={() => setScreen("dashboard")} student={student} />;
-  if (screen === "defi") return <DefiScreen onBack={() => setScreen("dashboard")} student={student} onLaunchCombo={handleLaunchCombo} />;
+  if (screen === "defi") return <DefiScreen onBack={() => setScreen("dashboard")} student={student} onLaunchCombo={handleLaunchCombo} onViewMonthly={() => setScreen("defiMonthly")} />;
+  if (screen === "defiMonthly") return <DefiMonthlyRankingScreen onBack={() => setScreen("defi")} student={student} />;
 
   if (screen === "matieres") return <MatieresScreen onBack={handleAbort} onSelect={handleSelectSubject} />;
 
