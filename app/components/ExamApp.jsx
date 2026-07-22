@@ -6364,7 +6364,7 @@ const SCHEMAS = {
   reflexo_pied: {
     titre: "Os du pied — schéma de réflexologie plantaire",
     type: "image",
-    imageSrc: "/schemas/os-dupied.png",
+    imageSrc: "/schemas/pied.png",
     aspectRatio: "4 / 3",
     points: [
       { num: 1, label: "Base des orteils (zone commune)" },
@@ -6416,7 +6416,7 @@ const SCHEMAS = {
   squelette_axial_appendiculaire: {
     titre: "Squelette axial et appendiculaire",
     type: "image",
-    imageSrc: "/schemas/squelette-axialapendiculaire.png",
+    imageSrc: "/schemas/squelette-axialappendiculaire.png",
     aspectRatio: "4 / 3",
     points: [
       { num: 1, label: "Squelette axial (tête + tronc)" },
@@ -9860,6 +9860,21 @@ function shuffleArr(arr) {
 function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
   const { schema, correctNum } = question;
   const letters = ["A", "B", "C", "D"];
+  // État réactif du chargement de l'image, avec nouvelles tentatives automatiques : un échec
+  // isolé (connexion lente, timeout réseau) ne condamne plus l'image définitivement — jusqu'à
+  // 3 essais espacés avant d'afficher le vrai message d'erreur.
+  const [imgAttempt, setImgAttempt] = useState(0);
+  const [imgFailed, setImgFailed] = useState(false);
+  const MAX_ATTEMPTS = 3;
+
+  const handleImgError = () => {
+    if (imgAttempt < MAX_ATTEMPTS - 1) {
+      setTimeout(() => setImgAttempt((n) => n + 1), 600 * (imgAttempt + 1));
+    } else {
+      setImgFailed(true);
+    }
+  };
+
   return (
     <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 20 }}>
       <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.blueDeep, textTransform: "uppercase", letterSpacing: 0.4, marginBottom: 6 }}>
@@ -9869,24 +9884,28 @@ function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
 
       {schema.type === "image" ? (
         <div style={{ position: "relative", width: "100%", maxWidth: 320, margin: "0 auto", aspectRatio: schema.aspectRatio, background: "#FBFDFE", borderRadius: 12, overflow: "hidden" }}>
-          <img
-            src={schema.imageSrc}
-            alt={schema.titre}
-            style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-              const fallback = e.currentTarget.parentElement.querySelector(".schema-img-error");
-              if (fallback) fallback.style.display = "flex";
-            }}
-          />
-          <div
-            className="schema-img-error"
-            style={{ display: "none", position: "absolute", inset: 0, alignItems: "center", justifyContent: "center", flexDirection: "column", padding: 16, textAlign: "center", background: "#FBFDFE" }}
-          >
-            <div style={{ fontSize: 24, marginBottom: 8 }}>🖼️</div>
-            <div style={{ fontSize: 12, color: COLORS.red, fontWeight: 600, marginBottom: 4 }}>Image introuvable</div>
-            <div style={{ fontSize: 11, color: COLORS.inkSoft }}>Fichier attendu : <code>public{schema.imageSrc}</code></div>
-          </div>
+          {!imgFailed && (
+            <img
+              key={imgAttempt}
+              src={`${schema.imageSrc}?try=${imgAttempt}`}
+              alt={schema.titre}
+              style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+              onError={handleImgError}
+            />
+          )}
+          {imgFailed && (
+            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", padding: 16, textAlign: "center", background: "#FBFDFE" }}>
+              <div style={{ fontSize: 24, marginBottom: 8 }}>🖼️</div>
+              <div style={{ fontSize: 12, color: COLORS.red, fontWeight: 600, marginBottom: 4 }}>Image introuvable après {MAX_ATTEMPTS} tentatives</div>
+              <div style={{ fontSize: 11, color: COLORS.inkSoft, marginBottom: 10 }}>Fichier attendu : <code>public{schema.imageSrc}</code></div>
+              <button
+                onClick={() => { setImgFailed(false); setImgAttempt(0); }}
+                style={{ ...secondaryBtn, padding: "6px 14px", fontSize: 11.5 }}
+              >
+                ↺ Réessayer
+              </button>
+            </div>
+          )}
           {/* Les numéros sont déjà dessinés directement sur l'image (annotée manuellement) :
               plus besoin de cercles superposés ici, contrairement à l'ancienne version. */}
         </div>

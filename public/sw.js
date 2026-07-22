@@ -4,7 +4,7 @@
 // ressources statiques (icônes, polices) qui ne changent presque jamais.
 // Le nom du cache change à chaque nouvelle version du service worker : ça force la purge
 // automatique de l'ancien cache et évite de rester bloqué sur une vieille version de l'app.
-const CACHE_VERSION = "infas-prepa-v2";
+const CACHE_VERSION = "infas-prepa-v3";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
