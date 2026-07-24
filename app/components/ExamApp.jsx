@@ -9621,20 +9621,33 @@ function LoginScreen({ onLogin }) {
   );
 }
 
+// Définis avec des "getters" plutôt que des valeurs figées : { ...primaryBtn } (utilisé partout
+// dans le fichier) réévalue ces propriétés à chaque rendu, donc les boutons suivent bien le
+// thème actif (clair/sombre/noir) sans avoir à toucher aux centaines d'usages existants.
 const inputStyle = {
-  width: "100%", boxSizing: "border-box", padding: "10px 12px", borderRadius: 9,
-  border: `1px solid ${COLORS.line}`, fontSize: 14, fontFamily: "'IBM Plex Mono', monospace",
-  color: COLORS.ink, outline: "none", background: "#FBFDFE",
+  width: "100%", boxSizing: "border-box", padding: "11px 13px", borderRadius: 10,
+  outline: "none",
+  get border() { return `1px solid ${COLORS.line}`; },
+  fontSize: 14, fontFamily: "'IBM Plex Mono', monospace",
+  get color() { return COLORS.ink; },
+  get background() { return COLORS.surface; },
+  transition: "border-color 0.2s ease, box-shadow 0.2s ease",
 };
 const primaryBtn = {
-  background: COLORS.blue, color: "white", border: "none", borderRadius: 10,
-  padding: "11px 18px", fontSize: 14, fontWeight: 600, cursor: "pointer",
+  get background() { return `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDeep})`; },
+  color: "white", border: "none", borderRadius: 11,
+  padding: "12px 19px", fontSize: 14, fontWeight: 600, cursor: "pointer",
   fontFamily: "'IBM Plex Sans', sans-serif",
+  get boxShadow() { return `0 4px 14px ${COLORS.blueDeep}40`; },
 };
 const secondaryBtn = {
-  background: COLORS.surface, color: COLORS.blueDeep, border: `1px solid ${COLORS.line}`, borderRadius: 10,
+  get background() { return COLORS.surface; },
+  get color() { return COLORS.blueDeep; },
+  get border() { return `1px solid ${COLORS.line}`; },
+  borderRadius: 10,
   padding: "10px 16px", fontSize: 13.5, fontWeight: 600, cursor: "pointer",
   fontFamily: "'IBM Plex Sans', sans-serif",
+  get boxShadow() { return `0 1px 3px ${COLORS.ink}0F`; },
 };
 
 function Field({ label, value, onChange, type = "text", style }) {
@@ -10275,13 +10288,17 @@ function useAppAnimations() {
       .anim-stagger > *:nth-child(7) { animation-delay: 0.32s; }
       .anim-stagger > *:nth-child(8) { animation-delay: 0.37s; }
       .anim-stagger > *:nth-child(n+9) { animation-delay: 0.4s; }
-      button { transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease; }
-      button:hover:not(:disabled) { transform: translateY(-1px); }
-      button:active:not(:disabled) { transform: translateY(0); }
-      .card-hover { transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease; }
-      .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(15,39,51,0.12); }
-      .reveal-on-scroll { opacity: 0; transform: translateY(28px) scale(0.985); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+      button { transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, opacity 0.15s ease, filter 0.18s ease; }
+      button:hover:not(:disabled) { transform: translateY(-1.5px); filter: brightness(1.04); }
+      button:active:not(:disabled) { transform: translateY(0); filter: brightness(0.98); }
+      .card-hover { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+      .card-hover:hover { transform: translateY(-4px) scale(1.008); box-shadow: 0 16px 32px -8px rgba(15,39,51,0.18), 0 4px 10px -2px rgba(15,39,51,0.08); }
+      .reveal-on-scroll { opacity: 0; transform: translateY(32px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
       .reveal-on-scroll.is-revealed { opacity: 1; transform: translateY(0) scale(1); }
+      .reveal-on-scroll.is-revealed:nth-child(2) { transition-delay: 0.06s; }
+      .reveal-on-scroll.is-revealed:nth-child(3) { transition-delay: 0.12s; }
+      ::selection { background: ${THEME_PALETTES.clair.blue}33; }
+      * { scrollbar-width: thin; }
     `;
     document.head.appendChild(style);
   }, []);
@@ -11427,11 +11444,17 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
               Rechercher un terme →
             </button>
           </div>
-          <div style={{ background: "#B25E2E", borderRadius: 16, padding: "20px 20px", color: "white" }}>
+          <div style={{ background: "#8A8F95", borderRadius: 16, padding: "20px 20px", color: "white", opacity: 0.6, position: "relative" }}>
+            <div style={{
+              position: "absolute", top: 12, right: 12, fontSize: 9.5, fontWeight: 700, letterSpacing: 0.4,
+              background: "rgba(255,255,255,0.25)", padding: "3px 8px", borderRadius: 999, textTransform: "uppercase",
+            }}>
+              Bientôt disponible
+            </div>
             <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🩻 Schémas légendés</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Identifiez les structures numérotées sur un schéma, comme dans les vrais examens INFAS/ISS (crâne, main, pied, cage thoracique, tube digestif).</div>
-            <button onClick={onSchemaPractice} style={{ ...primaryBtn, background: "white", color: "#B25E2E", width: "100%" }}>
-              S'entraîner →
+            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>En cours de révision pour garantir des repères fiables — de retour très prochainement.</div>
+            <button disabled style={{ ...primaryBtn, background: "rgba(255,255,255,0.5)", color: "#5A5F63", width: "100%", cursor: "not-allowed" }}>
+              Indisponible pour le moment
             </button>
           </div>
           <div style={{ background: "#3E5A7A", borderRadius: 16, padding: "20px 20px", color: "white" }}>
