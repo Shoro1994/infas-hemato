@@ -9465,8 +9465,11 @@ function LoginScreen({ onLogin }) {
       setError("Merci de renseigner tous les champs.");
       return;
     }
-    if (!/^[0-9]{2}-[0-9]{5}$/.test(matricule.trim())) {
-      setError("Le matricule doit être au format 25-00000 : deux chiffres, un tiret, puis exactement cinq chiffres.");
+    // Nouvelles inscriptions : numéro de téléphone (10 chiffres, commence par 0) au lieu du
+    // matricule — les comptes déjà inscrits avec un matricule (format 25-00000) continuent de
+    // fonctionner normalement pour la connexion, sans aucun changement pour eux.
+    if (!/^0[0-9]{9}$/.test(matricule.trim())) {
+      setError("Le numéro de téléphone doit comporter exactement 10 chiffres et commencer par 0 (ex : 0101010101).");
       return;
     }
     if (!/^[0-9]{4}$/.test(pwd.trim())) {
@@ -9477,7 +9480,7 @@ function LoginScreen({ onLogin }) {
     const existing = await findStudent(matricule.trim());
     if (existing) {
       setBusy(false);
-      setError("Ce matricule est déjà enregistré. Utilisez plutôt « Se connecter ».");
+      setError("Ce numéro de téléphone est déjà enregistré. Utilisez plutôt « Se connecter ».");
       return;
     }
     const profile = {
@@ -9563,7 +9566,7 @@ function LoginScreen({ onLogin }) {
             <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, margin: "14px 0 4px" }}>Connexion</h1>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 20px" }}>Identifiant = votre matricule. Mot de passe = votre année de naissance.</p>
 
-            <Field label="MATRICULE" value={matricule} onChange={setMatricule} />
+            <Field label="MATRICULE / NUMÉRO DE TÉL." value={matricule} onChange={setMatricule} />
             <Field label="ANNÉE DE NAISSANCE" value={pwd} onChange={setPwd} type="password" style={{ marginTop: 14 }} />
 
             {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
@@ -9583,7 +9586,7 @@ function LoginScreen({ onLogin }) {
               Votre <b>matricule</b> et votre <b>année de naissance</b> serviront respectivement d'identifiant et de mot de passe à chaque connexion — notez-les bien.
             </p>
 
-            <Field label="MATRICULE (ex : 25-00000)" value={matricule} onChange={setMatricule} />
+            <Field label="NUMÉRO DE TÉLÉPHONE (ex : 0101010101)" value={matricule} onChange={setMatricule} />
             <Field label="ANNÉE DE NAISSANCE (ex : 1900)" value={pwd} onChange={setPwd} style={{ marginTop: 14 }} />
             <Field label="NOM" value={nom} onChange={setNom} style={{ marginTop: 14 }} />
             <Field label="PRÉNOM" value={prenom} onChange={setPrenom} style={{ marginTop: 14 }} />
