@@ -503,6 +503,576 @@ const VIRTUAL_PATIENT_CASES = [
     ],
     expected: "Démarche de dépistage volontaire (VIH/IST). Conduite à tenir : counseling pré-test, réalisation du test avec consentement, counseling post-test adapté au résultat, orientation si positif. Soins infirmiers : écoute et confidentialité, éducation sur la prévention, accompagnement psychologique, orientation vers une prise en charge adaptée si besoin.",
   },
+  {
+    id: "vp21", level: 2,
+    profil: "Nourrisson, 14 mois (mère présente)",
+    motif: "Diarrhée depuis 2 jours",
+    ouverture: "Mon bébé a la diarrhée depuis avant-hier, il fait beaucoup de selles liquides et il semble fatigué.",
+    faits: [
+      { q: "Combien de selles par jour ?", r: "Au moins 6 à 7 selles liquides par jour." },
+      { q: "Vomissements ?", r: "Oui, il a vomi deux fois hier." },
+      { q: "Il boit encore ?", r: "Il boit, mais moins que d'habitude, et il pleure sans larmes." },
+      { q: "Fièvre ?", r: "Un peu, 38°C ce matin." },
+      { q: "Sang dans les selles ?", r: "Non, je n'ai pas vu de sang." },
+      { q: "Alimentation habituelle ?", r: "Il est encore allaité, avec un peu de bouillie." },
+    ],
+    examens: [
+      { nom: "Pli cutané", resultat: "S'efface lentement." },
+      { nom: "Yeux", resultat: "Légèrement enfoncés." },
+      { nom: "Soif", resultat: "Boit avidement quand on lui propose de l'eau." },
+      { nom: "Poids", resultat: "Perte de poids d'environ 5% par rapport au dernier contrôle." },
+    ],
+    expected: "Diarrhée aiguë avec déshydratation modérée (signes : pli cutané lent, yeux enfoncés, soif avide — classification Plan B selon la PCIMEN). Conduite à tenir : réhydratation orale par SRO selon le Plan B, poursuite de l'allaitement, zinc pendant 10 jours, surveillance de l'évolution. Soins infirmiers : peser l'enfant, préparer et faire boire la SRO par petites quantités fréquentes, surveiller les signes de déshydratation sévère, éduquer la mère sur la poursuite de l'allaitement.",
+  },
+  {
+    id: "vp22", level: 3,
+    profil: "Nouveau-né, 5 jours",
+    motif: "Coloration jaune de la peau",
+    ouverture: "Mon bébé a la peau et les yeux jaunes depuis hier, je m'inquiète.",
+    faits: [
+      { q: "Depuis quand exactement ?", r: "J'ai remarqué ça hier après-midi, ça semble s'étendre." },
+      { q: "Allaitement ?", r: "Oui, il tète bien, toutes les 2-3 heures." },
+      { q: "Selles et urines ?", r: "Selles jaunes normales, urines claires." },
+      { q: "Terme de la grossesse ?", r: "Il est né à terme, accouchement normal." },
+      { q: "Groupe sanguin de la mère ?", r: "Je suis O négatif je crois." },
+      { q: "Comportement du bébé ?", r: "Il est un peu somnolent mais se réveille pour téter." },
+    ],
+    examens: [
+      { nom: "Examen clinique (règle de Kramer)", resultat: "Ictère s'étendant du visage jusqu'au thorax." },
+      { nom: "Bilirubinémie totale", resultat: "Élevée, au-dessus du seuil de photothérapie pour l'âge." },
+      { nom: "Groupe sanguin du nouveau-né et test de Coombs", resultat: "En cours de réalisation." },
+    ],
+    expected: "Ictère du nouveau-né nécessitant une prise en charge (à différencier de l'ictère physiologique bénin ; surveiller une possible incompatibilité materno-fœtale vu le groupe maternel O négatif). Conduite à tenir : photothérapie selon le taux de bilirubine, poursuite et renforcement de l'allaitement, surveillance de l'évolution de l'ictère. Soins infirmiers : installer en photothérapie en protégeant les yeux, surveiller la température, encourager les tétées fréquentes, surveiller l'aggravation (léthargie, refus de téter).",
+  },
+  {
+    id: "vp23", level: 3,
+    profil: "Enfant, 18 mois",
+    motif: "Œdèmes des pieds et amaigrissement",
+    ouverture: "Mon enfant a les pieds gonflés depuis quelques jours, et il a beaucoup maigri ces derniers mois.",
+    faits: [
+      { q: "Alimentation ?", r: "On mange surtout du riz et de la bouillie, peu de viande ou de poisson, on a des difficultés financières." },
+      { q: "Appétit ?", r: "Il mange peu, il est plutôt grognon et ne joue plus comme avant." },
+      { q: "Autres gonflements ?", r: "Oui, son visage semble un peu gonflé aussi depuis peu." },
+      { q: "Diarrhée récente ?", r: "Oui, il a eu plusieurs épisodes ces dernières semaines." },
+      { q: "Vaccinations ?", r: "Je ne suis pas sûre qu'il soit à jour." },
+    ],
+    examens: [
+      { nom: "Œdèmes", resultat: "Œdèmes bilatéraux des pieds, godet positif." },
+      { nom: "Périmètre brachial (PB)", resultat: "10,8 cm." },
+      { nom: "Comportement", resultat: "Apathique, peu réactif, cheveux décolorés et cassants." },
+      { nom: "Poids/Taille", resultat: "Très inférieur à la normale pour l'âge." },
+    ],
+    expected: "Malnutrition aiguë sévère avec œdèmes bilatéraux, forme kwashiorkor (périmètre brachial < 11,5 cm, œdèmes, apathie, altération des phanères). Conduite à tenir : prise en charge nutritionnelle spécialisée avec ATPE, recherche et traitement des complications (infections), suivi régulier. Soins infirmiers : mesurer le périmètre brachial et le poids, surveiller les signes de complications, encourager l'allaitement s'il est poursuivi, éduquer la mère sur l'alimentation de complément adaptée.",
+  },
+  {
+    id: "vp24", level: 2,
+    profil: "Enfant, 7 ans",
+    motif: "Démangeaisons anales la nuit",
+    ouverture: "Mon fils se gratte les fesses depuis quelques jours, surtout la nuit, et il dort mal.",
+    faits: [
+      { q: "Depuis quand ?", r: "Environ une semaine." },
+      { q: "Autres enfants dans la famille ?", r: "Oui, deux autres enfants qui se grattent aussi un peu." },
+      { q: "Douleur abdominale ?", r: "Il se plaint parfois de mal au ventre." },
+      { q: "Fièvre ?", r: "Non, pas de fièvre." },
+      { q: "Selles ?", r: "Normales, pas de sang ni de vers visibles." },
+      { q: "Hygiène des mains ?", r: "Il se ronge souvent les ongles." },
+    ],
+    examens: [
+      { nom: "Scotch-test anal (le matin)", resultat: "Présence d'œufs typiques d'oxyures." },
+      { nom: "Examen clinique", resultat: "Lésions de grattage périanales, pas d'autre anomalie." },
+    ],
+    expected: "Oxyurose (Enterobius vermicularis), avec probable contamination de plusieurs membres de la famille (auto-infestation et transmission interhumaine). Conduite à tenir : traitement antihelminthique (albendazole) de l'enfant et de toute la famille, mesures d'hygiène. Soins infirmiers : éduquer sur le lavage des mains, les ongles courts, le changement fréquent des draps et sous-vêtements, expliquer l'importance de traiter tout le foyer simultanément.",
+  },
+  {
+    id: "vp25", level: 2,
+    profil: "Homme, 45 ans, agriculteur",
+    motif: "Sang dans les urines",
+    ouverture: "Depuis quelques semaines, je vois du sang à la fin de mes urines, surtout en fin de miction.",
+    faits: [
+      { q: "Douleur associée ?", r: "Une gêne légère en urinant, mais pas de vraie douleur." },
+      { q: "Zone de vie/activité ?", r: "Je travaille dans les rizières, je suis souvent dans l'eau des champs." },
+      { q: "Fièvre ?", r: "Non, pas de fièvre." },
+      { q: "Fréquence des mictions ?", r: "Un peu plus fréquentes que d'habitude." },
+      { q: "Antécédents ?", r: "Rien de particulier, je n'ai jamais eu ce problème avant." },
+    ],
+    examens: [
+      { nom: "Bandelette urinaire", resultat: "Présence de sang (hématurie confirmée)." },
+      { nom: "Examen parasitologique des urines", resultat: "Présence d'œufs de Schistosoma haematobium." },
+      { nom: "Échographie vésicale", resultat: "Légère irrégularité de la paroi vésicale." },
+    ],
+    expected: "Bilharziose urinaire (Schistosoma haematobium), favorisée par l'exposition professionnelle prolongée à l'eau douce stagnante (rizières). Conduite à tenir : traitement antiparasitaire spécifique, surveillance de la fonction rénale et vésicale. Soins infirmiers : éduquer sur les mesures de protection individuelle lors du travail en eau douce (bottes), sensibiliser à la consultation précoce devant toute hématurie.",
+  },
+  {
+    id: "vp26", level: 3,
+    profil: "Femme, 27 ans, enceinte de 32 semaines",
+    motif: "Maux de tête et vision trouble",
+    ouverture: "J'ai très mal à la tête depuis ce matin et je vois parfois flou, j'ai aussi les pieds très gonflés.",
+    faits: [
+      { q: "Depuis quand les œdèmes ?", r: "Ça a beaucoup augmenté ces derniers jours, mes bagues ne rentrent plus." },
+      { q: "Douleur abdominale ?", r: "Oui, une douleur en barre sous les côtes depuis ce matin." },
+      { q: "Mouvements du bébé ?", r: "Il bouge, mais je trouve que c'est un peu moins qu'avant." },
+      { q: "Suivi de grossesse ?", r: "J'ai fait deux consultations prénatales, tout allait bien avant." },
+      { q: "Première grossesse ?", r: "Oui, c'est ma première grossesse." },
+    ],
+    examens: [
+      { nom: "Tension artérielle", resultat: "158/102 mmHg." },
+      { nom: "Bandelette urinaire", resultat: "Protéinurie ++ ." },
+      { nom: "Réflexes ostéotendineux", resultat: "Vifs, légèrement augmentés." },
+      { nom: "Monitoring fœtal", resultat: "Rythme cardiaque fœtal normal pour l'instant." },
+    ],
+    expected: "Pré-éclampsie sévère (hypertension, protéinurie, céphalées, troubles visuels, douleur épigastrique en barre — signes de gravité). Conduite à tenir : hospitalisation en urgence, antihypertenseurs, surveillance materno-fœtale rapprochée, prévention de l'éclampsie, discussion de l'extraction fœtale selon l'évolution. Soins infirmiers : surveillance stricte de la tension artérielle et des signes neurosensoriels, repos strict, surveillance des mouvements fœtaux, préparation à une prise en charge en urgence.",
+  },
+  {
+    id: "vp27", level: 2,
+    profil: "Enfant, 4 ans",
+    motif: "Douleur abdominale et amaigrissement progressif",
+    ouverture: "Mon enfant se plaint souvent de mal au ventre depuis quelques semaines, et il a maigri un peu.",
+    faits: [
+      { q: "Appétit ?", r: "Il mange bien, parfois même plus qu'avant, mais ne prend pas de poids." },
+      { q: "A-t-il déjà vu des vers ?", r: "Oui, une fois dans ses selles, ça m'a fait peur." },
+      { q: "Toux récente ?", r: "Il a eu une petite toux il y a quelques semaines, sans fièvre." },
+      { q: "Habitudes alimentaires ?", r: "Il mange parfois des fruits et légumes non lavés du jardin." },
+      { q: "Diarrhée ?", r: "Non, transit normal en dehors de la douleur." },
+    ],
+    examens: [
+      { nom: "Examen parasitologique des selles", resultat: "Présence d'œufs d'Ascaris lumbricoides." },
+      { nom: "Examen clinique", resultat: "Abdomen souple, légèrement sensible, pas de défense." },
+      { nom: "NFS", resultat: "Légère hyperéosinophilie." },
+    ],
+    expected: "Ascaridiose intestinale (Ascaris lumbricoides), confirmée par la découverte d'un ver et l'examen parasitologique des selles ; la toux évoquait probablement le passage pulmonaire larvaire (syndrome de Löffler). Conduite à tenir : traitement antihelminthique (albendazole ou mébendazole). Soins infirmiers : éduquer sur le lavage des mains et des légumes/fruits avant consommation, surveiller l'évolution du poids après traitement.",
+  },
+  {
+    id: "vp28", level: 3,
+    profil: "Femme, 68 ans",
+    motif: "Confusion et faiblesse générale, sous plusieurs médicaments",
+    ouverture: "Ma fille m'a amenée parce que je suis très fatiguée et un peu confuse depuis deux jours. Je prends beaucoup de médicaments.",
+    faits: [
+      { q: "Quels médicaments prenez-vous ?", r: "Un médicament pour le cœur, un pour la tension, un anticoagulant, et un pour dormir." },
+      { q: "Avez-vous changé de traitement récemment ?", r: "Oui, le médecin a ajouté un nouveau médicament la semaine dernière." },
+      { q: "Alimentation, hydratation ?", r: "Je mange et bois moins depuis quelques jours, je n'ai pas très faim." },
+      { q: "Chutes récentes ?", r: "J'ai failli tomber hier en me levant." },
+      { q: "Saignements ?", r: "J'ai remarqué un bleu important sur mon bras sans me souvenir m'être cognée." },
+    ],
+    examens: [
+      { nom: "Tension artérielle", resultat: "98/58 mmHg (basse pour elle)." },
+      { nom: "Examen clinique", resultat: "Hématome important à l'avant-bras, confusion légère, pas de déficit moteur." },
+      { nom: "Bilan de coagulation (INR)", resultat: "Très élevé, hors zone thérapeutique." },
+    ],
+    expected: "Suspicion de surdosage en anticoagulant (probable interaction médicamenteuse avec le nouveau traitement ajouté), associé à une possible déshydratation contribuant à la confusion. Conduite à tenir : arrêt ou adaptation de l'anticoagulant selon avis médical, surveillance du risque hémorragique, réhydratation prudente, réévaluation de l'ensemble du traitement (ordonnance trop chargée). Soins infirmiers : surveiller tout signe de saignement, réévaluer régulièrement la conscience et la tension, vérifier scrupuleusement la concordance entre prescriptions et traitements pris à domicile.",
+  },
+  {
+    id: "vp29", level: 2,
+    profil: "Nourrisson, 3 mois",
+    motif: "Prématurité, difficulté de prise de poids",
+    ouverture: "Mon bébé est né prématurément à 33 semaines, il a maintenant 3 mois mais je trouve qu'il grandit lentement.",
+    faits: [
+      { q: "Poids de naissance ?", r: "Il pesait 1,8 kg à la naissance." },
+      { q: "Alimentation actuelle ?", r: "Je l'allaite, mais j'ai l'impression qu'il tète faiblement." },
+      { q: "A-t-il été hospitalisé ?", r: "Oui, trois semaines en néonatologie après la naissance." },
+      { q: "Température, comportement ?", r: "Il est plutôt calme, un peu somnolent parfois." },
+      { q: "Suivi depuis la sortie ?", r: "On a eu une seule consultation depuis la sortie de l'hôpital." },
+    ],
+    examens: [
+      { nom: "Poids actuel", resultat: "3,1 kg (gain de poids inférieur à l'attendu depuis la naissance)." },
+      { nom: "Périmètre crânien", resultat: "Légèrement inférieur à la courbe attendue." },
+      { nom: "Examen clinique", resultat: "Bon tonus général, pas de signe infectieux, succion faible notée." },
+    ],
+    expected: "Ancien prématuré avec croissance pondérale insuffisante, probablement liée à une succion encore faible et un allaitement à optimiser. Conduite à tenir : renforcement de l'accompagnement à l'allaitement, surveillance rapprochée de la courbe de croissance, recherche d'une cause associée si la stagnation persiste. Soins infirmiers : peser et mesurer régulièrement, observer et corriger la position au sein, encourager des tétées plus fréquentes, programmer un suivi rapproché.",
+  },
+  {
+    id: "vp30", level: 3,
+    profil: "Homme, 34 ans",
+    motif: "Fièvre élevée et confusion depuis quelques heures",
+    ouverture: "Je me sens très mal depuis ce matin, j'ai très chaud et ma famille dit que je parle bizarrement.",
+    faits: [
+      { q: "Voyage récent ou zone de vie ?", r: "Je vis en zone rurale, il y a beaucoup de moustiques chez nous." },
+      { q: "Traitement préventif contre le paludisme ?", r: "Non, je n'utilise pas de moustiquaire régulièrement." },
+      { q: "Symptômes associés ?", r: "Maux de tête intenses, courbatures, un peu de diarrhée." },
+      { q: "Convulsions ?", r: "Ma famille dit que j'ai eu un tremblement bizarre tout à l'heure." },
+      { q: "Urines ?", r: "Plus foncées que d'habitude depuis ce matin." },
+    ],
+    examens: [
+      { nom: "Température", resultat: "40,2°C." },
+      { nom: "Test de diagnostic rapide (TDR) paludisme", resultat: "Positif à Plasmodium falciparum." },
+      { nom: "État de conscience", resultat: "Confus, désorienté dans le temps et l'espace." },
+      { nom: "Glycémie capillaire", resultat: "Basse." },
+    ],
+    expected: "Paludisme grave à Plasmodium falciparum, avec signes de gravité neurologiques (confusion, possible convulsion) et hypoglycémie associée — urgence vitale. Conduite à tenir : hospitalisation en urgence, traitement antipaludique par voie injectable selon protocole, correction de l'hypoglycémie, surveillance neurologique rapprochée. Soins infirmiers : surveillance stricte de la conscience et de la glycémie, pose de voie veineuse, position latérale de sécurité en cas de convulsion, alerter immédiatement en cas d'aggravation.",
+  },
+  {
+    id: "vp31", level: 2,
+    profil: "Enfant, 9 ans",
+    motif: "Démangeaisons oculaires et nodules sous-cutanés",
+    ouverture: "Mon enfant se gratte beaucoup les yeux et la peau, et j'ai remarqué des petites boules sous la peau.",
+    faits: [
+      { q: "Zone de vie ?", r: "On vit près d'une rivière, il y a beaucoup de mouches noires (simulies)." },
+      { q: "Depuis quand ?", r: "Les démangeaisons durent depuis plusieurs mois." },
+      { q: "Vision ?", r: "Il se plaint parfois de voir un peu flou." },
+      { q: "Localisation des nodules ?", r: "Surtout sur le tronc et les hanches." },
+      { q: "Autres enfants du village concernés ?", r: "Oui, plusieurs enfants ont les mêmes symptômes." },
+    ],
+    examens: [
+      { nom: "Examen cutané", resultat: "Nodules sous-cutanés fermes et indolores, lésions de grattage diffuses." },
+      { nom: "Examen ophtalmologique", resultat: "Début d'atteinte oculaire à surveiller." },
+      { nom: "Biopsie cutanée exsangue", resultat: "Présence de microfilaires d'Onchocerca volvulus." },
+    ],
+    expected: "Onchocercose (cécité des rivières), transmise par la simulie en zone de rivière à courant rapide. Conduite à tenir : traitement antiparasitaire spécifique, surveillance ophtalmologique régulière pour prévenir la cécité. Soins infirmiers : éduquer sur la protection contre les piqûres de simulies, sensibiliser au dépistage communautaire, surveiller l'évolution des atteintes oculaires.",
+  },
+  {
+    id: "vp32", level: 3,
+    profil: "Femme, 24 ans",
+    motif: "Diarrhée glairo-sanglante et douleurs abdominales chroniques",
+    ouverture: "J'ai des douleurs au ventre depuis plusieurs semaines, avec des selles qui contiennent parfois du sang et du mucus.",
+    faits: [
+      { q: "Activité habituelle ?", r: "Je fais la lessive et je me baigne souvent dans le fleuve près de chez moi." },
+      { q: "Fièvre ?", r: "Un peu par moments, pas très élevée." },
+      { q: "Poids ?", r: "J'ai un peu maigri ces derniers mois." },
+      { q: "Autres symptômes ?", r: "Je me sens fatiguée, et mon ventre est parfois gonflé." },
+      { q: "Antécédents ?", r: "Rien de particulier avant ça." },
+    ],
+    examens: [
+      { nom: "Examen parasitologique des selles", resultat: "Présence d'œufs de Schistosoma mansoni." },
+      { nom: "Palpation abdominale", resultat: "Hépato-splénomégalie modérée." },
+      { nom: "NFS", resultat: "Anémie modérée, hyperéosinophilie." },
+    ],
+    expected: "Bilharziose intestinale et hépato-splénique (Schistosoma mansoni), liée à l'exposition répétée à l'eau douce du fleuve. Conduite à tenir : traitement antiparasitaire spécifique, surveillance de la fonction hépatique. Soins infirmiers : éduquer sur l'évitement du contact avec l'eau douce stagnante, sensibiliser à la consultation précoce, surveiller l'évolution de l'anémie.",
+  },
+  {
+    id: "vp33", level: 2,
+    profil: "Enfant, 2 ans",
+    motif: "Convulsion avec fièvre élevée",
+    ouverture: "Mon enfant a eu des tremblements de tout le corps pendant qu'il avait beaucoup de fièvre, ça a duré environ 2 minutes.",
+    faits: [
+      { q: "Fièvre avant la crise ?", r: "Oui, 39,8°C juste avant, apparue rapidement ce matin." },
+      { q: "Perte de connaissance ?", r: "Oui, il ne répondait plus pendant la crise." },
+      { q: "Après la crise ?", r: "Il s'est vite réveillé, un peu somnolent mais reconnaissait son entourage." },
+      { q: "Antécédents similaires ?", r: "Non, c'est la première fois." },
+      { q: "Raideur de nuque, vomissements ?", r: "Non, rien de tout ça." },
+      { q: "Éruption cutanée ?", r: "Non, pas de boutons." },
+    ],
+    examens: [
+      { nom: "Température", resultat: "39,8°C" },
+      { nom: "Examen neurologique", resultat: "Normal après la crise, pas de raideur de nuque, pas de signe de localisation." },
+      { nom: "Recherche de foyer infectieux", resultat: "Rhinopharyngite virale probable." },
+    ],
+    expected: "Convulsion fébrile simple chez un enfant de 2 ans, dans un contexte de fièvre d'apparition rapide (probable rhinopharyngite virale), sans signe de gravité neurologique associé. Conduite à tenir : traitement de la fièvre, surveillance, rassurer les parents sur le pronostic généralement favorable. Soins infirmiers : mettre en position latérale de sécurité pendant une crise, expliquer la conduite à tenir en cas de récidive, éduquer sur les moyens de contrôle de la fièvre.",
+  },
+  {
+    id: "vp34", level: 2,
+    profil: "Femme, 29 ans, 3 jours après accouchement",
+    motif: "Saignement vaginal abondant persistant",
+    ouverture: "J'ai accouché il y a 3 jours et je saigne encore beaucoup, plus que ce qu'on m'avait dit que c'était normal.",
+    faits: [
+      { q: "Abondance des saignements ?", r: "Je change de protection toutes les heures, ça continue." },
+      { q: "Odeur ?", r: "Oui, une odeur assez désagréable depuis hier." },
+      { q: "Fièvre ?", r: "Oui, un peu de fièvre depuis ce matin." },
+      { q: "Douleur abdominale ?", r: "Oui, mon ventre est douloureux, surtout au niveau de l'utérus." },
+      { q: "Accouchement ?", r: "Accouchement par voie basse, sans complication signalée sur le moment." },
+    ],
+    examens: [
+      { nom: "Température", resultat: "38,3°C" },
+      { nom: "Palpation utérine", resultat: "Utérus mal rétracté, sensible." },
+      { nom: "Examen des lochies", resultat: "Abondantes, malodorantes." },
+    ],
+    expected: "Suspicion d'endométrite du post-partum avec rétention probable, associée à une hémorragie du post-partum tardive. Conduite à tenir : antibiothérapie, échographie pour rechercher une rétention, surveillance rapprochée, éventuel geste utérin selon les résultats. Soins infirmiers : surveiller la température, l'abondance et l'odeur des lochies, surveiller les signes de choc, encourager l'allaitement si compatible avec le traitement.",
+  },
+  {
+    id: "vp35", level: 3,
+    profil: "Homme, 19 ans",
+    motif: "Raideur de la mâchoire et spasmes musculaires",
+    ouverture: "Depuis deux jours, j'ai du mal à ouvrir la bouche et mes muscles se contractent parfois tout seuls.",
+    faits: [
+      { q: "Blessure récente ?", r: "Oui, je me suis blessé au pied avec un clou rouillé il y a une dizaine de jours." },
+      { q: "Vaccination antitétanique ?", r: "Je ne sais pas si je suis à jour, ça fait longtemps." },
+      { q: "Soins de la plaie ?", r: "Je n'ai pas consulté, j'ai juste nettoyé moi-même." },
+      { q: "Fièvre ?", r: "Un peu, oui." },
+      { q: "Autres spasmes ?", r: "Oui, mon dos se cambre parfois de façon incontrôlable." },
+    ],
+    examens: [
+      { nom: "Examen clinique", resultat: "Trismus (contracture des mâchoires), contractures musculaires généralisées, plaie du pied cicatrisée mais négligée." },
+      { nom: "Statut vaccinal", resultat: "Non à jour pour le tétanos." },
+    ],
+    expected: "Tétanos, probablement lié à la plaie souillée par un clou rouillé, chez un patient non à jour de vaccination — urgence vitale nécessitant une prise en charge hospitalière spécialisée. Conduite à tenir : hospitalisation en urgence, sérothérapie et vaccination antitétanique, prise en charge des spasmes, environnement calme et peu stimulant. Soins infirmiers : surveillance respiratoire rapprochée (risque de spasme laryngé), éviter les stimulations sonores et lumineuses excessives, soins de la plaie initiale.",
+  },
+  {
+    id: "vp36", level: 2,
+    profil: "Enfant, 8 mois",
+    motif: "Contrôle de croissance, prise de poids insuffisante",
+    ouverture: "Je viens pour le contrôle de mon bébé, mais je trouve qu'il ne grossit pas beaucoup ces derniers mois.",
+    faits: [
+      { q: "Alimentation ?", r: "Je l'allaite encore, j'ai commencé la bouillie il y a 2 mois." },
+      { q: "Appétit ?", r: "Il mange peu de bouillie, il préfère encore le sein." },
+      { q: "Maladies récentes ?", r: "Il a eu la diarrhée deux fois ce mois-ci." },
+      { q: "Développement ?", r: "Il se tient assis, mais ne fait pas encore le 4 pattes." },
+      { q: "Vaccination ?", r: "Oui, à jour selon le carnet." },
+    ],
+    examens: [
+      { nom: "Poids actuel", resultat: "Poids stagnant depuis 2 mois, courbe de croissance qui s'infléchit." },
+      { nom: "Périmètre brachial", resultat: "12,8 cm (à la limite basse de la normale)." },
+      { nom: "Examen clinique", resultat: "Pas d'œdème, enfant actif, pas de signe infectieux au moment de la consultation." },
+    ],
+    expected: "Cassure de la courbe de croissance, probablement liée à une diversification alimentaire insuffisante associée à des épisodes de diarrhée répétés, à surveiller de près pour prévenir une malnutrition aiguë. Conduite à tenir : conseils de diversification alimentaire adaptés à l'âge, surveillance rapprochée du poids, recherche et traitement des causes de diarrhée répétée. Soins infirmiers : peser et mesurer le périmètre brachial à chaque contact, éduquer la mère sur l'alimentation de complément, programmer un contrôle rapproché.",
+  },
+  {
+    id: "vp37", level: 3,
+    profil: "Femme, 55 ans",
+    motif: "Essoufflement croissant et gonflement des jambes",
+    ouverture: "Depuis plusieurs semaines, je m'essouffle de plus en plus facilement et mes jambes ont beaucoup gonflé.",
+    faits: [
+      { q: "Antécédents ?", r: "J'ai de l'hypertension depuis des années, pas toujours bien suivie." },
+      { q: "Position pour dormir ?", r: "Je dois dormir avec plusieurs oreillers, sinon j'étouffe." },
+      { q: "Prise de poids ?", r: "Oui, j'ai pris plusieurs kilos rapidement." },
+      { q: "Fatigue ?", r: "Beaucoup, même au repos maintenant." },
+      { q: "Douleur thoracique ?", r: "Non, pas de douleur, juste l'essoufflement." },
+    ],
+    examens: [
+      { nom: "Examen clinique", resultat: "Œdèmes des membres inférieurs prenant le godet, turgescence jugulaire." },
+      { nom: "Auscultation pulmonaire", resultat: "Râles crépitants aux deux bases." },
+      { nom: "Tension artérielle", resultat: "168/98 mmHg." },
+    ],
+    expected: "Insuffisance cardiaque décompensée, probablement en lien avec une hypertension artérielle mal contrôlée au long cours. Conduite à tenir : diurétiques, contrôle de la tension artérielle, restriction sodée, bilan cardiologique (échographie). Soins infirmiers : surveiller le poids quotidien, la diurèse, installer en position semi-assise pour faciliter la respiration, éduquer sur la restriction en sel et en liquides.",
+  },
+  {
+    id: "vp38", level: 3,
+    profil: "Homme, 60 ans",
+    motif: "Faiblesse brutale d'un côté du corps",
+    ouverture: "Il y a une heure, mon bras et ma jambe droite sont devenus faibles d'un coup, et ma femme dit que ma bouche est déformée.",
+    faits: [
+      { q: "Heure exacte du début ?", r: "Il y a environ une heure, c'était très soudain." },
+      { q: "Parole ?", r: "J'ai du mal à trouver mes mots, je bafouille un peu." },
+      { q: "Antécédents ?", r: "Hypertension et diabète connus, traitement pas toujours bien suivi." },
+      { q: "Douleur ?", r: "Non, pas de douleur particulière." },
+      { q: "Perte de connaissance ?", r: "Non, je suis resté conscient tout le temps." },
+    ],
+    examens: [
+      { nom: "Examen neurologique", resultat: "Hémiparésie droite, asymétrie faciale, dysarthrie." },
+      { nom: "Glycémie capillaire", resultat: "Normale (élimine une hypoglycémie comme cause)." },
+      { nom: "Tension artérielle", resultat: "175/100 mmHg." },
+    ],
+    expected: "Accident vasculaire cérébral probable (déficit moteur brutal, asymétrie faciale, trouble de la parole apparus il y a moins de 3 heures) — urgence absolue nécessitant une imagerie cérébrale en urgence pour orienter le traitement. Conduite à tenir : transport médicalisé immédiat, imagerie cérébrale en urgence, ne rien donner par voie orale en attendant. Soins infirmiers : noter précisément l'heure de début des symptômes (déterminante pour la thrombolyse), surveiller la conscience et les constantes, installer en position adaptée, rassurer le patient et l'entourage.",
+  },
+  {
+    id: "vp39", level: 2,
+    profil: "Enfant, 10 ans, connu drépanocytaire",
+    motif: "Douleurs osseuses intenses",
+    ouverture: "Mon fils, qui est drépanocytaire, a très mal aux bras et aux jambes depuis ce matin, il pleure beaucoup.",
+    faits: [
+      { q: "Facteur déclenchant possible ?", r: "Il a eu très froid hier soir, on n'avait pas assez de couvertures." },
+      { q: "Hydratation ?", r: "Il a moins bu que d'habitude ces derniers jours." },
+      { q: "Fièvre ?", r: "Un peu, oui." },
+      { q: "Antécédents de crises ?", r: "Oui, il a déjà eu plusieurs crises similaires." },
+      { q: "Traitement habituel ?", r: "Il prend de l'acide folique régulièrement." },
+    ],
+    examens: [
+      { nom: "Examen clinique", resultat: "Douleur à la palpation des os longs, pas de déficit neurologique." },
+      { nom: "Température", resultat: "38,1°C" },
+      { nom: "NFS", resultat: "Anémie connue, pas de chute brutale de l'hémoglobine par rapport aux bilans antérieurs." },
+    ],
+    expected: "Crise vaso-occlusive drépanocytaire, probablement favorisée par l'exposition au froid et une hydratation insuffisante. Conduite à tenir : hydratation abondante, antalgiques adaptés à l'intensité de la douleur, réchauffement, recherche et traitement d'un facteur déclenchant infectieux. Soins infirmiers : évaluer régulièrement la douleur, encourager l'hydratation, surveiller la température, éduquer la famille sur les facteurs déclenchants à éviter (froid, déshydratation).",
+  },
+  {
+    id: "vp40", level: 3,
+    profil: "Femme, 38 ans",
+    motif: "Malaise brutal après une piqûre d'insecte",
+    ouverture: "Je viens d'être piquée par une abeille et je me sens très mal, j'ai du mal à respirer et j'ai des boutons partout.",
+    faits: [
+      { q: "Antécédents allergiques connus ?", r: "Oui, j'ai déjà eu une réaction plus légère à une piqûre il y a 2 ans." },
+      { q: "Délai depuis la piqûre ?", r: "Ça fait à peine 10 minutes." },
+      { q: "Gorge, voix ?", r: "J'ai l'impression que ma gorge se serre, ma voix change." },
+      { q: "Vertiges ?", r: "Oui, je me sens faible, j'ai peur de tomber." },
+    ],
+    examens: [
+      { nom: "Tension artérielle", resultat: "82/50 mmHg." },
+      { nom: "Examen cutané", resultat: "Urticaire généralisée, œdème du visage et des lèvres." },
+      { nom: "Auscultation", resultat: "Sibilants diffus, difficulté respiratoire." },
+    ],
+    expected: "Choc anaphylactique consécutif à une piqûre d'hyménoptère chez une patiente déjà sensibilisée — urgence vitale absolue. Conduite à tenir : adrénaline intramusculaire en urgence sans délai, oxygénothérapie, remplissage vasculaire, surveillance rapprochée. Soins infirmiers : administrer l'adrénaline sans attendre, installer en position adaptée (jambes surélevées si hypotension), surveiller étroitement la respiration et la tension, préparer le matériel de réanimation.",
+  },
+  {
+    id: "vp41", level: 2,
+    profil: "Nourrisson, 5 mois",
+    motif: "Vomissements répétés après les repas",
+    ouverture: "Mon bébé vomit après presque chaque tétée depuis une semaine, je suis inquiète.",
+    faits: [
+      { q: "Aspect des vomissements ?", r: "C'est du lait, pas de sang ni de couleur verte." },
+      { q: "Poids ?", r: "Il continue à prendre du poids normalement." },
+      { q: "Comportement ?", r: "Il est content entre les épisodes, pas de pleurs excessifs." },
+      { q: "Fièvre ?", r: "Non, pas de fièvre." },
+      { q: "Selles ?", r: "Normales." },
+    ],
+    examens: [
+      { nom: "Courbe de croissance", resultat: "Poids et taille sur la courbe normale, pas de cassure." },
+      { nom: "Examen abdominal", resultat: "Souple, indolore, pas de masse palpable." },
+      { nom: "État général", resultat: "Bon état général, enfant souriant et réactif." },
+    ],
+    expected: "Régurgitations/vomissements simples du nourrisson, très probablement bénins compte tenu de la croissance normale et du bon état général (à différencier des vomissements pathologiques avec retentissement). Conduite à tenir : rassurer les parents, conseils de positionnement post-prandial, surveillance de la courbe de croissance. Soins infirmiers : éduquer sur les positions post-tétée (verticalisation), rassurer sur le caractère habituellement bénin, expliquer les signes qui justifieraient de reconsulter (sang, vert, cassure de courbe).",
+  },
+  {
+    id: "vp42", level: 2,
+    profil: "Femme, 45 ans",
+    motif: "Soif intense et urines fréquentes depuis plusieurs semaines",
+    ouverture: "Depuis environ un mois, j'ai très soif tout le temps et je vais uriner beaucoup plus souvent qu'avant.",
+    faits: [
+      { q: "Poids ?", r: "J'ai perdu du poids sans le vouloir." },
+      { q: "Fatigue ?", r: "Oui, très fatiguée ces derniers temps." },
+      { q: "Antécédents familiaux ?", r: "Ma mère était diabétique." },
+      { q: "Vision ?", r: "J'ai un peu de mal à voir net parfois." },
+      { q: "Plaies ?", r: "J'ai une petite plaie au pied qui met du temps à cicatriser." },
+    ],
+    examens: [
+      { nom: "Glycémie à jeun", resultat: "1,68 g/L (élevée)." },
+      { nom: "Bandelette urinaire", resultat: "Glycosurie positive." },
+      { nom: "Examen du pied", resultat: "Plaie superficielle non infectée en cours de cicatrisation lente." },
+    ],
+    expected: "Diabète sucré de découverte récente (polyurie, polydipsie, amaigrissement, glycémie à jeun élevée), probablement de type 2 compte tenu de l'âge et des antécédents familiaux. Conduite à tenir : confirmation diagnostique (glycémie à jeun répétée, HbA1c), règles hygiéno-diététiques, traitement antidiabétique selon l'évolution. Soins infirmiers : éduquer à l'autosurveillance glycémique, conseils diététiques, surveillance et soins de la plaie du pied, éducation sur les signes d'hypoglycémie et d'hyperglycémie.",
+  },
+  {
+    id: "vp43", level: 3,
+    profil: "Homme, 50 ans",
+    motif: "Douleur brutale au mollet et essoufflement soudain",
+    ouverture: "J'ai eu une grosse douleur au mollet il y a 2 jours, et depuis ce matin je suis brutalement essoufflé avec une douleur dans la poitrine.",
+    faits: [
+      { q: "Immobilisation récente ?", r: "Oui, j'ai fait un long voyage en bus il y a une semaine." },
+      { q: "Jambe concernée ?", r: "Le mollet gauche est gonflé, chaud et douloureux." },
+      { q: "Douleur thoracique ?", r: "Oui, ça pique quand je respire profondément." },
+      { q: "Toux ?", r: "Oui, un peu, avec un peu de sang ce matin." },
+      { q: "Antécédents ?", r: "Rien de particulier, pas de traitement habituel." },
+    ],
+    examens: [
+      { nom: "Examen du mollet", resultat: "Œdème, chaleur et douleur du mollet gauche, signe de Homans positif." },
+      { nom: "Saturation en oxygène", resultat: "89%, basse." },
+      { nom: "Fréquence cardiaque", resultat: "112/min, tachycardie." },
+    ],
+    expected: "Suspicion forte d'embolie pulmonaire faisant suite à une thrombose veineuse profonde du mollet, favorisée par l'immobilisation prolongée lors du voyage — urgence vitale. Conduite à tenir : oxygénothérapie, anticoagulation en urgence après confirmation (angioscanner), hospitalisation. Soins infirmiers : installer en position semi-assise, surveiller étroitement la saturation et la fréquence respiratoire, ne pas masser la jambe suspecte, rassurer le patient tout en agissant vite.",
+  },
+  {
+    id: "vp44", level: 2,
+    profil: "Enfant, 5 ans",
+    motif: "Éruption cutanée généralisée avec fièvre",
+    ouverture: "Mon enfant a de la fièvre depuis 3 jours et depuis ce matin il a des boutons rouges sur tout le corps.",
+    faits: [
+      { q: "Ordre d'apparition ?", r: "Ça a commencé derrière les oreilles et sur le visage, puis descendu sur le corps." },
+      { q: "Yeux ?", r: "Il a les yeux rouges et pleure facilement à la lumière." },
+      { q: "Toux, nez qui coule ?", r: "Oui, il tousse et a le nez qui coule depuis le début de la fièvre." },
+      { q: "Vaccination ?", r: "Je ne suis pas sûre qu'il ait reçu tous ses vaccins." },
+      { q: "Autres enfants malades autour ?", r: "Oui, un cousin a eu la même chose récemment." },
+    ],
+    examens: [
+      { nom: "Examen cutané", resultat: "Éruption maculopapuleuse généralisée, débutée au visage." },
+      { nom: "Température", resultat: "39,2°C" },
+      { nom: "Examen ORL/yeux", resultat: "Conjonctivite, toux, coryza associés." },
+    ],
+    expected: "Rougeole (mesures cliniques évocatrices : fièvre, catarrhe oculo-respiratoire, éruption maculopapuleuse descendante débutant au visage), chez un enfant probablement non complètement vacciné. Conduite à tenir : isolement, traitement symptomatique, recherche de complications, déclaration selon les recommandations locales. Soins infirmiers : isoler l'enfant, surveiller la température et l'hydratation, rechercher des complications (otite, pneumonie), rattraper le calendrier vaccinal de l'entourage non immunisé.",
+  },
+  {
+    id: "vp45", level: 2,
+    profil: "Femme, 26 ans",
+    motif: "Éruption vésiculeuse douloureuse et démangeaisons",
+    ouverture: "J'ai des démangeaisons très fortes depuis quelques jours, surtout la nuit, avec des petits sillons sur les mains.",
+    faits: [
+      { q: "Localisation principale ?", r: "Entre les doigts, aux poignets, et un peu sur le ventre." },
+      { q: "Entourage ?", r: "Mon mari se gratte aussi depuis peu." },
+      { q: "Horaire des démangeaisons ?", r: "C'est pire la nuit, ça m'empêche de dormir." },
+      { q: "Fièvre ?", r: "Non, pas de fièvre." },
+    ],
+    examens: [
+      { nom: "Examen dermatologique", resultat: "Sillons scabieux visibles entre les doigts, lésions de grattage." },
+      { nom: "Dermoscopie", resultat: "Évocatrice d'infestation par Sarcoptes scabiei." },
+    ],
+    expected: "Gale (scabiose), avec contamination probable du conjoint — nécessite un traitement simultané de l'entourage proche. Conduite à tenir : traitement scabicide local ou oral, traitement de tout l'entourage proche en même temps, désinfection du linge et de la literie. Soins infirmiers : expliquer l'application correcte du traitement local, insister sur le traitement simultané du foyer, éduquer sur la désinfection du linge à haute température.",
+  },
+  {
+    id: "vp46", level: 3,
+    profil: "Femme, 31 ans, enceinte de 8 semaines",
+    motif: "Douleur pelvienne et saignement léger",
+    ouverture: "J'ai un peu mal d'un côté du ventre depuis hier, et j'ai un léger saignement, alors que je pensais être enceinte de 2 mois.",
+    faits: [
+      { q: "Test de grossesse ?", r: "Oui, positif il y a environ 3 semaines." },
+      { q: "Douleur ?", r: "Plutôt d'un seul côté, assez intense par moments." },
+      { q: "Dernières règles ?", r: "Il y a environ 8 semaines." },
+      { q: "Malaise, vertiges ?", r: "Un peu de vertiges en me levant ce matin." },
+      { q: "Antécédents ?", r: "J'ai eu une infection génitale traitée il y a 2 ans." },
+    ],
+    examens: [
+      { nom: "Tension artérielle", resultat: "Légèrement basse, 96/60 mmHg." },
+      { nom: "Bêta-hCG plasmatiques", resultat: "Positives mais taux ne progressant pas normalement." },
+      { nom: "Échographie pelvienne", resultat: "Absence de grossesse intra-utérine visible, masse latéro-utérine suspecte." },
+    ],
+    expected: "Suspicion de grossesse extra-utérine (douleur pelvienne unilatérale, saignement, absence de grossesse intra-utérine à l'échographie malgré des bêta-hCG positifs) — urgence gynécologique à haut risque de rupture. Conduite à tenir : hospitalisation en urgence, surveillance rapprochée, traitement médical ou chirurgical selon l'évolution. Soins infirmiers : surveiller étroitement la tension artérielle et les signes de choc, préparer à une prise en charge chirurgicale urgente si aggravation, accompagner psychologiquement la patiente.",
+  },
+  {
+    id: "vp47", level: 2,
+    profil: "Homme, 40 ans",
+    motif: "Toux persistante depuis plus de 3 semaines avec sueurs nocturnes",
+    ouverture: "Je tousse depuis presque un mois, je transpire beaucoup la nuit et j'ai perdu du poids sans le vouloir.",
+    faits: [
+      { q: "Caractère de la toux ?", r: "Sèche au début, maintenant elle ramène un peu de sang parfois." },
+      { q: "Contact avec une personne malade ?", r: "Oui, un collègue de travail tousse depuis longtemps aussi." },
+      { q: "Fièvre ?", r: "Le soir surtout, avec des sueurs qui trempent mes draps." },
+      { q: "Conditions de vie ?", r: "On vit à plusieurs dans une petite maison, peu aérée." },
+    ],
+    examens: [
+      { nom: "Recherche de BAAR dans les crachats", resultat: "Positive." },
+      { nom: "Radiographie thoracique", resultat: "Image évocatrice de caverne au sommet du poumon droit." },
+      { nom: "Poids", resultat: "Perte de poids de 6 kg en 2 mois." },
+    ],
+    expected: "Tuberculose pulmonaire à microscopie positive, contagieuse, probablement transmise par le collègue tousseur — nécessite une prise en charge et un isolement respiratoire. Conduite à tenir : traitement antituberculeux combiné pendant au moins 6 mois, dépistage des sujets contacts. Soins infirmiers : éducation à l'observance stricte du traitement (risque de résistance en cas d'arrêt prématuré), mesures d'isolement respiratoire au début du traitement, surveillance de la tolérance au traitement.",
+  },
+  {
+    id: "vp48", level: 2,
+    profil: "Nourrisson, 2 mois",
+    motif: "Consultation de suivi post-natal",
+    ouverture: "Je viens pour le contrôle de mon bébé de 2 mois, tout semble bien se passer.",
+    faits: [
+      { q: "Alimentation ?", r: "Allaitement exclusif, il tète bien 8 à 9 fois par jour." },
+      { q: "Sommeil ?", r: "Il dort bien, se réveille pour téter la nuit." },
+      { q: "Selles et urines ?", r: "Normales, plusieurs fois par jour." },
+      { q: "Vaccinations ?", r: "Il a reçu ses premiers vaccins selon le calendrier." },
+      { q: "Comportement ?", r: "Il sourit depuis peu, suit du regard." },
+    ],
+    examens: [
+      { nom: "Poids", resultat: "Poids doublé par rapport à la naissance, sur la courbe normale." },
+      { nom: "Périmètre crânien", resultat: "Dans la norme pour l'âge." },
+      { nom: "Examen clinique", resultat: "Aucune anomalie détectée, développement psychomoteur adapté à l'âge." },
+    ],
+    expected: "Nourrisson en bonne santé avec croissance et développement psychomoteur normaux pour l'âge (poids doublé conforme à l'attendu pour un enfant allaité). Conduite à tenir : poursuite de l'allaitement exclusif jusqu'à 6 mois, poursuite du calendrier vaccinal. Soins infirmiers : féliciter et encourager la mère, rappeler le prochain rendez-vous vaccinal, répondre aux questions sur l'allaitement, profiter de la consultation pour renforcer les conseils de puériculture.",
+  },
+  {
+    id: "vp49", level: 3,
+    profil: "Homme, 70 ans",
+    motif: "Douleur abdominale intense et vomissements, sous anticoagulant",
+    ouverture: "J'ai très mal au ventre depuis ce matin, j'ai vomi plusieurs fois, et je prends un anticoagulant pour le cœur.",
+    faits: [
+      { q: "Caractère de la douleur ?", r: "Très intense, en coup de poignard au début, puis diffuse dans tout le ventre." },
+      { q: "Selles récentes ?", r: "Pas eu de selles depuis hier, pas de gaz non plus." },
+      { q: "Traitement en cours ?", r: "Anticoagulant pour une fibrillation auriculaire, depuis 2 ans." },
+      { q: "Antécédents digestifs ?", r: "J'ai un ulcère connu, jamais bien suivi." },
+    ],
+    examens: [
+      { nom: "Examen abdominal", resultat: "Abdomen très sensible, contracture généralisée (ventre de bois)." },
+      { nom: "Tension artérielle", resultat: "88/56 mmHg, tendance à la baisse." },
+      { nom: "Pâleur", resultat: "Marquée, sueurs associées." },
+    ],
+    expected: "Suspicion de perforation d'ulcère gastroduodénal avec péritonite associée, situation aggravée par le traitement anticoagulant en cours (risque hémorragique majoré) — urgence chirurgicale. Conduite à tenir : hospitalisation en urgence, arrêt/antagonisation de l'anticoagulant selon avis médical, prise en charge chirurgicale probable. Soins infirmiers : à jeun strict, pose de voie veineuse, surveillance rapprochée des constantes et des signes de choc, préparation à une intervention chirurgicale en urgence.",
+  },
+  {
+    id: "vp50", level: 2,
+    profil: "Femme, 35 ans",
+    motif: "Fatigue intense et tristesse depuis plusieurs semaines",
+    ouverture: "Je me sens très fatiguée et triste depuis plus d'un mois, je n'arrive plus à trouver de plaisir dans ce que je fais.",
+    faits: [
+      { q: "Sommeil ?", r: "Je dors mal, je me réveille très tôt sans pouvoir me rendormir." },
+      { q: "Appétit ?", r: "J'ai moins faim qu'avant, j'ai perdu un peu de poids." },
+      { q: "Vie quotidienne ?", r: "J'ai du mal à m'occuper de mes enfants et de la maison comme avant." },
+      { q: "Événement récent ?", r: "J'ai perdu mon emploi il y a deux mois." },
+      { q: "Pensées inquiétantes ?", r: "Je me sens souvent découragée, sans grand espoir pour l'avenir." },
+    ],
+    examens: [
+      { nom: "Entretien clinique", resultat: "Humeur triste persistante, anhédonie, troubles du sommeil et de l'appétit depuis plus de 2 semaines." },
+      { nom: "Examen somatique", resultat: "Sans particularité, pas de cause organique retrouvée." },
+    ],
+    expected: "Tableau évocateur d'un épisode dépressif, dans un contexte de perte d'emploi récente. Conduite à tenir : orientation vers une prise en charge psychologique/psychiatrique adaptée, évaluation systématique du risque de mise en danger, soutien psychosocial. Soins infirmiers : accueillir avec bienveillance et sans jugement, évaluer avec tact toute idée de découragement profond, orienter vers les ressources d'aide appropriées, ne jamais minimiser ce qui est exprimé.",
+  },
 ];
 
 
@@ -764,6 +1334,27 @@ function letters(n) {
 
 /* ---------------- Chapters ---------------- */
 const CHAPTERS = [
+  { id: "mnt_hta", label: "Hypertension artérielle", subjectId: "maladies-non-transmissibles" },
+  { id: "mnt_oap", label: "Œdème aigu du poumon", subjectId: "maladies-non-transmissibles" },
+  { id: "mnt_pericardite", label: "Péricardite aiguë", subjectId: "maladies-non-transmissibles" },
+  { id: "mnt_lithiase", label: "Lithiase urinaire", subjectId: "maladies-non-transmissibles" },
+  { id: "mnt_ira", label: "Insuffisance rénale aiguë", subjectId: "maladies-non-transmissibles" },
+  { id: "mnt_syndrome_nephrotique", label: "Syndrome néphrotique", subjectId: "maladies-non-transmissibles" },
+  { id: "mnt_rhumato", label: "Rhumatologie", subjectId: "maladies-non-transmissibles" },
+  { id: "mnt_gastrite", label: "Gastrites", subjectId: "maladies-non-transmissibles" },
+  { id: "istvih_ist_gen", label: "Généralités sur les IST", subjectId: "ist-vih" },
+  { id: "istvih_vih_gen", label: "Généralités sur l'infection à VIH", subjectId: "ist-vih" },
+  { id: "istvih_classification", label: "Etiopathogénie, histoire naturelle, classification", subjectId: "ist-vih" },
+  { id: "istvih_depistage", label: "Services de dépistage du VIH", subjectId: "ist-vih" },
+  { id: "istvih_prevention", label: "Stratégies de prévention, PTME", subjectId: "ist-vih" },
+  { id: "angsante_vocab_base", label: "Vocabulaire de base santé/médecine", subjectId: "anglais-sante" },
+  { id: "angsante_nursing", label: "Nursing (Virginia Henderson)", subjectId: "anglais-sante" },
+  { id: "angsante_anatomy", label: "Anatomie en anglais", subjectId: "anglais-sante" },
+  { id: "angsante_providers", label: "Healthcare providers", subjectId: "anglais-sante" },
+  { id: "angsante_consultation", label: "Motifs de consultation courants", subjectId: "anglais-sante" },
+  { id: "angsante_diseases", label: "Maladies respiratoires, digestives et parasitaires", subjectId: "anglais-sante" },
+  { id: "angsante_dialogues", label: "Dialogues cliniques", subjectId: "anglais-sante" },
+  { id: "angsante_test_officiel", label: "Test officiel du cours", subjectId: "anglais-sante" },
   { id: "si_soins_essentiels", label: "Soins essentiels au nouveau-né", subjectId: "sante-infantile" },
   { id: "si_incubateur", label: "Incubateur néonatal", subjectId: "sante-infantile" },
   { id: "si_mensurations", label: "Mensurations", subjectId: "sante-infantile" },
@@ -1281,7 +1872,7 @@ const ECUE_LIST = [
   { id: "SPB1111", ueId: "SPB1110", code: "SPB 1111", label: "Santé publique", credits: 2, subjectId: "sante-publique" },
   { id: "SPB1112", ueId: "SPB1110", code: "SPB 1112", label: "Santé publique", credits: 1, subjectId: "sante-publique" },
   { id: "SPB1113", ueId: "SPB1110", code: "SPB 1113", label: "Santé publique", credits: 1, subjectId: "sante-publique" },
-  { id: "PMC1121", ueId: "PMC1120", code: "PMC 1121", label: "IST / VIH", credits: 1, subjectId: null },
+  { id: "PMC1121", ueId: "PMC1120", code: "PMC 1121", label: "IST / VIH", credits: 1, subjectId: "ist-vih" },
   { id: "PMC1122", ueId: "PMC1120", code: "PMC 1122", label: "Pathologies chirurgicales / Sémiologie", credits: 1, subjectId: "semio-chir" },
   { id: "PMC1123", ueId: "PMC1120", code: "PMC 1123", label: "Pathologies médicales / Sémiologie", credits: 2, subjectId: "semio-medicale" },
   { id: "PMC1124", ueId: "PMC1120", code: "PMC 1124", label: "Pharmacologie", credits: 1, subjectId: "pharmacologie" },
@@ -1296,14 +1887,14 @@ const ECUE_LIST = [
   { id: "CFI1141", ueId: "CFI1140", code: "CFI 1141", label: "Déontologie et éthique professionnelle", credits: 0.5, subjectId: "deontologie" },
   { id: "CFI1142", ueId: "CFI1140", code: "CFI 1142", label: "Législation du travail", credits: 1, subjectId: "legislation-travail" },
   { id: "CFI1143", ueId: "CFI1140", code: "CFI 1143", label: "Profession infirmière / sage-femme", credits: 0.5, subjectId: null },
-  { id: "OMC1141", ueId: "OMC1140", code: "OMC 1141", label: "Anglais de la santé", credits: 0.5, subjectId: null },
+  { id: "OMC1141", ueId: "OMC1140", code: "OMC 1141", label: "Anglais de la santé", credits: 0.5, subjectId: "anglais-sante" },
   { id: "OMC1142", ueId: "OMC1140", code: "OMC 1142", label: "Informatique : Bureautique", credits: 0.5, subjectId: null },
   // Semestre 2
   { id: "CHF1211", ueId: "CHF1210", code: "CHF 1211", label: "Anatomie Physiologie : appareil respiratoire, cardiovasculaire, urinaire, reproducteur", credits: 2, subjectId: null },
   { id: "CHF1212", ueId: "CHF1210", code: "CHF 1212", label: "Anatomie physiologie obstétricale : bassin osseux, bassin mou", credits: 1, subjectId: null },
   { id: "PAC1211", ueId: "PAC1210", code: "PAC 1211", label: "Maladies parasitaires et infectieuses (Paludisme)", credits: 2, subjectId: "paludisme" },
   { id: "PAC1212", ueId: "PAC1210", code: "PAC 1212", label: "Pathologies respiratoires", credits: 2, subjectId: null },
-  { id: "PAC1213", ueId: "PAC1210", code: "PAC 1213", label: "Maladies non transmissibles", credits: 1, subjectId: null },
+  { id: "PAC1213", ueId: "PAC1210", code: "PAC 1213", label: "Maladies non transmissibles", credits: 1, subjectId: "maladies-non-transmissibles" },
   { id: "TLB1211", ueId: "TLB1210", code: "TLB 1211", label: "Biochimie", credits: 1, subjectId: null },
   { id: "TLB1212", ueId: "TLB1210", code: "TLB 1212", label: "Immunologie", credits: 1, subjectId: null },
   { id: "TLB1213", ueId: "TLB1210", code: "TLB 1213", label: "Hématologie", credits: 1, subjectId: "hematologie" },
@@ -8039,6 +8630,532 @@ const SANTEINFANT_RAW = [
     "Santé infantile – Malnutrition aiguë, traitement MAS"],
 ];
 
+const ANGLAIS_SANTE_RAW = [
+  // ===== Vocabulaire de base santé/médecine =====
+  ["QCU","angsante_vocab_base",1,"Comment traduit-on « wholesome » en français, dans le vocabulaire de santé du cours ?",
+    ["Sain (bon pour la santé)","Douloureux","Maladif","Gravement malade"],[0],
+    "« Wholesome » se traduit par « sain (bon pour la santé) » dans le lexique du cours.",
+    "Anglais de la santé – Vocabulaire de base"],
+  ["QCU","angsante_vocab_base",1,"Que signifie « painful » en français ?",
+    ["Douloureux","Guérison","Vacciner","Enflure"],[0],
+    "« Painful » signifie « douloureux ».",
+    "Anglais de la santé – Vocabulaire de base"],
+  ["QCU","angsante_vocab_base",1,"Que signifie « tuberculosis / consumption » en français ?",
+    ["Tuberculose","Angine","Oreillon","Torticolis"],[0],
+    "« Tuberculosis » (ou « consumption ») signifie « tuberculose ».",
+    "Anglais de la santé – Vocabulaire de base"],
+  ["QCU","angsante_vocab_base",2,"Comment dit-on « oreillons » en anglais ?",
+    ["Mumps","Measles","Smallpox","Bronchitis"],[0],
+    "« Oreillons » se traduit par « mumps » en anglais.",
+    "Anglais de la santé – Vocabulaire de base"],
+  ["QCU","angsante_vocab_base",2,"Comment dit-on « rougeole » en anglais ?",
+    ["Measles","Mumps","Smallpox","Stiff neck"],[0],
+    "« Rougeole » se traduit par « measles » en anglais.",
+    "Anglais de la santé – Vocabulaire de base"],
+  ["QCU","angsante_vocab_base",2,"Que signifie « recovery (from an illness) » ?",
+    ["Guérison (d'une maladie)","Pansement","Urticaire","Régime"],[0],
+    "« Recovery (from an illness) » signifie « guérison (d'une maladie) ».",
+    "Anglais de la santé – Vocabulaire de base"],
+  ["QCU","angsante_vocab_base",2,"Comment dit-on « pansement » en anglais ?",
+    ["Dressing / bandage","Blister","Boil","Bruise"],[0],
+    "« Pansement » se traduit par « dressing » ou « bandage » en anglais.",
+    "Anglais de la santé – Vocabulaire de base"],
+  ["QCU","angsante_vocab_base",2,"Que signifie « to vaccinate » ?",
+    ["Vacciner","Soulager","Guérir une plaie","S'aliter"],[0],
+    "« To vaccinate » signifie « vacciner ».",
+    "Anglais de la santé – Vocabulaire de base"],
+  // ===== Chapitre Nursing (Virginia Henderson) =====
+  ["QCU","angsante_nursing",1,"Selon le modèle de Virginia Henderson présenté dans le cours, combien de besoins fondamentaux (14 Activities for Client Assistance) sont listés ?",
+    ["14","10","12","20"],[0],
+    "Le modèle de Virginia Henderson présenté dans le cours liste 14 besoins fondamentaux (14 Activities for Client Assistance).",
+    "Anglais de la santé – Nursing, Virginia Henderson"],
+  ["QCU","angsante_nursing",2,"Parmi les besoins fondamentaux listés, lequel correspond à « Breathe normally » ?",
+    ["Respirer normalement","Manger et boire suffisamment","Éliminer les déchets corporels","Dormir et se reposer"],[0],
+    "« Breathe normally » signifie « respirer normalement », le premier besoin fondamental du modèle de Virginia Henderson.",
+    "Anglais de la santé – Nursing, Virginia Henderson"],
+  ["QCU","angsante_nursing",2,"Que signifie le besoin « Communicate with others in expressing emotions, needs, fears, or opinions » ?",
+    ["Communiquer avec autrui pour exprimer ses émotions, besoins, peurs ou opinions","Éliminer les déchets corporels","Se vêtir et se dévêtir","Travailler de façon à ressentir un sentiment d'accomplissement"],[0],
+    "Ce besoin décrit la communication avec autrui pour exprimer émotions, besoins, peurs ou opinions.",
+    "Anglais de la santé – Nursing, Virginia Henderson"],
+  // ===== Anatomie en anglais =====
+  ["QCU","angsante_anatomy",2,"Comment dit-on « crâne » en anglais, selon le schéma du squelette du cours ?",
+    ["Cranium","Clavicle","Sternum","Pelvis"],[0],
+    "« Crâne » se traduit par « cranium » en anglais.",
+    "Anglais de la santé – Anatomie"],
+  ["QCU","angsante_anatomy",2,"Comment dit-on « mâchoire inférieure » (mandibule) en anglais ?",
+    ["Mandible","Maxilla","Clavicle","Scapula"],[0],
+    "« Mandibule » se traduit par « mandible » en anglais.",
+    "Anglais de la santé – Anatomie"],
+  ["QCU","angsante_anatomy",2,"Comment dit-on « côtes » en anglais ?",
+    ["Ribs","Sternum","Humerus","Radius"],[0],
+    "« Côtes » se traduit par « ribs » en anglais.",
+    "Anglais de la santé – Anatomie"],
+  ["QCU","angsante_anatomy",2,"Comment dit-on « rotule » en anglais ?",
+    ["Patella","Femur","Fibula","Tibia"],[0],
+    "« Rotule » se traduit par « patella » en anglais.",
+    "Anglais de la santé – Anatomie"],
+  ["QCU","angsante_anatomy",2,"Comment dit-on « omoplate » en anglais ?",
+    ["Scapula","Clavicle","Sternum","Pelvis"],[0],
+    "« Omoplate » se traduit par « scapula » en anglais.",
+    "Anglais de la santé – Anatomie"],
+  // ===== Professionnels de santé =====
+  ["QCU","angsante_providers",1,"Comment dit-on « sage-femme » en anglais ?",
+    ["Midwife","Nurse","Physician","Surgeon"],[0],
+    "« Sage-femme » se traduit par « midwife » en anglais.",
+    "Anglais de la santé – Healthcare providers"],
+  ["QCU","angsante_providers",1,"Comment dit-on « chirurgien » en anglais ?",
+    ["Surgeon","Physician","Dentist","Radiologist"],[0],
+    "« Chirurgien » se traduit par « surgeon » en anglais.",
+    "Anglais de la santé – Healthcare providers"],
+  ["QCU","angsante_providers",2,"Comment dit-on « pédiatre » en anglais ?",
+    ["Pediatrician","Gynecologist","Physiotherapist","Dentist"],[0],
+    "« Pédiatre » se traduit par « pediatrician » en anglais.",
+    "Anglais de la santé – Healthcare providers"],
+  ["QCU","angsante_providers",2,"Comment dit-on « agent de santé communautaire » en anglais ?",
+    ["Community health worker","Hygiene technician","Medical imaging technician","Healthcare assistant"],[0],
+    "« Agent de santé communautaire » se traduit par « community health worker » en anglais.",
+    "Anglais de la santé – Healthcare providers"],
+  // ===== Motifs de consultation courants =====
+  ["QCU","angsante_consultation",1,"Selon le cours, comment définit-on « fever » (fièvre) ?",
+    ["Une température supérieure à 37,5°C en axillaire et 38°C en rectal","Une température supérieure à 39°C uniquement","Une sensation subjective désagréable","Une perte de contrôle des selles"],[0],
+    "Selon le cours, la fièvre (fever) est définie comme une température supérieure à 37,5°C en axillaire (aisselle) et 38°C si mesurée en rectal.",
+    "Anglais de la santé – Common tasks, fever"],
+  ["QCM","angsante_consultation",2,"Parmi les complications possibles de la fièvre citées dans le cours, lesquelles figurent ?",
+    ["Convulsion","Dehydration","Confusion","Hemorrhage"],[0,1,2],
+    "Les complications de la fièvre citées dans le cours sont : convulsion, dehydration (déshydratation), confusion, delerium (délire).",
+    "Anglais de la santé – Common tasks, fever"],
+  ["QCU","angsante_consultation",2,"Comment le cours définit-il « pain » (douleur) ?",
+    ["An uncomfortable sensation, subjective and expressed differently by each patient","A temperature higher than 37.5°C","A loss of control of bowel movements","A common reason for medical consultation, always physical"],[0],
+    "Selon le cours, « pain » est an uncomfortable sensation (une sensation inconfortable), subjective, exprimée différemment selon chaque patient.",
+    "Anglais de la santé – Common tasks, pain"],
+  // ===== Maladies respiratoires et digestives =====
+  ["QCM","angsante_diseases",2,"Parmi les symptômes de la diarrhée listés dans le cours en anglais, lesquels figurent ?",
+    ["Loose, watery stools three or more times a day","An urgent need to use the bathroom","Cramping or pain in the abdomen","Skin rash"],[0,1,2],
+    "Les symptômes cités incluent : loose watery stools (selles liquides et molles), an urgent need to use the bathroom (besoin urgent d'utiliser les toilettes), cramping or pain in the abdomen (crampes ou douleurs abdominales).",
+    "Anglais de la santé – Gastrointestinal disorders"],
+  ["QCU","angsante_diseases",1,"Selon le cours, quel est le vecteur du paludisme (malaria) ?",
+    ["The female anopheles mosquito","The male anopheles mosquito","The aedes mosquito","The tsetse fly"],[0],
+    "Le cours précise que le paludisme est transmis « to man by the female anopheles mosquito » — le moustique anophèle femelle.",
+    "Anglais de la santé – Parasitic diseases, malaria"],
+  ["QCM","angsante_diseases",2,"Selon le texte « Malaria and Pregnancy » du cours, quelles complications le paludisme peut-il causer chez la femme enceinte ?",
+    ["Premature birth","Foetal death","Maternal death, anaemia","Improved immunity"],[0,1,2],
+    "Le texte cite comme complications : premature birth (naissance prématurée), foetal death (mort fœtale), maternal death (décès maternel), anaemia (anémie), miscarriages (fausses couches).",
+    "Anglais de la santé – Malaria and Pregnancy"],
+  ["QCM","angsante_diseases",2,"Selon le texte du cours, à combien de niveaux d'action l'OMS recommande-t-elle d'agir contre le paludisme pendant la grossesse ?",
+    ["3 niveaux","1 niveau","5 niveaux","2 niveaux"],[0],
+    "Le texte précise : « The WHO recommends action at 3 levels » : moustiquaires imprégnées, traitement préventif intermittent, traitement efficace des accès palustres.",
+    "Anglais de la santé – Malaria and Pregnancy"],
+  ["QCU","angsante_diseases",2,"Comment dit-on « rhume/rhinopharyngite » en anglais, d'après le chapitre sur les maladies respiratoires ?",
+    ["Rhinitis and rhinopharyngitis","Acute sinusitis","Pertussis","Bronchitis"],[0],
+    "Le chapitre des maladies respiratoires cite « Rhinitis and rhinopharyngitis » comme premier sujet abordé.",
+    "Anglais de la santé – Respiratory diseases"],
+  ["QCU","angsante_diseases",2,"Comment dit-on « coqueluche » en anglais, selon le sommaire du cours ?",
+    ["Pertussis","Rhinitis","Acute sinusitis","Tetanus"],[0],
+    "« Coqueluche » se traduit par « pertussis » en anglais, cité dans le chapitre des maladies respiratoires.",
+    "Anglais de la santé – Respiratory diseases"],
+  // ===== Dialogues cliniques =====
+  ["QCU","angsante_dialogues",2,"Dans le dialogue 2 (a physician and a patient), pourquoi le patient avait-il abandonné son traitement antituberculeux ?",
+    ["Le traitement était très difficile à supporter sur la durée","Il n'avait plus de symptômes","Il n'avait pas d'argent pour continuer","Le médecin le lui avait conseillé"],[0],
+    "Le patient explique : « the treatment was very hard and I couldn't stand it for a long time » — le traitement était très dur et il n'a pas pu le supporter longtemps.",
+    "Anglais de la santé – Dialogue 2, tuberculosis treatment"],
+  ["QCU","angsante_dialogues",1,"Dans le dialogue 2, combien de temps le patient doit-il reprendre son traitement antituberculeux dans son intégralité ?",
+    ["Six months","Three months","One month","One year"],[0],
+    "Le médecin précise : « you have to resume the whole treatment for six months » — reprendre l'intégralité du traitement pendant six mois.",
+    "Anglais de la santé – Dialogue 2, tuberculosis treatment"],
+  ["QCU","angsante_dialogues",2,"Dans le dialogue 3 (prenatal consultation), pourquoi la femme enceinte refuse-t-elle initialement le test HIV ?",
+    ["Elle pense que « hiv » signifie automatiquement le SIDA","Elle n'a pas le temps","Elle n'a pas d'argent pour le test","Le test n'est pas disponible"],[0],
+    "La femme dit : « You say hiv? You mean AIDS? I'm not ready for that » — elle confond initialement le VIH et le SIDA déclaré.",
+    "Anglais de la santé – Dialogue 3, prenatal consultation"],
+  ["QCU","angsante_dialogues",2,"Dans le dialogue 4, pourquoi la sage-femme donne-t-elle des comprimés à la femme enceinte ?",
+    ["Ce sont des médicaments contre le paludisme, dangereux pour la femme enceinte","Ce sont des vitamines sans lien avec une maladie","Ce sont des antidouleurs","Ce sont des antibiotiques pour une infection urinaire"],[0],
+    "La sage-femme précise : « The tablets I'm giving to you are medicines against malaria. It is a very dangerous disease for pregnant women. »",
+    "Anglais de la santé – Dialogue 4, prenatal consultation"],
+  ["QCU","angsante_dialogues",2,"Dans le dialogue 5 (vaccination campaign), comment le health worker explique-t-il la transmission de la polio ?",
+    ["Par les selles souillant l'environnement, l'eau et les aliments","Par piqûre de moustique","Par contact respiratoire uniquement","Par transfusion sanguine"],[0],
+    "Le health worker explique : « It is generally transmitted by stools in the environment staining the ground, vegetables... dirty hands, stained water or vegetables are most of the time sources of transmission. »",
+    "Anglais de la santé – Dialogue 5, polio vaccination"],
+  ["QCU","angsante_dialogues",2,"Dans le dialogue 7 (conversation avec la sage-femme), quel diagnostic la sage-femme suspecte-t-elle devant un saignement chez une femme enceinte d'un mois ?",
+    ["An ectopic pregnancy","A normal pregnancy","A urinary infection","A miscarriage already completed"],[0],
+    "La sage-femme dit : « I suspect an ectopic pregnancy » et réfère la patiente en urgence au gynécologue.",
+    "Anglais de la santé – Dialogue 7, ectopic pregnancy"],
+  // ===== Tirées du test officiel du cours (avec réponse confirmée dans le document) =====
+  ["QCU","angsante_test_officiel",2,"Vrai ou faux : « In the jungle, the aedes mosquito transmits yellow fever. »",
+    ["Vrai (T)","Faux (F)"],[0],
+    "D'après le corrigé du test officiel du cours, cette affirmation est marquée Vraie (T).",
+    "Anglais de la santé – English Test officiel"],
+  ["QCU","angsante_test_officiel",2,"Vrai ou faux : « With the sputum sample, we can perform hemoglobin testing. »",
+    ["Vrai (T)","Faux (F)"],[1],
+    "D'après le corrigé du test officiel du cours, cette affirmation est marquée Fausse (F) — l'échantillon de crachat ne sert pas à tester l'hémoglobine.",
+    "Anglais de la santé – English Test officiel"],
+  ["QCU","angsante_test_officiel",2,"Vrai ou faux : « There is the same way of transmission in tetanus and dengue. »",
+    ["Vrai (T)","Faux (F)"],[1],
+    "D'après le corrigé du test officiel du cours, cette affirmation est marquée Fausse (F) — le tétanos et la dengue n'ont pas le même mode de transmission.",
+    "Anglais de la santé – English Test officiel"],
+  ["QCM","angsante_test_officiel",2,"Selon le test officiel du cours, de quels antigènes le vaccin DTP (DTC) est-il composé (3 réponses attendues) ?",
+    ["Diphteria antigen","Tetanus antigen","Pertusis antigen","Dengue antigen"],[0,1,2],
+    "Le vaccin DTP (DTC) est composé de 3 antigènes selon le test : Diphteria (diphtérie), Tetanus (tétanos), Pertusis (coqueluche).",
+    "Anglais de la santé – English Test officiel, DTP vaccine"],
+  ["QCM","angsante_test_officiel",2,"Selon le test officiel du cours, où trouve-t-on les germes du choléra (2 réponses attendues) ?",
+    ["The feces of infected people","The stools of infected people","The blood of infected people","The sputum of infected people"],[0,1],
+    "Le test cite : les germes du choléra se trouvent dans les selles (feces/stools) des personnes infectées, et l'eau contaminée par ces selles.",
+    "Anglais de la santé – English Test officiel, cholera"],
+  ["QCM","angsante_test_officiel",1,"Selon le test officiel du cours, comment prévenir le choléra (2 réponses attendues) ?",
+    ["Wash your hands often with soap and safe water","Use latrines or bury your feces","Eat your food when it is not hot","Avoid drinking any water"],[0,1],
+    "Le test cite en prévention : se laver les mains avec du savon et de l'eau propre, et utiliser des latrines ou enterrer ses excréments.",
+    "Anglais de la santé – English Test officiel, cholera prevention"],
+];
+
+const ISTVIH_RAW = [
+  // ===== Chapitre 1 : Généralités sur les IST =====
+  ["QCU","istvih_ist_gen",1,"Comment définit-on les Infections Sexuellement Transmissibles (IST) ?",
+    ["Des affections contagieuses dues à des microorganismes variés, liées par un même mode de transmission : les rapports sexuels","Des affections uniquement d'origine virale","Des affections transmises uniquement par voie sanguine","Des affections qui ne touchent que les femmes"],[0],
+    "Les IST sont des affections contagieuses dues à des microorganismes multiples et variés (bactériens, parasitaires, mycosiques, viraux), liées entre elles par un même mode de transmission : les rapports sexuels.",
+    "IST/VIH – Généralités sur les IST"],
+  ["QCU","istvih_ist_gen",2,"Quel germe est responsable de la gonococcie ?",
+    ["Neisseria gonorrhoeae","Chlamydia trachomatis","Treponema pallidum","Haemophilus ducreyi"],[0],
+    "La gonococcie est causée par la bactérie Neisseria gonorrhoeae.",
+    "IST/VIH – Généralités sur les IST, germes bactériens"],
+  ["QCU","istvih_ist_gen",2,"Quel germe est responsable du chancre mou ?",
+    ["Haemophilus ducreyi","Treponema pallidum pallidum","Neisseria gonorrhoeae","Chlamydia trachomatis"],[0],
+    "Le chancre mou est causé par la bactérie Haemophilus ducreyi.",
+    "IST/VIH – Généralités sur les IST, germes bactériens"],
+  ["QCU","istvih_ist_gen",1,"Quel germe est responsable de la syphilis ?",
+    ["Treponema pallidum pallidum","Neisseria gonorrhoeae","Gardnerella vaginalis","Calymmatobacterium granulomatis"],[0],
+    "La syphilis est causée par la bactérie Treponema pallidum pallidum.",
+    "IST/VIH – Généralités sur les IST, germes bactériens"],
+  ["QCU","istvih_ist_gen",2,"Quel niveau de la pyramide sanitaire ivoirienne correspond au dernier niveau de référence, avec les spécialistes ?",
+    ["Le niveau IST 3","Le niveau IST 1","Le niveau IST 2","Il n'y a qu'un seul niveau"],[0],
+    "Le niveau IST 3 est le dernier niveau de référence en Côte d'Ivoire, celui des spécialistes (dermato-vénérologues, gynéco-obstétriciens, pédiatres...) et du laboratoire de l'Institut Pasteur.",
+    "IST/VIH – Généralités sur les IST, niveaux de prise en charge"],
+  ["QCM","istvih_ist_gen",1,"Quelles sont les deux stratégies prioritaires pour le contrôle des IST ?",
+    ["La prévention","Le traitement précoce et efficace des cas","La vaccination systématique","L'isolement des patients"],[0,1],
+    "Les deux stratégies prioritaires de contrôle des IST sont la prévention et le traitement précoce et efficace des cas.",
+    "IST/VIH – Généralités sur les IST, stratégies de contrôle"],
+  ["QCU","istvih_ist_gen",2,"Pourquoi dit-on que la prévention secondaire des IST est une prévention primaire du VIH/sida ?",
+    ["Parce que la prise en charge précoce des IST évite les complications et limite la transmission du VIH","Parce qu'elle remplace le dépistage VIH","Parce qu'elle est obligatoire avant tout dépistage VIH","Parce qu'elle concerne uniquement les femmes enceintes"],[0],
+    "La prévention secondaire (prise en charge précoce des cas d'IST) permet d'éviter les complications des IST et la transmission du VIH/sida ; elle constitue donc une prévention primaire du VIH.",
+    "IST/VIH – Généralités sur les IST, stratégies de contrôle"],
+  ["QCU","istvih_ist_gen",1,"Combien d'approches de prise en charge des IST sont définies dans le cours ?",
+    ["3 (clinique, étiologique, syndromique)","2 (clinique et étiologique)","4","1 seule, la syndromique"],[0],
+    "Le cours définit 3 approches de prise en charge des IST : l'approche clinique, l'approche étiologique et l'approche syndromique.",
+    "IST/VIH – Généralités sur les IST, approches de prise en charge"],
+  ["QCU","istvih_ist_gen",2,"Quel est l'avantage principal de l'approche syndromique de prise en charge des IST ?",
+    ["Prise en charge immédiate, simple et applicable partout, sans besoin de laboratoire","Une précision diagnostique maximale","Un traitement toujours spécifique au germe exact","L'absence totale de traitement par excès"],[0],
+    "L'approche syndromique permet une prise en charge immédiate, est simple, applicable partout et indépendante du laboratoire ; sa limite principale est le traitement par excès et le risque de ne pas repérer les clients asymptomatiques.",
+    "IST/VIH – Généralités sur les IST, approches de prise en charge"],
+  ["QCU","istvih_ist_gen",1,"Combien d'étapes comporte la prise en charge syndromique d'un client IST ?",
+    ["7 étapes","3 étapes","5 étapes","10 étapes"],[0],
+    "La prise en charge syndromique comporte 7 étapes, incluant l'accueil, l'interrogatoire, l'examen physique, le diagnostic, le traitement, le counseling, la prise en charge des partenaires, et l'enregistrement des cas.",
+    "IST/VIH – Généralités sur les IST, étapes de prise en charge"],
+  ["QCM","istvih_ist_gen",2,"Parmi les 7 syndromes IST identifiés en Côte d'Ivoire, lesquels sont cités dans le cours ?",
+    ["Syndrome d'écoulement urétral masculin","Syndrome d'écoulement vaginal chez la femme","Syndrome d'ulcération génitale","Syndrome de fièvre isolée"],[0,1,2],
+    "Les 7 syndromes IST identifiés en Côte d'Ivoire comprennent notamment : écoulement urétral masculin, écoulement vaginal féminin, douleurs abdominales basses, douleurs testiculaires, ulcération génitale, végétations vénériennes, conjonctivite du nouveau-né. La fièvre isolée n'en fait pas partie.",
+    "IST/VIH – Généralités sur les IST, syndromes"],
+  ["QCU","istvih_ist_gen",2,"Quelles sont les causes fréquentes de l'écoulement urétral chez l'homme ?",
+    ["Gonococcie, chlamydiose, infection à mycoplasmes","Uniquement la gonococcie","Uniquement la trichomonose","La syphilis exclusivement"],[0],
+    "Les causes fréquentes de l'écoulement urétral chez l'homme sont la gonococcie, la chlamydiose et l'infection à mycoplasmes ; la trichomonose est une cause moins fréquente.",
+    "IST/VIH – Généralités sur les IST, écoulement urétral"],
+  ["QCU","istvih_ist_gen",2,"Dans l'évaluation du risque de cervicite, à partir de quel score considère-t-on qu'il s'agit d'une cervicite plutôt qu'une vaginite ?",
+    ["Score égal ou supérieur à 2","Score égal ou supérieur à 5","Score égal à 0","Il n'y a pas de seuil défini"],[0],
+    "Si le score de risque est inférieur à 2, il s'agit d'une vaginite ; si le score est égal ou supérieur à 2, il s'agit d'une cervicite.",
+    "IST/VIH – Généralités sur les IST, écoulement vaginal"],
+  ["QCU","istvih_ist_gen",2,"L'annonce aux partenaires sexuels d'un client IST doit-elle être obligatoire ou volontaire ?",
+    ["Obligatoire devant tout cas d'IST, mais le choix de la méthode reste volontaire et non coercitif pour le client","Totalement facultative dans tous les cas","Interdite pour préserver la confidentialité","Réservée uniquement au VIH"],[0],
+    "L'annonce aux partenaires est obligatoire devant tout cas d'IST ; cependant, le principe du choix libre veut qu'elle soit volontaire et non coercitive envers le client concernant la manière de procéder.",
+    "IST/VIH – Généralités sur les IST, annonce aux partenaires"],
+  ["QCU","istvih_ist_gen",1,"Qu'est-ce que le concept de « double protection » ?",
+    ["La protection simultanée contre les IST/VIH et contre les grossesses non désirées","L'utilisation de deux préservatifs en même temps","Le traitement systématique de deux IST à la fois","La vaccination associée à deux traitements"],[0],
+    "Le concept de double protection désigne la protection simultanée contre les IST/VIH/sida et contre les grossesses non désirées, généralement par l'usage du préservatif.",
+    "IST/VIH – Généralités sur les IST, double protection"],
+  // ===== Chapitre 2 : Généralités sur l'infection à VIH =====
+  ["QCU","istvih_vih_gen",1,"En quelle année les premiers cas de SIDA ont-ils été diagnostiqués aux États-Unis ?",
+    ["1981","1983","1985","1996"],[0],
+    "Les premiers cas de SIDA ont été diagnostiqués aux États-Unis en 1981.",
+    "IST/VIH – Généralités sur l'infection à VIH, historique mondial"],
+  ["QCU","istvih_vih_gen",2,"En quelle année le VIH-1 a-t-il été isolé par les équipes de Montagnier et Gallo ?",
+    ["1983","1981","1985","1987"],[0],
+    "Le VIH-1 a été isolé en 1983 par les équipes de Luc Montagnier et Robert Gallo.",
+    "IST/VIH – Généralités sur l'infection à VIH, historique mondial"],
+  ["QCU","istvih_vih_gen",2,"En quelle année le premier cas de SIDA a-t-il été diagnostiqué en Côte d'Ivoire ?",
+    ["1985","1981","1987","1990"],[0],
+    "Le premier cas de SIDA a été diagnostiqué en Côte d'Ivoire en 1985.",
+    "IST/VIH – Généralités sur l'infection à VIH, historique en Côte d'Ivoire"],
+  ["QCU","istvih_vih_gen",2,"Quelle note circulaire de 2017 a introduit la stratégie « tester et traiter tous » en Côte d'Ivoire ?",
+    ["Une note circulaire du 1er février 2017","La loi n°430-2014","Le lancement du plan PTME de 2012","La création du PNLS en 1987"],[0],
+    "La note circulaire du 1er février 2017 a introduit l'approche « tester et traiter tous » comme nouvelle stratégie de prise en charge des PVVIH en Côte d'Ivoire.",
+    "IST/VIH – Généralités sur l'infection à VIH, historique en Côte d'Ivoire"],
+  ["QCU","istvih_vih_gen",1,"À quelle famille de virus appartient le VIH ?",
+    ["La famille des rétrovirus, genre Lentivirus","La famille des herpèsvirus","La famille des papillomavirus","La famille des coronavirus"],[0],
+    "Le VIH appartient à la famille des rétrovirus, du genre Lentivirus.",
+    "IST/VIH – Généralités sur l'infection à VIH, définition"],
+  ["QCU","istvih_vih_gen",2,"Que signifie l'acronyme SIDA ?",
+    ["Syndrome d'Immunodéficience Acquise","Syndrome Infectieux Dégénératif Aigu","Syndrome d'Insuffisance et Déficit Immunitaire Autoimmun","Syndrome d'Infection Directe et Aiguë"],[0],
+    "SIDA signifie Syndrome d'Immunodéficience Acquise : un ensemble de symptômes (syndrome) liés à un affaiblissement (déficience) du système immunitaire (immunité), non inné ni héréditaire (acquis).",
+    "IST/VIH – Généralités sur l'infection à VIH, définition"],
+  ["QCU","istvih_vih_gen",1,"Combien de types de VIH sont connus dans le monde ?",
+    ["2 (VIH-1 et VIH-2)","1 seul","3","4"],[0],
+    "Il existe deux types de VIH connus dans le monde, le VIH-1 et le VIH-2, qui se transmettent de la même manière.",
+    "IST/VIH – Généralités sur l'infection à VIH, définition"],
+  ["QCU","istvih_vih_gen",2,"Quel type de VIH est le plus répandu dans le monde ?",
+    ["Le VIH-1","Le VIH-2","Les deux sont également répandus","Aucun des deux n'est prédominant"],[0],
+    "Le VIH-1 est de loin le plus répandu dans le monde entier ; le VIH-2 est plus rare et essentiellement localisé en Afrique de l'Ouest.",
+    "IST/VIH – Généralités sur l'infection à VIH, répartition géographique"],
+  ["QCM","istvih_vih_gen",2,"Parmi les liquides biologiques suivants, lesquels présentent un risque élevé de transmission du VIH ?",
+    ["Le sang","Le sperme et les sécrétions vaginales","Le lait maternel","La salive"],[0,1,2],
+    "Les liquides biologiques à risque élevé de transmission du VIH sont le sang, le sperme, le liquide séminal, les sécrétions vaginales, le lait maternel, et d'autres liquides comme le LCR ou le liquide amniotique. La salive n'est pas considérée comme un liquide à risque élevé.",
+    "IST/VIH – Généralités sur l'infection à VIH, liquides à risque"],
+  ["QCU","istvih_vih_gen",1,"Quel est le mode de transmission le plus fréquent du VIH, selon le cours ?",
+    ["La transmission sexuelle (environ 90%)","La transmission sanguine (environ 90%)","La transmission mère-enfant (environ 90%)","Tous les modes sont également fréquents"],[0],
+    "Trois modes de transmission sont connus : sexuelle (environ 90%), sanguine (environ 3%), et mère-enfant (environ 7%).",
+    "IST/VIH – Généralités sur l'infection à VIH, modes de transmission"],
+  ["QCU","istvih_vih_gen",2,"Pendant la grossesse, quel pourcentage de bébés nés de mère infectée sont contaminés par passage transplacentaire, selon le cours ?",
+    ["5 à 10%","20 à 30%","50%","1%"],[0],
+    "Pendant la grossesse, 5 à 10% des bébés nés de mère infectée sont contaminés après passage du virus à travers le placenta.",
+    "IST/VIH – Généralités sur l'infection à VIH, transmission mère-enfant"],
+  ["QCU","istvih_vih_gen",2,"Pendant le travail et l'accouchement, quel pourcentage de nouveau-nés sont contaminés lors du passage de la filière pelvi-génitale ?",
+    ["10 à 20%","1 à 3%","50 à 60%","Aucun risque à cette étape"],[0],
+    "Pendant le travail et l'accouchement, 10 à 20% des nouveau-nés sont contaminés lors du passage de la filière pelvi-génitale.",
+    "IST/VIH – Généralités sur l'infection à VIH, transmission mère-enfant"],
+  ["QCU","istvih_vih_gen",2,"Quel est le risque de transmission du VIH par l'allaitement prolongé jusqu'à 18-24 mois, selon le cours ?",
+    ["30 à 45%","5 à 10%","1 à 2%","70 à 80%"],[0],
+    "Le risque de transmission par l'allaitement varie de 25 à 35% jusqu'à 6 mois d'allaitement, et jusqu'à 30 à 45% en cas d'allaitement prolongé jusqu'à 18-24 mois.",
+    "IST/VIH – Généralités sur l'infection à VIH, transmission mère-enfant"],
+  // ===== Chapitre 3 : Etiopathogénie, histoire naturelle, classification =====
+  ["QCU","istvih_classification",1,"En combien de temps s'écoule en moyenne l'évolution de l'infection initiale par le VIH vers le stade SIDA en l'absence de traitement ?",
+    ["Plus de 10 ans en moyenne","Quelques semaines","1 an","20 à 30 ans"],[0],
+    "Il s'écoule en moyenne plus de 10 ans avant que l'infection initiale par le VIH ne mène au stade SIDA, en l'absence de traitement.",
+    "IST/VIH – Etiopathogénie et histoire naturelle"],
+  ["QCU","istvih_classification",2,"Quel outil clinique évalue le degré d'autonomie/de dépendance d'un patient, de 100% (normal) à 10% (processus fatal) ?",
+    ["L'indice de Karnofsky","La classification OMS","La classification CDC","Le score d'APGAR"],[0],
+    "L'indice de Karnofsky est une gradation de l'état du malade, de 100% (aucune évidence de maladie) à 10% (processus fatal progresse rapidement), appréciant le degré de dépendance du patient.",
+    "IST/VIH – Classification, indice de Karnofsky"],
+  ["QCU","istvih_classification",1,"Combien de stades cliniques comporte la classification OMS de l'infection à VIH chez l'adulte ?",
+    ["4 stades","2 stades","6 stades","3 stades"],[0],
+    "La classification clinique OMS de l'infection à VIH chez l'adulte comporte 4 stades cliniques.",
+    "IST/VIH – Classification OMS"],
+  ["QCU","istvih_classification",2,"Au stade clinique 1 de la classification OMS chez l'adulte, quel est l'état du patient ?",
+    ["Asymptomatique, éventuellement adénopathies persistantes généralisées","Syndrome cachectique lié au VIH","Candidose œsophagienne","Sarcome de Kaposi"],[0],
+    "Au stade clinique 1, le patient est asymptomatique, avec éventuellement des adénopathies persistantes généralisées.",
+    "IST/VIH – Classification OMS, stades cliniques"],
+  ["QCU","istvih_classification",2,"Le sarcome de Kaposi et la tuberculose extra-pulmonaire appartiennent à quel stade clinique OMS chez l'adulte ?",
+    ["Stade clinique 4","Stade clinique 1","Stade clinique 2","Il n'y a pas de stade défini pour ces atteintes"],[0],
+    "Le sarcome de Kaposi, la tuberculose extra-pulmonaire, la toxoplasmose cérébrale et l'encéphalopathie à VIH font partie des critères du stade clinique 4 (le plus avancé) de la classification OMS.",
+    "IST/VIH – Classification OMS, stades cliniques"],
+  ["QCU","istvih_classification",2,"Selon la classification immunologique OMS 2005, à partir de quel seuil de CD4 (nombre absolu) chez l'adulte considère-t-on un déficit immunitaire sévère ?",
+    ["Moins de 200/mm3","Moins de 500/mm3","Moins de 350/mm3","Moins de 1000/mm3"],[0],
+    "Selon la classification immunologique OMS 2005, un déficit immunitaire sévère chez l'adulte (plus de 5 ans) correspond à un taux de CD4 inférieur à 200/mm3.",
+    "IST/VIH – Classification immunologique OMS"],
+  ["QCM","istvih_classification",2,"Dans la classification CDC 1993 pour l'adulte, quelles catégories cliniques sont définies ?",
+    ["Catégorie A (asymptomatique)","Catégorie B (symptômes modérés)","Catégorie C (infections opportunistes définissant le sida)","Catégorie D (guérison)"],[0,1,2],
+    "La classification CDC 1993 pour l'adulte définit 3 catégories cliniques : A (asymptomatique, primo-infection, lymphadénopathie), B (symptômes modérés comme la candidose oro-pharyngée), et C (infections opportunistes sévères définissant le sida).",
+    "IST/VIH – Classification CDC"],
+  ["QCU","istvih_classification",2,"Dans la classification CDC de l'enfant de moins de 13 ans, que désigne la catégorie N ?",
+    ["Asymptomatique","Symptômes mineurs","Symptômes modérés","Symptômes sévères"],[0],
+    "Dans la classification CDC 1994 pour l'enfant de moins de 13 ans, la catégorie N correspond à un enfant asymptomatique.",
+    "IST/VIH – Classification CDC pédiatrique"],
+  // ===== Chapitre 4 : Dépistage =====
+  ["QCU","istvih_depistage",1,"Combien de tests rapides comporte le nouvel algorithme séquentiel de dépistage du VIH en Côte d'Ivoire ?",
+    ["3 tests rapides","1 seul test","2 tests","5 tests"],[0],
+    "La Côte d'Ivoire utilise un algorithme séquentiel à 3 tests rapides pour le dépistage de l'infection à VIH.",
+    "IST/VIH – Services de dépistage, algorithme"],
+  ["QCU","istvih_depistage",2,"Que signifie DBS dans le cadre du diagnostic biologique de l'infection à VIH chez l'enfant ?",
+    ["Dried Blood Spot","Diagnostic Biologique Simplifié","Dépistage Biologique Spécialisé","Détection Biologique Sanguine"],[0],
+    "DBS signifie Dried Blood Spot (goutte de sang séché), technique utilisée pour le diagnostic biologique de l'infection à VIH chez l'enfant, notamment pour la PCR.",
+    "IST/VIH – Services de dépistage, diagnostic pédiatrique"],
+  // ===== Chapitre 5 : Prévention et PTME =====
+  ["QCM","istvih_prevention",1,"Parmi les mesures suivantes, lesquelles font partie de la prévention de la transmission sanguine du VIH en milieu de soins ?",
+    ["Le port de gants et de blouse","L'utilisation de matériel à usage unique ou stérilisé","Le pansement systématique des plaies même mineures","L'absence de toute précaution si le patient semble en bonne santé"],[0,1,2],
+    "La prévention de la transmission sanguine en milieu de soins comprend le port de gants, blouse, masque, le pansement des plaies même mineures, et l'utilisation de matériel à usage unique ou stérilisé.",
+    "IST/VIH – Prévention, transmission sanguine"],
+  ["QCU","istvih_prevention",1,"Combien de piliers comporte la stratégie de PTME (Prévention de la Transmission Mère-Enfant) ?",
+    ["4 piliers","2 piliers","3 piliers","6 piliers"],[0],
+    "La PTME repose sur 4 piliers : la prévention primaire, la prévention des grossesses non désirées chez les femmes infectées, la prévention de la transmission mère-enfant proprement dite, et les soins/traitements aux mères infectées et à leur famille.",
+    "IST/VIH – Prévention, PTME"],
+  ["QCU","istvih_prevention",2,"Combien de consultations prénatales (CPN) sont recommandées au minimum pour toute femme enceinte ?",
+    ["Au moins 4 CPN","Au moins 1 CPN","Au moins 8 CPN","Aucune n'est nécessaire si la grossesse se passe bien"],[0],
+    "Il est recommandé à toute femme enceinte d'effectuer au moins 4 consultations prénatales (CPN).",
+    "IST/VIH – Prévention, PTME, suivi de grossesse"],
+  ["QCU","istvih_prevention",2,"Chez une femme enceinte infectée par le VIH, à quelle fréquence doit-elle être vue en consultation prénatale ?",
+    ["Chaque mois, car il s'agit d'une grossesse à risque","Une seule fois au premier trimestre","Tous les 3 mois","Uniquement en fin de grossesse"],[0],
+    "La grossesse chez une femme infectée par le VIH étant une grossesse à risque, la femme devra être vue chaque mois en consultation prénatale.",
+    "IST/VIH – Prévention, PTME, suivi de grossesse"],
+  ["QCM","istvih_prevention",2,"Parmi les mesures suivantes à prendre en salle de travail chez une femme VIH positive, lesquelles sont recommandées ?",
+    ["Minimiser la pratique de l'examen cervical", "Éviter la rupture artificielle des membranes avant 8 cm de dilatation","Nettoyer le cordon à la chlorhexidine avant de le sectionner","Privilégier systématiquement les manœuvres instrumentales (forceps)"],[0,1,2],
+    "Les mesures recommandées incluent : minimiser l'examen cervical, éviter la rupture artificielle précoce des membranes, éviter les manœuvres instrumentales (forceps, ventouse) et les épisiotomies autant que possible, et nettoyer le cordon à la chlorhexidine avant sectionnement.",
+    "IST/VIH – Prévention, PTME, accouchement"],
+  ["QCU","istvih_prevention",2,"Au 2ème trimestre de la grossesse chez une femme VIH positive, par quoi remplace-t-on un éventuel traitement préventif antipalustre ?",
+    ["Le cotrimoxazole","La chloroquine","L'artémisinine seule","Aucun remplacement n'est nécessaire"],[0],
+    "Au 2ème trimestre de la grossesse, la femme VIH positive est mise sous cotrimoxazole en remplacement d'un éventuel traitement préventif antipalustre.",
+    "IST/VIH – Prévention, PTME, suivi de grossesse"],
+];
+
+const MNT_RAW = [
+  // ===== Hypertension artérielle =====
+  ["QCU","mnt_hta",1,"Comment définit-on l'hypertension artérielle (HTA) ?",
+    ["Une PAS ≥ 140 mmHg et/ou une PAD ≥ 90 mmHg, mesurées au cours de deux consultations différentes au moins","Une PAS ≥ 120 mmHg uniquement","Une PAD ≥ 100 mmHg à une seule consultation","Une tension supérieure à celle du bras opposé"],[0],
+    "L'HTA est l'élévation de la pression artérielle systolique (PAS) ≥ 140 mmHg et/ou de la pression artérielle diastolique (PAD) ≥ 90 mmHg, au cours de deux consultations différentes au moins.",
+    "Maladies non transmissibles – Hypertension artérielle, définition"],
+  ["QCU","mnt_hta",2,"Dans quel pourcentage des cas l'HTA primaire (essentielle) est-elle de cause inconnue ?",
+    ["90% des cas","50% des cas","10% des cas","100% des cas"],[0],
+    "L'HTA primaire, ou essentielle, est de cause inconnue dans 90% des cas ; elle résulterait de la conjugaison de plusieurs facteurs modifiables et non modifiables.",
+    "Maladies non transmissibles – Hypertension artérielle, types"],
+  ["QCM","mnt_hta",2,"Parmi les causes suivantes, lesquelles peuvent entraîner une HTA secondaire ?",
+    ["Abus de corticoïdes ou d'AINS","Néphropathies chroniques","Sténose de l'artère rénale","L'hérédité"],[0,1,2],
+    "L'HTA secondaire survient à la suite d'un abus de certains médicaments (corticoïdes, AINS...), de maladies préexistantes (néphropathies, sténose de l'artère rénale) ou d'une mauvaise hygiène de vie ; l'hérédité est un facteur non modifiable de l'HTA primaire.",
+    "Maladies non transmissibles – Hypertension artérielle, types"],
+  ["QCU","mnt_hta",2,"Selon la classification OMS, à partir de quels seuils parle-t-on d'HTA grade 3 ?",
+    ["PAS ≥ 180 mmHg et/ou PAD ≥ 110 mmHg","PAS ≥ 140 mmHg et/ou PAD ≥ 90 mmHg","PAS ≥ 160 mmHg et/ou PAD ≥ 100 mmHg","PAS ≥ 130 mmHg et/ou PAD ≥ 85 mmHg"],[0],
+    "Selon la classification OMS, l'HTA grade 3 (sévère) correspond à une PAS ≥ 180 mmHg et/ou une PAD ≥ 110 mmHg.",
+    "Maladies non transmissibles – Hypertension artérielle, classification"],
+  ["QCM","mnt_hta",2,"Quels signes traduisent un retentissement de l'HTA sur les reins ?",
+    ["Polyurie, nycturie","Protéinurie, hématurie","Dyspnée, palpitations","Céphalées, phosphènes"],[0,1],
+    "Le retentissement rénal de l'HTA se traduit par polyurie, nycturie, protéinurie et hématurie ; les signes cardiaques (dyspnée, palpitations) et cérébraux (céphalées, phosphènes) correspondent respectivement à l'atteinte du cœur et du cerveau.",
+    "Maladies non transmissibles – Hypertension artérielle, retentissement"],
+  ["QCM","mnt_hta",1,"Quelles sont les bonnes pratiques pour la mesure de la tension artérielle, selon le cours ?",
+    ["Mesurer la PA aux deux bras la première fois","Faire la mesure après au moins 5 minutes de repos, sans parler","Mesurer sur un bras porteur de perfusion pour plus de précision","Attendre 30 minutes après un repas ou un excitant"],[0,1,3],
+    "Les bonnes pratiques incluent la mesure aux deux bras la première fois, un repos d'au moins 5 minutes sans parler, un délai de 30 minutes après repas/excitant ; il ne faut jamais mesurer sur un bras porteur de perfusion, de fistule ou hémiplégique.",
+    "Maladies non transmissibles – Hypertension artérielle, technique de mesure"],
+  ["QCM","mnt_hta",2,"Parmi les classes médicamenteuses suivantes, lesquelles sont citées dans le traitement de l'HTA ?",
+    ["Diurétiques (furosémide, thiazidiques)","Bêtabloquants","Inhibiteurs de l'enzyme de conversion (IEC)","Antibiotiques"],[0,1,2],
+    "Le traitement médical de l'HTA fait appel à plusieurs classes : diurétiques (furosémide, thiazidiques), bêtabloquants, inhibiteurs calciques, IEC, et inhibiteurs des récepteurs de l'angiotensine 2 ; les antibiotiques n'ont pas leur place dans ce traitement.",
+    "Maladies non transmissibles – Hypertension artérielle, traitement"],
+  ["QCM","mnt_hta",2,"Parmi les complications suivantes, lesquelles sont citées comme complications de l'HTA ?",
+    ["AVC hémorragique ou ischémique","Infarctus du myocarde","Dissection de l'aorte","Gastrite"],[0,1,2],
+    "Les complications de l'HTA citées sont l'AVC (hémorragique ou ischémique), l'infarctus du myocarde, la dissection de l'aorte et l'œdème aigu du poumon.",
+    "Maladies non transmissibles – Hypertension artérielle, complications"],
+  // ===== Œdème aigu du poumon =====
+  ["QCU","mnt_oap",1,"Comment définit-on l'œdème aigu du poumon (OAP) ?",
+    ["L'inondation brutale des alvéoles pulmonaires par transsudation de plasma, forme aiguë de l'insuffisance cardiaque gauche","Une infection aiguë du parenchyme pulmonaire","Une inflammation chronique des bronches","Un épanchement pleural chronique"],[0],
+    "L'OAP est l'inondation brutale des alvéoles pulmonaires et du tissu interstitiel par transsudation de plasma, provenant d'une augmentation de la pression capillaire pulmonaire ; c'est la forme aiguë de l'insuffisance cardiaque gauche.",
+    "Maladies non transmissibles – Œdème aigu du poumon, définition"],
+  ["QCM","mnt_oap",2,"Parmi les signes cliniques suivants, lesquels sont caractéristiques de l'OAP ?",
+    ["Râles crépitants (bruits de pas dans la neige)","Expectoration mousseuse, rosée ou saumonée","Cyanose importante","Bradycardie"],[0,1,2],
+    "L'OAP se manifeste par des râles crépitants, une expectoration mousseuse rosée/saumonée, une cyanose importante et une tachycardie (et non une bradycardie).",
+    "Maladies non transmissibles – Œdème aigu du poumon, signes cliniques"],
+  ["QCU","mnt_oap",2,"Quelle position doit-on installer un patient en OAP, selon le cours ?",
+    ["Position 3/4 assise, jambes pendantes","Position allongée à plat, jambes surélevées","Position latérale de sécurité","Position ventrale"],[0],
+    "Le patient en OAP doit être installé en position 3/4 assise, jambes pendantes, ce qui limite le retour veineux périphérique.",
+    "Maladies non transmissibles – Œdème aigu du poumon, prise en charge"],
+  ["QCU","mnt_oap",2,"Que signifie le mnémonique « ALORS » utilisé dans le cours pour résumer la prise en charge infirmière de l'OAP ?",
+    ["Assis/jambes pendantes, Lasilix, Oxygénation, Risordan, Surveillance","Antalgiques, Liquides, Oxygène, Repos, Sédation","Alerte, Lit, Observation, Réanimation, Soins","Aucune signification particulière"],[0],
+    "Le mnémonique ALORS résume la prise en charge infirmière de l'OAP : Assis(e)/jambes pendantes, Lasilix (diurétique), Oxygénation, Risordan (vasodilatateur), Surveillance des paramètres vitaux.",
+    "Maladies non transmissibles – Œdème aigu du poumon, prise en charge (mnémonique ALORS)"],
+  ["QCU","mnt_oap",1,"Quelle est la valeur normale de la saturation en oxygène (SpO2), selon le cours ?",
+    ["Entre 94 et 98%","Entre 70 et 80%","Entre 100 et 110%","Entre 50 et 60%"],[0],
+    "Le taux normal de saturation en oxygène se situe entre 94 et 98%.",
+    "Maladies non transmissibles – Œdème aigu du poumon, surveillance"],
+  // ===== Péricardite aiguë =====
+  ["QCU","mnt_pericardite",1,"Comment définit-on la péricardite aiguë ?",
+    ["Une inflammation des deux feuillets du péricarde, associée ou non à un épanchement liquidien","Une inflammation du muscle cardiaque uniquement","Une infection des valves cardiaques","Une inflammation chronique des artères coronaires"],[0],
+    "La péricardite aiguë est une inflammation des deux feuillets du péricarde, associée ou non à la présence d'un épanchement liquidien.",
+    "Maladies non transmissibles – Péricardite aiguë, définition"],
+  ["QCU","mnt_pericardite",2,"Quelle est la cause la plus fréquente de péricardite selon le cours (9 cas sur 10) ?",
+    ["Virale (VIH, hépatite C, herpès)","Bactérienne (staphylocoques, pneumocoques)","Tuberculeuse (bacille de Koch)","Fongique"],[0],
+    "La péricardite virale (VIH, hépatite C, herpès) est la cause la plus fréquente, représentant 9 cas sur 10.",
+    "Maladies non transmissibles – Péricardite aiguë, étiologies"],
+  ["QCU","mnt_pericardite",2,"Quel signe est décrit comme pathognomonique de la péricardite ?",
+    ["Le frottement péricardique (froissement de soie)","La fièvre isolée","La toux sèche","L'œdème des membres inférieurs"],[0],
+    "Le frottement péricardique, décrit comme un « froissement de soie » à l'auscultation, est pathognomonique de la péricardite.",
+    "Maladies non transmissibles – Péricardite aiguë, signes cliniques"],
+  ["QCU","mnt_pericardite",2,"Comment la douleur thoracique de la péricardite est-elle typiquement soulagée ?",
+    ["Par la position assise penchée en avant","Par la position allongée à plat","Par l'effort physique","Elle n'est jamais soulagée par la position"],[0],
+    "La douleur de la péricardite est calmée par la position assise penchée en avant, et majorée en décubitus, à l'inspiration ou lors des efforts de toux.",
+    "Maladies non transmissibles – Péricardite aiguë, signes cliniques"],
+  ["QCU","mnt_pericardite",2,"Pourquoi faut-il mobiliser avec précaution un patient atteint de péricardite, selon le cours ?",
+    ["Risque de mort subite en cas de mouvement violent et brusque","Risque de fracture osseuse","Risque de chute uniquement","Aucune précaution particulière n'est nécessaire"],[0],
+    "Tout patient chez qui l'on a diagnostiqué une péricardite doit être mobilisé avec précaution et douceur, du fait d'un risque de mort subite en cas de mouvement violent et brusque.",
+    "Maladies non transmissibles – Péricardite aiguë, prise en charge infirmière"],
+  // ===== Lithiase urinaire =====
+  ["QCU","mnt_lithiase",1,"Quel est le syndrome douloureux caractéristique de la lithiase urinaire, traduisant une souffrance urinaire aiguë unilatérale ?",
+    ["La colique néphrétique","La colique hépatique","La cystalgie chronique","La dysurie isolée"],[0],
+    "La crise de colique néphrétique est le syndrome douloureux unilatéral caractéristique, traduisant une mise en rétention aiguë des urines par obstacle sur la voie excrétrice.",
+    "Maladies non transmissibles – Lithiase urinaire, clinique"],
+  ["QCU","mnt_lithiase",2,"Comment irradie typiquement la douleur de la colique néphrétique ?",
+    ["Le long de l'uretère vers la vessie et les organes génitaux","Vers l'épaule et le bras gauche","Vers la mâchoire","Elle n'irradie jamais"],[0],
+    "La douleur de la colique néphrétique débute dans la région lombaire et irradie le long de l'uretère vers la vessie et les organes génitaux.",
+    "Maladies non transmissibles – Lithiase urinaire, clinique"],
+  ["QCU","mnt_lithiase",2,"Selon le cours, entre quel âge l'incidence de la lithiase urinaire est-elle maximale ?",
+    ["Entre 25 et 40 ans","Entre 0 et 15 ans","Après 70 ans","Il n'y a pas de pic d'âge particulier"],[0],
+    "L'incidence maximale de la lithiase urinaire se situe entre 25 et 40 ans, avec une fréquence plus élevée chez l'homme.",
+    "Maladies non transmissibles – Lithiase urinaire, épidémiologie"],
+  ["QCM","mnt_lithiase",2,"Quels signes doivent faire rechercher une infection urinaire associée lors d'une colique néphrétique ?",
+    ["Fièvre à 39-40°C","Frissons","Hypothermie à 36,5°C","Absence totale de tout autre symptôme"],[0,1,2],
+    "Il faut rechercher si la crise s'est accompagnée de fièvre à 39-40°C ou d'hypothermie à 36,5°C, et de frissons, qui témoignent de la présence d'urines infectées.",
+    "Maladies non transmissibles – Lithiase urinaire, clinique"],
+  // ===== Insuffisance rénale aiguë =====
+  ["QCU","mnt_ira",1,"Comment définit-on l'insuffisance rénale aiguë (IRA) ?",
+    ["La défaillance rapidement progressive et souvent transitoire de la fonction excrétrice rénale","Une inflammation chronique et irréversible des reins","Une infection urinaire basse","Une malformation congénitale des reins"],[0],
+    "L'IRA est la défaillance rapidement progressive, souvent transitoire, de la fonction excrétrice rénale, empêchant le maintien de l'équilibre interne de l'organisme.",
+    "Maladies non transmissibles – Insuffisance rénale aiguë, définition"],
+  ["QCU","mnt_ira",2,"En dessous de quel débit urinaire journalier parle-t-on d'oligo-anurie dans l'IRA ?",
+    ["400 ml","1500 ml","2000 ml","100 ml"],[0],
+    "L'oligo-anurie correspond à un débit urinaire journalier s'abaissant au-dessous de 400 ml.",
+    "Maladies non transmissibles – Insuffisance rénale aiguë, phase oligo-anurique"],
+  ["QCU","mnt_ira",2,"Quelle phase de l'IRA annonce la guérison, marquée par une reprise de la diurèse ?",
+    ["La phase diurétique","La phase initiale","La phase oligo-anurique","Il n'y a pas de phase de récupération"],[0],
+    "La phase diurétique annonce la guérison, avec une reprise de la diurèse due à l'élimination de l'eau extracellulaire accumulée pendant la phase oligo-anurique.",
+    "Maladies non transmissibles – Insuffisance rénale aiguë, évolution"],
+  ["QCU","mnt_ira",2,"Dans l'IRA, à partir de quel taux de kaliémie le pronostic vital est-il menacé ?",
+    ["Plus de 6,5 mmol/L","Plus de 3,5 mmol/L","Plus de 1 mmol/L","Il n'y a pas de seuil critique"],[0],
+    "La kaliémie peut augmenter rapidement dans l'IRA, surtout en cas d'acidose, et atteindre un seuil menaçant la vie du malade au-delà de 6,5 mmol/L (ou mEq/L).",
+    "Maladies non transmissibles – Insuffisance rénale aiguë, bilan biologique"],
+  ["QCM","mnt_ira",2,"Parmi les rôles infirmiers suivants, lesquels sont cités dans la prise en charge de l'IRA ?",
+    ["Surveiller les taux sériques d'électrolytes","Vérifier que les solutions parentérales ne contiennent pas de potassium","Encourager la mobilisation active intense du patient","Assurer les soins de peau, la peau étant souvent sèche et vulnérable"],[0,1,3],
+    "L'infirmière surveille les électrolytes, vérifie l'absence de potassium dans les apports, assure les soins de peau ; en revanche le repos au lit (et non une mobilisation active intense) est indiqué pour ralentir le métabolisme.",
+    "Maladies non transmissibles – Insuffisance rénale aiguë, interventions infirmières"],
+  // ===== Syndrome néphrotique =====
+  ["QCU","mnt_syndrome_nephrotique",1,"Quelle association de signes caractérise le syndrome néphrotique ?",
+    ["Protéinurie marquée, hypoalbuminémie, œdème et hypercholestérolémie","Hématurie isolée sans autre signe","Hypertension artérielle isolée","Fièvre et douleurs lombaires isolées"],[0],
+    "Le syndrome néphrotique est caractérisé par une protéinurie marquée, une hypoalbuminémie, un œdème et une hypercholestérolémie.",
+    "Maladies non transmissibles – Syndrome néphrotique, généralités"],
+  ["QCU","mnt_syndrome_nephrotique",2,"Pourquoi observe-t-on un œdème généralisé dans le syndrome néphrotique ?",
+    ["La baisse de la pression oncotique liée à l'hypoalbuminémie fait migrer l'eau vers l'espace extracellulaire","L'excès de protéines dans le sang retient l'eau dans les vaisseaux","Une infection bactérienne directe des tissus","Une allergie généralisée"],[0],
+    "L'hypoalbuminémie entraîne une baisse de la pression oncotique, ce qui fait migrer l'eau du système vasculaire vers l'espace extracellulaire, provoquant un œdème généralisé qui prend le godet.",
+    "Maladies non transmissibles – Syndrome néphrotique, physiopathologie"],
+  ["QCU","mnt_syndrome_nephrotique",2,"Quel traitement médicamenteux est cité en cas d'œdème grave du syndrome néphrotique ?",
+    ["Diurétiques et corticoïdes (Prednisone)","Antibiotiques à large spectre","Anticoagulants uniquement","Antalgiques opioïdes"],[0],
+    "Un œdème grave exige un régime pauvre en sodium, la prise de diurétiques, et de stéroïdes (Prednisone) pour réduire la protéinurie.",
+    "Maladies non transmissibles – Syndrome néphrotique, traitement"],
+  // ===== Rhumatologie =====
+  ["QCU","mnt_rhumato",1,"Que soigne la rhumatologie, selon le cours ?",
+    ["Les maladies de l'appareil locomoteur (os, articulations, muscles, tendons, ligaments)","Uniquement les maladies osseuses","Uniquement les maladies articulaires infectieuses","Les maladies exclusivement neurologiques"],[0],
+    "La rhumatologie s'intéresse au diagnostic et au traitement des maladies de l'appareil locomoteur : os, articulations, muscles, tendons et ligaments.",
+    "Maladies non transmissibles – Rhumatologie, généralités"],
+  ["QCM","mnt_rhumato",2,"Parmi les familles de pathologies rhumatologiques citées, lesquelles figurent dans le cours ?",
+    ["Les maladies inflammatoires (polyarthrite rhumatoïde, lupus)","Les maladies du squelette (arthrose, ostéoporose)","Les arthrites septiques","Les maladies exclusivement virales"],[0,1,2],
+    "Les familles citées incluent : maladies inflammatoires auto-immunes, maladies d'origine infectieuse, arthrites septiques, maladies du squelette (arthrose, ostéoporose), maladies néoplasiques et dysplasiques.",
+    "Maladies non transmissibles – Rhumatologie, classification"],
+  ["QCU","mnt_rhumato",1,"Quel est le signe fonctionnel le plus fréquent en rhumatologie ?",
+    ["La douleur","La fièvre","La toux","La dyspnée"],[0],
+    "La douleur est le signe fonctionnel le plus fréquent en rhumatologie ; il faut en préciser le mode d'installation, le siège, l'horaire, l'intensité et la topographie.",
+    "Maladies non transmissibles – Rhumatologie, signes fonctionnels"],
+  ["QCU","mnt_rhumato",2,"Quels sont les signes cardinaux de l'inflammation cités dans le cours ?",
+    ["La douleur, la rougeur et la tuméfaction","La fièvre et les frissons uniquement","La pâleur et la tachycardie","La toux et l'expectoration"],[0],
+    "Les signes cardinaux de l'inflammation cités dans le cours sont la douleur, la rougeur et la tuméfaction.",
+    "Maladies non transmissibles – Rhumatologie, signes physiques"],
+  // ===== Gastrites =====
+  ["QCU","mnt_gastrite",1,"Comment définit-on la gastrite ?",
+    ["L'inflammation aiguë ou chronique de la muqueuse gastrique","Une infection intestinale basse","Une inflammation de l'œsophage uniquement","Un ulcère perforé"],[0],
+    "La gastrite est l'inflammation aiguë ou chronique de la muqueuse gastrique, regroupant toutes les altérations de la muqueuse de l'estomac (infectieuses, toxiques, ou allergiques).",
+    "Maladies non transmissibles – Gastrites, définition"],
+  ["QCU","mnt_gastrite",1,"Combien de types essentiels de gastrites sont décrits dans le cours ?",
+    ["2 types (aiguës et chroniques)","1 seul type","4 types","5 types"],[0],
+    "Le cours décrit deux types essentiels de gastrites : les gastrites aiguës et les gastrites chroniques.",
+    "Maladies non transmissibles – Gastrites, types"],
+  ["QCM","mnt_gastrite",2,"Parmi les causes suivantes, lesquelles sont citées comme causes de gastrite aiguë ?",
+    ["Prise d'aspirine ou d'AINS","Ingestion de produits caustiques (acide ou base)","Stress important","Vaccination récente"],[0,1,2],
+    "Les causes de gastrite aiguë citées incluent la prise de médicaments gastro-toxiques (aspirine, AINS, corticoïdes), l'ingestion de caustiques, l'alcoolisme, les infections et le stress important ; la vaccination n'est pas citée comme cause.",
+    "Maladies non transmissibles – Gastrites, causes"],
+  ["QCU","mnt_gastrite",2,"Quel examen complémentaire précise l'étendue et la gravité des lésions dans la gastrite aiguë ?",
+    ["La fibroscopie","La radiographie standard de l'abdomen","L'échographie abdominale","La ponction lombaire"],[0],
+    "La fibroscopie est l'examen complémentaire de choix, permettant de préciser l'étendue et la gravité des lésions (œdème, ulcération, hémorragie).",
+    "Maladies non transmissibles – Gastrites, examens complémentaires"],
+  ["QCU","mnt_gastrite",2,"Quelle mesure hygiéno-diététique est recommandée en début de traitement d'une gastrite aiguë avec vomissements importants ?",
+    ["Une diète complète de 24 à 36 heures suivie de thé et de bouillie","Un régime hyperprotéiné immédiat","La reprise immédiate d'une alimentation normale","Le jeûne strict pendant une semaine"],[0],
+    "Le traitement hygiéno-diététique recommande une diète complète de 24 à 36 heures, suivie de la reprise progressive avec du thé, de la bouillie de mil, avant de supprimer définitivement l'agent causal (alcool, tabac, médicaments gastro-toxiques).",
+    "Maladies non transmissibles – Gastrites, traitement"],
+];
+
 const QUESTIONS = [
   ...buildQuestions(RAW, "hematologie", "q"),
   ...buildQuestions(SEMIO_EXAM_RAW, "semio-medicale", "sm"),
@@ -8051,6 +9168,9 @@ const QUESTIONS = [
   ...buildQuestions(PEDIATRIE_RAW, "pediatrie", "pe"),
   ...buildQuestions(PSYCHOANTHRO_SUPP_RAW, "psycho-anthropo", "pas"),
   ...buildQuestions(SANTEINFANT_RAW, "sante-infantile", "si"),
+  ...buildQuestions(ANGLAIS_SANTE_RAW, "anglais-sante", "as"),
+  ...buildQuestions(ISTVIH_RAW, "ist-vih", "iv"),
+  ...buildQuestions(MNT_RAW, "maladies-non-transmissibles", "mn"),
   ...buildQuestions(GYNECO_RAW, "gyneco-obstetrique", "gy"),
   ...buildQuestions(CONCEPTS_RAW, "concepts-sciences-inf", "cn"),
   ...buildQuestions(NUTRITION_SCOLAIRE_RAW, "sante-publique", "nt"),
@@ -8670,6 +9790,63 @@ function announcementMatches(a, student) {
   const antenneOk = !a.antennes || a.antennes.length === 0 || a.antennes.includes("toutes") || a.antennes.includes(student.antenne);
   const niveauOk = !a.niveau || a.niveau === "tous" || a.niveau === student.niveau;
   const specialiteOk = !a.specialite || a.specialite === "toutes" || a.specialite === student.specialite;
+  return antenneOk && niveauOk && specialiteOk;
+}
+
+// Suivi de lecture des messages par étudiant : une fois un message ouvert dans l'écran
+// dédié, son id est ajouté à la liste des messages lus, et le badge de la cloche se
+// recalcule automatiquement (revient à 0 dès que tout est lu).
+function readMessagesKey(matricule) {
+  return `read-messages:${matricule}`;
+}
+async function loadReadMessageIds(matricule) {
+  try {
+    const r = await storage.get(readMessagesKey(matricule), false);
+    return r ? JSON.parse(r.value) : [];
+  } catch {
+    return [];
+  }
+}
+async function markMessagesRead(matricule, ids) {
+  try {
+    const current = await loadReadMessageIds(matricule);
+    const merged = Array.from(new Set([...current, ...ids]));
+    await storage.set(readMessagesKey(matricule), JSON.stringify(merged), false);
+    return merged;
+  } catch (e) {
+    console.error("Erreur sauvegarde messages lus", e);
+    return [];
+  }
+}
+
+/* ================= MESSAGERIE (cloche) — autonome, distincte des Annonces ================
+   Un message peut être individuel (targetMatricule renseigné) ou groupé (ciblage par
+   antenne/niveau/spécialité, comme les annonces, mais stocké séparément). Aucune des deux
+   fonctionnalités ne dépend de l'autre : "Annonces" garde son propre espace de stockage. */
+const ADMIN_MESSAGES_KEY = "infas-hemato:admin-messages";
+
+async function loadAdminMessages() {
+  try {
+    const r = await storage.get(ADMIN_MESSAGES_KEY, true);
+    return r ? JSON.parse(r.value) : [];
+  } catch {
+    return [];
+  }
+}
+async function saveAdminMessages(list) {
+  try {
+    await storage.set(ADMIN_MESSAGES_KEY, JSON.stringify(list), true);
+  } catch (e) {
+    console.error("Erreur sauvegarde messages admin", e);
+  }
+}
+function adminMessageMatches(m, student) {
+  // Message individuel : ne s'affiche que pour l'étudiant visé, quel que soit le reste.
+  if (m.targetMatricule) return m.targetMatricule === student.matricule;
+  // Message groupé : mêmes règles de ciblage que les annonces (antenne/niveau/spécialité).
+  const antenneOk = !m.antennes || m.antennes.length === 0 || m.antennes.includes("toutes") || m.antennes.includes(student.antenne);
+  const niveauOk = !m.niveau || m.niveau === "tous" || m.niveau === student.niveau;
+  const specialiteOk = !m.specialite || m.specialite === "toutes" || m.specialite === student.specialite;
   return antenneOk && niveauOk && specialiteOk;
 }
 
@@ -9906,6 +11083,866 @@ const MEDICAL_DICT = [
     definition:"Administration par voie intraveineuse d'un produit sanguin (culot globulaire, plasma, plaquettes) prélevé chez un donneur à un receveur.",
     conseils:"Vérifier systématiquement la concordance du groupe ABO Rhésus entre le patient et la poche, et réaliser un test de compatibilité au lit du patient avant la transfusion.",
     references:"Hématologie" },
+
+  { id:"hypertension-arterielle", terme:"Hypertension artérielle", categorie:"Cardiologie",
+    definition:"Élévation chronique de la pression artérielle au-dessus de 140/90 mmHg mesurée à plusieurs reprises.",
+    causes:"Essentielle (sans cause identifiée, la plus fréquente), ou secondaire (rénale, endocrinienne, grossesse).",
+    symptomes:"Souvent asymptomatique, parfois céphalées, acouphènes, vertiges, épistaxis.",
+    diagnostic:"Mesure répétée de la tension artérielle au repos, sur plusieurs consultations.",
+    examens:"Ionogramme, créatininémie, ECG, fond d'œil, recherche de protéinurie.",
+    traitement:"Règles hygiéno-diététiques (réduction du sel, activité physique), traitement antihypertenseur si nécessaire.",
+    prevention:"Limitation du sel, activité physique régulière, contrôle du poids, arrêt du tabac.",
+    complications:"AVC, insuffisance cardiaque, insuffisance rénale, rétinopathie hypertensive.",
+    conseils:"Surveiller la tension régulièrement, éduquer à l'observance du traitement au long cours.",
+    references:"Sémiologie médicale" },
+  { id:"hypotension-arterielle", terme:"Hypotension artérielle", categorie:"Cardiologie",
+    definition:"Pression artérielle systolique inférieure à 90 mmHg ou diastolique inférieure à 60 mmHg.",
+    causes:"Déshydratation, hémorragie, insuffisance cardiaque, certains médicaments, orthostatisme.",
+    symptomes:"Vertiges, faiblesse, vision trouble, syncope à l'orthostatisme.",
+    diagnostic:"Mesure de la tension artérielle en position couchée puis debout.",
+    examens:"NFS, ionogramme, ECG selon contexte clinique.",
+    traitement:"Traitement de la cause, remplissage vasculaire si hypovolémie.",
+    prevention:"Lever progressif, hydratation suffisante.",
+    complications:"Chutes, syncope, choc si sévère.",
+    conseils:"Conseiller au patient de se lever lentement, surveiller les signes de mauvaise tolérance.",
+    references:"Sémiologie médicale" },
+  { id:"insuffisance-cardiaque", terme:"Insuffisance cardiaque", categorie:"Cardiologie",
+    definition:"Incapacité du cœur à assurer un débit sanguin suffisant pour répondre aux besoins de l'organisme.",
+    causes:"Hypertension artérielle, cardiopathie ischémique, valvulopathies, cardiomyopathies.",
+    symptomes:"Dyspnée d'effort puis de repos, œdèmes des membres inférieurs, fatigue, orthopnée.",
+    diagnostic:"Examen clinique, échographie cardiaque, dosage du BNP.",
+    examens:"ECG, radiographie thoracique, échocardiographie, bilan biologique.",
+    traitement:"Diurétiques, IEC, bêtabloquants, restriction sodée.",
+    prevention:"Contrôle des facteurs de risque cardiovasculaires.",
+    complications:"Œdème aigu du poumon, arythmies, décès.",
+    conseils:"Surveiller le poids quotidien, limiter les apports en sel et en liquides.",
+    references:"Sémiologie médicale" },
+  { id:"infarctus-du-myocarde", terme:"Infarctus du myocarde", categorie:"Urgences médicales",
+    definition:"Nécrose d'une partie du muscle cardiaque due à l'obstruction d'une artère coronaire.",
+    causes:"Athérosclérose coronarienne avec formation d'un thrombus obstructif.",
+    symptomes:"Douleur thoracique intense, constrictive, irradiant vers le bras gauche/la mâchoire, sueurs, angoisse.",
+    diagnostic:"ECG (sus-décalage du segment ST), dosage de la troponine.",
+    examens:"ECG, troponine, coronarographie.",
+    traitement:"Urgence vitale : désobstruction coronaire (angioplastie), anticoagulants, antiagrégants.",
+    prevention:"Contrôle des facteurs de risque : tabac, cholestérol, diabète, hypertension.",
+    complications:"Arythmies, insuffisance cardiaque, décès.",
+    conseils:"Appeler les secours immédiatement devant toute douleur thoracique suspecte, ne jamais faire marcher le patient.",
+    references:"Urgences médicales" },
+  { id:"accident-vasculaire-cerebral", terme:"Accident vasculaire cérébral (AVC)", categorie:"Neurologie",
+    definition:"Interruption brutale de la circulation sanguine dans une partie du cerveau, ischémique ou hémorragique.",
+    causes:"Ischémique (obstruction d'une artère, 80% des cas) ou hémorragique (rupture d'un vaisseau).",
+    symptomes:"Déficit moteur brutal d'un côté du corps, trouble de la parole, asymétrie faciale, troubles visuels.",
+    diagnostic:"Examen neurologique, imagerie cérébrale en urgence (scanner ou IRM).",
+    examens:"Scanner cérébral, IRM, bilan de coagulation.",
+    traitement:"Urgence absolue ; thrombolyse si AVC ischémique pris en charge à temps.",
+    prevention:"Contrôle de la tension artérielle, du diabète, arrêt du tabac.",
+    complications:"Séquelles motrices, troubles du langage, décès.",
+    conseils:"Retenir le score FAST (Face, Arm, Speech, Time) pour reconnaître les signes et agir vite.",
+    references:"Urgences médicales" },
+  { id:"diabete-sucre", terme:"Diabète sucré", categorie:"Endocrinologie",
+    definition:"Maladie métabolique chronique caractérisée par une hyperglycémie chronique.",
+    causes:"Type 1 : destruction auto-immune des cellules bêta du pancréas. Type 2 : insulinorésistance, souvent liée à l'obésité.",
+    symptomes:"Polyurie, polydipsie, polyphagie, amaigrissement (type 1), fatigue.",
+    diagnostic:"Glycémie à jeun ≥ 1,26 g/L à deux reprises, ou glycémie ≥ 2 g/L à tout moment avec symptômes.",
+    examens:"Glycémie à jeun, HbA1c, hyperglycémie provoquée par voie orale.",
+    traitement:"Insulinothérapie (type 1), antidiabétiques oraux et/ou insuline (type 2), règles hygiéno-diététiques.",
+    prevention:"Activité physique, alimentation équilibrée, contrôle du poids (pour le type 2).",
+    complications:"Rétinopathie, néphropathie, neuropathie, pied diabétique, complications cardiovasculaires.",
+    conseils:"Éduquer à l'autosurveillance glycémique et à la reconnaissance des signes d'hypoglycémie.",
+    references:"Sémiologie médicale ; Pharmacologie" },
+  { id:"hypoglycemie", terme:"Hypoglycémie", categorie:"Endocrinologie",
+    definition:"Baisse anormale de la glycémie en dessous de 0,60 g/L, pouvant être grave.",
+    causes:"Surdosage en insuline ou antidiabétiques, jeûne prolongé, effort physique intense.",
+    symptomes:"Sueurs, tremblements, pâleur, faim intense, confusion, coma si sévère.",
+    diagnostic:"Mesure de la glycémie capillaire.",
+    examens:"Glycémie capillaire, glycémie veineuse si doute.",
+    traitement:"Resucrage oral si conscient, glucagon ou glucose IV si troubles de conscience.",
+    prevention:"Adapter les doses de traitement, ne jamais sauter un repas sous insuline.",
+    complications:"Coma hypoglycémique, convulsions, séquelles neurologiques si prolongée.",
+    conseils:"Toujours avoir du sucre à portée de main pour les patients diabétiques traités.",
+    references:"Pharmacologie" },
+  { id:"ascaridiose", terme:"Ascaridiose", categorie:"Infectiologie-Bactériologie",
+    definition:"Parasitose intestinale due à Ascaris lumbricoides, ver rond vivant dans l'intestin grêle.",
+    causes:"Ingestion d'œufs d'Ascaris présents sur des aliments souillés (voie orale, péril fécal).",
+    symptomes:"Souvent asymptomatique, parfois douleurs abdominales, troubles digestifs, syndrome de Löffler (phase pulmonaire).",
+    diagnostic:"Découverte de vers dans les selles, mise en évidence des œufs à l'examen coprologique.",
+    examens:"Examen parasitologique des selles.",
+    traitement:"Antihelminthiques (albendazole, mébendazole).",
+    prevention:"Lavage des mains, lavage des légumes et fruits crus, assainissement de l'environnement.",
+    complications:"Occlusion intestinale en cas de forte charge parasitaire, migration ectopique.",
+    conseils:"Éduquer les familles à l'hygiène des mains et des aliments.",
+    references:"Parasitologie" },
+  { id:"oxyurose", terme:"Oxyurose", categorie:"Infectiologie-Bactériologie",
+    definition:"Parasitose intestinale bénigne due à Enterobius vermicularis (oxyure), très fréquente chez l'enfant.",
+    causes:"Auto-infestation par ingestion d'œufs après grattage anal, ou contamination interhumaine.",
+    symptomes:"Prurit anal, surtout nocturne, troubles du sommeil, irritabilité.",
+    diagnostic:"Scotch-test de Graham (recherche des œufs sur la marge anale, le matin avant la toilette).",
+    examens:"Scotch-test anal.",
+    traitement:"Antihelminthiques (albendazole), traitement de toute la famille.",
+    prevention:"Lavage des mains, ongles courts, changement fréquent des draps et sous-vêtements.",
+    complications:"Surinfection des lésions de grattage, vulvovaginite chez la fillette.",
+    conseils:"Traiter simultanément tous les membres du foyer pour éviter la réinfestation.",
+    references:"Parasitologie" },
+  { id:"pre-eclampsie", terme:"Pré-éclampsie", categorie:"Gynéco-Obstétrique",
+    definition:"Association d'une hypertension artérielle et d'une protéinurie survenant après 20 semaines d'aménorrhée.",
+    causes:"Anomalie de la placentation, mécanisme encore incomplètement élucidé.",
+    symptomes:"Céphalées, troubles visuels, œdèmes, douleur épigastrique en barre.",
+    diagnostic:"Tension artérielle ≥ 140/90 mmHg associée à une protéinurie significative.",
+    examens:"Bandelette urinaire, protéinurie des 24h, bilan hépatique et rénal.",
+    traitement:"Antihypertenseurs, surveillance rapprochée, extraction fœtale si sévère.",
+    prevention:"Surveillance prénatale régulière, dépistage systématique de la tension et de la protéinurie.",
+    complications:"Éclampsie (convulsions), HELLP syndrome, retard de croissance intra-utérin, décès maternel/fœtal.",
+    conseils:"Ne jamais négliger des céphalées ou troubles visuels chez une femme enceinte.",
+    references:"Gynéco-Obstétrique" },
+  { id:"hemorragie-du-post-partum", terme:"Hémorragie du post-partum", categorie:"Gynéco-Obstétrique",
+    definition:"Saignement génital supérieur à 500 ml survenant dans les 24 heures suivant l'accouchement.",
+    causes:"Atonie utérine (cause la plus fréquente), rétention placentaire, déchirures des voies génitales, troubles de la coagulation.",
+    symptomes:"Saignement vaginal abondant, signes de choc hémorragique (tachycardie, hypotension, pâleur).",
+    diagnostic:"Évaluation clinique du saignement, examen de l'utérus et des voies génitales.",
+    examens:"NFS, bilan de coagulation, groupe sanguin.",
+    traitement:"Massage utérin, ocytociques, transfusion si besoin, prise en charge de la cause.",
+    prevention:"Gestion active de la délivrance (GATPA), surveillance rapprochée du post-partum immédiat.",
+    complications:"Choc hémorragique, décès maternel, syndrome de Sheehan.",
+    conseils:"Surveiller le globe utérin et les saignements toutes les 15 minutes dans les 2 heures suivant l'accouchement.",
+    references:"Gynéco-Obstétrique" },
+  { id:"epilepsie", terme:"Épilepsie", categorie:"Neurologie",
+    definition:"Maladie neurologique chronique caractérisée par la survenue répétée de crises convulsives.",
+    causes:"Idiopathique, lésion cérébrale, séquelles de traumatisme, malformation, tumeur.",
+    symptomes:"Crises convulsives généralisées ou focales, perte de connaissance, morsure de langue, perte d'urine.",
+    diagnostic:"Électroencéphalogramme (EEG), imagerie cérébrale.",
+    examens:"EEG, IRM ou scanner cérébral.",
+    traitement:"Antiépileptiques au long cours, adaptés au type de crise.",
+    prevention:"Observance stricte du traitement, éviter les facteurs déclenchants (manque de sommeil, alcool).",
+    complications:"État de mal épileptique, traumatismes liés aux chutes, retentissement psychosocial.",
+    conseils:"Mettre le patient en position latérale de sécurité pendant une crise, ne rien mettre dans la bouche.",
+    references:"Sémiologie médicale" },
+  { id:"thrombose-veineuse-profonde", terme:"Thrombose veineuse profonde", categorie:"Cardiologie",
+    definition:"Formation d'un caillot sanguin (thrombus) obstruant une veine profonde, le plus souvent des membres inférieurs.",
+    causes:"Immobilisation prolongée, chirurgie, grossesse, contraception œstroprogestative, cancer.",
+    symptomes:"Douleur, œdème, chaleur et rougeur d'un membre, signe de Homans positif.",
+    diagnostic:"Écho-doppler veineux des membres inférieurs.",
+    examens:"Écho-doppler veineux, dosage des D-dimères.",
+    traitement:"Anticoagulants (héparine puis relais oral), bas de contention.",
+    prevention:"Lever précoce après chirurgie, bas de contention, anticoagulation préventive si risque élevé.",
+    complications:"Embolie pulmonaire, syndrome post-thrombotique.",
+    conseils:"Ne jamais masser un membre suspect de thrombose, surélever le membre atteint.",
+    references:"Sémiologie médicale" },
+  { id:"embolie-pulmonaire", terme:"Embolie pulmonaire", categorie:"Urgences médicales",
+    definition:"Obstruction brutale d'une artère pulmonaire par un caillot sanguin, le plus souvent migré d'une thrombose veineuse profonde.",
+    causes:"Migration d'un thrombus veineux profond vers la circulation pulmonaire.",
+    symptomes:"Douleur thoracique brutale, dyspnée, tachycardie, angoisse, parfois hémoptysie.",
+    diagnostic:"Angioscanner thoracique, dosage des D-dimères.",
+    examens:"Angioscanner thoracique, D-dimères, gaz du sang, ECG.",
+    traitement:"Anticoagulation en urgence, thrombolyse si forme grave.",
+    prevention:"Prévention de la thrombose veineuse profonde, mobilisation précoce.",
+    complications:"Choc obstructif, décès si embolie massive non traitée.",
+    conseils:"Urgence vitale : toute douleur thoracique avec dyspnée brutale doit faire évoquer le diagnostic.",
+    references:"Urgences médicales" },
+  { id:"choc-anaphylactique", terme:"Choc anaphylactique", categorie:"Urgences médicales",
+    definition:"Réaction allergique généralisée sévère et brutale, engageant le pronostic vital.",
+    causes:"Piqûre d'insecte, médicament, aliment, latex, chez un sujet préalablement sensibilisé.",
+    symptomes:"Urticaire généralisée, œdème de Quincke, dyspnée, hypotension, malaise brutal.",
+    diagnostic:"Diagnostic clinique devant l'apparition brutale des signes après exposition à l'allergène.",
+    examens:"Dosage de la tryptase sérique (a posteriori), bilan allergologique à distance.",
+    traitement:"Adrénaline en urgence par voie intramusculaire, remplissage vasculaire, oxygénothérapie.",
+    prevention:"Éviction de l'allergène identifié, trousse d'urgence avec adrénaline auto-injectable.",
+    complications:"Arrêt cardio-respiratoire, décès si prise en charge retardée.",
+    conseils:"L'adrénaline est le traitement de première intention à administrer sans délai.",
+    references:"Urgences médicales" },
+  { id:"arret-cardio-respiratoire", terme:"Arrêt cardio-respiratoire", categorie:"Urgences médicales",
+    definition:"Cessation brutale de l'activité mécanique efficace du cœur et de la respiration.",
+    causes:"Cardiopathie, trouble du rythme, hypoxie sévère, traumatisme, noyade, électrocution.",
+    symptomes:"Perte de connaissance, absence de pouls, absence de respiration.",
+    diagnostic:"Constat clinique immédiat : inconscience, absence de respiration normale.",
+    examens:"Aucun examen ne doit retarder la prise en charge.",
+    traitement:"Réanimation cardio-pulmonaire immédiate, défibrillation si indiquée.",
+    prevention:"Prise en charge précoce des facteurs de risque cardiovasculaires.",
+    complications:"Décès, séquelles anoxiques cérébrales si réanimation tardive.",
+    conseils:"Débuter le massage cardiaque sans délai, alerter les secours immédiatement.",
+    references:"Secourisme" },
+  { id:"detresse-respiratoire-aigue", terme:"Détresse respiratoire aiguë", categorie:"Urgences médicales",
+    definition:"Incapacité aiguë du système respiratoire à assurer une oxygénation adéquate de l'organisme.",
+    causes:"Pneumonie sévère, asthme aigu grave, œdème aigu du poumon, corps étranger, traumatisme thoracique.",
+    symptomes:"Polypnée, tirage, cyanose, sueurs, agitation ou troubles de conscience.",
+    diagnostic:"Examen clinique, mesure de la saturation en oxygène.",
+    examens:"Saturation en oxygène, gaz du sang, radiographie thoracique.",
+    traitement:"Oxygénothérapie, traitement de la cause, ventilation assistée si besoin.",
+    prevention:"Prise en charge précoce des pathologies respiratoires chroniques.",
+    complications:"Arrêt respiratoire, décès.",
+    conseils:"Installer le patient en position semi-assise, surveiller la saturation en continu.",
+    references:"Urgences médicales" },
+  { id:"otite-moyenne-aigue", terme:"Otite moyenne aiguë", categorie:"Pédiatrie",
+    definition:"Inflammation aiguë de l'oreille moyenne, très fréquente chez le jeune enfant.",
+    causes:"Infection bactérienne ou virale, souvent secondaire à une rhinopharyngite.",
+    symptomes:"Douleur auriculaire (otalgie), fièvre, irritabilité chez le nourrisson, parfois écoulement.",
+    diagnostic:"Otoscopie retrouvant un tympan rouge, bombé, inflammatoire.",
+    examens:"Otoscopie.",
+    traitement:"Antalgiques, antibiothérapie si indiquée selon l'âge et la sévérité.",
+    prevention:"Éviter le tabagisme passif, traiter précocement les rhinopharyngites.",
+    complications:"Perforation tympanique, mastoïdite, otite chronique.",
+    conseils:"Chez le nourrisson, évoquer l'otite devant des pleurs inexpliqués avec fièvre.",
+    references:"Pédiatrie" },
+  { id:"ictere-du-nouveau-ne", terme:"Ictère du nouveau-né", categorie:"Pédiatrie",
+    definition:"Coloration jaune de la peau et des muqueuses du nouveau-né liée à une hyperbilirubinémie.",
+    causes:"Ictère physiologique (immaturité hépatique), incompatibilité fœto-maternelle, infection.",
+    symptomes:"Coloration jaune de la peau et des sclérotiques, apparaissant du visage vers les extrémités.",
+    diagnostic:"Évaluation clinique (règle de Kramer), dosage de la bilirubine transcutanée ou sanguine.",
+    examens:"Bilirubinémie totale et conjuguée, groupe sanguin mère-enfant, test de Coombs.",
+    traitement:"Photothérapie si taux élevé, exsanguino-transfusion dans les formes sévères.",
+    prevention:"Surveillance systématique du nouveau-né dans les premiers jours de vie.",
+    complications:"Ictère nucléaire (atteinte cérébrale) si bilirubine très élevée non traitée.",
+    conseils:"Encourager l'allaitement fréquent, surveiller l'intensité de l'ictère quotidiennement.",
+    references:"Pédiatrie ; Santé infantile" },
+  { id:"deshydratation-de-l-enfant", terme:"Déshydratation de l'enfant", categorie:"Pédiatrie",
+    definition:"Perte excessive d'eau et d'électrolytes de l'organisme, fréquente lors des diarrhées aiguës.",
+    causes:"Diarrhée aiguë, vomissements, fièvre élevée, apports hydriques insuffisants.",
+    symptomes:"Pli cutané persistant, yeux enfoncés, soif intense, muqueuses sèches, léthargie si sévère.",
+    diagnostic:"Évaluation clinique de l'état d'hydratation (pli cutané, état de conscience, soif).",
+    examens:"Ionogramme sanguin si déshydratation sévère.",
+    traitement:"Solution de réhydratation orale (SRO), réhydratation IV si sévère.",
+    prevention:"Poursuite de l'allaitement, SRO précoce dès le début de la diarrhée.",
+    complications:"Choc hypovolémique, insuffisance rénale aiguë, décès si non traitée.",
+    conseils:"Débuter la réhydratation orale dès les premiers signes, ne jamais attendre l'aggravation.",
+    references:"Pédiatrie ; Santé infantile" },
+  { id:"malnutrition-aigue-severe", terme:"Malnutrition aiguë sévère", categorie:"Pédiatrie",
+    definition:"Forme grave de dénutrition chez l'enfant de 6 à 59 mois, associée à un risque élevé de mortalité.",
+    causes:"Apports alimentaires insuffisants, infections répétées, pauvreté, insécurité alimentaire.",
+    symptomes:"Amaigrissement extrême (marasme), œdèmes bilatéraux (kwashiorkor), périmètre brachial très bas.",
+    diagnostic:"Périmètre brachial inférieur à 11,5 cm, ou rapport Poids/Taille inférieur à -3 Z-score.",
+    examens:"Mensurations anthropométriques, bilan biologique selon complications.",
+    traitement:"Aliments thérapeutiques prêts à l'emploi (ATPE), prise en charge des complications si présentes.",
+    prevention:"Allaitement exclusif, diversification alimentaire adaptée, surveillance de la croissance.",
+    complications:"Infections sévères, décès si non prise en charge.",
+    conseils:"Dépister systématiquement par la mesure du périmètre brachial lors de toute consultation infantile.",
+    references:"Santé infantile" },
+  { id:"otite-externe", terme:"Otite externe", categorie:"Spécialités médicales",
+    definition:"Inflammation ou infection du conduit auditif externe.",
+    causes:"Bactérienne ou fongique, favorisée par l'humidité (baignade), traumatisme du conduit.",
+    symptomes:"Douleur auriculaire vive à la mobilisation du pavillon, prurit, écoulement parfois.",
+    diagnostic:"Otoscopie retrouvant un conduit inflammatoire, œdématié.",
+    examens:"Otoscopie, prélèvement bactériologique si besoin.",
+    traitement:"Gouttes auriculaires antibiotiques et/ou anti-inflammatoires locales.",
+    prevention:"Éviter l'introduction de corps étrangers dans le conduit, sécher les oreilles après baignade.",
+    complications:"Extension infectieuse, sténose du conduit.",
+    conseils:"Ne jamais utiliser de coton-tige en profondeur dans le conduit auditif.",
+    references:"Sémiologie médicale" },
+  { id:"gastro-enterite-aigue", terme:"Gastro-entérite aiguë", categorie:"Spécialités médicales",
+    definition:"Inflammation aiguë de la muqueuse gastrique et intestinale, d'origine le plus souvent infectieuse.",
+    causes:"Virale (rotavirus fréquent chez l'enfant), bactérienne, parasitaire, toxi-infection alimentaire.",
+    symptomes:"Diarrhée, vomissements, douleurs abdominales, parfois fièvre.",
+    diagnostic:"Diagnostic clinique, coproculture si signes de gravité ou contexte particulier.",
+    examens:"Coproculture, ionogramme si déshydratation.",
+    traitement:"Réhydratation orale, traitement symptomatique, antibiothérapie si origine bactérienne documentée.",
+    prevention:"Hygiène des mains, hygiène alimentaire, vaccination antirotavirus chez le nourrisson.",
+    complications:"Déshydratation sévère, surtout chez le jeune enfant.",
+    conseils:"Poursuivre l'alimentation adaptée à l'âge, privilégier la réhydratation orale précoce.",
+    references:"Santé infantile ; Sémiologie médicale" },
+  { id:"ulcere-gastroduodenal", terme:"Ulcère gastroduodénal", categorie:"Spécialités médicales",
+    definition:"Perte de substance de la muqueuse gastrique ou duodénale atteignant la couche musculaire.",
+    causes:"Infection à Helicobacter pylori, prise d'anti-inflammatoires non stéroïdiens, stress important.",
+    symptomes:"Douleur épigastrique rythmée par les repas, brûlures, parfois hémorragie digestive.",
+    diagnostic:"Fibroscopie œso-gastro-duodénale avec biopsies.",
+    examens:"Fibroscopie digestive haute, recherche d'Helicobacter pylori.",
+    traitement:"Inhibiteurs de la pompe à protons, éradication d'Helicobacter pylori si présent.",
+    prevention:"Éviter la prise prolongée d'AINS, traiter l'infection à Helicobacter pylori.",
+    complications:"Hémorragie digestive, perforation, sténose.",
+    conseils:"Prendre les traitements à distance des AINS, surveiller les signes d'hémorragie digestive.",
+    references:"Sémiologie médicale" },
+  { id:"cirrhose-hepatique", terme:"Cirrhose hépatique", categorie:"Spécialités médicales",
+    definition:"Maladie chronique du foie caractérisée par une fibrose diffuse et une désorganisation de l'architecture hépatique.",
+    causes:"Consommation excessive d'alcool, hépatites virales chroniques (B, C), stéatose hépatique.",
+    symptomes:"Fatigue, ictère, ascite, œdèmes des membres inférieurs, angiomes stellaires.",
+    diagnostic:"Examen clinique, échographie hépatique, élastométrie (Fibroscan).",
+    examens:"Bilan hépatique, échographie abdominale, biopsie hépatique si besoin.",
+    traitement:"Traitement de la cause, prise en charge des complications, transplantation dans les formes sévères.",
+    prevention:"Limitation de la consommation d'alcool, vaccination contre l'hépatite B, dépistage des hépatites.",
+    complications:"Hypertension portale, hémorragie digestive, carcinome hépatocellulaire, encéphalopathie hépatique.",
+    conseils:"Sevrage alcoolique total indispensable, surveillance régulière par échographie.",
+    references:"Sémiologie médicale" },
+  { id:"insuffisance-renale-aigue", terme:"Insuffisance rénale aiguë", categorie:"Spécialités médicales",
+    definition:"Diminution brutale et souvent réversible de la fonction rénale.",
+    causes:"Déshydratation sévère, obstruction des voies urinaires, toxicité médicamenteuse, choc.",
+    symptomes:"Diminution de la diurèse, œdèmes, nausées, confusion dans les formes sévères.",
+    diagnostic:"Élévation de la créatininémie, diminution du débit urinaire.",
+    examens:"Créatininémie, ionogramme sanguin, échographie rénale.",
+    traitement:"Traitement de la cause, correction des troubles hydroélectrolytiques, dialyse si sévère.",
+    prevention:"Hydratation adéquate, prudence avec les médicaments néphrotoxiques.",
+    complications:"Hyperkaliémie sévère, œdème aigu du poumon, décès si non prise en charge.",
+    conseils:"Surveiller strictement la diurèse et le bilan entrées-sorties.",
+    references:"Sémiologie médicale" },
+  { id:"otite-mastoidite", terme:"Mastoïdite", categorie:"Pédiatrie",
+    definition:"Complication infectieuse de l'otite moyenne aiguë, atteignant l'os mastoïde.",
+    causes:"Extension d'une otite moyenne aiguë mal traitée ou négligée.",
+    symptomes:"Douleur rétro-auriculaire, décollement du pavillon de l'oreille, fièvre.",
+    diagnostic:"Examen clinique, imagerie (scanner) en cas de doute.",
+    examens:"Scanner des rochers si suspicion.",
+    traitement:"Antibiothérapie intraveineuse, parfois chirurgie (mastoïdectomie).",
+    prevention:"Traitement précoce et complet des otites moyennes aiguës.",
+    complications:"Extension méningée, thrombophlébite cérébrale.",
+    conseils:"Ne jamais interrompre prématurément le traitement d'une otite.",
+    references:"Pédiatrie" },
+  { id:"convulsion-febrile", terme:"Convulsion fébrile", categorie:"Pédiatrie",
+    definition:"Crise convulsive survenant chez le jeune enfant, associée à une fièvre, en l'absence d'infection du système nerveux central.",
+    causes:"Fièvre élevée d'apparition rapide, souvent d'origine virale, chez l'enfant de 6 mois à 5 ans.",
+    symptomes:"Perte de connaissance brève, mouvements convulsifs, révulsion oculaire.",
+    diagnostic:"Diagnostic clinique après élimination d'une cause neurologique infectieuse.",
+    examens:"Bilan selon contexte, ponction lombaire si doute sur une méningite.",
+    traitement:"Traitement de la fièvre, mise en position latérale de sécurité pendant la crise.",
+    prevention:"Contrôle de la fièvre en cas d'antécédent de convulsion fébrile.",
+    complications:"Rarement état de mal convulsif ; le pronostic est généralement favorable.",
+    conseils:"Rassurer les parents, expliquer la conduite à tenir en cas de récidive.",
+    references:"Pédiatrie" },
+  { id:"anesthesie-generale", terme:"Anesthésie générale", categorie:"Soins infirmiers",
+    definition:"Technique anesthésique entraînant une perte de conscience réversible et contrôlée du patient.",
+    causes:"Réalisée pour permettre un acte chirurgical ou un examen invasif.",
+    symptomes:"Perte de conscience, abolition de la douleur, relâchement musculaire.",
+    diagnostic:"Sans objet (procédure médicale planifiée).",
+    examens:"Bilan préanesthésique, consultation d'anesthésie.",
+    traitement:"Sans objet.",
+    prevention:"Respect strict du jeûne préopératoire, information du patient sur les risques.",
+    complications:"Allergie, troubles respiratoires, complications cardiovasculaires.",
+    conseils:"Vérifier le jeûne, la fiche de consentement et le bilan préopératoire avant le bloc.",
+    references:"Soins infirmiers" },
+  { id:"sondage-urinaire", terme:"Sondage urinaire", categorie:"Soins infirmiers",
+    definition:"Introduction d'une sonde dans la vessie par l'urètre afin de drainer les urines.",
+    causes:"Rétention urinaire, surveillance de la diurèse, préparation à une intervention chirurgicale.",
+    symptomes:"Sans objet (geste technique).",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet (le sondage est lui-même un geste thérapeutique).",
+    prevention:"Respect strict des règles d'asepsie pour prévenir les infections urinaires nosocomiales.",
+    complications:"Infection urinaire, traumatisme urétral, hématurie.",
+    conseils:"Respecter les règles d'asepsie stricte lors de la pose, surveiller l'aspect des urines.",
+    references:"Soins infirmiers" },
+  { id:"perfusion-intraveineuse", terme:"Perfusion intraveineuse", categorie:"Soins infirmiers",
+    definition:"Administration continue ou discontinue de solutés ou médicaments directement dans la circulation veineuse.",
+    causes:"Réhydratation, administration de médicaments, transfusion, nutrition parentérale.",
+    symptomes:"Sans objet (geste technique).",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet (la perfusion est le traitement lui-même).",
+    prevention:"Respect de l'asepsie, surveillance régulière du point de ponction.",
+    complications:"Phlébite, extravasation, infection du site de perfusion, embolie gazeuse.",
+    conseils:"Vérifier régulièrement le débit, l'absence de rougeur ou de douleur au point de ponction.",
+    references:"Soins infirmiers" },
+  { id:"triage-des-urgences", terme:"Triage des urgences", categorie:"Urgences médicales",
+    definition:"Processus d'évaluation rapide des patients à leur arrivée aux urgences afin de déterminer l'ordre de prise en charge selon la gravité.",
+    causes:"Nécessité d'organiser la prise en charge en fonction du degré d'urgence vitale.",
+    symptomes:"Sans objet (processus organisationnel).",
+    diagnostic:"Évaluation clinique rapide : constantes vitales, motif de consultation.",
+    examens:"Sans objet.",
+    traitement:"Orientation du patient vers le niveau de soins adapté à son degré d'urgence.",
+    prevention:"Sans objet.",
+    complications:"Retard de prise en charge en cas de triage erroné.",
+    conseils:"Toujours réévaluer un patient si son état se modifie en salle d'attente.",
+    references:"Secourisme ; Urgences médicales" },
+  { id:"choc-hemorragique", terme:"Choc hémorragique", categorie:"Urgences médicales",
+    definition:"État de choc consécutif à une perte sanguine importante, entraînant une hypoperfusion tissulaire.",
+    causes:"Hémorragie traumatique, digestive, obstétricale, ou postopératoire.",
+    symptomes:"Pâleur, tachycardie, hypotension, sueurs froides, agitation ou confusion.",
+    diagnostic:"Évaluation clinique des signes de choc, estimation des pertes sanguines.",
+    examens:"NFS, groupe sanguin, bilan de coagulation.",
+    traitement:"Arrêt de l'hémorragie, remplissage vasculaire, transfusion si nécessaire.",
+    prevention:"Prise en charge rapide de toute hémorragie active.",
+    complications:"Défaillance multiviscérale, décès si non traité rapidement.",
+    conseils:"Alerter immédiatement, poser une voie veineuse de bon calibre, comprimer toute hémorragie externe.",
+    references:"Urgences médicales ; Secourisme" },
+  { id:"pediculose", terme:"Pédiculose", categorie:"Dermatologie",
+    definition:"Infestation cutanée par des poux, parasites externes de l'homme.",
+    causes:"Contact direct avec une personne infestée, ou partage d'objets personnels (peignes, bonnets).",
+    symptomes:"Prurit du cuir chevelu, lésions de grattage, présence de lentes visibles sur les cheveux.",
+    diagnostic:"Examen visuel du cuir chevelu à la recherche de poux et de lentes.",
+    examens:"Examen clinique direct.",
+    traitement:"Shampooings et lotions antiparasitaires spécifiques, peigne fin.",
+    prevention:"Éviter le partage d'objets personnels, dépistage en collectivité.",
+    complications:"Surinfection cutanée des lésions de grattage.",
+    conseils:"Traiter simultanément tous les membres du foyer et désinfecter les objets personnels.",
+    references:"Dermatologie" },
+  { id:"brulure-cutanee", terme:"Brûlure cutanée", categorie:"Urgences médicales",
+    definition:"Lésion des tissus cutanés causée par la chaleur, un agent chimique, électrique ou par rayonnement.",
+    causes:"Contact avec une source de chaleur, produit chimique, courant électrique, rayonnement solaire.",
+    symptomes:"Douleur, rougeur (1er degré), phlyctènes (2e degré), nécrose (3e degré) selon la profondeur.",
+    diagnostic:"Évaluation clinique de la surface corporelle atteinte et de la profondeur de la brûlure.",
+    examens:"Évaluation de la surface cutanée brûlée (règle des 9 de Wallace).",
+    traitement:"Refroidissement immédiat à l'eau tempérée, pansements adaptés, prise en charge de la douleur.",
+    prevention:"Prévention des accidents domestiques, sensibilisation aux risques de brûlure.",
+    complications:"Infection, choc hypovolémique si brûlure étendue, séquelles cicatricielles.",
+    conseils:"Refroidir immédiatement la brûlure à l'eau tempérée pendant plusieurs minutes, ne jamais appliquer de corps gras.",
+    references:"Secourisme ; Urgences médicales" },
+  { id:"morsure-de-serpent", terme:"Morsure de serpent", categorie:"Urgences médicales",
+    definition:"Envenimation consécutive à la morsure d'un serpent venimeux.",
+    causes:"Contact accidentel avec un serpent venimeux.",
+    symptomes:"Douleur locale, œdème progressif, parfois troubles de la coagulation, signes neurologiques.",
+    diagnostic:"Diagnostic clinique, identification du serpent si possible.",
+    examens:"Bilan de coagulation, surveillance clinique rapprochée.",
+    traitement:"Immobilisation du membre, transport rapide vers une structure de soins, sérum antivenimeux si disponible.",
+    prevention:"Port de chaussures fermées en zone à risque, prudence en zone rurale/broussailleuse.",
+    complications:"Syndrome hémorragique, insuffisance rénale, décès si envenimation sévère non traitée.",
+    conseils:"Ne jamais inciser ni sucer la plaie, immobiliser le membre et évacuer rapidement.",
+    references:"Secourisme" },
+  { id:"noyade", terme:"Noyade", categorie:"Urgences médicales",
+    definition:"Détresse respiratoire consécutive à une immersion ou une submersion dans un liquide.",
+    causes:"Accident en milieu aquatique, malaise dans l'eau, incapacité à nager.",
+    symptomes:"Détresse respiratoire, toux, cyanose, troubles de conscience selon la gravité.",
+    diagnostic:"Contexte de survenue, examen clinique respiratoire.",
+    examens:"Saturation en oxygène, radiographie thoracique, gaz du sang.",
+    traitement:"Sortie de l'eau, réanimation cardio-pulmonaire si arrêt cardio-respiratoire, oxygénothérapie.",
+    prevention:"Surveillance des enfants près des points d'eau, apprentissage de la natation.",
+    complications:"Œdème pulmonaire, arrêt cardio-respiratoire, séquelles anoxiques.",
+    conseils:"Toute noyade, même apparemment bénigne, justifie une surveillance médicale du fait du risque d'œdème pulmonaire secondaire.",
+    references:"Secourisme" },
+  { id:"anti-inflammatoire", terme:"Anti-inflammatoire", categorie:"Pharmacologie",
+    definition:"Médicament destiné à réduire l'inflammation, stéroïdien (corticoïdes) ou non stéroïdien (AINS).",
+    causes:"Sans objet (classe médicamenteuse).",
+    symptomes:"Sans objet.",
+    diagnostic:"Prescription selon la pathologie inflammatoire à traiter.",
+    examens:"Sans objet.",
+    traitement:"Traitement symptomatique de l'inflammation, de la douleur et de la fièvre.",
+    prevention:"Sans objet.",
+    complications:"Irritation gastrique, ulcère, insuffisance rénale, risque hémorragique.",
+    conseils:"Prendre au cours des repas, éviter l'association avec d'autres AINS ou anticoagulants.",
+    references:"Pharmacologie" },
+  { id:"corticotherapie", terme:"Corticothérapie", categorie:"Pharmacologie",
+    definition:"Traitement utilisant des corticoïdes, hormones aux puissantes propriétés anti-inflammatoires et immunosuppressives.",
+    causes:"Sans objet (classe médicamenteuse).",
+    symptomes:"Sans objet.",
+    diagnostic:"Prescription dans de nombreuses pathologies inflammatoires, allergiques, auto-immunes.",
+    examens:"Glycémie, tension artérielle, ionogramme en cas de traitement prolongé.",
+    traitement:"Traitement de l'asthme, des allergies sévères, des maladies inflammatoires et auto-immunes.",
+    prevention:"Sans objet.",
+    complications:"Prise de poids, hyperglycémie, ostéoporose, insuffisance surrénalienne si arrêt brutal.",
+    conseils:"Ne jamais arrêter brutalement un traitement corticoïde prolongé, diminuer progressivement.",
+    references:"Pharmacologie" },
+  { id:"vaccination", terme:"Vaccination", categorie:"Soins infirmiers",
+    definition:"Administration d'un antigène destiné à stimuler une réponse immunitaire protectrice contre une maladie infectieuse.",
+    causes:"Sans objet (mesure préventive).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet (mesure préventive et non curative).",
+    prevention:"Prévention primaire des maladies infectieuses évitables par la vaccination.",
+    complications:"Réactions locales bénignes, exceptionnellement réaction allergique sévère.",
+    conseils:"Respecter le calendrier vaccinal, surveiller les réactions post-vaccinales.",
+    references:"Soins infirmiers ; Pédiatrie" },
+  { id:"consentement-eclaire", terme:"Consentement éclairé", categorie:"Soins infirmiers",
+    definition:"Accord donné librement par un patient après avoir reçu une information claire, loyale et appropriée sur les soins proposés.",
+    causes:"Sans objet (principe éthique et légal).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"Absence de consentement éclairé : mise en jeu de la responsabilité du soignant.",
+    conseils:"Toujours s'assurer que le patient a bien compris l'information avant tout acte de soin.",
+    references:"Déontologie" },
+  { id:"secret-professionnel", terme:"Secret professionnel", categorie:"Soins infirmiers",
+    definition:"Obligation légale et déontologique de ne pas divulguer les informations concernant un patient obtenues dans le cadre de l'exercice professionnel.",
+    causes:"Sans objet (principe déontologique).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"Sanctions disciplinaires et judiciaires en cas de violation.",
+    conseils:"Ne jamais divulguer d'informations sur un patient, même à sa famille, sans son accord.",
+    references:"Déontologie" },
+
+  { id:"grossesse-extra-uterine", terme:"Grossesse extra-utérine", categorie:"Gynéco-Obstétrique",
+    definition:"Nidation et développement de l'œuf fécondé en dehors de la cavité utérine, le plus souvent dans la trompe.",
+    causes:"Antécédent d'infection génitale, chirurgie tubaire, tabagisme, dispositif intra-utérin.",
+    symptomes:"Douleur pelvienne unilatérale, aménorrhée, métrorragies, parfois signes de choc si rupture.",
+    diagnostic:"Échographie pelvienne, dosage plasmatique des bêta-hCG.",
+    examens:"Échographie pelvienne, bêta-hCG plasmatiques répétées.",
+    traitement:"Traitement médical (méthotrexate) si précoce, chirurgie en urgence si rupture.",
+    prevention:"Dépistage et traitement précoce des infections génitales.",
+    complications:"Rupture tubaire, hémopéritoine, choc hémorragique, décès.",
+    conseils:"Urgence gynécologique : toute douleur pelvienne avec retard de règles doit faire évoquer le diagnostic.",
+    references:"Gynéco-Obstétrique" },
+  { id:"menometrorragies", terme:"Ménométrorragies", categorie:"Gynéco-Obstétrique",
+    definition:"Saignements génitaux anormaux associant règles abondantes (ménorragies) et saignements en dehors des règles (métrorragies).",
+    causes:"Fibromes utérins, polypes, troubles hormonaux, cancer gynécologique, dispositif intra-utérin.",
+    symptomes:"Saignements vaginaux abondants et/ou irréguliers, parfois anémie associée.",
+    diagnostic:"Examen gynécologique, échographie pelvienne.",
+    examens:"Échographie pelvienne, NFS, bilan hormonal selon contexte.",
+    traitement:"Traitement de la cause, traitement hormonal ou chirurgical selon l'étiologie.",
+    prevention:"Suivi gynécologique régulier.",
+    complications:"Anémie chronique par saignement répété.",
+    conseils:"Rechercher systématiquement une anémie associée à des saignements prolongés.",
+    references:"Gynéco-Obstétrique" },
+  { id:"rupture-prematuree-des-membranes", terme:"Rupture prématurée des membranes", categorie:"Gynéco-Obstétrique",
+    definition:"Rupture de la poche des eaux survenant avant le début du travail.",
+    causes:"Infection génitale, surdistension utérine, antécédent de rupture prématurée.",
+    symptomes:"Écoulement de liquide clair par voie vaginale, en dehors de toute contraction.",
+    diagnostic:"Examen au spéculum confirmant l'écoulement de liquide amniotique.",
+    examens:"Test de détection du liquide amniotique, prélèvement vaginal si suspicion d'infection.",
+    traitement:"Surveillance materno-fœtale, antibioprophylaxie, déclenchement selon le terme.",
+    prevention:"Dépistage et traitement des infections génitales pendant la grossesse.",
+    complications:"Infection materno-fœtale (chorioamniotite), accouchement prématuré.",
+    conseils:"Surveiller la température maternelle et les mouvements fœtaux après la rupture.",
+    references:"Gynéco-Obstétrique" },
+  { id:"presentation-du-siege", terme:"Présentation du siège", categorie:"Gynéco-Obstétrique",
+    definition:"Présentation fœtale dans laquelle le fœtus se présente par le bassin plutôt que par la tête.",
+    causes:"Prématurité, grossesse multiple, malformation utérine, excès de liquide amniotique.",
+    symptomes:"Sans objet (diagnostic échographique ou clinique).",
+    diagnostic:"Palpation abdominale, confirmation échographique.",
+    examens:"Échographie obstétricale.",
+    traitement:"Version par manœuvre externe si possible, césarienne selon les circonstances.",
+    prevention:"Sans objet.",
+    complications:"Difficultés d'accouchement par voie basse, souffrance fœtale.",
+    conseils:"Une échographie de fin de grossesse permet d'anticiper la voie d'accouchement la plus sûre.",
+    references:"Gynéco-Obstétrique" },
+  { id:"depression", terme:"Dépression", categorie:"Spécialités médicales",
+    definition:"Trouble mental caractérisé par une tristesse persistante et une perte d'intérêt ou de plaisir pour les activités habituelles.",
+    causes:"Facteurs biologiques, psychologiques et sociaux intriqués, événements de vie difficiles.",
+    symptomes:"Humeur triste persistante, perte d'intérêt, troubles du sommeil et de l'appétit, fatigue, idées noires.",
+    diagnostic:"Entretien clinique, critères diagnostiques standardisés.",
+    examens:"Sans examen biologique spécifique ; bilan pour éliminer une cause organique si besoin.",
+    traitement:"Psychothérapie, antidépresseurs selon la sévérité.",
+    prevention:"Soutien psychosocial, repérage précoce des facteurs de vulnérabilité.",
+    complications:"Risque suicidaire, retentissement socioprofessionnel majeur.",
+    conseils:"Toujours évaluer le risque suicidaire devant tout syndrome dépressif.",
+    references:"Psychosociologie" },
+  { id:"anxiete", terme:"Anxiété", categorie:"Spécialités médicales",
+    definition:"État émotionnel caractérisé par un sentiment d'appréhension, de tension ou d'inquiétude excessive.",
+    causes:"Facteurs biologiques, psychologiques, événements stressants, troubles anxieux sous-jacents.",
+    symptomes:"Nervosité, palpitations, tension musculaire, troubles du sommeil, difficultés de concentration.",
+    diagnostic:"Entretien clinique, échelles d'évaluation de l'anxiété.",
+    examens:"Sans examen biologique spécifique.",
+    traitement:"Psychothérapie (thérapies cognitivo-comportementales), anxiolytiques si besoin ponctuel.",
+    prevention:"Techniques de gestion du stress, soutien psychologique.",
+    complications:"Retentissement sur la qualité de vie, comorbidité dépressive.",
+    conseils:"Encourager les techniques de relaxation et éviter la banalisation des symptômes exprimés.",
+    references:"Psychosociologie" },
+  { id:"deni-de-grossesse", terme:"Déni de grossesse", categorie:"Gynéco-Obstétrique",
+    definition:"Absence de perception consciente par une femme de son état de grossesse, malgré des signes objectifs.",
+    causes:"Mécanismes psychologiques complexes, souvent inconscients.",
+    symptomes:"Absence de prise de conscience de la grossesse, parfois découverte tardive lors de l'accouchement.",
+    diagnostic:"Découverte fortuite, parfois lors du travail lui-même.",
+    examens:"Échographie confirmant la grossesse une fois suspectée.",
+    traitement:"Accompagnement psychologique de la mère.",
+    prevention:"Sans objet.",
+    complications:"Absence de suivi prénatal, risques materno-fœtaux liés à ce défaut de suivi.",
+    conseils:"Accompagner la patiente sans jugement, favoriser un dialogue de confiance.",
+    references:"Gynéco-Obstétrique ; Psychosociologie" },
+  { id:"otite-sereuse", terme:"Otite séromuqueuse", categorie:"Pédiatrie",
+    definition:"Inflammation chronique de l'oreille moyenne avec présence d'un épanchement non infecté derrière le tympan.",
+    causes:"Dysfonctionnement de la trompe d'Eustache, souvent après des otites moyennes aiguës répétées.",
+    symptomes:"Hypoacousie, sensation d'oreille bouchée, généralement sans douleur ni fièvre.",
+    diagnostic:"Otoscopie, tympanométrie.",
+    examens:"Otoscopie, audiométrie, tympanométrie.",
+    traitement:"Surveillance, parfois pose d'aérateurs transtympaniques (yoyos) si persistante.",
+    prevention:"Traitement adéquat des otites moyennes aiguës.",
+    complications:"Retard de langage chez l'enfant si non dépistée, atteinte auditive prolongée.",
+    conseils:"Évoquer le diagnostic devant un enfant qui semble mal entendre ou qui a un retard de langage.",
+    references:"Pédiatrie" },
+  { id:"laryngite-aigue", terme:"Laryngite aiguë", categorie:"Pédiatrie",
+    definition:"Inflammation aiguë du larynx, fréquente chez le jeune enfant, pouvant entraîner une gêne respiratoire.",
+    causes:"Origine virale le plus souvent.",
+    symptomes:"Toux rauque (aboyante), voix enrouée, stridor inspiratoire, dyspnée si sévère.",
+    diagnostic:"Diagnostic clinique devant la toux caractéristique et le contexte.",
+    examens:"Examen clinique ; imagerie rarement nécessaire.",
+    traitement:"Corticothérapie orale, humidification de l'air, surveillance de la détresse respiratoire.",
+    prevention:"Sans objet.",
+    complications:"Détresse respiratoire aiguë dans les formes sévères.",
+    conseils:"Rassurer l'enfant et les parents, installer en position semi-assise, surveiller les signes de gravité.",
+    references:"Pédiatrie" },
+  { id:"invagination-intestinale-aigue", terme:"Invagination intestinale aiguë", categorie:"Pédiatrie",
+    definition:"Pénétration d'un segment d'intestin dans le segment d'aval, entraînant une occlusion intestinale, fréquente chez le nourrisson.",
+    causes:"Idiopathique le plus souvent chez le nourrisson, parfois secondaire à une cause organique.",
+    symptomes:"Douleurs abdominales paroxystiques, pâleur, vomissements, rectorragies (selles « gelée de groseille »).",
+    diagnostic:"Échographie abdominale mettant en évidence l'image en cocarde.",
+    examens:"Échographie abdominale.",
+    traitement:"Réduction par lavement (radiologique) ou chirurgie si échec.",
+    prevention:"Sans objet.",
+    complications:"Nécrose intestinale, perforation, péritonite si prise en charge tardive.",
+    conseils:"Urgence pédiatrique : toute crise de pleurs avec pâleur chez le nourrisson doit faire évoquer le diagnostic.",
+    references:"Pédiatrie" },
+  { id:"syphilis", terme:"Syphilis", categorie:"Infectiologie-Bactériologie",
+    definition:"Infection sexuellement transmissible due à la bactérie Treponema pallidum.",
+    causes:"Transmission sexuelle, transmission materno-fœtale (syphilis congénitale).",
+    symptomes:"Chancre indolore au site d'inoculation (phase primaire), éruption cutanée (phase secondaire), atteintes viscérales tardives.",
+    diagnostic:"Sérologie syphilitique (TPHA, VDRL).",
+    examens:"TPHA, VDRL, examen direct au microscope à fond noir si chancre présent.",
+    traitement:"Pénicilline injectable, traitement du/des partenaire(s).",
+    prevention:"Utilisation du préservatif, dépistage systématique chez la femme enceinte.",
+    complications:"Atteinte neurologique et cardiovasculaire tardive, syphilis congénitale.",
+    conseils:"Dépister systématiquement chez la femme enceinte pour prévenir la transmission materno-fœtale.",
+    references:"Bactériologie ; Gynéco-Obstétrique" },
+  { id:"vih-sida", terme:"VIH / SIDA", categorie:"Infectiologie-Bactériologie",
+    definition:"Infection due au virus de l'immunodéficience humaine (VIH), pouvant évoluer vers le stade SIDA en l'absence de traitement.",
+    causes:"Transmission sexuelle, sanguine, materno-fœtale.",
+    symptomes:"Souvent asymptomatique initialement, puis infections opportunistes au stade SIDA.",
+    diagnostic:"Sérologie VIH (test de dépistage puis confirmation).",
+    examens:"Sérologie VIH, charge virale, taux de lymphocytes CD4.",
+    traitement:"Trithérapie antirétrovirale au long cours.",
+    prevention:"Préservatif, dépistage, prévention de la transmission mère-enfant, prophylaxie pré-exposition.",
+    complications:"Infections opportunistes, cancers associés au VIH, décès en l'absence de traitement.",
+    conseils:"Encourager le dépistage volontaire et l'observance stricte du traitement antirétroviral.",
+    references:"Bactériologie ; Déontologie" },
+  { id:"hepatite-virale-b", terme:"Hépatite virale B", categorie:"Infectiologie-Bactériologie",
+    definition:"Infection du foie causée par le virus de l'hépatite B, pouvant évoluer vers la chronicité.",
+    causes:"Transmission sexuelle, sanguine, materno-fœtale.",
+    symptomes:"Souvent asymptomatique, parfois ictère, fatigue, douleurs abdominales à la phase aiguë.",
+    diagnostic:"Sérologie de l'hépatite B (antigène HBs, anticorps anti-HBc).",
+    examens:"Sérologie hépatite B, bilan hépatique, charge virale si positive.",
+    traitement:"Traitement antiviral dans les formes chroniques actives ; pas de traitement spécifique pour la forme aiguë bénigne.",
+    prevention:"Vaccination, dépistage systématique chez la femme enceinte.",
+    complications:"Hépatite chronique, cirrhose, carcinome hépatocellulaire.",
+    conseils:"La vaccination reste le moyen de prévention le plus efficace.",
+    references:"Bactériologie" },
+  { id:"choc-septique", terme:"Choc septique", categorie:"Urgences médicales",
+    definition:"Forme la plus sévère d'infection généralisée, associée à une défaillance circulatoire aiguë.",
+    causes:"Infection bactérienne sévère non contrôlée, souvent d'origine pulmonaire, urinaire ou digestive.",
+    symptomes:"Fièvre ou hypothermie, hypotension, tachycardie, marbrures, troubles de conscience.",
+    diagnostic:"Critères cliniques de sepsis associés à une hypotension réfractaire au remplissage.",
+    examens:"Hémocultures, lactates, NFS, CRP, bilan de gravité.",
+    traitement:"Antibiothérapie probabiliste en urgence, remplissage vasculaire, amines vasopressives si besoin.",
+    prevention:"Prise en charge précoce de toute infection.",
+    complications:"Défaillance multiviscérale, décès.",
+    conseils:"L'antibiothérapie doit être débutée le plus rapidement possible devant tout sepsis sévère.",
+    references:"Urgences médicales ; Bactériologie" },
+  { id:"score-de-glasgow", terme:"Score de Glasgow", categorie:"Abréviations",
+    definition:"Échelle clinique standardisée d'évaluation du niveau de conscience, cotée de 3 à 15 points.",
+    causes:"Sans objet (outil d'évaluation).",
+    symptomes:"Sans objet.",
+    diagnostic:"Évaluation de 3 critères : ouverture des yeux, réponse verbale, réponse motrice.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"Sans objet.",
+    conseils:"Un score inférieur ou égal à 8 signe un coma et impose une protection des voies aériennes.",
+    references:"Neurologie ; Urgences médicales" },
+  { id:"phlebite", terme:"Phlébite", categorie:"Cardiologie",
+    definition:"Terme couramment utilisé pour désigner une thrombose veineuse, avec ou sans inflammation associée.",
+    causes:"Immobilisation, chirurgie, grossesse, contraception hormonale, cancer.",
+    symptomes:"Douleur, œdème, rougeur et chaleur d'un membre, généralement inférieur.",
+    diagnostic:"Écho-doppler veineux.",
+    examens:"Écho-doppler veineux, D-dimères.",
+    traitement:"Anticoagulation, contention veineuse.",
+    prevention:"Mobilisation précoce, bas de contention en cas de risque.",
+    complications:"Embolie pulmonaire.",
+    conseils:"Ne jamais masser ni comprimer un membre suspect de phlébite.",
+    references:"Sémiologie médicale" },
+  { id:"hematurie", terme:"Hématurie", categorie:"Sémiologie",
+    definition:"Présence anormale de sang dans les urines, macroscopique ou microscopique.",
+    causes:"Infection urinaire, lithiase, tumeur, bilharziose urinaire, traumatisme.",
+    symptomes:"Urines rouges ou rosées (macroscopique), parfois asymptomatique (microscopique).",
+    diagnostic:"Bandelette urinaire, examen cytobactériologique des urines.",
+    examens:"ECBU, échographie rénale et vésicale, cytologie urinaire.",
+    traitement:"Traitement de la cause sous-jacente.",
+    prevention:"Dépend de la cause (traitement de la bilharziose en zone d'endémie, par exemple).",
+    complications:"Anémie si hématurie prolongée et abondante.",
+    conseils:"Toute hématurie macroscopique, surtout terminale, doit faire évoquer une bilharziose urinaire en zone d'endémie.",
+    references:"Sémiologie médicale ; Parasitologie" },
+  { id:"cyanose", terme:"Cyanose", categorie:"Sémiologie",
+    definition:"Coloration bleutée de la peau et des muqueuses, traduisant un manque d'oxygénation du sang.",
+    causes:"Insuffisance respiratoire, cardiopathie congénitale, exposition au froid intense.",
+    symptomes:"Coloration bleu-violacé des lèvres, des extrémités, parfois généralisée.",
+    diagnostic:"Examen clinique, mesure de la saturation en oxygène.",
+    examens:"Saturation en oxygène, gaz du sang.",
+    traitement:"Oxygénothérapie, traitement de la cause sous-jacente.",
+    prevention:"Dépend de la cause.",
+    complications:"Hypoxie tissulaire sévère si prolongée.",
+    conseils:"Une cyanose des extrémités isolée par le froid diffère d'une cyanose centrale, toujours pathologique.",
+    references:"Sémiologie médicale" },
+  { id:"oedeme", terme:"Œdème", categorie:"Sémiologie",
+    definition:"Accumulation anormale de liquide dans les tissus interstitiels, se traduisant par un gonflement.",
+    causes:"Insuffisance cardiaque, insuffisance rénale, hypoprotéinémie, pré-éclampsie, insuffisance veineuse.",
+    symptomes:"Gonflement prenant le godet, souvent déclive (chevilles, membres inférieurs).",
+    diagnostic:"Examen clinique (signe du godet).",
+    examens:"Bilan selon la cause suspectée (bilan rénal, cardiaque, hépatique).",
+    traitement:"Traitement de la cause sous-jacente, diurétiques si besoin.",
+    prevention:"Dépend de la cause.",
+    complications:"Retentissement respiratoire si œdème généralisé (anasarque).",
+    conseils:"Chez la femme enceinte, un œdème associé à une hypertension doit faire évoquer une pré-éclampsie.",
+    references:"Sémiologie médicale" },
+  { id:"saturation-en-oxygene", terme:"Saturation en oxygène (SpO2)", categorie:"Abréviations",
+    definition:"Pourcentage d'hémoglobine liée à l'oxygène dans le sang artériel, mesuré par oxymétrie de pouls.",
+    causes:"Sans objet (paramètre de surveillance).",
+    symptomes:"Sans objet.",
+    diagnostic:"Mesure par saturomètre (oxymètre de pouls) placé sur un doigt ou un lobe d'oreille.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"Sans objet.",
+    conseils:"Une SpO2 inférieure à 90% est un signe de gravité nécessitant une oxygénothérapie.",
+    references:"Soins infirmiers ; Urgences médicales" },
+  { id:"crp", terme:"Protéine C-réactive (CRP)", categorie:"Abréviations",
+    definition:"Marqueur biologique de l'inflammation, dont le taux s'élève en cas d'infection ou d'inflammation.",
+    causes:"Sans objet (marqueur biologique).",
+    symptomes:"Sans objet.",
+    diagnostic:"Dosage sanguin.",
+    examens:"Sans objet (il s'agit lui-même de l'examen).",
+    traitement:"Sans objet.",
+    prevention:"Sans objet.",
+    complications:"Sans objet.",
+    conseils:"Un taux élevé oriente vers une cause infectieuse ou inflammatoire, à corréler à la clinique.",
+    references:"Bactériologie" },
+  { id:"antiemetique", terme:"Antiémétique", categorie:"Pharmacologie",
+    definition:"Médicament destiné à prévenir ou traiter les nausées et vomissements.",
+    causes:"Sans objet (classe médicamenteuse).",
+    symptomes:"Sans objet.",
+    diagnostic:"Prescription devant des nausées ou vomissements.",
+    examens:"Sans objet.",
+    traitement:"Traitement symptomatique des nausées et vomissements.",
+    prevention:"Sans objet.",
+    complications:"Effets secondaires neurologiques pour certaines molécules.",
+    conseils:"Rechercher et traiter la cause des vomissements en parallèle du traitement symptomatique.",
+    references:"Pharmacologie" },
+  { id:"antispasmodique", terme:"Antispasmodique", categorie:"Pharmacologie",
+    definition:"Médicament destiné à réduire les spasmes des muscles lisses, notamment digestifs.",
+    causes:"Sans objet (classe médicamenteuse).",
+    symptomes:"Sans objet.",
+    diagnostic:"Prescription devant des douleurs spasmodiques (coliques).",
+    examens:"Sans objet.",
+    traitement:"Traitement symptomatique des douleurs abdominales spasmodiques.",
+    prevention:"Sans objet.",
+    complications:"Effets secondaires généralement mineurs.",
+    conseils:"Ne pas masquer un tableau chirurgical urgent par un traitement antalgique/antispasmodique systématique.",
+    references:"Pharmacologie" },
+  { id:"anxiolytique", terme:"Anxiolytique", categorie:"Pharmacologie",
+    definition:"Médicament destiné à réduire l'anxiété.",
+    causes:"Sans objet (classe médicamenteuse).",
+    symptomes:"Sans objet.",
+    diagnostic:"Prescription dans les troubles anxieux, sur une durée limitée le plus souvent.",
+    examens:"Sans objet.",
+    traitement:"Traitement symptomatique de l'anxiété.",
+    prevention:"Sans objet.",
+    complications:"Risque de dépendance, somnolence, chutes chez la personne âgée.",
+    conseils:"Limiter la durée de prescription, privilégier une prise en charge non médicamenteuse en première intention.",
+    references:"Pharmacologie" },
+  { id:"antidepresseur", terme:"Antidépresseur", categorie:"Pharmacologie",
+    definition:"Médicament destiné à traiter les épisodes dépressifs.",
+    causes:"Sans objet (classe médicamenteuse).",
+    symptomes:"Sans objet.",
+    diagnostic:"Prescription dans le traitement de la dépression caractérisée.",
+    examens:"Sans objet.",
+    traitement:"Traitement de fond de la dépression, délai d'action de plusieurs semaines.",
+    prevention:"Sans objet.",
+    complications:"Risque de levée d'inhibition en début de traitement (surveillance du risque suicidaire).",
+    conseils:"Prévenir le patient du délai d'action et ne jamais arrêter brutalement le traitement.",
+    references:"Pharmacologie ; Psychosociologie" },
+  { id:"chlorhexidine", terme:"Chlorhexidine", categorie:"Pharmacologie",
+    definition:"Antiseptique à large spectre utilisé pour la désinfection cutanée et des plaies.",
+    causes:"Sans objet (produit antiseptique).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Antisepsie cutanée avant geste invasif, soins de plaies, soins du cordon ombilical du nouveau-né.",
+    prevention:"Prévention des infections lors des soins.",
+    complications:"Réaction allergique locale possible.",
+    conseils:"Respecter le temps de contact recommandé pour une efficacité antiseptique optimale.",
+    references:"Soins infirmiers ; Santé infantile" },
+  { id:"solute-de-rehydratation-orale", terme:"Solution de réhydratation orale (SRO)", categorie:"Abréviations",
+    definition:"Solution composée d'eau, de sels minéraux et de glucose, destinée à corriger la déshydratation.",
+    causes:"Sans objet (traitement).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Traitement de première intention de la déshydratation liée à la diarrhée aiguë.",
+    prevention:"Prévention de la déshydratation dès le début d'un épisode de diarrhée.",
+    complications:"Sans objet si utilisation correcte.",
+    conseils:"Préparer la solution selon les proportions exactes indiquées sur le sachet, à consommer dans les 24 heures.",
+    references:"Santé infantile ; Pédiatrie" },
+  { id:"consultation-prenatale", terme:"Consultation prénatale (CPN)", categorie:"Abréviations",
+    definition:"Consultation médicale de suivi régulier d'une femme enceinte tout au long de sa grossesse.",
+    causes:"Sans objet (suivi médical).",
+    symptomes:"Sans objet.",
+    diagnostic:"Suivi clinique, biologique et échographique de la grossesse.",
+    examens:"Bilan sanguin, échographies de datation, morphologique et de croissance.",
+    traitement:"Sans objet.",
+    prevention:"Dépistage précoce des complications de la grossesse.",
+    complications:"Risque accru de complications materno-fœtales non dépistées en l'absence de suivi.",
+    conseils:"Recommander un minimum de 4 à 8 consultations prénatales selon les recommandations en vigueur.",
+    references:"Gynéco-Obstétrique" },
+  { id:"consultation-postnatale", terme:"Consultation postnatale (CPoN)", categorie:"Abréviations",
+    definition:"Consultation de suivi de la mère et du nouveau-né après l'accouchement.",
+    causes:"Sans objet (suivi médical).",
+    symptomes:"Sans objet.",
+    diagnostic:"Évaluation clinique de la mère (involution utérine, cicatrisation) et du nouveau-né (croissance, allaitement).",
+    examens:"Examen clinique complet mère-enfant.",
+    traitement:"Sans objet.",
+    prevention:"Dépistage précoce des complications du post-partum et des pathologies néonatales.",
+    complications:"Sans objet.",
+    conseils:"Ne pas négliger la santé psychique de la mère lors de cette consultation (dépistage du baby-blues).",
+    references:"Gynéco-Obstétrique ; Santé infantile" },
+  { id:"partogramme", terme:"Partogramme", categorie:"Gynéco-Obstétrique",
+    definition:"Outil graphique de surveillance du travail obstétrical, permettant de suivre la dilatation cervicale et la descente fœtale.",
+    causes:"Sans objet (outil de surveillance).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Dépistage précoce d'une stagnation ou anomalie du travail obstétrical.",
+    complications:"Retard de dépistage d'une dystocie en l'absence d'utilisation rigoureuse.",
+    conseils:"Renseigner le partogramme systématiquement dès le début du travail actif.",
+    references:"Gynéco-Obstétrique" },
+  { id:"lochies", terme:"Lochies", categorie:"Gynéco-Obstétrique",
+    definition:"Écoulements vaginaux physiologiques survenant après l'accouchement, correspondant à l'élimination des débris de la cavité utérine.",
+    causes:"Sans objet (phénomène physiologique).",
+    symptomes:"Écoulement sanguin puis séreux évoluant sur plusieurs semaines après l'accouchement.",
+    diagnostic:"Surveillance clinique de l'aspect, de l'abondance et de l'odeur des lochies.",
+    examens:"Sans objet en l'absence d'anomalie.",
+    traitement:"Sans objet (phénomène physiologique).",
+    prevention:"Sans objet.",
+    complications:"Une odeur nauséabonde ou une abondance excessive doit faire évoquer une infection ou une rétention.",
+    conseils:"Surveiller l'aspect et l'odeur des lochies dans les suites de couches.",
+    references:"Gynéco-Obstétrique" },
+  { id:"carnet-de-sante", terme:"Carnet de santé mère-enfant", categorie:"Soins infirmiers",
+    definition:"Document individuel retraçant le suivi médical de la grossesse, de l'accouchement et de la croissance de l'enfant.",
+    causes:"Sans objet (outil de suivi).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Permet la continuité et la coordination du suivi entre les différents intervenants de santé.",
+    complications:"Perte d'information de suivi en cas de non-tenue rigoureuse.",
+    conseils:"Toujours consulter et compléter le carnet de santé à chaque contact avec la mère ou l'enfant.",
+    references:"Santé infantile" },
+  { id:"kwashiorkor", terme:"Kwashiorkor", categorie:"Pédiatrie",
+    definition:"Forme de malnutrition aiguë sévère caractérisée par des œdèmes bilatéraux, liée à une carence protéique.",
+    causes:"Alimentation pauvre en protéines malgré des apports caloriques parfois suffisants.",
+    symptomes:"Œdèmes bilatéraux débutant aux pieds, visage bouffi (« face de lune »), troubles cutanés, apathie.",
+    diagnostic:"Présence d'œdèmes bilatéraux chez un enfant de 6 à 59 mois.",
+    examens:"Mensurations anthropométriques, bilan biologique selon complications.",
+    traitement:"Aliments thérapeutiques prêts à l'emploi, prise en charge des complications.",
+    prevention:"Diversification alimentaire adaptée, apports protéiques suffisants.",
+    complications:"Infections sévères, décès si non pris en charge.",
+    conseils:"Ne jamais négliger des œdèmes des pieds chez un jeune enfant, même en l'absence d'amaigrissement apparent.",
+    references:"Santé infantile" },
+  { id:"marasme", terme:"Marasme", categorie:"Pédiatrie",
+    definition:"Forme de malnutrition aiguë sévère caractérisée par un amaigrissement extrême, sans œdème.",
+    causes:"Carence globale et prolongée en apports caloriques et protéiques.",
+    symptomes:"Fonte musculaire et graisseuse extrême, visage émacié (« petit vieux »), appétit conservé.",
+    diagnostic:"Périmètre brachial très bas, rapport Poids/Taille très abaissé.",
+    examens:"Mensurations anthropométriques.",
+    traitement:"Aliments thérapeutiques prêts à l'emploi, réalimentation progressive.",
+    prevention:"Allaitement exclusif, diversification alimentaire adéquate.",
+    complications:"Décès si non pris en charge, infections sévères associées.",
+    conseils:"Le marasme est la forme de malnutrition sévère la plus fréquente ; le dépister par les mensurations systématiques.",
+    references:"Santé infantile" },
+  { id:"biopsychosociale", terme:"Approche biopsychosociale", categorie:"Soins infirmiers",
+    definition:"Modèle de compréhension de la santé et de la maladie intégrant les dimensions biologiques, psychologiques et sociales.",
+    causes:"Sans objet (modèle conceptuel).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Permet une prise en charge globale du patient, au-delà du seul aspect biologique.",
+    complications:"Sans objet.",
+    conseils:"Toujours considérer le contexte psychologique et social du patient dans la prise en charge des soins.",
+    references:"Psychosociologie" },
+  { id:"empowerment", terme:"Empowerment (autonomisation)", categorie:"Soins infirmiers",
+    definition:"Processus par lequel une personne ou un groupe acquiert davantage de contrôle sur les décisions affectant sa santé.",
+    causes:"Sans objet (concept social et de santé publique).",
+    symptomes:"Sans objet.",
+    diagnostic:"Sans objet.",
+    examens:"Sans objet.",
+    traitement:"Sans objet.",
+    prevention:"Favorise l'adhésion aux soins et l'adoption de comportements favorables à la santé.",
+    complications:"Sans objet.",
+    conseils:"Encourager la participation active du patient à ses propres décisions de santé.",
+    references:"Psychosociologie" },
 ];
 
 /* ---------------- Dictionnaire médical — stockage favoris & historique ---------------- */
@@ -11930,7 +13967,7 @@ function AdminScreen({ onBack }) {
         </p>
 
         <div style={{ display: "flex", gap: 6, marginBottom: 20, background: "#E9EFF2", borderRadius: 10, padding: 4, maxWidth: 460 }}>
-          {[["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
+          {[["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
             <button
               key={id}
               onClick={() => setTab(id)}
@@ -12042,6 +14079,7 @@ function AdminScreen({ onBack }) {
         )}
 
         {tab === "announcements" && <AnnouncementsAdmin announcements={announcements} onChanged={refreshAnnouncements} />}
+        {tab === "messages" && <MessagesAdmin students={students} />}
 
         {tab === "ratings" && (
           <div>
@@ -12211,6 +14249,223 @@ function AnnouncementsAdmin({ announcements, onChanged }) {
               </div>
             </div>
           ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MessagesAdmin({ students }) {
+  const [messages, setMessages] = useState(null);
+  const [mode, setMode] = useState("groupe"); // "individuel" | "groupe"
+  const [titre, setTitre] = useState("");
+  const [contenu, setContenu] = useState("");
+  const [antennesSel, setAntennesSel] = useState(["toutes"]);
+  const [niveau, setNiveau] = useState("tous");
+  const [specialite, setSpecialite] = useState("toutes");
+  const [studentSearch, setStudentSearch] = useState("");
+  const [targetMatricule, setTargetMatricule] = useState(null);
+  const [busy, setBusy] = useState(false);
+
+  const refresh = () => loadAdminMessages().then((list) => setMessages(list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))));
+  useEffect(() => { refresh(); }, []);
+
+  const toggleAntenne = (a) => {
+    if (a === "toutes") { setAntennesSel(["toutes"]); return; }
+    setAntennesSel((prev) => {
+      const withoutToutes = prev.filter((x) => x !== "toutes");
+      const has = withoutToutes.includes(a);
+      const next = has ? withoutToutes.filter((x) => x !== a) : [...withoutToutes, a];
+      return next.length === 0 ? ["toutes"] : next;
+    });
+  };
+
+  const matchingStudents = (students || []).filter((s) => {
+    if (!studentSearch.trim()) return false;
+    const q = studentSearch.trim().toLowerCase();
+    return `${s.prenom} ${s.nom} ${s.matricule}`.toLowerCase().includes(q);
+  }).slice(0, 6);
+
+  const targetStudent = (students || []).find((s) => s.matricule === targetMatricule);
+  const canSend = titre.trim() && contenu.trim() && (mode === "groupe" || targetMatricule);
+
+  const send = async () => {
+    if (!canSend) return;
+    setBusy(true);
+    const list = await loadAdminMessages();
+    const entry = {
+      id: `msg-${Date.now()}`, titre: titre.trim(), contenu: contenu.trim(), createdAt: new Date().toISOString(),
+      ...(mode === "individuel"
+        ? { targetMatricule }
+        : { antennes: antennesSel, niveau, specialite }),
+    };
+    await saveAdminMessages([...list, entry]);
+    setTitre(""); setContenu(""); setTargetMatricule(null); setStudentSearch("");
+    setAntennesSel(["toutes"]); setNiveau("tous"); setSpecialite("toutes");
+    setBusy(false);
+    refresh();
+  };
+
+  const remove = async (id) => {
+    const list = await loadAdminMessages();
+    await saveAdminMessages(list.filter((m) => m.id !== id));
+    refresh();
+  };
+
+  return (
+    <div>
+      <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18, marginBottom: 20 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.ink, marginBottom: 12 }}>Envoyer un message</div>
+
+        <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
+          <button
+            onClick={() => setMode("groupe")}
+            style={{
+              flex: 1, padding: "8px 10px", borderRadius: 9, cursor: "pointer", fontSize: 12, fontWeight: 700,
+              border: `1px solid ${mode === "groupe" ? COLORS.blue : COLORS.line}`,
+              background: mode === "groupe" ? COLORS.blueSoft : "white", color: mode === "groupe" ? COLORS.blueDeep : COLORS.inkSoft,
+            }}
+          >
+            👥 Message groupé
+          </button>
+          <button
+            onClick={() => setMode("individuel")}
+            style={{
+              flex: 1, padding: "8px 10px", borderRadius: 9, cursor: "pointer", fontSize: 12, fontWeight: 700,
+              border: `1px solid ${mode === "individuel" ? COLORS.blue : COLORS.line}`,
+              background: mode === "individuel" ? COLORS.blueSoft : "white", color: mode === "individuel" ? COLORS.blueDeep : COLORS.inkSoft,
+            }}
+          >
+            👤 Message personnel
+          </button>
+        </div>
+
+        <Field label="TITRE" value={titre} onChange={setTitre} />
+        <div style={{ marginTop: 12 }}>
+          <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>CONTENU</label>
+          <textarea
+            value={contenu} onChange={(e) => setContenu(e.target.value)} rows={4}
+            style={{ ...inputStyle, fontFamily: "'IBM Plex Sans', sans-serif", resize: "vertical" }}
+            placeholder="Le message à envoyer…"
+          />
+        </div>
+
+        {mode === "individuel" ? (
+          <div style={{ marginTop: 12 }}>
+            <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>DESTINATAIRE</label>
+            {targetStudent ? (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: COLORS.greenSoft, border: `1px solid ${COLORS.green}`, borderRadius: 9, padding: "9px 12px" }}>
+                <span style={{ fontSize: 12.5, color: COLORS.ink, fontWeight: 600 }}>{targetStudent.prenom} {targetStudent.nom} · {targetStudent.matricule}</span>
+                <button onClick={() => { setTargetMatricule(null); setStudentSearch(""); }} style={{ background: "none", border: "none", color: COLORS.red, cursor: "pointer", fontSize: 12, fontWeight: 700 }}>✕</button>
+              </div>
+            ) : (
+              <>
+                <input
+                  value={studentSearch} onChange={(e) => setStudentSearch(e.target.value)} style={inputStyle}
+                  placeholder="Rechercher un étudiant par nom ou matricule…"
+                />
+                {matchingStudents.length > 0 && (
+                  <div style={{ marginTop: 6, border: `1px solid ${COLORS.line}`, borderRadius: 9, overflow: "hidden" }}>
+                    {matchingStudents.map((s) => (
+                      <button
+                        key={s.matricule}
+                        onClick={() => { setTargetMatricule(s.matricule); setStudentSearch(""); }}
+                        style={{ display: "block", width: "100%", textAlign: "left", padding: "9px 12px", border: "none", borderBottom: `1px solid ${COLORS.line}`, background: "white", cursor: "pointer", fontSize: 12.5, color: COLORS.ink }}
+                      >
+                        {s.prenom} {s.nom} <span style={{ color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", fontSize: 11 }}>· {s.matricule}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        ) : (
+          <>
+            <div style={{ marginTop: 12 }}>
+              <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 6 }}>ANTENNE(S) CONCERNÉE(S)</label>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                <button
+                  onClick={() => toggleAntenne("toutes")}
+                  style={{
+                    borderRadius: 999, padding: "5px 11px", fontSize: 11.5, cursor: "pointer",
+                    border: `1px solid ${antennesSel.includes("toutes") ? COLORS.blue : COLORS.line}`,
+                    background: antennesSel.includes("toutes") ? COLORS.blueSoft : "white",
+                    color: antennesSel.includes("toutes") ? COLORS.blueDeep : COLORS.inkSoft, fontWeight: 600,
+                  }}
+                >
+                  Toutes les antennes
+                </button>
+                {ANTENNES.map((a) => (
+                  <button
+                    key={a}
+                    onClick={() => toggleAntenne(a)}
+                    style={{
+                      borderRadius: 999, padding: "5px 11px", fontSize: 11.5, cursor: "pointer",
+                      border: `1px solid ${antennesSel.includes(a) ? COLORS.blue : COLORS.line}`,
+                      background: antennesSel.includes(a) ? COLORS.blueSoft : "white",
+                      color: antennesSel.includes(a) ? COLORS.blueDeep : COLORS.inkSoft, fontWeight: 600,
+                    }}
+                  >
+                    {a}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>NIVEAU</label>
+                <select value={niveau} onChange={(e) => setNiveau(e.target.value)} style={inputStyle}>
+                  <option value="tous">Tous les niveaux</option>
+                  {NIVEAUX.map((n) => <option key={n.id} value={n.id}>{n.label}</option>)}
+                </select>
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>SPÉCIALITÉ</label>
+                <select value={specialite} onChange={(e) => setSpecialite(e.target.value)} style={inputStyle}>
+                  <option value="toutes">Toutes spécialités</option>
+                  {SPECIALITES.map((s) => <option key={s.id} value={s.id}>{s.id}</option>)}
+                </select>
+              </div>
+            </div>
+          </>
+        )}
+
+        <button onClick={send} disabled={busy || !canSend} style={{ ...primaryBtn, width: "100%", marginTop: 16, opacity: busy || !canSend ? 0.5 : 1 }}>
+          {busy ? "Envoi…" : mode === "individuel" ? "Envoyer au destinataire →" : "Envoyer au groupe →"}
+        </button>
+      </div>
+
+      <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.ink, marginBottom: 10 }}>Messages envoyés</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {messages === null ? (
+          <div style={{ fontSize: 13, color: COLORS.inkSoft }}>Chargement…</div>
+        ) : messages.length === 0 ? (
+          <div style={{ fontSize: 13, color: COLORS.inkSoft }}>Aucun message envoyé pour l'instant.</div>
+        ) : (
+          messages.map((m) => {
+            const rec = m.targetMatricule ? (students || []).find((s) => s.matricule === m.targetMatricule) : null;
+            return (
+              <div key={m.id} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 14 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 6 }}>
+                  <div style={{ fontWeight: 700, fontSize: 13, color: COLORS.ink }}>{m.titre}</div>
+                  <button onClick={() => remove(m.id)} style={{ ...secondaryBtn, color: COLORS.red, fontSize: 11, padding: "4px 10px" }}>Supprimer</button>
+                </div>
+                <div style={{ fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.6, whiteSpace: "pre-wrap", marginBottom: 8 }}>{m.contenu}</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {m.targetMatricule ? (
+                    <Badge tone="green">👤 {rec ? `${rec.prenom} ${rec.nom}` : m.targetMatricule}</Badge>
+                  ) : (
+                    <>
+                      <Badge tone="blue">{m.antennes?.includes("toutes") ? "Toutes antennes" : m.antennes?.join(", ")}</Badge>
+                      <Badge tone="blue">{m.niveau === "tous" ? "Tous niveaux" : m.niveau}</Badge>
+                      <Badge tone="blue">{m.specialite === "toutes" ? "Toutes spécialités" : m.specialite}</Badge>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })
         )}
       </div>
     </div>
@@ -12392,7 +14647,67 @@ function AnnouncementsFeed({ student }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme }) {
+function MessagesScreen({ onBack, student, onRead }) {
+  const [items, setItems] = useState(null);
+  const [readIds, setReadIds] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const [all, read] = await Promise.all([loadAdminMessages(), loadReadMessageIds(student.matricule)]);
+      const mine = all.filter((m) => adminMessageMatches(m, student)).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setItems(mine);
+      setReadIds(read);
+      const unreadIds = mine.filter((m) => !read.includes(m.id)).map((m) => m.id);
+      if (unreadIds.length > 0) {
+        const merged = await markMessagesRead(student.matricule, unreadIds);
+        setReadIds(merged);
+        onRead && onRead(0);
+      }
+    })();
+  }, []);
+
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "24px 18px 60px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+          ← Retour au tableau de bord
+        </button>
+        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, marginBottom: 4 }}>💬 Messages</h1>
+        <p style={{ fontSize: 12.5, color: COLORS.inkSoft, marginBottom: 22 }}>
+          Messages de l'administration — vous ne pouvez pas y répondre directement depuis l'application.
+        </p>
+
+        {items === null ? (
+          <div style={{ color: COLORS.inkSoft, fontSize: 13 }}>Chargement…</div>
+        ) : items.length === 0 ? (
+          <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 22, textAlign: "center", color: COLORS.inkSoft, fontSize: 13 }}>
+            Aucun message pour le moment.
+          </div>
+        ) : (
+          <div className="anim-stagger" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {items.map((a) => (
+              <div key={a.id} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 6 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: COLORS.blueDeep }}>{a.titre}</div>
+                    {a.targetMatricule && (
+                      <span style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.green, background: COLORS.greenSoft, borderRadius: 999, padding: "2px 7px" }}>Personnel</span>
+                    )}
+                  </div>
+                  <div style={{ fontSize: 10.5, color: COLORS.inkSoft, whiteSpace: "nowrap" }}>{fmtDate(a.createdAt)}</div>
+                </div>
+                <div style={{ fontSize: 13, color: COLORS.ink, lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{a.contenu}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme, unreadCount, onOpenMessages }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -12404,13 +14719,13 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
 
   useEffect(() => {
     if (!welcomeInfo) return;
-    const t = setTimeout(() => onDismissWelcome(), 5000);
+    const t = setTimeout(() => onDismissWelcome(), 14000);
     return () => clearTimeout(t);
   }, [welcomeInfo]);
 
   return (
     <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
-      <TopBar onLogout={onLogout} />
+      <TopBar onLogout={onLogout} unreadCount={unreadCount} onOpenMessages={onOpenMessages} />
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "26px 18px 60px" }}>
         {welcomeInfo && (
           <div
@@ -12481,85 +14796,48 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           <StatCard label="Chapitres maîtrisés" value={mastered.length} tone="green" />
         </div>
 
-        <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14, marginBottom: 26 }}>
-          <div style={{ background: COLORS.blueDeep, borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1 }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📚 Apprendre</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Un résumé des notions à maîtriser par chapitre, avec des explications simples, avant de passer à l'entraînement.</div>
-            <button onClick={onLearn} disabled={access.isBlocked} style={{ ...primaryBtn, background: "white", color: COLORS.blueDeep, width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Choisir un chapitre →"}
-            </button>
-          </div>
-          <div style={{ background: COLORS.green, borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1 }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📖 Entraînement</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Révisez par chapitre, sans limite de temps : la correction et l'explication s'affichent immédiatement après chaque réponse.</div>
-            <button onClick={onTrain} disabled={access.isBlocked} style={{ ...primaryBtn, background: "white", color: COLORS.green, width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Commencer une séance →"}
-            </button>
-          </div>
-          <div style={{ background: COLORS.blueDeep, borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1 }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📝 Examen blanc</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Choisissez une matière et un niveau. Aucune correction affichée avant la fin de l'épreuve, comme au concours.</div>
-            <button onClick={onStart} disabled={access.isBlocked} style={{ ...primaryBtn, background: COLORS.green, width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Choisir une matière →"}
-            </button>
-          </div>
-          <div style={{ background: COLORS.green, borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1 }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🩺 Réflexes cliniques</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Signe clinique → orientation diagnostique. Entraînez-vous à raisonner, système par système, pour une bonne initiation à la prescription.</div>
-            <button onClick={onDiagnostic} disabled={access.isBlocked} style={{ ...primaryBtn, background: "white", color: COLORS.green, width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Ouvrir →"}
-            </button>
-          </div>
-          <div style={{ background: COLORS.amber, borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1, position: "relative" }}>
-            {!access.isPaid && !access.isVIP && <div style={{ position: "absolute", top: 12, right: 12, fontSize: 10.5, fontWeight: 700, background: "rgba(255,255,255,0.25)", borderRadius: 999, padding: "3px 9px" }}>🎁 Essai</div>}
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🧠 Diagnostic infirmier</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Aucune proposition affichée : répondez en texte libre (diagnostic, examens, conduite à tenir, soins). Une IA corrige et explique votre réponse.</div>
-            <button onClick={onDiagnosticInfirmier} disabled={access.isBlocked} style={{ ...primaryBtn, background: "white", color: COLORS.amber, width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Commencer →"}
-            </button>
-          </div>
-          <div style={{ background: "#2D6E6B", borderRadius: 16, padding: "20px 20px", color: "white", opacity: access.isBlocked ? 0.55 : 1, position: "relative" }}>
-            {!access.isPaid && !access.isVIP && <div style={{ position: "absolute", top: 12, right: 12, fontSize: 10.5, fontWeight: 700, background: "rgba(255,255,255,0.25)", borderRadius: 999, padding: "3px 9px" }}>🎁 Essai</div>}
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🧑‍⚕️ Patient virtuel</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Discutez avec un patient simulé, demandez les examens utiles, puis posez votre diagnostic et votre prise en charge. Le plus immersif.</div>
-            <button onClick={onVirtualPatient} disabled={access.isBlocked} style={{ ...primaryBtn, background: "white", color: "#2D6E6B", width: "100%", cursor: access.isBlocked ? "not-allowed" : "pointer" }}>
-              {access.isBlocked ? "Accès bloqué — payez pour continuer" : "Commencer →"}
-            </button>
-          </div>
-          <div style={{ background: "#0E7C7B", borderRadius: 16, padding: "20px 20px", color: "white" }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📖 Dictionnaire médical</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Recherchez un terme, une maladie, un médicament ou une abréviation. Filtres par catégorie, favoris et historique de recherche.</div>
-            <button onClick={onDictionary} style={{ ...primaryBtn, background: "white", color: "#0E7C7B", width: "100%" }}>
-              Rechercher un terme →
-            </button>
-          </div>
-          <div style={{ background: "#8A8F95", borderRadius: 16, padding: "20px 20px", color: "white", opacity: 0.6, position: "relative" }}>
-            <div style={{
-              position: "absolute", top: 12, right: 12, fontSize: 9.5, fontWeight: 700, letterSpacing: 0.4,
-              background: "rgba(255,255,255,0.25)", padding: "3px 8px", borderRadius: 999, textTransform: "uppercase",
-            }}>
-              Bientôt disponible
-            </div>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>🩻 Schémas légendés</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>En cours de révision pour garantir des repères fiables — de retour très prochainement.</div>
-            <button disabled style={{ ...primaryBtn, background: "rgba(255,255,255,0.5)", color: "#5A5F63", width: "100%", cursor: "not-allowed" }}>
-              Indisponible pour le moment
-            </button>
-          </div>
-          <div style={{ background: "#3E5A7A", borderRadius: 16, padding: "20px 20px", color: "white" }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>📝 Mes notes</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Prenez des notes personnelles au fil de vos révisions, consultables et exportables en PDF à tout moment.</div>
-            <button onClick={onMyNotes} style={{ ...primaryBtn, background: "white", color: "#3E5A7A", width: "100%" }}>
-              Ouvrir mes notes →
-            </button>
-          </div>
-          <div style={{ background: "linear-gradient(135deg, #D9A441, #C4841E)", borderRadius: 16, padding: "20px 20px", color: "white" }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, marginBottom: 4 }}>⭐ Donner mon avis</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9, marginBottom: 14 }}>Votre avis compte ! Notez l'application et laissez un commentaire pour aider à l'améliorer.</div>
-            <button onClick={onRateApp} style={{ ...primaryBtn, background: "white", color: "#B5701A", width: "100%" }}>
-              Laisser un avis →
-            </button>
-          </div>
+        <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 700, color: COLORS.inkSoft, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 12 }}>Réviser &amp; s'évaluer</h2>
+        <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14, marginBottom: 30 }}>
+          <ModuleCard icon="📚" title="Apprendre" color={COLORS.blueDeep}
+            desc="Un résumé des notions à maîtriser par chapitre, avec des explications simples, avant de passer à l'entraînement."
+            onClick={onLearn} disabled={access.isBlocked} ctaLabel={access.isBlocked ? "Accès bloqué" : "Choisir un chapitre"} large />
+          <ModuleCard icon="📖" title="Entraînement" color={COLORS.green}
+            desc="Révisez par chapitre, sans limite de temps : la correction s'affiche immédiatement après chaque réponse."
+            onClick={onTrain} disabled={access.isBlocked} ctaLabel={access.isBlocked ? "Accès bloqué" : "Commencer une séance"} large />
+          <ModuleCard icon="📝" title="Examen blanc" color={COLORS.blueDeep}
+            desc="Choisissez une matière et un niveau. Aucune correction affichée avant la fin de l'épreuve, comme au concours."
+            onClick={onStart} disabled={access.isBlocked} ctaLabel={access.isBlocked ? "Accès bloqué" : "Choisir une matière"} large />
+        </div>
+
+        <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 700, color: COLORS.inkSoft, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 12 }}>Approfondir votre pratique</h2>
+        <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14, marginBottom: 30 }}>
+          <ModuleCard icon="🩺" title="Réflexes cliniques" color={COLORS.green}
+            desc="Signe clinique → orientation diagnostique. Entraînez-vous à raisonner, système par système."
+            onClick={onDiagnostic} disabled={access.isBlocked} ctaLabel={access.isBlocked ? "Accès bloqué" : "Ouvrir"} />
+          <ModuleCard icon="🧠" title="Diagnostic infirmier" color={COLORS.amber}
+            desc="Répondez en texte libre : diagnostic, examens, conduite à tenir. Une IA corrige et explique votre réponse."
+            onClick={onDiagnosticInfirmier} disabled={access.isBlocked} ctaLabel={access.isBlocked ? "Accès bloqué" : "Commencer"}
+            badge={!access.isPaid && !access.isVIP ? "🎁 Essai" : null} />
+          <ModuleCard icon="🧑‍⚕️" title="Patient virtuel" color="#2D6E6B"
+            desc="Discutez avec un patient simulé, demandez des examens, posez votre diagnostic. Le plus immersif."
+            onClick={onVirtualPatient} disabled={access.isBlocked} ctaLabel={access.isBlocked ? "Accès bloqué" : "Commencer"}
+            badge={!access.isPaid && !access.isVIP ? "🎁 Essai" : null} />
+        </div>
+
+        <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 700, color: COLORS.inkSoft, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 12 }}>Outils</h2>
+        <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 26 }}>
+          <ModuleCard icon="📖" title="Dictionnaire médical" color="#0E7C7B" compact
+            desc="Recherchez un terme, une maladie, un médicament ou une abréviation."
+            onClick={onDictionary} ctaLabel="Rechercher" />
+          <ModuleCard icon="📝" title="Mes notes" color="#3E5A7A" compact
+            desc="Notes personnelles au fil de vos révisions, exportables en PDF."
+            onClick={onMyNotes} ctaLabel="Ouvrir" />
+          <ModuleCard icon="⭐" title="Donner mon avis" color="#C4841E" compact
+            desc="Notez l'application et laissez un commentaire."
+            onClick={onRateApp} ctaLabel="Laisser un avis" />
+          <ModuleCard icon="🩻" title="Schémas légendés" color="#8A8F95" compact disabled
+            desc="En cours de révision — de retour très prochainement."
+            badge="Bientôt disponible" ctaLabel="Indisponible" />
         </div>
 
         <div className="reveal-on-scroll" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 26 }}>
@@ -12768,7 +15046,7 @@ function useHeadroom() {
   return visible;
 }
 
-function TopBar({ onLogout, onAdmin }) {
+function TopBar({ onLogout, onAdmin, unreadCount, onOpenMessages }) {
   const [showAide, setShowAide] = useState(false);
   const visible = useHeadroom();
   return (
@@ -12782,6 +15060,29 @@ function TopBar({ onLogout, onAdmin }) {
     }}>
       <Logo />
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        {onOpenMessages && (
+          <button
+            onClick={onOpenMessages}
+            aria-label="Messages"
+            style={{
+              position: "relative", display: "flex", alignItems: "center", justifyContent: "center",
+              width: 34, height: 34, borderRadius: 999, border: `1px solid ${COLORS.line}`, background: COLORS.surface,
+              cursor: "pointer", fontSize: 16,
+            }}
+          >
+            🔔
+            {unreadCount > 0 && (
+              <span style={{
+                position: "absolute", top: -4, right: -4, minWidth: 17, height: 17, borderRadius: 999,
+                background: COLORS.red, color: "white", fontSize: 10, fontWeight: 700,
+                display: "flex", alignItems: "center", justifyContent: "center", padding: "0 3px",
+                border: `2px solid ${COLORS.surface}`,
+              }}>
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
+          </button>
+        )}
         <button
           onClick={() => setShowAide(true)}
           style={{
@@ -12797,6 +15098,60 @@ function TopBar({ onLogout, onAdmin }) {
         <button onClick={onLogout} style={{ ...secondaryBtn, padding: "7px 12px", fontSize: 12.5 }}>Déconnexion</button>
       </div>
       {showAide && <AideModal onClose={() => setShowAide(false)} />}
+    </div>
+  );
+}
+
+// Carte de module premium : fond surface (pas de couleur pleine), badge d'icône dégradé,
+// et un lien-CTA en texte plutôt qu'un bouton plein — remplace l'ancien mur de rectangles
+// de couleur unie par une vraie hiérarchie visuelle éditoriale.
+function ModuleCard({ icon, title, desc, color, onClick, disabled, ctaLabel, badge, large, compact }) {
+  return (
+    <div
+      className="card-hover reveal-on-scroll"
+      style={{
+        background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 18,
+        padding: compact ? "16px 16px" : large ? "24px 22px" : "20px 20px",
+        position: "relative", opacity: disabled ? 0.6 : 1,
+        display: "flex", flexDirection: "column", gap: compact ? 8 : 12,
+        boxShadow: `0 1px 3px ${COLORS.ink}0A`,
+      }}
+    >
+      {badge && (
+        <div style={{
+          position: "absolute", top: 14, right: 14, fontSize: 10, fontWeight: 700, letterSpacing: 0.3,
+          background: `${color}1A`, color, borderRadius: 999, padding: "3px 9px", textTransform: badge.includes("Bientôt") ? "uppercase" : "none",
+        }}>
+          {badge}
+        </div>
+      )}
+      <div style={{
+        width: compact ? 34 : large ? 48 : 42, height: compact ? 34 : large ? 48 : 42, borderRadius: compact ? 10 : 13,
+        background: `linear-gradient(135deg, ${color}, ${color}CC)`, display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: compact ? 16 : large ? 24 : 20, flexShrink: 0,
+      }}>
+        {icon}
+      </div>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: compact ? 13.5 : large ? 17 : 15, color: COLORS.ink, marginBottom: 4 }}>
+          {title}
+        </div>
+        <div style={{ fontSize: compact ? 11.5 : 12.5, color: COLORS.inkSoft, lineHeight: 1.5 }}>
+          {desc}
+        </div>
+      </div>
+      <button
+        onClick={onClick}
+        disabled={disabled}
+        style={{
+          background: "none", border: "none", padding: 0, textAlign: "left", marginTop: "auto",
+          color: disabled ? COLORS.inkSoft : color, fontWeight: 700, fontSize: compact ? 12 : 13,
+          cursor: disabled ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 6,
+          fontFamily: "'IBM Plex Sans', sans-serif",
+        }}
+      >
+        {ctaLabel} <span>→</span>
+      </button>
     </div>
   );
 }
@@ -14111,7 +16466,8 @@ export default function App() {
     applyTheme(name);
     setThemeState(name);
   };
-  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training | dictionary | schemas | mynotes | rateapp
+  const [screen, setScreen] = useState("intro"); // intro | login | dashboard | matieres | setup | proctor | exam | results | fraud | admin | trainingSetup | training | dictionary | schemas | mynotes | rateapp | messages
+  const [unreadCount, setUnreadCount] = useState(0);
   useScrollReveal(screen);
   const [role, setRole] = useState(null); // "admin" | "student"
   const [welcomeInfo, setWelcomeInfo] = useState(null); // { prenom, isNew } — pilote la bannière de bienvenue/félicitations
@@ -14129,6 +16485,18 @@ export default function App() {
   const [lastResult, setLastResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState(null);
+
+  // Calcule le nombre de messages non lus dès qu'un étudiant est connecté, et à chaque
+  // retour sur le tableau de bord (au cas où un nouveau message a été publié entre-temps).
+  useEffect(() => {
+    if (!student) return;
+    (async () => {
+      const [all, read] = await Promise.all([loadAdminMessages(), loadReadMessageIds(student.matricule)]);
+      const mine = all.filter((m) => adminMessageMatches(m, student));
+      const unread = mine.filter((m) => !read.includes(m.id)).length;
+      setUnreadCount(unread);
+    })();
+  }, [student, screen]);
 
   useEffect(() => {
     try {
@@ -14298,10 +16666,11 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} unreadCount={unreadCount} onOpenMessages={() => setScreen("messages")} />;
   }
 
   if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
+  if (screen === "messages") return <MessagesScreen onBack={() => setScreen("dashboard")} student={student} onRead={setUnreadCount} />;
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "mynotes") return <MyNotesScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "rateapp") return <RateAppScreen onBack={() => setScreen("dashboard")} student={student} />;
