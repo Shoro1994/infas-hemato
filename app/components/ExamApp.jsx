@@ -18458,30 +18458,32 @@ function AdminScreen({ onBack }) {
         )}
 
         {tab === "payments" && (
-          <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, overflow: "hidden" }}>
-            {pending.length === 0 ? (
-              <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Aucun paiement en attente de vérification.</div>
-            ) : (
-              pending.map((s, i) => {
-                const plan = SUBSCRIPTION_PLANS.find((p) => p.id === s.pendingPlan);
-                return (
-                  <div key={s.matricule} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}`, fontSize: 13, gap: 10 }}>
-                    <div>
-                      <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s.matricule}</span></div>
-                      <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · signalé le {fmtDate(s.pendingSince)}</div>
-                      {plan && <Badge tone="amber">{plan.label} · {plan.price} F</Badge>}
+          <>
+            <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, overflow: "hidden" }}>
+              {pending.length === 0 ? (
+                <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Aucun paiement en attente de vérification.</div>
+              ) : (
+                pending.map((s, i) => {
+                  const plan = SUBSCRIPTION_PLANS.find((p) => p.id === s.pendingPlan);
+                  return (
+                    <div key={s.matricule} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}`, fontSize: 13, gap: 10 }}>
+                      <div>
+                        <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s.matricule}</span></div>
+                        <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · signalé le {fmtDate(s.pendingSince)}</div>
+                        {plan && <Badge tone="amber">{plan.label} · {plan.price} F</Badge>}
+                      </div>
+                      <button onClick={() => handleConfirm(s.matricule)} style={{ ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px" }}>
+                        Confirmer le paiement
+                      </button>
                     </div>
-                    <button onClick={() => handleConfirm(s.matricule)} style={{ ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px" }}>
-                      Confirmer le paiement
-                    </button>
-                  </div>
-                );
-              })
-            )}
-          </div>
-          <div style={{ marginTop: 26 }}>
-            <ReferralsAdmin students={students} refreshTrigger={referralsRefreshTrigger} />
-          </div>
+                  );
+                })
+              )}
+            </div>
+            <div style={{ marginTop: 26 }}>
+              <ReferralsAdmin students={students} refreshTrigger={referralsRefreshTrigger} />
+            </div>
+          </>
         )}
 
         {tab === "announcements" && <AnnouncementsAdmin announcements={announcements} onChanged={refreshAnnouncements} />}
