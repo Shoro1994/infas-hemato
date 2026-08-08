@@ -16977,6 +16977,500 @@ const MEDICAL_DICT = [
     causes:"Atteinte neuromusculaire, atteinte centrale, notamment chez le nourrisson.",
     references:"Sémiologie ; Neurologie ; Pédiatrie" },
 ];
+
+/* ---------------- Dictionnaire médical — stockage favoris & historique ---------------- */
+function dictFavKey(matricule) {
+  return `infas-hemato:dict-fav:${sanitizeKeyPart(matricule)}`;
+}
+function dictHistKey(matricule) {
+  return `infas-hemato:dict-hist:${sanitizeKeyPart(matricule)}`;
+}
+async function loadDictFavorites(matricule) {
+  try {
+    const res = await storage.get(dictFavKey(matricule), true);
+    return res ? JSON.parse(res.value) : [];
+  } catch { return []; }
+}
+async function saveDictFavorites(matricule, favs) {
+  try { await storage.set(dictFavKey(matricule), JSON.stringify(favs), true); } catch (e) { console.error(e); }
+}
+async function loadDictHistory(matricule) {
+  try {
+    const res = await storage.get(dictHistKey(matricule), true);
+    return res ? JSON.parse(res.value) : [];
+  } catch { return []; }
+}
+async function saveDictHistory(matricule, hist) {
+  try { await storage.set(dictHistKey(matricule), JSON.stringify(hist), true); } catch (e) { console.error(e); }
+}
+
+const DICT_CATEGORIES = Array.from(new Set(MEDICAL_DICT.map((e) => e.categorie))).sort((a, b) => a.localeCompare(b, "fr"));
+const DICT_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+function normalizeForSearch(s) {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+// Distance de Levenshtein (nombre minimal de modifications pour passer d'un mot à l'autre) :
+// sert de filet de sécurité pour tolérer les fautes de frappe/orthographe dans la recherche.
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const matrix = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      matrix[i][j] =
+        a[i - 1] === b[j - 1]
+          ? matrix[i - 1][j - 1]
+          : 1 + Math.min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
+    }
+  }
+  return matrix[a.length][b.length];
+}
+
+// Vérifie si la requête correspond à une fiche : terme, synonymes, abréviation, ou définition en
+// correspondance exacte (substring), puis en secours par tolérance aux fautes (distance ≤ 2 sur
+// un des mots du terme ou des synonymes), pour couvrir les fautes de frappe et d'orthographe.
+function dictEntryMatches(entry, normalizedQuery) {
+  if (!normalizedQuery) return true;
+  const termN = normalizeForSearch(entry.terme);
+  if (termN.includes(normalizedQuery)) return true;
+  if (normalizeForSearch(entry.definition || "").includes(normalizedQuery)) return true;
+  const synonymsN = (entry.synonymes || []).map(normalizeForSearch);
+  if (synonymsN.some((s) => s.includes(normalizedQuery))) return true;
+  const abbrevN = normalizeForSearch(entry.abreviation || "");
+  if (abbrevN && abbrevN === normalizedQuery) return true;
+  // tolérance aux fautes : uniquement pour les requêtes de 4 lettres ou plus, en comparant
+  // chaque mot du terme/synonyme à la requête (distance ≤ 2, proportionnelle à la longueur)
+  if (normalizedQuery.length >= 4) {
+    const words = [...termN.split(/[\s-]+/), ...synonymsN.flatMap((s) => s.split(/[\s-]+/))];
+    const threshold = normalizedQuery.length <= 6 ? 1 : 2;
+    if (words.some((w) => w.length >= 3 && levenshtein(w, normalizedQuery) <= threshold)) return true;
+  }
+  return false;
+}
+
+function DictionaryScreen({ onBack, student }) {
+  const [query, setQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("Toutes");
+  const [activeLetter, setActiveLetter] = useState(null);
+  const [selectedTerm, setSelectedTerm] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [view, setView] = useState("liste"); // liste | favoris | historique
+  const [loading, setLoading] = useState(true);
+  const searchBoxRef = useRef(null);
+
+  useEffect(() => {
+    if (!student?.matricule) return;
+    Promise.all([loadDictFavorites(student.matricule), loadDictHistory(student.matricule)]).then(
+      ([favs, hist]) => {
+        setFavorites(favs);
+        setHistory(hist);
+        setLoading(false);
+      }
+    );
+  }, [student]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) setShowSuggestions(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const normalizedQuery = normalizeForSearch(query);
+
+  const suggestions = useMemo(() => {
+    if (!normalizedQuery) return [];
+    return MEDICAL_DICT.filter((e) => dictEntryMatches(e, normalizedQuery)).slice(0, 8);
+  }, [normalizedQuery]);
+
+  const filteredTerms = useMemo(() => {
+    let list = MEDICAL_DICT;
+    if (activeCategory !== "Toutes") list = list.filter((e) => e.categorie === activeCategory);
+    if (activeLetter) list = list.filter((e) => normalizeForSearch(e.terme)[0] === activeLetter.toLowerCase());
+    if (normalizedQuery) {
+      list = list.filter((e) => dictEntryMatches(e, normalizedQuery));
+    }
+    return [...list].sort((a, b) => a.terme.localeCompare(b.terme, "fr"));
+  }, [activeCategory, activeLetter, normalizedQuery]);
+
+  const favoriteEntries = useMemo(
+    () => MEDICAL_DICT.filter((e) => favorites.includes(e.id)).sort((a, b) => a.terme.localeCompare(b.terme, "fr")),
+    [favorites]
+  );
+
+  const openTerm = (entry) => {
+    setSelectedTerm(entry);
+    setShowSuggestions(false);
+    if (student?.matricule) {
+      const newHist = [entry.id, ...history.filter((h) => h !== entry.id)].slice(0, 15);
+      setHistory(newHist);
+      saveDictHistory(student.matricule, newHist);
+    }
+  };
+
+  const toggleFavorite = (id) => {
+    const isFav = favorites.includes(id);
+    const newFavs = isFav ? favorites.filter((f) => f !== id) : [...favorites, id];
+    setFavorites(newFavs);
+    if (student?.matricule) saveDictFavorites(student.matricule, newFavs);
+  };
+
+  const historyEntries = useMemo(
+    () => history.map((id) => MEDICAL_DICT.find((e) => e.id === id)).filter(Boolean),
+    [history]
+  );
+
+  if (selectedTerm) {
+    const isFav = favorites.includes(selectedTerm.id);
+    const fields = [
+      ["Définition", selectedTerm.definition],
+      ["Description détaillée", selectedTerm.description],
+      ["Anatomie concernée", selectedTerm.anatomie],
+      ["Physiopathologie", selectedTerm.physiopathologie],
+      ["Causes", selectedTerm.causes],
+      ["Facteurs de risque", selectedTerm.facteursRisque],
+      ["Classification / Types / Formes cliniques", selectedTerm.classification],
+      ["Signes fonctionnels", selectedTerm.signesFonctionnels],
+      ["Signes physiques", selectedTerm.signesPhysiques],
+      ["Symptômes", selectedTerm.symptomes],
+      ["Diagnostic", selectedTerm.diagnostic],
+      ["Diagnostic différentiel", selectedTerm.diagnosticDifferentiel],
+      ["Examens complémentaires", selectedTerm.examens],
+      ["Valeurs normales", selectedTerm.valeursNormales],
+      ["Traitement", selectedTerm.traitement],
+      ["Surveillance infirmière", selectedTerm.surveillanceInfirmiere],
+      ["Prévention", selectedTerm.prevention],
+      ["Complications", selectedTerm.complications],
+      ["Pronostic", selectedTerm.pronostic],
+      ["Conseils pratiques", selectedTerm.conseils],
+      ["Points clés à retenir", selectedTerm.pointsCles],
+    ].filter(([, value]) => value);
+    return (
+      <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+        <TopBar onLogout={onBack} />
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "24px 18px 60px" }}>
+          <button onClick={() => setSelectedTerm(null)} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>
+            ← Retour au dictionnaire
+          </button>
+          <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 6 }}>
+              <div>
+                <Badge tone="blue">{selectedTerm.categorie}</Badge>
+                <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, color: COLORS.ink, margin: "10px 0 0" }}>
+                  {selectedTerm.terme}
+                </h1>
+                {selectedTerm.prononciation && (
+                  <div style={{ fontSize: 12, color: COLORS.inkSoft, fontStyle: "italic", marginTop: 3 }}>[{selectedTerm.prononciation}]</div>
+                )}
+                {selectedTerm.etymologie && (
+                  <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginTop: 3 }}>Étymologie : {selectedTerm.etymologie}</div>
+                )}
+                {selectedTerm.synonymes?.length > 0 && (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
+                    {selectedTerm.synonymes.map((s) => (
+                      <span key={s} style={{ fontSize: 10.5, background: COLORS.blueSoft, color: COLORS.blueDeep, borderRadius: 999, padding: "2px 8px" }}>
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => toggleFavorite(selectedTerm.id)}
+                title={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+                style={{
+                  border: `1.5px solid ${isFav ? COLORS.amber : COLORS.line}`, background: isFav ? COLORS.amberSoft : "white",
+                  borderRadius: 10, width: 40, height: 40, fontSize: 18, cursor: "pointer", flexShrink: 0,
+                  color: isFav ? COLORS.amber : COLORS.inkSoft,
+                }}
+              >
+                {isFav ? "★" : "☆"}
+              </button>
+            </div>
+            <TraceDivider />
+            <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 16 }}>
+              {fields.map(([label, value]) => (
+                <div key={label}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4, marginBottom: 4, textTransform: "uppercase" }}>
+                    {label}
+                  </div>
+                  <div style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.6, whiteSpace: "pre-line" }}>{value}</div>
+                </div>
+              ))}
+              {selectedTerm.incertain && (
+                <div style={{ fontSize: 11.5, color: COLORS.amber, background: COLORS.amberSoft, borderRadius: 8, padding: 10 }}>
+                  ⚠ {selectedTerm.incertain}
+                </div>
+              )}
+              <div style={{ fontSize: 11, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", borderTop: `1px dashed ${COLORS.line}`, paddingTop: 12 }}>
+                Réf. : {selectedTerm.references}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: "26px 18px 60px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
+        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 21, color: COLORS.ink, marginBottom: 4 }}>📖 Dictionnaire médical</h1>
+        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 18 }}>
+          Recherchez un terme médical, une maladie, un symptôme, un médicament ou une abréviation.
+        </p>
+
+        {/* Barre de recherche avec autocomplétion */}
+        <div ref={searchBoxRef} style={{ position: "relative", marginBottom: 16 }}>
+          <input
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setShowSuggestions(true); }}
+            onFocus={() => setShowSuggestions(true)}
+            placeholder="Rechercher un terme (ex : anémie, tachycardie, PEV…)"
+            style={{ ...inputStyle, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 14, padding: "12px 14px" }}
+          />
+          {showSuggestions && suggestions.length > 0 && (
+            <div
+              style={{
+                position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4, background: "white",
+                border: `1px solid ${COLORS.line}`, borderRadius: 10, boxShadow: "0 6px 18px rgba(15,39,51,0.12)",
+                zIndex: 20, overflow: "hidden",
+              }}
+            >
+              {suggestions.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => { setQuery(s.terme); openTerm(s); }}
+                  style={{
+                    display: "block", width: "100%", textAlign: "left", padding: "10px 14px", border: "none",
+                    background: "white", cursor: "pointer", fontSize: 13, color: COLORS.ink, borderBottom: `1px solid ${COLORS.line}`,
+                  }}
+                >
+                  <b>{s.terme}</b> <span style={{ color: COLORS.inkSoft, fontSize: 11 }}>· {s.categorie}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Onglets liste / favoris / historique */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+          {[
+            ["liste", "Tous les termes"],
+            ["favoris", `Favoris (${favorites.length})`],
+            ["historique", "Historique"],
+          ].map(([id, label]) => (
+            <button
+              key={id}
+              onClick={() => setView(id)}
+              style={{
+                padding: "7px 14px", borderRadius: 999, fontSize: 12.5, fontWeight: 600, cursor: "pointer",
+                border: view === id ? `1.5px solid ${COLORS.blue}` : `1px solid ${COLORS.line}`,
+                background: view === id ? COLORS.blueSoft : "white", color: view === id ? COLORS.blueDeep : COLORS.inkSoft,
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {view === "liste" && (
+          <>
+            {/* Filtres par catégorie */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
+              <button
+                onClick={() => setActiveCategory("Toutes")}
+                style={{
+                  padding: "5px 11px", borderRadius: 999, fontSize: 11.5, cursor: "pointer",
+                  border: activeCategory === "Toutes" ? `1.5px solid ${COLORS.green}` : `1px solid ${COLORS.line}`,
+                  background: activeCategory === "Toutes" ? COLORS.greenSoft : "white",
+                  color: activeCategory === "Toutes" ? COLORS.green : COLORS.inkSoft, fontWeight: 600,
+                }}
+              >
+                Toutes catégories
+              </button>
+              {DICT_CATEGORIES.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setActiveCategory(c)}
+                  style={{
+                    padding: "5px 11px", borderRadius: 999, fontSize: 11.5, cursor: "pointer",
+                    border: activeCategory === c ? `1.5px solid ${COLORS.green}` : `1px solid ${COLORS.line}`,
+                    background: activeCategory === c ? COLORS.greenSoft : "white",
+                    color: activeCategory === c ? COLORS.green : COLORS.inkSoft, fontWeight: 600,
+                  }}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+
+            {/* Index alphabétique */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 16 }}>
+              <button
+                onClick={() => setActiveLetter(null)}
+                style={{
+                  width: 26, height: 26, borderRadius: 6, fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", cursor: "pointer",
+                  border: !activeLetter ? `1.5px solid ${COLORS.blue}` : `1px solid ${COLORS.line}`,
+                  background: !activeLetter ? COLORS.blueSoft : "white", color: !activeLetter ? COLORS.blueDeep : COLORS.inkSoft,
+                }}
+              >
+                A-Z
+              </button>
+              {DICT_LETTERS.map((l) => {
+                const has = MEDICAL_DICT.some((e) => normalizeForSearch(e.terme)[0] === l.toLowerCase());
+                return (
+                  <button
+                    key={l}
+                    onClick={() => has && setActiveLetter(l)}
+                    disabled={!has}
+                    style={{
+                      width: 26, height: 26, borderRadius: 6, fontSize: 11, fontFamily: "'IBM Plex Mono', monospace",
+                      cursor: has ? "pointer" : "default",
+                      border: activeLetter === l ? `1.5px solid ${COLORS.blue}` : `1px solid ${COLORS.line}`,
+                      background: activeLetter === l ? COLORS.blueSoft : "white",
+                      color: !has ? "#CBD5DA" : activeLetter === l ? COLORS.blueDeep : COLORS.inkSoft,
+                    }}
+                  >
+                    {l}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginBottom: 8 }}>{filteredTerms.length} terme(s)</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {filteredTerms.map((e) => (
+                <DictTermRow key={e.id} entry={e} isFav={favorites.includes(e.id)} onOpen={() => openTerm(e)} onToggleFav={() => toggleFavorite(e.id)} />
+              ))}
+              {filteredTerms.length === 0 && (
+                <div style={{ fontSize: 13, color: COLORS.inkSoft, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18 }}>
+                  Aucun terme ne correspond à cette recherche.
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {view === "favoris" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {favoriteEntries.length === 0 ? (
+              <div style={{ fontSize: 13, color: COLORS.inkSoft, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18 }}>
+                Aucun terme favori pour l'instant — cliquez sur l'étoile ☆ d'un terme pour l'ajouter ici.
+              </div>
+            ) : (
+              favoriteEntries.map((e) => (
+                <DictTermRow key={e.id} entry={e} isFav={true} onOpen={() => openTerm(e)} onToggleFav={() => toggleFavorite(e.id)} />
+              ))
+            )}
+          </div>
+        )}
+
+        {view === "historique" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {historyEntries.length === 0 ? (
+              <div style={{ fontSize: 13, color: COLORS.inkSoft, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18 }}>
+                Aucune recherche récente.
+              </div>
+            ) : (
+              historyEntries.map((e) => (
+                <DictTermRow key={e.id} entry={e} isFav={favorites.includes(e.id)} onOpen={() => openTerm(e)} onToggleFav={() => toggleFavorite(e.id)} />
+              ))
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DictTermRow({ entry, isFav, onOpen, onToggleFav }) {
+  return (
+    <div
+      style={{
+        display: "flex", alignItems: "center", gap: 10, background: COLORS.surface, border: `1px solid ${COLORS.line}`,
+        borderRadius: 12, padding: "12px 14px",
+      }}
+    >
+      <button onClick={onOpen} style={{ flex: 1, textAlign: "left", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.ink }}>{entry.terme}</div>
+        <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginTop: 2 }}>{entry.categorie}</div>
+      </button>
+      <button
+        onClick={onToggleFav}
+        title={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+        style={{ border: "none", background: "none", cursor: "pointer", fontSize: 18, color: isFav ? COLORS.amber : "#CBD5DA", flexShrink: 0 }}
+      >
+        {isFav ? "★" : "☆"}
+      </button>
+    </div>
+  );
+}
+function Logo({ size = 34 }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div
+        style={{
+          width: size, height: size, borderRadius: size * 0.24, background: COLORS.blueSoft,
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+        }}
+      >
+        <img src={CADUCEUS_ICON} alt="Caducée" style={{ width: "72%", height: "72%", objectFit: "contain" }} />
+      </div>
+      <div style={{ lineHeight: 1.1 }}>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.blueDeep }}>
+          Agent de Santé Nouveau
+        </div>
+        <div style={{ fontSize: 10, color: COLORS.inkSoft, letterSpacing: 0.4 }}>PRÉPARATION AUX EXAMENS</div>
+      </div>
+    </div>
+  );
+}
+
+// signature decorative element: a lab-strip trace divider
+function TraceDivider({ color = COLORS.blue }) {
+  return (
+    <svg width="100%" height="14" viewBox="0 0 400 14" preserveAspectRatio="none" style={{ display: "block", opacity: 0.55 }}>
+      <polyline
+        points="0,7 20,7 26,2 32,12 38,7 60,7 66,3 72,11 78,7 400,7"
+        fill="none" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function Badge({ children, tone = "blue" }) {
+  const map = {
+    blue: { bg: COLORS.blueSoft, fg: COLORS.blueDeep },
+    green: { bg: COLORS.greenSoft, fg: COLORS.green },
+    red: { bg: COLORS.redSoft, fg: COLORS.red },
+    amber: { bg: COLORS.amberSoft, fg: COLORS.amber },
+  }[tone];
+  return (
+    <span
+      style={{
+        background: map.bg, color: map.fg, fontSize: 11, fontWeight: 600,
+        padding: "3px 9px", borderRadius: 999, letterSpacing: 0.3,
+        fontFamily: "'IBM Plex Sans', sans-serif",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
 function findVIP(matricule) {
   return VIP_ACCOUNTS.find((v) => v.matricule === matricule) || null;
 }
