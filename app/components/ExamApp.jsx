@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import { storage, setAdminToken } from "../../lib/storage";
 
 /* ============================================================
@@ -20159,7 +20160,7 @@ function AccountMenu({ student, onClose, onLogout }) {
     }
   };
 
-  return (
+  return createPortal(
     <div
       style={{ position: "fixed", inset: 0, background: "rgba(15,39,51,0.45)", zIndex: 110, display: "flex" }}
       onClick={onClose}
@@ -20231,7 +20232,8 @@ function AccountMenu({ student, onClose, onLogout }) {
       </div>
 
       {showInstallGuide && <InstallGuideModal onClose={() => setShowInstallGuide(false)} />}
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -20292,7 +20294,7 @@ function AideModal({ onClose }) {
     setInput("");
   };
 
-  return (
+  return createPortal(
     <div
       style={{
         position: "fixed", inset: 0, background: COLORS.bg, zIndex: 100,
@@ -20376,7 +20378,8 @@ function AideModal({ onClose }) {
           </a>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
