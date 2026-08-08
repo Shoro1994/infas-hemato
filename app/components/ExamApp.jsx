@@ -17471,6 +17471,11 @@ function Badge({ children, tone = "blue" }) {
   );
 }
 
+const VIP_ACCOUNTS = [
+  { matricule: "25-01015", anneeNaissance: "1994", nom: "Kouame", prenom: "Franck Aime", antenne: "Abidjan", niveau: "L1", specialite: "IDE" },
+  { matricule: "25-00925", anneeNaissance: "2003", nom: "Kouabenan", prenom: "Ange Carine", antenne: "Abidjan", niveau: "L1", specialite: "IDE" },
+  { matricule: "25-00870", anneeNaissance: "1996", nom: "Koné", prenom: "Mohamed", antenne: "Abidjan", niveau: "L1", specialite: "IDE" },
+];
 function findVIP(matricule) {
   return VIP_ACCOUNTS.find((v) => v.matricule === matricule) || null;
 }
@@ -19941,7 +19946,7 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
 
   return (
     <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
-      <TopBar onLogout={onLogout} unreadCount={unreadCount} onOpenMessages={onOpenMessages} />
+      <TopBar onLogout={onLogout} unreadCount={unreadCount} onOpenMessages={onOpenMessages} student={student} />
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "26px 18px 60px" }}>
         {welcomeInfo && (
           <div
@@ -20100,6 +20105,169 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           © 2026 Shoro_design&conseil. Tous droits réservés.<br />
           Copywriter : Shoro. shoro_design&conseil
         </div>
+      </div>
+    </div>
+  );
+}
+
+const APP_URL = "https://shoro-prepa-agentsante.netlify.app";
+
+function AccountMenu({ student, onClose, onLogout }) {
+  const [referralCount, setReferralCount] = useState(null);
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [showInstallGuide, setShowInstallGuide] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    loadReferralBalance(student.matricule).then((bal) => setReferralCount(bal.entries.length));
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => { e.preventDefault(); setInstallPrompt(e); };
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const access = computeAccess(student);
+
+  const shareApp = async () => {
+    const shareData = {
+      title: "Agent de Santé Nouveau",
+      text: "Révise pour l'examen infirmier/sage-femme avec Agent de Santé Nouveau — plus de 1500 questions, un dictionnaire médical, et bien plus !",
+      url: APP_URL,
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch { /* annulé par l'utilisateur, rien à faire */ }
+    } else {
+      try {
+        await navigator.clipboard.writeText(APP_URL);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        window.open(`https://wa.me/?text=${encodeURIComponent(shareData.text + " " + APP_URL)}`, "_blank");
+      }
+    }
+  };
+
+  const installApp = async () => {
+    if (installPrompt) {
+      installPrompt.prompt();
+      await installPrompt.userChoice;
+      setInstallPrompt(null);
+    } else {
+      setShowInstallGuide(true);
+    }
+  };
+
+  return (
+    <div
+      style={{ position: "fixed", inset: 0, background: "rgba(15,39,51,0.45)", zIndex: 110, display: "flex" }}
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: "100%", maxWidth: 320, background: COLORS.bg, height: "100%",
+          display: "flex", flexDirection: "column", fontFamily: "'IBM Plex Sans', sans-serif",
+          boxShadow: "4px 0 24px rgba(15,39,51,0.2)", overflowY: "auto",
+        }}
+      >
+        <div style={{ background: `linear-gradient(135deg, #2D6E6B, #1B4F4C)`, padding: "24px 20px", color: "white" }}>
+          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 8, width: 28, height: 28, cursor: "pointer", fontSize: 14, marginBottom: 14 }}>✕</button>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 17, marginBottom: 2 }}>
+            {student.prenom} {student.nom}
+          </div>
+          <div style={{ fontSize: 12, opacity: 0.85, fontFamily: "'IBM Plex Mono', monospace", marginBottom: 10 }}>{student.matricule}</div>
+          <div style={{ fontSize: 11.5, opacity: 0.9, marginBottom: 10 }}>{student.antenne} · {student.niveau} {student.specialite}</div>
+          <span style={{
+            display: "inline-block", fontSize: 10.5, fontWeight: 700, borderRadius: 999, padding: "3px 10px",
+            background: "rgba(255,255,255,0.2)",
+          }}>
+            {access.isVIP ? "⭐ VIP" : access.isPaid ? "✓ Abonnement actif" : access.isBlocked ? "Accès bloqué" : `Essai — ${access.daysLeft}j restants`}
+          </span>
+        </div>
+
+        <div style={{ padding: 18, display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
+          <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.ink }}>🎁 Personnes parrainées</div>
+              <div style={{ fontSize: 11, color: COLORS.inkSoft }}>Filleuls ayant payé leur abonnement</div>
+            </div>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.green }}>
+              {referralCount === null ? "…" : referralCount}
+            </div>
+          </div>
+
+          <button
+            onClick={shareApp}
+            style={{ textAlign: "left", display: "flex", alignItems: "center", gap: 10, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: "13px 14px", cursor: "pointer", fontFamily: "inherit" }}
+          >
+            <span style={{ fontSize: 18 }}>📤</span>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.ink }}>Partager l'application</div>
+              <div style={{ fontSize: 11, color: COLORS.inkSoft }}>{copied ? "✓ Lien copié !" : "Envoyer le lien à un ami"}</div>
+            </div>
+          </button>
+
+          <button
+            onClick={installApp}
+            style={{ textAlign: "left", display: "flex", alignItems: "center", gap: 10, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: "13px 14px", cursor: "pointer", fontFamily: "inherit" }}
+          >
+            <span style={{ fontSize: 18 }}>📲</span>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.ink }}>Installer l'application</div>
+              <div style={{ fontSize: 11, color: COLORS.inkSoft }}>Sur l'écran d'accueil, comme une vraie appli</div>
+            </div>
+          </button>
+
+          <button
+            onClick={onLogout}
+            style={{ textAlign: "left", display: "flex", alignItems: "center", gap: 10, background: COLORS.redSoft, border: `1px solid ${COLORS.red}`, borderRadius: 12, padding: "13px 14px", cursor: "pointer", fontFamily: "inherit", marginTop: 10 }}
+          >
+            <span style={{ fontSize: 18 }}>🚪</span>
+            <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.red }}>Se déconnecter</div>
+          </button>
+        </div>
+      </div>
+
+      {showInstallGuide && <InstallGuideModal onClose={() => setShowInstallGuide(false)} />}
+    </div>
+  );
+}
+
+function InstallGuideModal({ onClose }) {
+  const [platform, setPlatform] = useState(
+    /iphone|ipad|ipod/i.test(navigator.userAgent) ? "ios" : "android"
+  );
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(15,39,51,0.55)", zIndex: 120, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={onClose}>
+      <div onClick={(e) => e.stopPropagation()} style={{ background: COLORS.surface, borderRadius: 16, padding: 22, maxWidth: 380, width: "100%", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.ink }}>📲 Installer l'application</div>
+          <button onClick={onClose} style={{ background: "none", border: "none", fontSize: 18, color: COLORS.inkSoft, cursor: "pointer" }}>✕</button>
+        </div>
+        <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+          <button onClick={() => setPlatform("android")} style={{ flex: 1, padding: "8px", borderRadius: 9, cursor: "pointer", fontSize: 12.5, fontWeight: 700, border: `1px solid ${platform === "android" ? COLORS.blue : COLORS.line}`, background: platform === "android" ? COLORS.blueSoft : COLORS.surface, color: platform === "android" ? COLORS.blueDeep : COLORS.inkSoft }}>Android</button>
+          <button onClick={() => setPlatform("ios")} style={{ flex: 1, padding: "8px", borderRadius: 9, cursor: "pointer", fontSize: 12.5, fontWeight: 700, border: `1px solid ${platform === "ios" ? COLORS.blue : COLORS.line}`, background: platform === "ios" ? COLORS.blueSoft : COLORS.surface, color: platform === "ios" ? COLORS.blueDeep : COLORS.inkSoft }}>iPhone</button>
+        </div>
+        {platform === "android" ? (
+          <ol style={{ margin: 0, paddingLeft: 20, fontSize: 13, color: COLORS.ink, lineHeight: 2 }}>
+            <li>Ouvrez le site dans <b>Chrome</b></li>
+            <li>Appuyez sur le menu <b>⋮</b> en haut à droite</li>
+            <li>Choisissez <b>« Installer l'application »</b> ou <b>« Ajouter à l'écran d'accueil »</b></li>
+            <li>Confirmez — l'icône apparaît sur votre écran d'accueil</li>
+          </ol>
+        ) : (
+          <ol style={{ margin: 0, paddingLeft: 20, fontSize: 13, color: COLORS.ink, lineHeight: 2 }}>
+            <li>Ouvrez le site dans <b>Safari</b> (obligatoire, pas Chrome)</li>
+            <li>Appuyez sur le bouton <b>Partager</b> (carré avec une flèche) en bas de l'écran</li>
+            <li>Faites défiler et choisissez <b>« Sur l'écran d'accueil »</b></li>
+            <li>Appuyez sur <b>« Ajouter »</b> en haut à droite</li>
+          </ol>
+        )}
+        <p style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 14, marginBottom: 0 }}>
+          Une fois installée, l'application s'ouvre en plein écran depuis votre écran d'accueil, sans passer par le navigateur.
+        </p>
       </div>
     </div>
   );
@@ -20271,8 +20439,9 @@ function useHeadroom() {
   return visible;
 }
 
-function TopBar({ onLogout, onAdmin, unreadCount, onOpenMessages }) {
+function TopBar({ onLogout, onAdmin, unreadCount, onOpenMessages, student }) {
   const [showAide, setShowAide] = useState(false);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
   const visible = useHeadroom();
   return (
     <div style={{
@@ -20283,7 +20452,22 @@ function TopBar({ onLogout, onAdmin, unreadCount, onOpenMessages }) {
       transition: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease",
       boxShadow: visible ? "0 2px 10px rgba(15,39,51,0.06)" : "none",
     }}>
-      <Logo />
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        {student && (
+          <button
+            onClick={() => setShowAccountMenu(true)}
+            aria-label="Menu"
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              width: 34, height: 34, borderRadius: 999, border: `1px solid ${COLORS.line}`, background: COLORS.surface,
+              cursor: "pointer", fontSize: 16, flexShrink: 0,
+            }}
+          >
+            ☰
+          </button>
+        )}
+        <Logo />
+      </div>
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
         {onOpenMessages && (
           <button
@@ -20320,9 +20504,10 @@ function TopBar({ onLogout, onAdmin, unreadCount, onOpenMessages }) {
           💡 Aide
         </button>
         {onAdmin && <button onClick={onAdmin} style={{ ...secondaryBtn, padding: "7px 12px", fontSize: 12.5 }}>Administration</button>}
-        <button onClick={onLogout} style={{ ...secondaryBtn, padding: "7px 12px", fontSize: 12.5 }}>Déconnexion</button>
+        {!student && <button onClick={onLogout} style={{ ...secondaryBtn, padding: "7px 12px", fontSize: 12.5 }}>Déconnexion</button>}
       </div>
       {showAide && <AideModal onClose={() => setShowAide(false)} />}
+      {showAccountMenu && <AccountMenu student={student} onClose={() => setShowAccountMenu(false)} onLogout={onLogout} />}
     </div>
   );
 }
