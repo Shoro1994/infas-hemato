@@ -7,11 +7,13 @@ import { memoryFallback } from "../../../lib/blobsFallback";
 //   1. Le LISTING (prefix=...) des fiches étudiants et des avis exige le
 //      jeton admin — sinon n'importe qui pouvait dresser la liste complète
 //      de tous les comptes en un seul appel.
-//   2. La LECTURE d'une fiche étudiant précise (key=student:...) ne renvoie
-//      JAMAIS le mot de passe (anneeNaissance) sans jeton admin. La vraie
-//      vérification du mot de passe se fait désormais côté serveur, dans
-//      /api/student-auth — cette route ne sert plus qu'à vérifier qu'un
-//      matricule existe (utile à l'inscription), jamais à en lire le secret.
+//   2. La LECTURE d'une fiche étudiant précise (key=student:...) est ouverte, y
+//      compris le mot de passe (anneeNaissance) : plusieurs endroits de
+//      l'application relisent la fiche complète avant de la réenregistrer, et un
+//      retrait du mot de passe ici l'effaçait silencieusement à chaque
+//      réenregistrement. La vraie vérification du mot de passe à la connexion se
+//      fait côté serveur, dans /api/student-auth — le navigateur ne le compare
+//      plus jamais lui-même.
 //   3. L'ÉCRITURE (POST) ignore silencieusement toute tentative de modifier
 //      des champs financiers/privilèges (isVIP, paymentStatus...) sans
 //      jeton admin, et refuse totalement l'écriture sur certains préfixes
@@ -31,20 +33,16 @@ function isSensitiveListPrefix(prefix) {
   return prefix.startsWith("student:") || prefix.startsWith("app-rating:");
 }
 
-// Le mot de passe d'une fiche étudiant ne doit jamais transiter par une
-// lecture non authentifiée : on le retire avant de renvoyer la réponse.
-function stripSecretFields(jsonString) {
-  try {
-    const obj = JSON.parse(jsonString);
-    if (obj && typeof obj === "object" && "anneeNaissance" in obj) {
-      const { anneeNaissance, ...rest } = obj;
-      return JSON.stringify(rest);
-    }
-    return jsonString;
-  } catch {
-    return jsonString;
-  }
-}
+// NOTE IMPORTANTE : la lecture d'une fiche étudiant précise (key=student:...) ne
+// retire PLUS le mot de passe de sa réponse. Une version antérieure le faisait par
+// précaution, mais l'application relit et réenregistre très régulièrement la fiche
+// complète d'un étudiant à divers endroits (mise à jour de l'essai gratuit, du
+// nombre d'examens, du parrainage...). Comme ces relectures passent par cette même
+// route, retirer le mot de passe ici l'effaçait silencieusement de la base à chaque
+// réenregistrement — rendant la connexion impossible dès la deuxième tentative,
+// pour tout le monde. Le vrai verrou de sécurité utile reste en place : la
+// vérification du mot de passe se fait côté serveur (/api/student-auth), le
+// navigateur ne le compare plus jamais lui-même.
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -66,9 +64,6 @@ export async function GET(request) {
       if (value === null || value === undefined) {
         return NextResponse.json({ error: "not_found" }, { status: 404 });
       }
-      if (key.startsWith("student:") && !authorized) {
-        value = stripSecretFields(value);
-      }
       return NextResponse.json({ key, value });
     }
     return NextResponse.json({ error: "missing key or prefix" }, { status: 400 });
@@ -82,9 +77,6 @@ export async function GET(request) {
     }
     let value = await memoryFallback.get(key);
     if (value === null) return NextResponse.json({ error: "not_found" }, { status: 404 });
-    if (key && key.startsWith("student:") && !authorized) {
-      value = stripSecretFields(value);
-    }
     return NextResponse.json({ key, value });
   }
 }
