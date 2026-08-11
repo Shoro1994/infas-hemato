@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "../../../lib/rateLimit";
 
 // Route serveur : corrige une réponse libre d'étudiant via Gemini (clé GEMINI_API_KEY
 // en variable d'environnement Netlify). Appelée par gradeClinicalAnswer() côté client.
 export async function POST(request) {
+  const { allowed } = await checkRateLimit(request, "grade");
+  if (!allowed) {
+    return NextResponse.json(
+      { verdict: "partiel", explication: "", rappel: "", error: true, rateLimited: true },
+      { status: 429 }
+    );
+  }
   try {
     const { stem, expected, studentAnswer } = await request.json();
 

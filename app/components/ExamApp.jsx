@@ -1374,6 +1374,39 @@ function letters(n) {
 
 /* ---------------- Chapters ---------------- */
 const CHAPTERS = [
+  { id: "santepub_milieu_def", label: "Étude du milieu (définitions)", subjectId: "sante-publique" },
+  { id: "santepub_milieu_strategies", label: "Types de stratégies (fixe/avancée/mobile)", subjectId: "sante-publique" },
+  { id: "santepub_milieu_facteurs", label: "Facteurs du milieu agissant sur la santé", subjectId: "sante-publique" },
+  { id: "santepub_milieu_avantages", label: "Avantages d'une étude du milieu", subjectId: "sante-publique" },
+  { id: "santepub_milieu_elements", label: "Éléments d'une étude du milieu", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_def", label: "Hygiène et assainissement (définitions)", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_domaines", label: "Domaines de l'hygiène et de l'assainissement", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_eau_types", label: "Types et qualités de l'eau potable", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_eau_maladies", label: "Maladies liées à l'eau", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_eau_puits", label: "Construction et aménagement des puits", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_eau_purif", label: "Méthodes de purification de l'eau", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_habitat", label: "Hygiène de l'habitat", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_decharge", label: "Ordures ménagères et décharges", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_excreta", label: "Évacuation des excréta (latrines, fosses)", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_perilfecal", label: "Lutte contre le péril fécal", subjectId: "sante-publique" },
+  { id: "santepub_hygiene_vecteurs", label: "Vecteurs, rongeurs et nuisances sonores", subjectId: "sante-publique" },
+  { id: "santepub_ssp_histoire", label: "Histoire des Soins de Santé Primaires", subjectId: "sante-publique" },
+  { id: "santepub_ssp_caract", label: "Caractéristiques des SSP", subjectId: "sante-publique" },
+  { id: "santepub_ssp_composantes", label: "Composantes essentielles des SSP", subjectId: "sante-publique" },
+  { id: "santepub_ssp_principes", label: "Principes de base des SSP (OMS 2017)", subjectId: "sante-publique" },
+  { id: "santepub_ssp_but", label: "But et objectifs des SSP en Côte d'Ivoire", subjectId: "sante-publique" },
+  { id: "santepub_ccsc_def", label: "CCSC (définitions)", subjectId: "sante-publique" },
+  { id: "santepub_ccsc_elements", label: "Éléments constitutifs de la communication", subjectId: "sante-publique" },
+  { id: "santepub_ccsc_cibles", label: "Populations cibles de la CCSC", subjectId: "sante-publique" },
+  { id: "santepub_ccsc_etapes", label: "Étapes d'une séance de CCSC", subjectId: "sante-publique" },
+  { id: "santepub_plaidoyer_def", label: "Plaidoyer en santé (définition)", subjectId: "sante-publique" },
+  { id: "santepub_plaidoyer_etapes", label: "Étapes d'une stratégie de plaidoyer", subjectId: "sante-publique" },
+  { id: "santepub_plaidoyer_cibles", label: "Populations cibles du plaidoyer", subjectId: "sante-publique" },
+  { id: "santepub_animation_fonctions", label: "Fonctions de l'animateur de groupe", subjectId: "sante-publique" },
+  { id: "santepub_animation_techniques", label: "Techniques d'animation de groupe", subjectId: "sante-publique" },
+  { id: "santepub_animation_brainstorming", label: "Le brainstorming", subjectId: "sante-publique" },
+  { id: "santepub_animation_expose", label: "L'exposé", subjectId: "sante-publique" },
+  { id: "santepub_animation_conflits", label: "Gestion des conflits en animation de groupe", subjectId: "sante-publique" },
   { id: "mnt_hta", label: "Hypertension artérielle", subjectId: "maladies-non-transmissibles" },
   { id: "mnt_oap", label: "Œdème aigu du poumon", subjectId: "maladies-non-transmissibles" },
   { id: "mnt_pericardite", label: "Péricardite aiguë", subjectId: "maladies-non-transmissibles" },
@@ -2019,7 +2052,23 @@ const TOTAL_COEF = Object.values(SUBJECT_CREDITS).reduce((a, b) => a + b, 0);
 // Quotas précis par semaine (somme = coefficient total du programme, 26,5) : légèrement
 // dégressifs pour laisser plus de marge en fin de mois. L'étudiant choisit librement
 // quelles matières combiner pour atteindre le quota de chaque semaine.
-const WEEKLY_TARGETS = [7.5, 7, 6, 6];
+// Objectifs hebdomadaires du Défi : calculés dynamiquement à partir du coefficient total
+// RÉELLEMENT disponible (matières ayant du contenu chargé), et non plus figés en dur. Ça
+// garantit deux choses à la fois : (1) le total des 4 semaines correspond EXACTEMENT au
+// total disponible, donc terminer le mois impose de couvrir absolument toutes les matières
+// (chacune n'étant proposée qu'une seule fois) ; (2) quand une nouvelle matière est ajoutée
+// au programme (donc redéployée avec ses questions), les objectifs se recalculent tout seuls
+// dès l'affichage suivant, sans qu'aucun chiffre n'ait besoin d'être retouché à la main.
+function computeWeeklyTargets(totalAvailable) {
+  const shape = [7.5, 7, 6, 6]; // répartition relative d'origine (légèrement dégressive)
+  const shapeSum = shape.reduce((a, b) => a + b, 0);
+  const raw = shape.map((s) => Math.round(((s / shapeSum) * totalAvailable) * 2) / 2); // arrondi au 0,5
+  const roundedSum = raw.reduce((a, b) => a + b, 0);
+  // La dernière semaine absorbe l'écart d'arrondi, pour que la somme colle exactement
+  // au total disponible — condition nécessaire pour que "tout couvrir" reste atteignable.
+  raw[3] = Math.round((raw[3] + (totalAvailable - roundedSum)) * 2) / 2;
+  return raw;
+}
 
 async function loadDefiRecord(matricule, isoMonth = currentIsoMonth()) {
   try {
@@ -11478,6 +11527,412 @@ const PALUDISME_SUPP2_RAW = [
     "Paludisme — Prévention"],
 ];
 
+const SANTEPUB_MILIEU_RAW = [
+  // ===== Étude du milieu — définitions =====
+  ["QCU","santepub_milieu_def",1,"Selon l'UNICEF (1992), l'étude du milieu ou monographie se définit comme :",
+    ["La connaissance des hommes et de l'environnement dans lequel ils vivent, des problèmes et des moyens de résolution de ces problèmes","Un simple recensement démographique annuel","La cartographie exclusive des routes d'une région","Un audit financier des structures sanitaires"],[0],
+    "Selon l'UNICEF (1992), l'étude du milieu (ou monographie) est la connaissance des hommes et de l'environnement dans lequel ils vivent, des problèmes et des moyens de résolution de ces problèmes qui existent dans ce milieu.",
+    "Santé publique — Étude du milieu, définition (UNICEF 1992)"],
+  ["QCU","santepub_milieu_def",2,"Un district sanitaire est placé sous l'autorité de :",
+    ["Un médecin-chef ou Directeur Départemental de la Santé (DDS)","Un maire élu localement","Un chef traditionnel de village","Un directeur d'ONG internationale"],[0],
+    "Le district sanitaire, unité sanitaire déconcentrée s'étendant sur un département administratif, est placé sous l'autorité d'un médecin-chef ou Directeur Départemental de la Santé (DDS).",
+    "Santé publique — Étude du milieu, district sanitaire"],
+  ["QCU","santepub_milieu_def",2,"Une aire sanitaire peut s'étendre :",
+    ["Au-delà de 15 km d'un centre de santé","Uniquement dans un rayon de 2 km","Exclusivement en zone urbaine","Sur l'ensemble du territoire national"],[0],
+    "L'aire sanitaire est une zone géographique bien définie dont la superficie peut s'étendre au-delà de 15 km d'un centre de santé, comprenant un ou plusieurs villages ou quartiers rattachés à une ou plusieurs infrastructures sanitaires.",
+    "Santé publique — Étude du milieu, aire sanitaire"],
+  ["QCU","santepub_milieu_def",2,"Le bassin de desserte, zone de compétence de l'infirmier ou de la sage-femme en milieu rural, s'étend sur :",
+    ["Un rayon de 0 à 15 km autour de la structure sanitaire","Un rayon fixe de 50 km","Uniquement le village où se trouve le centre de santé","Toute la région administrative"],[0],
+    "Le bassin de desserte, dans le cadre de la stratégie des Soins de Santé Primaires, s'étend sur un rayon de 0 à 15 km autour d'une structure sanitaire (dispensaire rural, maternité rurale, centre de santé rural).",
+    "Santé publique — Étude du milieu, bassin de desserte"],
+  ["QCM","santepub_milieu_strategies",1,"Dans le cadre des Soins de Santé Primaires, il existe trois types de stratégies. Lesquelles ?",
+    ["La stratégie fixe","La stratégie avancée","La stratégie mobile","La stratégie hospitalière"],[0,1,2],
+    "Les trois types de stratégies sont : la stratégie fixe, la stratégie avancée et la stratégie mobile — la « stratégie hospitalière » n'est pas l'une des trois.",
+    "Santé publique — Étude du milieu, types de stratégies"],
+  ["QCU","santepub_milieu_strategies",2,"La stratégie fixe consiste, pour le personnel de santé, à recevoir au centre de santé les populations situées dans un rayon de :",
+    ["Moins de 5 km autour du centre","5 à 15 km autour du centre","Au-delà de 15 km autour du centre","Plus de 30 km autour du centre"],[0],
+    "La stratégie fixe consiste à rester au centre de santé pour recevoir les populations des localités situées dans un rayon de moins de 5 km autour dudit centre.",
+    "Santé publique — Étude du milieu, stratégie fixe"],
+  ["QCU","santepub_milieu_strategies",2,"La stratégie avancée concerne les populations situées à quelle distance du centre de santé ?",
+    ["Entre 5 km et 15 km","Moins de 5 km","Au-delà de 15 km","Uniquement au-delà de 50 km"],[0],
+    "La stratégie avancée consiste, pour le personnel de santé, à quitter le centre de santé pour aller vers les populations des localités situées entre 5 km et 15 km autour dudit centre.",
+    "Santé publique — Étude du milieu, stratégie avancée"],
+  ["QCU","santepub_milieu_strategies",2,"La stratégie mobile est mise en œuvre par :",
+    ["L'équipe mobile du district, pour les populations situées au-delà de 15 km","Le seul infirmier du poste de santé","Uniquement lors des campagnes de vaccination de masse","Le médecin-chef exclusivement"],[0],
+    "La stratégie mobile consiste, pour l'équipe mobile du district, à se déplacer vers les populations des localités situées au-delà de 15 km des centres de santé pour administrer les actes de santé.",
+    "Santé publique — Étude du milieu, stratégie mobile"],
+  ["QCM","santepub_milieu_facteurs",1,"Selon l'auteur québécois ALONDE, les facteurs du milieu pouvant agir sur la santé se regroupent en trois grands groupes. Lesquels ?",
+    ["Les facteurs favorisant la santé","Les facteurs favorisant la maladie","Les facteurs déterminant la maladie","Les facteurs favorisant uniquement l'économie locale"],[0,1,2],
+    "Selon ALONDE, les trois grands groupes de facteurs du milieu sont : les facteurs favorisant la santé, les facteurs favorisant la maladie, et les facteurs déterminant la maladie (microbes, parasites, virus).",
+    "Santé publique — Étude du milieu, facteurs selon ALONDE"],
+  ["QCU","santepub_milieu_facteurs",2,"Parmi les facteurs suivants, lequel est un facteur biologique favorisant la maladie ?",
+    ["L'âge (vieillard, enfant, adolescent)","L'accès à l'éducation","La baisse du coût des denrées alimentaires","L'absence de discrimination"],[0],
+    "L'âge (vieillard, enfant, adolescent) est cité parmi les facteurs physiologiques favorisant la maladie, aux côtés du sexe et de l'aspect physique.",
+    "Santé publique — Étude du milieu, facteurs favorisant la maladie"],
+  ["QCM","santepub_milieu_avantages",2,"Quels sont les avantages d'une étude du milieu pour le professionnel de santé ?",
+    ["Avoir une vue d'ensemble sur les informations relatives aux hommes et à leur environnement","Identifier les thèmes éducationnels et les populations cibles","Vivre en harmonie et en symbiose avec la population","Remplacer entièrement le besoin de formation médicale continue"],[0,1,2],
+    "L'étude du milieu permet d'avoir une vue d'ensemble des informations sur les hommes et leur environnement, d'identifier les thèmes éducationnels et populations cibles, de vivre en harmonie avec la population, de disposer de données fiables et récentes, et de connaître l'organisation sociale de la communauté.",
+    "Santé publique — Étude du milieu, avantages"],
+  ["QCU","santepub_milieu_elements",2,"Dans une étude du milieu, quel pourcentage de la population totale de l'aire sanitaire représente approximativement le nombre de femmes enceintes attendues ?",
+    ["5%","20%","1,45%","45%"],[0],
+    "Le nombre de femmes enceintes ou grossesses attendues représente environ 5% de la population totale de l'aire sanitaire.",
+    "Santé publique — Étude du milieu, données démographiques de référence"],
+  ["QCU","santepub_milieu_elements",2,"Dans une étude du milieu, les FAR (Femmes en Âge de Reproduction) représentent environ quel pourcentage de la population totale ?",
+    ["20%","5%","45%","1,86%"],[0],
+    "Le nombre de FAR (Femmes en Âge de Reproduction) représente environ 20% de la population totale de l'aire sanitaire.",
+    "Santé publique — Étude du milieu, données démographiques de référence"],
+  ["QCM","santepub_milieu_elements",1,"Parmi les informations recherchées lors d'une étude du milieu, lesquelles concernent l'identification du centre de santé ?",
+    ["Le nom de la localité où est implantée la structure","Le code du centre de santé","La date d'ouverture du centre","Le nombre de fleuves et marigots de la zone"],[0,1,2],
+    "Les informations relatives à l'identification du centre constituent sa « carte d'identité » : nom de la localité, dénomination, code du centre, date d'ouverture, distance au district. Le nombre de fleuves/marigots relève, lui, des informations sur les cours d'eau.",
+    "Santé publique — Étude du milieu, identification du centre"],
+
+  // ===== Cas d'application — Étude du milieu =====
+  ["QCU","santepub_milieu_strategies",2,"Mise en situation — Un infirmier affecté dans un centre de santé rural doit organiser la couverture sanitaire de villages situés entre 8 et 12 km du centre. Quelle stratégie doit-il privilégier pour ces villages ?",
+    ["La stratégie avancée","La stratégie fixe","La stratégie mobile","Aucune stratégie n'est nécessaire à cette distance"],[0],
+    "Les populations situées entre 5 km et 15 km relèvent de la stratégie avancée, où le personnel de santé se déplace vers elles depuis le centre de santé.",
+    "Santé publique — Application, choix de la stratégie SSP"],
+  ["QCU","santepub_milieu_strategies",2,"Mise en situation (suite) — Ce même centre doit également couvrir des campements isolés situés à 22 km, inaccessibles autrement que par une équipe dédiée du district. Quelle stratégie correspond à cette situation ?",
+    ["La stratégie mobile","La stratégie fixe","La stratégie avancée","La stratégie hospitalière"],[0],
+    "Au-delà de 15 km, c'est la stratégie mobile qui s'applique, mise en œuvre par l'équipe mobile du district et non par le personnel du centre de santé lui-même.",
+    "Santé publique — Application, choix de la stratégie SSP"],
+
+  // ===== Hygiène et assainissement =====
+  ["QCU","santepub_hygiene_def",1,"Selon l'OMS (1949), l'hygiène est un ensemble de mesures basées essentiellement sur trois actions. Lesquelles ?",
+    ["Le nettoyage/détersion, la désinfection, la conservation","La vaccination, le dépistage, le traitement","L'éducation, la sensibilisation, la communication","La construction, l'entretien, la destruction"],[0],
+    "Selon l'OMS (1949), l'hygiène repose essentiellement sur trois actions : le nettoyage et la détersion, la désinfection, et la conservation.",
+    "Santé publique — Hygiène et assainissement, définition OMS 1949"],
+  ["QCM","santepub_hygiene_domaines",1,"Le cours identifie cinq domaines de l'hygiène et de l'assainissement. Lesquels ?",
+    ["L'approvisionnement en eau potable","L'hygiène de l'habitat","L'évacuation et le traitement des ordures/excréta/eaux usées","La lutte contre les vecteurs, rongeurs et nuisances sonores"],[0,1,2,3],
+    "Les cinq domaines de l'hygiène et de l'assainissement sont : l'approvisionnement en eau potable, l'hygiène de l'habitat, l'évacuation/traitement des ordures ménagères/excréta/eaux usées/déchets toxiques, et la lutte contre les vecteurs/rongeurs/nuisances sonores (le 5ème domaine complète la liste globale du cours).",
+    "Santé publique — Hygiène et assainissement, les 5 domaines"],
+  ["QCM","santepub_hygiene_eau_types",1,"Quelles sont les qualités physiques d'une eau potable ?",
+    ["Limpide, fraîche, incolore, inodore, aérée","Riche en calcium et magnésium en excès","Colorée et parfumée pour être agréable","Contenant du chlore en excès en permanence"],[0],
+    "Les qualités physiques d'une eau potable sont : limpide, fraîche, incolore, inodore, aérée, sans saveur désagréable.",
+    "Santé publique — Hygiène, qualités de l'eau potable"],
+  ["QCU","santepub_hygiene_eau_maladies",2,"Le goitre endémique est lié à quelle carence dans l'eau ?",
+    ["Le manque ou l'insuffisance d'iode","Le manque de fluor","L'excès de plomb","L'excès de chlore"],[0],
+    "Le goitre endémique est une maladie liée à la qualité chimique de l'eau, causée par un manque ou une insuffisance d'iode.",
+    "Santé publique — Hygiène, maladies liées à l'eau"],
+  ["QCU","santepub_hygiene_eau_maladies",2,"Le saturnisme, maladie liée à la qualité chimique de l'eau, est causé par :",
+    ["Un excès de plomb dans l'eau","Un excès de fluor","Un manque d'iode","Un manque de calcium"],[0],
+    "Le saturnisme est causé par l'excès de plomb dans l'eau ; à l'inverse, la fluorose est causée par un excès de fluor.",
+    "Santé publique — Hygiène, maladies liées à l'eau"],
+  ["QCU","santepub_hygiene_eau_puits",2,"Lors de la construction d'un puits traditionnel, à quelle distance minimale doit-il être situé de toute source de contamination (toilettes, latrines) sur un terrain plat ?",
+    ["Au moins 15 mètres","Au moins 2 mètres","Au moins 50 mètres","Au moins 100 mètres"],[0],
+    "Le puits traditionnel doit être situé à au moins 15 mètres de toute source de contamination (toilettes, cimetière, latrines) lorsqu'il est sur un terrain plat.",
+    "Santé publique — Hygiène, précautions de construction d'un puits"],
+  ["QCU","santepub_hygiene_eau_puits",2,"Quelle doit être la hauteur minimale de la margelle d'un puits traditionnel aménagé, pour éviter les chutes d'enfants et d'animaux ?",
+    ["0,70 mètre","0,20 mètre","2 mètres","5 mètres"],[0],
+    "La margelle d'un puits traditionnel doit avoir une hauteur de 0,70 mètre pour éviter les chutes des enfants et des animaux.",
+    "Santé publique — Hygiène, aménagement d'un puits"],
+  ["QCU","santepub_hygiene_eau_purif",2,"Pour la javellisation d'une eau claire, combien de gouttes d'eau de javel doit-on ajouter pour 10 litres d'eau ?",
+    ["Quelques gouttes (moins que pour une eau trouble)","20 gouttes","6 gouttes","50 gouttes"],[0],
+    "Pour une eau claire, on met quelques gouttes d'eau de javel pour 10 litres d'eau ; pour une eau trouble, la quantité augmente à 6 gouttes pour 10 litres.",
+    "Santé publique — Hygiène, javellisation de l'eau"],
+  ["QCU","santepub_hygiene_eau_purif",2,"Pour la javellisation d'une eau trouble, combien de gouttes d'eau de javel doit-on ajouter pour 10 litres d'eau ?",
+    ["6 gouttes","1 goutte","20 gouttes","0,5 goutte"],[0],
+    "Pour une eau trouble, il faut ajouter 6 gouttes d'eau de javel pour 10 litres d'eau — davantage que pour une eau claire.",
+    "Santé publique — Hygiène, javellisation de l'eau"],
+  ["QCU","santepub_hygiene_eau_purif",2,"Combien de temps minimum faut-il faire bouillir l'eau pour la purifier par ébullition ?",
+    ["10 à 15 minutes","2 minutes","1 heure","30 secondes"],[0],
+    "L'ébullition consiste à faire bouillir l'eau pendant au moins 10 à 15 minutes, puis à la laisser reposer avant de l'aérer pour lui redonner du goût.",
+    "Santé publique — Hygiène, purification de l'eau par ébullition"],
+  ["QCU","santepub_hygiene_habitat",1,"Selon les critères relatifs aux besoins physiologiques de l'habitat, quelle température est adéquate pour assurer le confort dans une chambre ?",
+    ["21 à 22°C","10 à 15°C","30 à 35°C","0 à 5°C"],[0],
+    "Une température adéquate pour assurer le confort au niveau des chambres se situe entre 21 et 22°C.",
+    "Santé publique — Hygiène de l'habitat, critères physiologiques"],
+  ["QCU","santepub_hygiene_decharge",2,"À quelle distance minimale de tout habitat une décharge commune doit-elle être située ?",
+    ["Au moins 20 mètres","Au moins 5 mètres","Au moins 500 mètres","Aucune distance minimale requise"],[0],
+    "Une décharge commune doit être située au moins à 20 mètres de tout habitat, et au moins à 100 mètres de tout cours d'eau.",
+    "Santé publique — Hygiène, normes de sécurité d'une décharge"],
+  ["QCU","santepub_hygiene_excreta",1,"Quelles sont les dimensions standards de la fosse d'une latrine à fosse traditionnelle ?",
+    ["Diamètre de 90 à 120 cm, profondeur de 1,80 à 2,5 m","Diamètre de 10 cm, profondeur de 50 cm","Diamètre de 5 mètres, profondeur de 20 mètres","Aucune dimension standard n'est précisée"],[0],
+    "La fosse d'une latrine à fosse a un diamètre de 90 à 120 cm et une profondeur de 1,80 à 2,5 mètres.",
+    "Santé publique — Hygiène, dimensions d'une latrine à fosse"],
+  ["QCU","santepub_hygiene_excreta",2,"À quelle distance minimale une latrine à fosse doit-elle être installée de toute source d'eau ?",
+    ["Au moins 15 mètres","Au moins 2 mètres","Au moins 50 mètres","Au moins 200 mètres"],[0],
+    "Une latrine à fosse doit être installée au moins à 15 mètres de toute source d'eau, et au moins à 6 mètres de tout habitat.",
+    "Santé publique — Hygiène, installation d'une latrine à fosse"],
+  ["QCU","santepub_hygiene_excreta",2,"Qu'est-il formellement interdit de jeter dans une fosse septique, sous peine d'en compromettre le fonctionnement ?",
+    ["Des désinfectants","Des matières fécales","Du papier hygiénique","De l'eau"],[0],
+    "Il est formellement interdit de jeter des désinfectants dans une fosse septique, car ils éliminent les germes anaérobies indispensables à son fonctionnement ; l'eau savonneuse et les détergents sont également interdits.",
+    "Santé publique — Hygiène, fosse septique, interdictions"],
+  ["QCM","santepub_hygiene_perilfecal",1,"Quels moyens de lutte contre le péril fécal doivent être conseillés à la population ?",
+    ["Se laver les mains avant de manger et après les selles","Construire et utiliser effectivement des latrines","Protéger les aliments contre les mouches","Boire l'eau directement des marigots sans traitement"],[0,1,2],
+    "Les moyens de lutte contre le péril fécal comprennent le lavage des mains, la construction et l'utilisation de latrines, la protection des aliments contre les mouches, la cuisson des aliments, et le traitement des malades atteints de gastro-entérite.",
+    "Santé publique — Hygiène, lutte contre le péril fécal"],
+  ["QCU","santepub_hygiene_vecteurs",1,"Comment définit-on un vecteur, en hygiène et santé publique ?",
+    ["Un arthropode qui transmet des germes pathogènes d'un hôte à un autre","Un médicament préventif","Une technique de communication","Un type de structure sanitaire"],[0],
+    "Un vecteur est un arthropode qui transmet des germes pathogènes d'un hôte à un autre (exemples : moustiques, mouches tsé-tsé).",
+    "Santé publique — Hygiène, définition du vecteur"],
+  ["QCU","santepub_hygiene_vecteurs",2,"Dans la transmission biologique d'une maladie par un vecteur, comme le paludisme, que se passe-t-il ?",
+    ["L'agent pathogène accomplit un cycle de développement à l'intérieur de l'insecte avant d'être inoculé","L'insecte transporte simplement le germe sur ses pattes sans évolution biologique","La maladie ne se transmet jamais par cette voie","Le germe est détruit à l'intérieur de l'insecte"],[0],
+    "Dans la transmission biologique (exemple : paludisme, onchocercose, trypanosomiase), l'agent pathogène accomplit un cycle de développement à l'intérieur de l'insecte vecteur, qui devient « infestant », avant de pouvoir être inoculé à un nouvel hôte.",
+    "Santé publique — Hygiène, transmission biologique par vecteur"],
+  ["QCU","santepub_hygiene_vecteurs",2,"Le trachome se transmet par quel mode, via les mouches ?",
+    ["La transmission mécanique","La transmission biologique","Aucune transmission par vecteur n'est possible pour le trachome","Une transmission génétique"],[0],
+    "Le trachome se transmet par transmission mécanique : la mouche transporte les germes sur ses pattes ou son corps sans qu'il y ait d'évolution biologique du germe à l'intérieur de l'insecte.",
+    "Santé publique — Hygiène, transmission mécanique"],
+
+  // ===== Soins de Santé Primaires =====
+  ["QCU","santepub_ssp_histoire",1,"En quelle année et dans quelle ville la conférence internationale a-t-elle adopté la stratégie des Soins de Santé Primaires ?",
+    ["1978, à Alma-Ata","1985, à Lusaka","1987, à Bamako","1996, à Abidjan"],[0],
+    "La conférence internationale d'Alma-Ata, réunissant 134 pays du sud et 67 organisations, a adopté la stratégie des Soins de Santé Primaires du 6 au 12 septembre 1978.",
+    "Santé publique — SSP, conférence d'Alma-Ata (1978)"],
+  ["QCU","santepub_ssp_histoire",2,"L'initiative de Bamako (1987) a notamment permis l'adoption de quelle politique dans les pays africains ?",
+    ["Une politique de médicaments génériques à moindre coût","La suppression totale des soins gratuits","L'interdiction de la participation communautaire","La centralisation totale des décisions sanitaires"],[0],
+    "L'initiative de Bamako (1987) a permis l'adoption d'une politique vigoureuse de médicaments génériques à moindre coût, avec un système de recouvrement des coûts et une décentralisation via les comités de gestion (COGES).",
+    "Santé publique — SSP, initiative de Bamako (1987)"],
+  ["QCU","santepub_ssp_histoire",2,"En Côte d'Ivoire, quand a été créé le district sanitaire, en remplacement des bases de secteur de santé rurale ?",
+    ["1994","1981","1978","2002"],[0],
+    "Le district sanitaire a été créé en 1994, en remplacement des bases de secteur de santé rurale, par l'arrêté N°113/MSP/DG-SSS du 02 juin 1994.",
+    "Santé publique — SSP, histoire en Côte d'Ivoire"],
+  ["QCU","santepub_ssp_histoire",2,"Quel secteur pilote a été choisi pour le démarrage effectif des activités des Soins de Santé Primaires en Côte d'Ivoire en 1993 ?",
+    ["Le secteur de santé rurale de Bouaflé","Le secteur de santé d'Abidjan","Le secteur de santé de Bouaké","Le secteur de santé de Yamoussoukro"],[0],
+    "Le démarrage effectif des activités des SSP en Côte d'Ivoire s'est fait en 1993 à la base de secteur de santé rurale de Bouaflé, choisi comme secteur pilote.",
+    "Santé publique — SSP, histoire en Côte d'Ivoire"],
+  ["QCM","santepub_ssp_caract",1,"Quelles sont les quatre caractéristiques des Soins de Santé Primaires ?",
+    ["Des soins essentiels","Des soins accessibles","Des soins adaptés","Des soins intégrés"],[0,1,2,3],
+    "Les 4 caractéristiques des SSP sont : essentiels (répondant aux besoins fondamentaux), accessibles (à tous, géographiquement/socialement/financièrement/culturellement), adaptés (techniquement applicables et socialement acceptables), et intégrés (liés aux autres secteurs socio-économiques).",
+    "Santé publique — SSP, caractéristiques"],
+  ["QCM","santepub_ssp_composantes",1,"Parmi les composantes essentielles des SSP, lesquelles relèvent des composantes préventives ?",
+    ["La protection maternelle et infantile","La vaccination contre les principales maladies infectieuses","La prévention et la lutte contre les endémies locales","Le traitement des maladies et lésions courantes"],[0,1,2],
+    "Les composantes préventives des SSP sont : la protection maternelle et infantile (y compris santé de la reproduction/planification familiale), la vaccination, et la prévention/lutte contre les endémies locales. Le traitement des maladies courantes relève des composantes curatives.",
+    "Santé publique — SSP, composantes préventives"],
+  ["QCU","santepub_ssp_composantes",1,"Combien de composantes essentielles comportent au total les Soins de Santé Primaires ?",
+    ["8 composantes","4 composantes","12 composantes","3 composantes"],[0],
+    "Les SSP comportent 8 composantes essentielles, réparties en 3 composantes promotionnelles, 3 préventives, et 2 curatives.",
+    "Santé publique — SSP, nombre de composantes"],
+  ["QCM","santepub_ssp_principes",1,"Selon le rapport mondial sur la santé de l'OMS (2017), quels sont les quatre principes de base des Soins de Santé Primaires ?",
+    ["La couverture universelle","Des services centrés sur la personne","Des politiques publiques saines","Le leadership"],[0,1,2,3],
+    "Les 4 principes de base des SSP selon l'OMS (2017) sont : la couverture universelle, des services centrés sur la personne, des politiques publiques saines, et le leadership.",
+    "Santé publique — SSP, principes de base (OMS 2017)"],
+  ["QCU","santepub_ssp_but",1,"Quel est le but des Soins de Santé Primaires en Côte d'Ivoire ?",
+    ["Améliorer les conditions socio-sanitaires des populations, avec un accent sur la santé de la mère et de l'enfant","Construire uniquement de nouveaux hôpitaux","Former exclusivement des médecins spécialistes","Développer le tourisme médical"],[0],
+    "Le but des SSP en Côte d'Ivoire est d'améliorer les conditions socio-sanitaires des populations ivoiriennes, avec un accent particulier sur la santé de la mère et de l'enfant.",
+    "Santé publique — SSP, but en Côte d'Ivoire"],
+
+  // ===== CCSC =====
+  ["QCU","santepub_ccsc_def",1,"Que signifie l'acronyme CCSC ?",
+    ["Communication pour le Changement Social de Comportement","Comité Communautaire de Santé et Contrôle","Centre de Coordination des Soins Communautaires","Conseil Consultatif de la Santé Communautaire"],[0],
+    "CCSC signifie Communication pour le Changement Social de Comportement, auparavant appelée CCC (communication pour le changement comportemental).",
+    "Santé publique — CCSC, définition"],
+  ["QCM","santepub_ccsc_elements",1,"Quels sont les éléments constitutifs de la communication, selon le cours ?",
+    ["L'émetteur","Le récepteur","Le message","Le feedback (rétroaction)"],[0,1,2,3],
+    "Les éléments constitutifs de la communication sont : l'émetteur, le récepteur, le message, le canal, le feedback (rétroaction), et le codage.",
+    "Santé publique — CCSC, éléments de la communication"],
+  ["QCU","santepub_ccsc_elements",2,"Que désigne le « feedback » ou rétroaction dans le processus de communication ?",
+    ["La réaction du récepteur du message vers l'émetteur","Le support physique de transmission du message","Le contenu de la communication","Le système de signes utilisé pour construire le message"],[0],
+    "Le feedback (ou rétroaction) est la réaction du récepteur du message vers l'émetteur, le retour de l'information à l'émetteur.",
+    "Santé publique — CCSC, feedback"],
+  ["QCM","santepub_ccsc_cibles",1,"Quelles sont les trois populations cibles de la CCSC ?",
+    ["La population cible primaire","La population cible secondaire","La population cible tertiaire","La population cible internationale exclusivement"],[0,1,2],
+    "Les 3 populations cibles de la CCSC sont : primaire (celle qui doit changer de comportement), secondaire (celle qui influence la cible primaire), et tertiaire (décideurs, financiers).",
+    "Santé publique — CCSC, populations cibles"],
+  ["QCU","santepub_ccsc_cibles",2,"Dans un programme visant à améliorer le taux d'accouchement assisté, les femmes enceintes constituent :",
+    ["La population cible primaire","La population cible secondaire","La population cible tertiaire","Elles ne sont jamais une cible en CCSC"],[0],
+    "Les femmes enceintes, dont on cherche directement à faire évoluer le comportement (recourir à un accouchement assisté), constituent la population cible primaire de ce programme.",
+    "Santé publique — CCSC, population cible primaire, exemple"],
+  ["QCU","santepub_ccsc_etapes",2,"Combien d'étapes comporte la conduite d'une séance de CCSC proprement dite ?",
+    ["8 étapes","3 étapes","5 étapes","12 étapes"],[0],
+    "La séance de CCSC proprement dite comporte 8 étapes, de l'analyse de la situation jusqu'au suivi et à l'évaluation des stratégies.",
+    "Santé publique — CCSC, étapes de la séance"],
+
+  // ===== Plaidoyer =====
+  ["QCU","santepub_plaidoyer_def",1,"Comment définit-on le plaidoyer en santé ?",
+    ["Un processus actif visant à influencer décideurs, professionnels et public pour promouvoir des politiques favorables à la santé","Un simple rapport statistique annuel","Une technique de soins curatifs individuels","Un mode de financement hospitalier"],[0],
+    "Le plaidoyer en santé est un processus actif qui consiste à influencer les décideurs politiques, les professionnels de la santé, les organisations et le public en général, afin de promouvoir des politiques, programmes et pratiques favorables à la santé.",
+    "Santé publique — Plaidoyer, définition"],
+  ["QCU","santepub_plaidoyer_etapes",2,"Combien d'étapes comporte une stratégie de plaidoyer, selon le cours ?",
+    ["9 étapes","4 étapes","6 étapes","3 étapes"],[0],
+    "Une stratégie de plaidoyer comporte 9 étapes, de l'identification du thème jusqu'à l'élaboration des messages du plaidoyer.",
+    "Santé publique — Plaidoyer, étapes de la stratégie"],
+  ["QCM","santepub_plaidoyer_cibles",1,"Quelles sont les populations cibles du plaidoyer ?",
+    ["Les décideurs politiques","Les organisations civiles nationales et internationales","Le grand public exclusivement","Les enfants uniquement"],[0,1],
+    "Les populations cibles du plaidoyer sont les décideurs politiques et les organisations civiles nationales et internationales.",
+    "Santé publique — Plaidoyer, populations cibles"],
+
+  // ===== Technique d'animation de groupe =====
+  ["QCM","santepub_animation_fonctions",1,"Un animateur de groupe remplit trois fonctions. Lesquelles ?",
+    ["La fonction de production","La fonction de facilitation","La fonction de régulation","La fonction de sanction"],[0,1,2],
+    "Les trois fonctions de l'animateur de groupe sont : la production (trouver une solution/atteindre les objectifs), la facilitation (organiser et clarifier le travail du groupe), et la régulation (maintenir le groupe uni, gérer les conflits).",
+    "Santé publique — Animation de groupe, fonctions de l'animateur"],
+  ["QCU","santepub_animation_fonctions",2,"La fonction de régulation d'un animateur de groupe consiste à :",
+    ["Maintenir le groupe uni dans un climat détendu en évitant ou résolvant les conflits","Uniquement présenter le sujet au groupe","Prendre toutes les décisions à la place du groupe","Ignorer systématiquement les tensions du groupe"],[0],
+    "La fonction de régulation concerne les relations entre participants : l'animateur doit maintenir le groupe uni dans un climat détendu en évitant ou résolvant les conflits.",
+    "Santé publique — Animation de groupe, fonction de régulation"],
+  ["QCM","santepub_animation_techniques",1,"Parmi les techniques d'animation de groupe décrites dans le cours, lesquelles figurent ?",
+    ["L'exposé","Le brainstorming (remue-méninges)","Les jeux de rôles","L'étude de cas"],[0,1,2,3],
+    "Les techniques d'animation de groupe décrites sont : l'exposé, le brainstorming, les jeux de rôles, l'étude de cas, et la présentation en duo ou trio.",
+    "Santé publique — Animation de groupe, techniques"],
+  ["QCU","santepub_animation_brainstorming",2,"Pour quelle taille de groupe le brainstorming est-il recommandé, selon le cours ?",
+    ["Un groupe de moins de 15 personnes","Un groupe de plus de 100 personnes","Un groupe de 2 personnes uniquement","Il n'y a aucune limite de taille recommandée"],[0],
+    "Le brainstorming est recommandé pour tout public adulte, en groupe de moins de 15 personnes.",
+    "Santé publique — Animation de groupe, brainstorming"],
+  ["QCU","santepub_animation_expose",1,"Un exposé bien structuré comporte trois parties. Lesquelles ?",
+    ["Introduction, développement, conclusion","Salutation, débat, vote","Objectifs, budget, calendrier","Titre, auteur, bibliographie"],[0],
+    "Un exposé se structure en trois parties : l'introduction, le développement, et la conclusion.",
+    "Santé publique — Animation de groupe, structure de l'exposé"],
+  ["QCM","santepub_animation_conflits",2,"Parmi les sources de conflits dans l'animation de groupe citées dans le cours, lesquelles figurent ?",
+    ["Les différences de personnalité et de style","Le manque de communication","La pression de travail et le stress","L'excès de motivation des participants"],[0,1,2],
+    "Les sources de conflits citées sont : les différences de personnalité/style, le manque de communication, la pression de travail et le stress, et les conflits de rôle et d'autorité. L'excès de motivation n'est pas une source de conflit.",
+    "Santé publique — Animation de groupe, sources de conflits"],
+  ["QCM","santepub_animation_conflits",2,"Quelles attitudes l'animateur doit-il adopter dans la gestion d'un conflit, selon le cours ?",
+    ["Être transparent dans ses intentions","Être vigilant et présent sur ce qui se passe","Faire preuve d'empathie et de congruence","Prendre systématiquement parti pour un sous-groupe"],[0,1,2],
+    "L'animateur doit être transparent dans ses intentions, vigilant et attentif à ce qui se passe, faire preuve d'empathie et de congruence, et ne jamais interpréter ni prendre parti dans un conflit entre sous-groupes.",
+    "Santé publique — Animation de groupe, attitudes en gestion de conflit"],
+
+  // ===== Cas d'application transversal =====
+  ["QCU","santepub_ccsc_etapes",2,"Mise en situation — Une sage-femme souhaite organiser une séance de sensibilisation sur la planification familiale dans un village. Avant la séance, elle doit répondre à plusieurs questions préalables. Laquelle de ces questions correspond au « Pourquoi » de sa préparation ?",
+    ["Quels sont les objectifs de la communication ?","Sur quel thème porte la communication ?","Auprès de quelles cibles la communication est-elle destinée ?","Quel est le planning de mise en œuvre ?"],[0],
+    "La question « Pourquoi ? » de la préparation d'une séance de CCSC correspond aux objectifs poursuivis par la communication, à distinguer du « Quoi » (thème), du « À qui » (cibles) et du « Quand » (planning).",
+    "Santé publique — Application, préparation d'une séance CCSC"],
+];
+
+const SANTEPUB_EXO_RAW = [
+  // ===== PEV =====
+  ["QCU","santepub_pev_def",1,"Le vaccin est une substance qui détermine dans l'organisme un état de résistance à une maladie donnée en faisant appel à ses défenses propres, avec l'avantage d'être plus durable que l'efficacité d'un sérum.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte du vaccin par opposition au sérum, qui a une action plus courte.",
+    "Santé publique — Exercice PEV, item 1"],
+  ["QCU","santepub_pev_maladies",2,"La coqueluche, l'hépatite C, la rubéole et la fièvre jaune font partie des maladies cibles du Programme Élargi de Vaccination de Côte d'Ivoire.",
+    ["Vrai","Faux"],[1],
+    "Faux : le PEV cible l'hépatite B (via le vaccin Penta/DTC-HepB-Hib), pas l'hépatite C, qui ne fait pas partie des maladies cibles du PEV.",
+    "Santé publique — Exercice PEV, item 2"],
+  ["QCU","santepub_pev_def",1,"Une injection est dite sécurisée lorsqu'elle est sans risque pour la mère ou l'enfant, pour l'agent de santé, pour la communauté et pour les partenaires au développement.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte d'une injection sécurisée, protégeant l'ensemble des parties concernées.",
+    "Santé publique — Exercice PEV, item 4"],
+  ["QCU","santepub_pev_def",2,"La vérification de l'intégrité du flacon, de l'exposition à la chaleur et des étiquettes (PCV, date de péremption, numéro de lot) sont les SEULES mesures à observer pour éviter les manifestations adverses post-immunisation (MAPI).",
+    ["Vrai","Faux"],[1],
+    "Faux : ce sont des mesures importantes, mais pas les SEULES — le respect de la technique d'injection, l'asepsie et le bon dosage en font également partie.",
+    "Santé publique — Exercice PEV, item 5"],
+  ["QCU","santepub_pev_def",1,"Un vaccin inactivé est un vaccin constitué d'organismes tués par la chaleur et un agent chimique.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte d'un vaccin inactivé (ou « tué »).",
+    "Santé publique — Exercice PEV, item 6"],
+  ["QCU","santepub_pev_cibles",2,"Les enfants de 0 à 11 mois représentent uniquement la population cible vaccinale en Côte d'Ivoire.",
+    ["Vrai","Faux"],[1],
+    "Faux : les populations cibles vaccinales en Côte d'Ivoire sont au nombre de trois : l'enfant de 0 à 23 mois, la femme enceinte, et la jeune fille de 9 ans.",
+    "Santé publique — Exercice PEV, item 7"],
+  ["QCM","santepub_pev_def",2,"Parmi les propositions suivantes, lesquelles constituent des obstacles liés à l'homme pour une injection sécurisée ?",
+    ["Méconnaissance","Incompétence","Matériel inadapté"],[0,1],
+    "Les obstacles liés à l'homme sont la méconnaissance et l'incompétence ; le matériel inadapté relève, lui, d'un obstacle matériel et non humain.",
+    "Santé publique — Exercice PEV, item 8"],
+  ["QCM","santepub_pev_def",2,"Parmi les matériels suivants, lesquels sont utilisés dans le cadre du monitorage de la chaîne du froid au centre de santé ?",
+    ["Le thermomètre","Les indicateurs de congélation","Les emballages isothermes"],[0,1],
+    "Le thermomètre et les indicateurs de congélation sont les outils de monitorage (mesure/surveillance) de la chaîne du froid, à distinguer des emballages isothermes et glacières qui sont des équipements de stockage/transport.",
+    "Santé publique — Exercice PEV, item 10"],
+
+  // ===== Nutrition =====
+  ["QCU","nutrition_def",1,"La nutrition est l'ensemble des aliments transformés dont l'organisme a besoin pour son bon fonctionnement.",
+    ["Vrai","Faux"],[1],
+    "Faux : la nutrition est l'ensemble des réactions métaboliques par lesquelles l'organisme utilise les aliments, et non les « aliments transformés » eux-mêmes (cette confusion mélange nutrition et alimentation).",
+    "Santé publique — Exercice Nutrition, item 13"],
+  ["QCU","nutrition_def",1,"L'alimentation est l'action volontaire d'introduire les aliments dans l'organisme par la bouche.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte de l'alimentation.",
+    "Santé publique — Exercice Nutrition, item 14"],
+  ["QCU","nutrition_def",2,"Les nutriments sont des substances chimiques provenant de la transformation de l'aliment dans l'organisme.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte des nutriments, résultant de la digestion des aliments.",
+    "Santé publique — Exercice Nutrition, item 16"],
+  ["QCU","nutrition_def",1,"Les macronutriments sont des substances nécessaires en grande quantité au bon fonctionnement de l'organisme.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte des macronutriments (protéines, lipides, glucides).",
+    "Santé publique — Exercice Nutrition, item 17"],
+  ["QCU","nutrition_def",1,"Les micronutriments sont des substances nécessaires en petite quantité au bon fonctionnement de l'organisme.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte des micronutriments (vitamines, minéraux).",
+    "Santé publique — Exercice Nutrition, item 18"],
+  ["QCU","nutrition_def",2,"Les micronutriments fournissent de l'énergie à l'organisme.",
+    ["Vrai","Faux"],[1],
+    "Faux : ce sont les macronutriments (glucides, lipides, protéines) qui fournissent de l'énergie ; les micronutriments (vitamines, minéraux) n'apportent pas de calories.",
+    "Santé publique — Exercice Nutrition, item 20"],
+  ["QCU","nutrition_def",1,"Le métabolisme est l'ensemble des transformations qui s'accomplissent dans l'organisme vivant.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte du métabolisme.",
+    "Santé publique — Exercice Nutrition, item 22"],
+  ["QCU","nutrition_def",1,"La calorie est l'unité de mesure de la valeur énergétique et de la quantité d'énergie contenue dans l'aliment.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte de la calorie.",
+    "Santé publique — Exercice Nutrition, item 23"],
+  ["QCU","nutrition_def",1,"Le besoin nutritionnel est la quantité moyenne d'énergie ou de nutriments nécessaire chaque jour à l'organisme pour se maintenir en bon état de santé.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte du besoin nutritionnel.",
+    "Santé publique — Exercice Nutrition, item 24"],
+  ["QCU","nutrition_def",2,"L'alimentation de remplacement est le fait de nourrir l'enfant uniquement avec des substituts de lait maternel.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte de l'alimentation de remplacement.",
+    "Santé publique — Exercice Nutrition, item 25"],
+  ["QCU","nutrition_def",1,"L'aliment de complément est recommandé pour l'enfant de 6 à 24 mois.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la diversification alimentaire par l'aliment de complément est recommandée entre 6 et 24 mois, en association avec la poursuite de l'allaitement.",
+    "Santé publique — Exercice Nutrition, item 26"],
+  ["QCU","nutrition_def",1,"L'eau représente environ 60% de la masse corporelle.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'eau représente environ 60% de la masse corporelle chez l'adulte.",
+    "Santé publique — Exercice Nutrition, item 27"],
+  ["QCM","nutrition_groupes",1,"Les aliments énergétiques de base comprennent :",
+    ["Les céréales","Les racines et tubercules","Les huiles et matières grasses"],[0,1,2],
+    "Les aliments énergétiques de base comprennent les céréales, les racines et tubercules, ainsi que les huiles et matières grasses.",
+    "Santé publique — Exercice Nutrition, item 28"],
+  ["QCU","nutrition_def",2,"La sédentarité est le quatrième facteur de risque de mortalité à l'échelle mondiale.",
+    ["Vrai","Faux"],[0],
+    "Vrai, selon l'OMS, la sédentarité (inactivité physique) est classée au 4ème rang des facteurs de risque de mortalité à l'échelle mondiale.",
+    "Santé publique — Exercice Nutrition, item 29"],
+  ["QCU","nutrition_5cles",1,"« Prenez l'habitude de la propreté » fait partie des 5 clés pour des aliments plus sûrs.",
+    ["Vrai","Faux"],[0],
+    "Vrai, « garder la propreté » est la première des 5 clés de l'OMS pour des aliments plus sûrs.",
+    "Santé publique — Exercice Nutrition, item 30"],
+  ["QCU","nutrition_maladies_carence",1,"Le kwashiorkor est l'une des maladies par carence alimentaire.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le kwashiorkor, forme œdémateuse de la malnutrition, est une maladie par carence protéino-énergétique.",
+    "Santé publique — Exercice Nutrition, item 31"],
+  ["QCU","nutrition_maladies_carence",2,"Le marasme est une maladie due à une carence vitaminique.",
+    ["Vrai","Faux"],[1],
+    "Faux : le marasme est dû à une carence globale, protéino-calorique (et non spécifiquement vitaminique), entraînant une fonte musculaire et adipeuse extrême.",
+    "Santé publique — Exercice Nutrition, item 32"],
+  ["QCU","nutrition_maladies_carence",2,"Le goitre est une maladie due à une carence protéino-énergétique.",
+    ["Vrai","Faux"],[1],
+    "Faux : le goitre est dû à une carence en iode, et non à une carence protéino-énergétique (qui cause plutôt le kwashiorkor et le marasme).",
+    "Santé publique — Exercice Nutrition, item 33"],
+  ["QCU","nutrition_maladies_carence",1,"L'anémie est l'une des maladies par carence alimentaire.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'anémie ferriprive (carence en fer) est une maladie par carence alimentaire fréquente.",
+    "Santé publique — Exercice Nutrition, item 34"],
+  ["QCU","nutrition_maladies_carence",1,"L'avitaminose A est l'une des maladies par carence alimentaire.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la carence en vitamine A (avitaminose A) est une maladie par carence alimentaire, pouvant notamment affecter la vision.",
+    "Santé publique — Exercice Nutrition, item 35"],
+
+  // ===== Étude du milieu =====
+  ["QCU","santepub_milieu_def",1,"La monographie est la connaissance des hommes et de l'environnement dans lequel ils vivent, des moyens et des problèmes qui existent dans ce milieu, selon l'UNICEF (1992).",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte de la monographie (étude du milieu) selon l'UNICEF (1992).",
+    "Santé publique — Exercice Étude du milieu, item 36"],
+  ["QCU","santepub_milieu_elements",1,"Les données relatives à la communauté sont l'un des éléments entrant dans l'élaboration d'un document monographique.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les informations concernant la communauté (cases de santé, agents de santé communautaires, accoucheuses traditionnelles...) font partie des éléments d'une étude du milieu.",
+    "Santé publique — Exercice Étude du milieu, item 37"],
+  ["QCU","santepub_milieu_avantages",1,"Le document monographique permet d'avoir un coup d'œil sur le tableau de bord du centre de santé.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est l'un des avantages cités de l'étude du milieu : avoir à coup d'œil toutes les informations nécessaires sur les hommes et leur environnement.",
+    "Santé publique — Exercice Étude du milieu, item 38"],
+  ["QCU","santepub_milieu_elements",2,"Le nombre de femmes en âge de reproduction (FAR) représente 20% de la population totale.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les FAR (Femmes en Âge de Reproduction) représentent environ 20% de la population totale de l'aire sanitaire.",
+    "Santé publique — Exercice Étude du milieu, item 40"],
+  ["QCM","santepub_milieu_facteurs",2,"Parmi les propositions suivantes, lesquelles ne sont PAS des facteurs psychologiques favorisant la santé ?",
+    ["Une éducation adéquate de l'enfant","Une affection parentale durant l'enfance","Un patrimoine génétique correct et complet"],[2],
+    "Un patrimoine génétique correct et complet relève des facteurs biologiques, pas des facteurs psychologiques — contrairement à l'éducation adéquate et à l'affection parentale, qui sont bien des facteurs psychologiques favorisant la santé.",
+    "Santé publique — Exercice Étude du milieu, item 44"],
+  ["QCU","santepub_milieu_facteurs",2,"Parmi les propositions suivantes, laquelle n'est PAS l'un des trois groupes de facteurs du milieu pouvant agir sur la santé, selon ALONDE ?",
+    ["Les facteurs déterminants la vie","Les facteurs favorisant la santé","Les facteurs favorisant la maladie","Les facteurs déterminant la maladie"],[0],
+    "Les trois groupes de facteurs selon ALONDE sont : favorisant la santé, favorisant la maladie, et déterminant la maladie — « les facteurs déterminants la vie » n'en fait pas partie.",
+    "Santé publique — Exercice Étude du milieu, item 47"],
+];
+
 const QUESTIONS = [
   ...buildQuestions(RAW, "hematologie", "q"),
   ...buildQuestions(HEMATO_SUPP_RAW, "hematologie", "hs"),
@@ -11508,6 +11963,8 @@ const QUESTIONS = [
   ...buildQuestions(DEONTO_EXAM_RAW, "deontologie", "dx"),
   ...buildQuestions(SANTEPUB_RAW, "sante-publique", "sp"),
   ...buildQuestions(SANTEPUB_2026_RAW, "sante-publique", "sp26"),
+  ...buildQuestions(SANTEPUB_MILIEU_RAW, "sante-publique", "spm"),
+  ...buildQuestions(SANTEPUB_EXO_RAW, "sante-publique", "spe"),
   ...buildQuestions(SANTECOMMU_RAW, "sante-communautaire", "sc"),
   ...buildQuestions(BACTERIO_RAW, "bacteriologie", "bq"),
   ...buildQuestions(PALUDISME_RAW, "paludisme", "pl"),
@@ -19755,10 +20212,26 @@ function LoginScreen({ onLogin }) {
       return;
     }
 
+    // La vérification du mot de passe se fait désormais côté serveur, via
+    // /api/student-auth : le navigateur ne compare plus jamais le mot de passe
+    // lui-même, et ne reçoit en retour que la fiche SANS le mot de passe.
     setBusy(true);
-    let student = await findStudent(matricule.trim());
+    let student = null;
+    try {
+      const res = await fetch("/api/student-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matricule: matricule.trim(), password: pwd.trim() }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        student = data.student;
+      }
+    } catch {
+      /* erreur réseau : student reste null, message générique ci-dessous */
+    }
     setBusy(false);
-    if (!student || student.anneeNaissance !== pwd.trim()) {
+    if (!student) {
       setError("Identifiant ou mot de passe incorrect. Si vous n'avez pas encore de compte, créez-en un.");
       return;
     }
@@ -20820,7 +21293,6 @@ function DefiScreen({ onBack, student, onLaunchCombo, onViewMonthly }) {
   // La semaine à jouer est celle du prochain palier non validé, dans l'ordre strict
   // 1 → 2 → 3 → 4 — jamais liée au calendrier, pour permettre le rattrapage.
   const week = nextWeekToPlay(weeksCompleted);
-  const weekTarget = week ? WEEKLY_TARGETS[week - 1] : 0;
   // Seules les matières qui ont déjà de vraies questions chargées sont proposées ; celles
   // encore vides (cours pas encore intégré par l'admin) sont automatiquement mises de côté
   // et n'apparaîtront que dès que du contenu y sera ajouté — recalculé à chaque affichage.
@@ -20831,6 +21303,15 @@ function DefiScreen({ onBack, student, onLaunchCombo, onViewMonthly }) {
   const notYetReadyCount = allSubjectIds.filter((id) => !attemptedIds.has(id) && !subjectsWithQuestions.has(id)).length;
   const allSubjectsDone = allSubjectIds.length > 0 && remainingSubjects.length === 0 && notYetReadyCount === 0;
   const monthFullyCompleted = week === null;
+
+  // Total du coefficient RÉELLEMENT disponible ce mois-ci (uniquement les matières qui ont
+  // du contenu) : c'est sur cette base que les objectifs hebdomadaires se calculent, pour
+  // que couvrir les 4 semaines impose de couvrir absolument toutes les matières proposées.
+  const totalAvailableCoef = allSubjectIds
+    .filter((id) => subjectsWithQuestions.has(id))
+    .reduce((sum, id) => sum + (SUBJECT_CREDITS[id] || 1), 0);
+  const WEEKLY_TARGETS = computeWeeklyTargets(totalAvailableCoef);
+  const weekTarget = week ? WEEKLY_TARGETS[week - 1] : 0;
 
   const selectedCoef = selected.reduce((sum, id) => sum + (SUBJECT_CREDITS[id] || 1), 0);
   // Le quota doit être atteint EXACTEMENT (ni plus, ni moins) pour pouvoir lancer le combo —

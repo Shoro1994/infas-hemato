@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "../../../lib/rateLimit";
 
 // Route serveur : fait "parler" le patient virtuel via Gemini, strictement contraint à la
 // fiche de faits du cas (clé GEMINI_API_KEY en variable d'environnement Netlify).
 export async function POST(request) {
+  const { allowed } = await checkRateLimit(request, "patient-chat");
+  if (!allowed) {
+    return NextResponse.json(
+      { reponse: "Trop de messages envoyés d'un coup, merci de patienter un instant avant de continuer.", error: true, rateLimited: true },
+      { status: 429 }
+    );
+  }
   try {
     const { profil, motif, faits, studentQuestion } = await request.json();
     const factsList = (faits || []).map((f) => `- ${f.q} → ${f.r}`).join("\n");
