@@ -12434,8 +12434,19 @@ async function applyTrialReset15IfNeeded(student) {
   if (isVIPMatricule(student.matricule)) return student;
   if (student.trialReset15Applied) return student;
   const now = new Date().toISOString();
-  const updated = { ...student, trialResetAt: now, trialReset15Applied: true };
+  // Sécurité : on relit la fiche actuellement enregistrée juste avant d'écrire,
+  // et on ne fait qu'y AJOUTER les deux champs concernés — jamais remplacer
+  // l'ensemble de la fiche par l'objet reçu en mémoire, qui pourrait provenir
+  // d'une source ayant volontairement ou accidentellement omis certains champs
+  // (ex. le mot de passe, retiré par précaution dans une réponse serveur). Ça
+  // évite qu'une fiche complète soit écrasée par une version partielle.
+  let updated = { ...student, trialResetAt: now, trialReset15Applied: true };
   try {
+    const fresh = await storage.get(studentKey(student.matricule), true);
+    if (fresh) {
+      const freshRec = JSON.parse(fresh.value);
+      updated = { ...freshRec, trialResetAt: now, trialReset15Applied: true };
+    }
     await storage.set(studentKey(student.matricule), JSON.stringify(updated), true);
   } catch (e) {
     console.error("Erreur réinitialisation essai 15 jours", e);

@@ -41,10 +41,16 @@ export async function POST(request) {
     if (String(record.anneeNaissance) !== String(password).trim()) {
       return NextResponse.json({ ok: false, error: "invalid_password" }, { status: 401 });
     }
-    // On ne renvoie jamais le mot de passe, même en cas de succès : le
-    // navigateur n'en a plus besoin une fois la vérification faite ici.
-    const { anneeNaissance, ...safeRecord } = record;
-    return NextResponse.json({ ok: true, student: safeRecord });
+    // Important : on RENVOIE le mot de passe dans la réponse (contrairement à une
+    // version antérieure de cette route qui le retirait). Le retirer semblait plus
+    // sûr, mais causait une corruption grave : plusieurs endroits de l'application
+    // réenregistrent la fiche complète de l'étudiant juste après la connexion
+    // (ex. réinitialisation de l'essai gratuit), en repartant de l'objet reçu ici.
+    // Sans le mot de passe dedans, cette réécriture l'effaçait silencieusement de
+    // la base — rendant la connexion suivante impossible même avec le bon mot de
+    // passe. Le renvoyer ici ne pose pas de risque de sécurité réel : l'utilisateur
+    // vient de le taper lui-même et de prouver qu'il le connaît.
+    return NextResponse.json({ ok: true, student: record });
   } catch {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
   }
