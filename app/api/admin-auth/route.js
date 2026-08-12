@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "../../../lib/rateLimit";
 
 // Route serveur d'authentification admin. Les identifiants réels (ADMIN_ID,
 // ADMIN_PASSWORD) et le jeton de session (ADMIN_TOKEN) vivent uniquement dans
@@ -9,6 +10,21 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const { id, password } = await request.json();
+
+    // Limité par l'identifiant TENTÉ (pas par IP) : cette route est appelée à
+    // chaque connexion, y compris celles des étudiants, qui partagent parfois la
+    // même adresse IP (réseaux mobiles). Limiter par IP bloquerait des étudiants
+    // innocents ; limiter par l'identifiant saisi ne freine que les vraies
+    // tentatives répétées sur le compte admin lui-même.
+    const { allowed } = await checkRateLimit(request, "admin-auth", {
+      customKey: String(id || "unknown").slice(0, 100),
+      windowMs: 15 * 60 * 1000,
+      maxRequests: 6,
+    });
+    if (!allowed) {
+      return NextResponse.json({ ok: false, error: "too_many_attempts" }, { status: 429 });
+    }
+
     const validId = process.env.ADMIN_ID;
     const validPassword = process.env.ADMIN_PASSWORD;
     const token = process.env.ADMIN_TOKEN;

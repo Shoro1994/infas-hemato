@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getStore } from "@netlify/blobs";
 import { memoryFallback } from "../../../lib/blobsFallback";
+import { checkRateLimit } from "../../../lib/rateLimit";
 
 // Route serveur d'authentification étudiante. Avant cette route, le mot de
 // passe (année de naissance) d'un étudiant était comparé CÔTÉ NAVIGATEUR :
@@ -56,6 +57,21 @@ export async function POST(request) {
     if (!matricule || !password) {
       return NextResponse.json({ ok: false, error: "missing_fields" }, { status: 400 });
     }
+
+    // Limité par le MATRICULE tenté (pas par IP) : un mot de passe à 4 chiffres n'a que
+    // 10 000 combinaisons possibles, il faut donc freiner les essais en boucle. Cibler
+    // le matricule plutôt que l'IP évite de bloquer des étudiants innocents partageant
+    // une même adresse (réseaux mobiles), tout en arrêtant net quiconque s'acharne sur
+    // UN compte précis.
+    const { allowed } = await checkRateLimit(request, "student-auth", {
+      customKey: String(matricule).trim().slice(0, 100),
+      windowMs: 15 * 60 * 1000,
+      maxRequests: 8,
+    });
+    if (!allowed) {
+      return NextResponse.json({ ok: false, error: "too_many_attempts" }, { status: 429 });
+    }
+
     const record = await readStudent(matricule.trim());
     if (!record) {
       return NextResponse.json({ ok: false, error: "not_found" }, { status: 404 });

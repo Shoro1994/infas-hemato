@@ -12627,18 +12627,29 @@ async function deleteStudentAccount(matricule) {
 
 async function loadAllStudents() {
   try {
-    const listRes = await storage.list(STUDENT_PREFIX, true);
-    const keys = listRes?.keys || [];
-    const records = [];
-    for (const k of keys) {
-      try {
-        const r = await storage.get(k, true);
-        if (r) records.push(JSON.parse(r.value));
-      } catch {
-        /* skip unreadable entry */
-      }
-    }
-    return records;
+    // Les comptes créés avant le 15 juillet 2026 existent toujours sous l'ancien
+    // préfixe "infas-hemato:cand:", jamais migrés vers le nouveau "infas-hemato:student:".
+    // Sans lister aussi cet ancien préfixe, ces comptes restent invisibles dans l'admin,
+    // même si leur connexion fonctionne correctement (côté serveur, les deux formats
+    // sont désormais vérifiés).
+    const [listNew, listLegacy] = await Promise.all([
+      storage.list(STUDENT_PREFIX, true),
+      storage.list("infas-hemato:cand:", true),
+    ]);
+    const keys = [...(listNew?.keys || []), ...(listLegacy?.keys || [])];
+    // Chargement en parallèle plutôt qu'un par un : avec beaucoup de comptes, la
+    // version séquentielle précédente pouvait prendre plusieurs dizaines de secondes.
+    const results = await Promise.all(
+      keys.map(async (k) => {
+        try {
+          const r = await storage.get(k, true);
+          return r ? JSON.parse(r.value) : null;
+        } catch {
+          return null;
+        }
+      })
+    );
+    return results.filter(Boolean);
   } catch (e) {
     console.error("Erreur chargement comptes étudiants", e);
     return [];

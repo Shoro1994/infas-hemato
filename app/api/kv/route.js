@@ -23,16 +23,6 @@ const STORE_NAME = "infas-hemato-candidates";
 function getBlobStore() {
   return getStore(STORE_NAME);
 }
-// Cohérence forte, réservée à la lecture d'UNE fiche précise (connexion, vérification
-// d'un compte). Par défaut, Netlify Blobs privilégie la rapidité (cohérence "eventual"),
-// ce qui veut dire qu'une lecture juste après une écriture peut renvoyer une version pas
-// encore à jour — un compte tout juste créé pouvait ainsi se voir refuser la connexion
-// juste après, avec pourtant le bon mot de passe. On ne l'applique volontairement PAS au
-// listing complet des étudiants (plus lent en cohérence forte, et sans le même enjeu
-// d'immédiateté), pour ne pas ralentir l'espace admin.
-function getBlobStoreStrong() {
-  return getStore(STORE_NAME, { consistency: "strong" });
-}
 
 function isAuthorized(request) {
   const token = request.headers.get("x-admin-token");
@@ -69,7 +59,7 @@ export async function GET(request) {
       return NextResponse.json({ keys: blobs.map((b) => b.key) });
     }
     if (key) {
-      const store = getBlobStoreStrong();
+      const store = getBlobStore();
       let value = await store.get(key);
       if (value === null || value === undefined) {
         return NextResponse.json({ error: "not_found" }, { status: 404 });
@@ -111,7 +101,7 @@ export async function POST(request) {
   const isStudentKey = key.startsWith("infas-hemato:student:") || key.startsWith("infas-hemato:cand:");
   if (isStudentKey && !authorized) {
     try {
-      const store = getBlobStoreStrong();
+      const store = getBlobStore();
       const existingRaw = await store.get(key);
       const existing = existingRaw ? JSON.parse(existingRaw) : null;
       const incoming = JSON.parse(value);
