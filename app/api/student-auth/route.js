@@ -11,7 +11,11 @@ import { memoryFallback } from "../../../lib/blobsFallback";
 // uniquement si le mot de passe fourni est correct.
 const STORE_NAME = "infas-hemato-candidates";
 function getBlobStore() {
-  return getStore(STORE_NAME);
+  // Cohérence forte : indispensable ici. Sans ça, un étudiant qui vient de
+  // s'inscrire (ou dont la fiche vient d'être modifiée) peut se voir refuser la
+  // connexion juste après, le temps que l'écriture se propage complètement —
+  // même avec le bon mot de passe.
+  return getStore(STORE_NAME, { consistency: "strong" });
 }
 function studentKey(matricule) {
   return `student:${matricule}`;
