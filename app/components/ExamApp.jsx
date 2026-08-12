@@ -12552,13 +12552,20 @@ async function loadAllPendingReferrals() {
 // Attribue ou révoque le statut VIP d'un compte étudiant existant, sans toucher aux comptes
 // VIP historiques codés en dur (VIP_ACCOUNTS / VIP_MATRICULES_EXTRA) : ce nouveau champ dynamique
 // isVIP se contrôle entièrement depuis l'espace admin, sans jamais nécessiter de redéploiement.
-async function toggleStudentVIP(matricule, newValue) {
+// Ces 4 fonctions acceptent désormais directement la clé de stockage réelle du compte
+// (storageKey), plutôt que de la reconstruire à partir du seul matricule. Les tout premiers
+// comptes (ancien préfixe "infas-hemato:cand:") n'ont jamais eu de champ "matricule" — en
+// reconstruisant systématiquement la clé via studentKey(matricule), ces fonctions échouaient
+// silencieusement pour eux (clé inexistante, donc aucune écriture réelle), y compris pour la
+// modification de mot de passe depuis l'admin, qui semblait fonctionner mais n'enregistrait
+// en réalité jamais rien pour ces comptes précis.
+async function toggleStudentVIP(storageKey, newValue) {
   try {
-    const r = await storage.get(studentKey(matricule), true);
+    const r = await storage.get(storageKey, true);
     if (!r) return null;
     const rec = JSON.parse(r.value);
     rec.isVIP = newValue;
-    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(storageKey, JSON.stringify(rec), true);
     return rec;
   } catch (e) {
     console.error("Erreur changement statut VIP", e);
@@ -12566,9 +12573,9 @@ async function toggleStudentVIP(matricule, newValue) {
   }
 }
 
-async function confirmPayment(matricule) {
+async function confirmPayment(storageKey) {
   try {
-    const r = await storage.get(studentKey(matricule), true);
+    const r = await storage.get(storageKey, true);
     if (!r) return null;
     const rec = JSON.parse(r.value);
     const plan = SUBSCRIPTION_PLANS.find((p) => p.id === rec.pendingPlan);
@@ -12583,7 +12590,7 @@ async function confirmPayment(matricule) {
       await addReferralCredit(rec.parrainMatricule, { matricule: rec.matricule, nom: rec.nom, prenom: rec.prenom });
       rec.parrainRecompense = true;
     }
-    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(storageKey, JSON.stringify(rec), true);
     return rec;
   } catch (e) {
     console.error("Erreur confirmation paiement", e);
@@ -12593,13 +12600,13 @@ async function confirmPayment(matricule) {
 
 // Permet à l'administrateur de consulter le mot de passe réel (année de naissance) d'un
 // étudiant inscrit, et de le modifier au besoin pour le lui retransmettre en cas d'oubli.
-async function updateStudentPassword(matricule, newAnneeNaissance) {
+async function updateStudentPassword(storageKey, newAnneeNaissance) {
   try {
-    const r = await storage.get(studentKey(matricule), true);
+    const r = await storage.get(storageKey, true);
     if (!r) return null;
     const rec = JSON.parse(r.value);
     rec.anneeNaissance = newAnneeNaissance.trim();
-    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(storageKey, JSON.stringify(rec), true);
     return rec;
   } catch (e) {
     console.error("Erreur modification mot de passe", e);
@@ -12609,10 +12616,14 @@ async function updateStudentPassword(matricule, newAnneeNaissance) {
 
 // Supprime définitivement un compte étudiant et toutes les données associées
 // (fiche, historique d'examens, suivi anti-répétition, progression schémas, notes).
-async function deleteStudentAccount(matricule) {
+// matricule reste nécessaire ici pour les données annexes (historique, notes...), qui
+// sont TOUJOURS indexées par matricule même pour un compte legacy sans matricule propre —
+// dans ce cas ces clés annexes n'auront simplement jamais existé, ce qui ne pose pas de
+// problème (storage.delete sur une clé absente ne fait rien).
+async function deleteStudentAccount(storageKey, matricule) {
   try {
     await Promise.all([
-      storage.delete(studentKey(matricule), true),
+      storage.delete(storageKey, true),
       storage.delete(historyKey(matricule), true),
       storage.delete(seenKey(matricule), true),
       storage.delete(schemaKey(matricule), false),
@@ -12643,7 +12654,16 @@ async function loadAllStudents() {
       keys.map(async (k) => {
         try {
           const r = await storage.get(k, true);
-          return r ? JSON.parse(r.value) : null;
+          if (!r) return null;
+          const rec = JSON.parse(r.value);
+          // Les tout premiers comptes (ancien préfixe "cand:") n'ont jamais eu de champ
+          // "matricule" — seulement "telephone". On attache ici la clé de stockage RÉELLE
+          // (_storageKey) et un identifiant d'affichage fiable (_displayId), pour que
+          // l'admin puisse afficher, modifier et supprimer ces comptes correctement, sans
+          // jamais reconstruire une clé différente de celle où le compte existe vraiment.
+          rec._storageKey = k;
+          rec._displayId = rec.matricule || rec.telephone || "?";
+          return rec;
         } catch {
           return null;
         }
@@ -12668,11 +12688,19 @@ function computeAccess(student) {
   const isPaid = student.paymentStatus === "paid" && student.paidAt;
   // La bascule de l'essai gratuit à 15 jours (contre 45 auparavant) a été appliquée à tous les
   // comptes non-VIP et non-payants au moment de la mise à jour : trialResetAt marque ce nouveau
-  // départ de compteur, prioritaire sur la date d'inscription d'origine (createdAt).
-  const trialStart = student.trialResetAt || student.createdAt;
-  const start = isPaid ? new Date(student.paidAt).getTime() : new Date(trialStart).getTime();
+  // départ de compteur, prioritaire sur la date d'inscription d'origine (createdAt). Les comptes
+  // créés avant l'introduction du système d'inscription actuel (ancien préfixe "cand:") n'ont ni
+  // l'un ni l'autre, mais portent parfois encore "firstSeen", leur toute première trace connue.
+  const trialStart = student.trialResetAt || student.createdAt || student.firstSeen;
+  const startMs = trialStart ? new Date(trialStart).getTime() : NaN;
+  const isPaidStartMs = isPaid ? new Date(student.paidAt).getTime() : NaN;
+  const start = isPaid ? isPaidStartMs : startMs;
   const totalDays = isPaid ? (student.paidDays || PAID_DAYS) : TRIAL_DAYS;
-  const elapsedDays = (now - start) / 86400000;
+  // Filet de sécurité : si aucune date exploitable n'a été trouvée (très anciens comptes
+  // incomplets), on ne calcule jamais un résultat "NaN" affiché à l'écran — on considère
+  // plutôt, par défaut, un essai gratuit qui démarre aujourd'hui.
+  const safeStart = Number.isFinite(start) ? start : now;
+  const elapsedDays = (now - safeStart) / 86400000;
   const daysLeft = Math.max(0, Math.ceil(totalDays - elapsedDays));
   return { isBlocked: daysLeft <= 0, daysLeft, totalDays, isPaid, isVIP: false };
 }
@@ -21635,16 +21663,16 @@ function AdminScreen({ onBack }) {
   const paid = students ? students.filter((s) => s.paymentStatus === "paid") : [];
 
   const [referralsRefreshTrigger, setReferralsRefreshTrigger] = useState(0);
-  const handleConfirm = async (matricule) => {
-    await confirmPayment(matricule);
+  const handleConfirm = async (s) => {
+    await confirmPayment(s._storageKey);
     refreshStudents();
     setReferralsRefreshTrigger((n) => n + 1);
   };
 
   const [vipBusyMatricule, setVipBusyMatricule] = useState(null);
-  const handleToggleVIP = async (matricule, currentValue) => {
-    setVipBusyMatricule(matricule);
-    await toggleStudentVIP(matricule, !currentValue);
+  const handleToggleVIP = async (s, currentValue) => {
+    setVipBusyMatricule(s._displayId);
+    await toggleStudentVIP(s._storageKey, !currentValue);
     await refreshStudents();
     setVipBusyMatricule(null);
   };
@@ -21652,29 +21680,29 @@ function AdminScreen({ onBack }) {
   // Suppression protégée par une double confirmation : le premier clic arme le bouton
   // (il devient "Confirmer la suppression ?"), le second clic, dans les 5 secondes,
   // supprime réellement le compte et toutes ses données associées.
-  const handleDeleteClick = async (matricule) => {
-    if (deleteConfirmMatricule !== matricule) {
-      setDeleteConfirmMatricule(matricule);
-      setTimeout(() => setDeleteConfirmMatricule((m) => (m === matricule ? null : m)), 5000);
+  const handleDeleteClick = async (s) => {
+    if (deleteConfirmMatricule !== s._displayId) {
+      setDeleteConfirmMatricule(s._displayId);
+      setTimeout(() => setDeleteConfirmMatricule((m) => (m === s._displayId ? null : m)), 5000);
       return;
     }
     setDeleteConfirmMatricule(null);
-    await deleteStudentAccount(matricule);
+    await deleteStudentAccount(s._storageKey, s.matricule);
     refreshStudents();
   };
 
   const openPwdEdit = (s) => {
-    setPwdEditMatricule(s.matricule);
+    setPwdEditMatricule(s._displayId);
     setPwdEditValue(s.anneeNaissance || "");
     setPwdSavedMatricule(null);
   };
-  const savePwdEdit = async (matricule) => {
+  const savePwdEdit = async (s) => {
     if (!pwdEditValue.trim()) return;
-    await updateStudentPassword(matricule, pwdEditValue.trim());
+    await updateStudentPassword(s._storageKey, pwdEditValue.trim());
     setPwdEditMatricule(null);
-    setPwdSavedMatricule(matricule);
+    setPwdSavedMatricule(s._displayId);
     refreshStudents();
-    setTimeout(() => setPwdSavedMatricule((m) => (m === matricule ? null : m)), 3000);
+    setTimeout(() => setPwdSavedMatricule((m) => (m === s._displayId ? null : m)), 3000);
   };
 
   return (
@@ -21721,12 +21749,12 @@ function AdminScreen({ onBack }) {
               ) : (
                 students.map((s, i) => {
                   const access = computeAccess(s);
-                  const isEditing = pwdEditMatricule === s.matricule;
+                  const isEditing = pwdEditMatricule === s._displayId;
                   return (
-                    <div key={s.matricule} style={{ borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}` }}>
+                    <div key={s._storageKey} style={{ borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}` }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", fontSize: 13, gap: 10 }}>
                         <div>
-                          <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s.matricule}</span></div>
+                          <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s._displayId}</span></div>
                           <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · {s.niveau} {s.specialite} · {s.examsCount || 0} examen(s) · dernière visite {fmtDate(s.lastSeen)}</div>
                           {s.parrainMatricule && (
                             <div style={{ fontSize: 11, color: COLORS.green, marginTop: 2 }}>
@@ -21747,23 +21775,23 @@ function AdminScreen({ onBack }) {
                           </button>
                           {!isVIPMatricule(s.matricule) && (
                             <button
-                              onClick={() => handleToggleVIP(s.matricule, s.isVIP === true)}
-                              disabled={vipBusyMatricule === s.matricule}
+                              onClick={() => handleToggleVIP(s, s.isVIP === true)}
+                              disabled={vipBusyMatricule === s._displayId}
                               style={{
                                 ...secondaryBtn, padding: "5px 10px", fontSize: 11,
                                 color: s.isVIP ? COLORS.amber : COLORS.blueDeep,
                                 borderColor: s.isVIP ? COLORS.amber : COLORS.line,
-                                opacity: vipBusyMatricule === s.matricule ? 0.5 : 1,
+                                opacity: vipBusyMatricule === s._displayId ? 0.5 : 1,
                               }}
                             >
-                              {vipBusyMatricule === s.matricule ? "…" : s.isVIP ? "⭐ Révoquer VIP" : "☆ Accorder VIP"}
+                              {vipBusyMatricule === s._displayId ? "…" : s.isVIP ? "⭐ Révoquer VIP" : "☆ Accorder VIP"}
                             </button>
                           )}
                           <button
-                            onClick={() => handleDeleteClick(s.matricule)}
-                            style={{ ...secondaryBtn, padding: "5px 10px", fontSize: 11, color: deleteConfirmMatricule === s.matricule ? "white" : COLORS.red, background: deleteConfirmMatricule === s.matricule ? COLORS.red : COLORS.surface, borderColor: COLORS.red }}
+                            onClick={() => handleDeleteClick(s)}
+                            style={{ ...secondaryBtn, padding: "5px 10px", fontSize: 11, color: deleteConfirmMatricule === s._displayId ? "white" : COLORS.red, background: deleteConfirmMatricule === s._displayId ? COLORS.red : COLORS.surface, borderColor: COLORS.red }}
                           >
-                            {deleteConfirmMatricule === s.matricule ? "Confirmer la suppression ?" : "🗑 Supprimer"}
+                            {deleteConfirmMatricule === s._displayId ? "Confirmer la suppression ?" : "🗑 Supprimer"}
                           </button>
                           <Badge tone={access.isVIP ? "blue" : access.isPaid ? "green" : access.isBlocked ? "red" : "amber"}>
                             {access.isVIP ? "⭐ VIP" : access.isPaid ? "Payé" : access.isBlocked ? "Bloqué" : `Essai ${access.daysLeft}j`}
@@ -21773,7 +21801,7 @@ function AdminScreen({ onBack }) {
                       {isEditing && (
                         <div style={{ padding: "0 16px 14px", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                           <div style={{ fontSize: 12, color: COLORS.inkSoft }}>
-                            Mot de passe actuel : <b style={{ fontFamily: "'IBM Plex Mono', monospace", color: COLORS.blueDeep }}>{s.anneeNaissance}</b>
+                            Mot de passe actuel : <b style={{ fontFamily: "'IBM Plex Mono', monospace", color: COLORS.blueDeep }}>{s.anneeNaissance || "— aucun (à définir)"}</b>
                           </div>
                           <input
                             value={pwdEditValue}
@@ -21781,14 +21809,14 @@ function AdminScreen({ onBack }) {
                             placeholder="Nouvelle année (ex : 1998)"
                             style={{ ...inputStyle, width: 160, padding: "6px 10px", fontSize: 12.5 }}
                           />
-                          <button onClick={() => savePwdEdit(s.matricule)} style={{ ...primaryBtn, padding: "7px 12px", fontSize: 12 }}>
+                          <button onClick={() => savePwdEdit(s)} style={{ ...primaryBtn, padding: "7px 12px", fontSize: 12 }}>
                             Enregistrer et retransmettre
                           </button>
                         </div>
                       )}
-                      {pwdSavedMatricule === s.matricule && (
+                      {pwdSavedMatricule === s._displayId && (
                         <div style={{ padding: "0 16px 14px", fontSize: 12, color: COLORS.green }}>
-                          ✓ Mot de passe mis à jour — communique-le à l'étudiant (matricule <b>{s.matricule}</b> / nouveau mot de passe transmis séparément).
+                          ✓ Mot de passe mis à jour — communique-le à l'étudiant (identifiant <b>{s._displayId}</b> / nouveau mot de passe transmis séparément).
                         </div>
                       )}
                     </div>
@@ -21808,13 +21836,13 @@ function AdminScreen({ onBack }) {
                 pending.map((s, i) => {
                   const plan = SUBSCRIPTION_PLANS.find((p) => p.id === s.pendingPlan);
                   return (
-                    <div key={s.matricule} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}`, fontSize: 13, gap: 10 }}>
+                    <div key={s._storageKey} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}`, fontSize: 13, gap: 10 }}>
                       <div>
-                        <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s.matricule}</span></div>
+                        <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s._displayId}</span></div>
                         <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · signalé le {fmtDate(s.pendingSince)}</div>
                         {plan && <Badge tone="amber">{plan.label} · {plan.price} F</Badge>}
                       </div>
-                      <button onClick={() => handleConfirm(s.matricule)} style={{ ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px" }}>
+                      <button onClick={() => handleConfirm(s)} style={{ ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px" }}>
                         Confirmer le paiement
                       </button>
                     </div>
@@ -22101,7 +22129,7 @@ function MessagesAdmin({ students }) {
   const matchingStudents = (students || []).filter((s) => {
     if (!studentSearch.trim()) return false;
     const q = studentSearch.trim().toLowerCase();
-    return `${s.prenom} ${s.nom} ${s.matricule}`.toLowerCase().includes(q);
+    return `${s.prenom} ${s.nom} ${s._displayId}`.toLowerCase().includes(q);
   }).slice(0, 6);
 
   const targetStudent = (students || []).find((s) => s.matricule === targetMatricule);
@@ -22186,11 +22214,11 @@ function MessagesAdmin({ students }) {
                   <div style={{ marginTop: 6, border: `1px solid ${COLORS.line}`, borderRadius: 9, overflow: "hidden" }}>
                     {matchingStudents.map((s) => (
                       <button
-                        key={s.matricule}
+                        key={s._storageKey}
                         onClick={() => { setTargetMatricule(s.matricule); setStudentSearch(""); }}
                         style={{ display: "block", width: "100%", textAlign: "left", padding: "9px 12px", border: "none", borderBottom: `1px solid ${COLORS.line}`, background: COLORS.surface, cursor: "pointer", fontSize: 12.5, color: COLORS.ink }}
                       >
-                        {s.prenom} {s.nom} <span style={{ color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", fontSize: 11 }}>· {s.matricule}</span>
+                        {s.prenom} {s.nom} <span style={{ color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", fontSize: 11 }}>· {s._displayId}</span>
                       </button>
                     ))}
                   </div>
