@@ -2,6 +2,26 @@ import { NextResponse } from "next/server";
 import { getStore } from "@netlify/blobs";
 import { memoryFallback } from "../../../lib/blobsFallback";
 
+// Empêche Next.js/Netlify de traiter cette route comme statique ou de mettre ses
+// réponses en cache à un quelconque niveau (CDN, edge, navigateur). Sans ça, deux
+// requêtes vers des clés DIFFÉRENTES (ex. deux fiches étudiants différentes) peuvent
+// se voir renvoyer la MÊME réponse mise en cache par erreur — c'est exactement ce qui
+// causait "tous les comptes affichent les données du premier compte chargé" dans
+// l'espace admin : la toute première lecture réussie restait en cache et était
+// réutilisée pour les lectures suivantes, malgré une clé différente dans l'URL.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+function noCacheHeaders() {
+  return {
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    Pragma: "no-cache",
+  };
+}
+function jsonNoCache(body, init = {}) {
+  return NextResponse.json(body, { ...init, headers: { ...noCacheHeaders(), ...(init.headers || {}) } });
+}
+
 // Cette route parle à Netlify Blobs pour toutes les données partagées
 // (candidats, avis, annonces). Plusieurs protections y sont appliquées :
 //   1. Le LISTING (prefix=...) des fiches étudiants et des avis exige le
@@ -19,6 +39,7 @@ import { memoryFallback } from "../../../lib/blobsFallback";
 //      jeton admin, et refuse totalement l'écriture sur certains préfixes
 //      sensibles (soldes de parrainage, messages admin, annonces).
 //   4. La SUPPRESSION (DELETE) exige toujours le jeton admin.
+//   5. AUCUNE réponse n'est mise en cache (voir dynamic/revalidate/no-cache ci-dessus).
 const STORE_NAME = "infas-hemato-candidates";
 function getBlobStore() {
   return getStore(STORE_NAME);
@@ -33,17 +54,6 @@ function isSensitiveListPrefix(prefix) {
   return prefix.startsWith("infas-hemato:student:") || prefix.startsWith("infas-hemato:cand:") || prefix.startsWith("app-rating:");
 }
 
-// NOTE IMPORTANTE : la lecture d'une fiche étudiant précise (key=student:...) ne
-// retire PLUS le mot de passe de sa réponse. Une version antérieure le faisait par
-// précaution, mais l'application relit et réenregistre très régulièrement la fiche
-// complète d'un étudiant à divers endroits (mise à jour de l'essai gratuit, du
-// nombre d'examens, du parrainage...). Comme ces relectures passent par cette même
-// route, retirer le mot de passe ici l'effaçait silencieusement de la base à chaque
-// réenregistrement — rendant la connexion impossible dès la deuxième tentative,
-// pour tout le monde. Le vrai verrou de sécurité utile reste en place : la
-// vérification du mot de passe se fait côté serveur (/api/student-auth), le
-// navigateur ne le compare plus jamais lui-même.
-
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const key = searchParams.get("key");
@@ -52,32 +62,32 @@ export async function GET(request) {
   try {
     if (prefix !== null) {
       if (isSensitiveListPrefix(prefix) && !authorized) {
-        return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+        return jsonNoCache({ error: "unauthorized" }, { status: 401 });
       }
       const store = getBlobStore();
       const { blobs } = await store.list({ prefix });
-      return NextResponse.json({ keys: blobs.map((b) => b.key) });
+      return jsonNoCache({ keys: blobs.map((b) => b.key) });
     }
     if (key) {
       const store = getBlobStore();
       let value = await store.get(key);
       if (value === null || value === undefined) {
-        return NextResponse.json({ error: "not_found" }, { status: 404 });
+        return jsonNoCache({ error: "not_found" }, { status: 404 });
       }
-      return NextResponse.json({ key, value });
+      return jsonNoCache({ key, value });
     }
-    return NextResponse.json({ error: "missing key or prefix" }, { status: 400 });
+    return jsonNoCache({ error: "missing key or prefix" }, { status: 400 });
   } catch {
     if (prefix !== null) {
       if (isSensitiveListPrefix(prefix) && !authorized) {
-        return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+        return jsonNoCache({ error: "unauthorized" }, { status: 401 });
       }
       const keys = await memoryFallback.list(prefix);
-      return NextResponse.json({ keys });
+      return jsonNoCache({ keys });
     }
     let value = await memoryFallback.get(key);
-    if (value === null) return NextResponse.json({ error: "not_found" }, { status: 404 });
-    return NextResponse.json({ key, value });
+    if (value === null) return jsonNoCache({ error: "not_found" }, { status: 404 });
+    return jsonNoCache({ key, value });
   }
 }
 
@@ -90,12 +100,12 @@ function isAdminOnlyWritePrefix(key) {
 export async function POST(request) {
   const body = await request.json();
   let { key, value } = body || {};
-  if (!key) return NextResponse.json({ error: "missing key" }, { status: 400 });
+  if (!key) return jsonNoCache({ error: "missing key" }, { status: 400 });
 
   const authorized = isAuthorized(request);
 
   if (isAdminOnlyWritePrefix(key) && !authorized) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    return jsonNoCache({ error: "unauthorized" }, { status: 401 });
   }
 
   const isStudentKey = key.startsWith("infas-hemato:student:") || key.startsWith("infas-hemato:cand:");
@@ -119,26 +129,26 @@ export async function POST(request) {
   try {
     const store = getBlobStore();
     await store.set(key, value);
-    return NextResponse.json({ key, value });
+    return jsonNoCache({ key, value });
   } catch {
     await memoryFallback.set(key, value);
-    return NextResponse.json({ key, value });
+    return jsonNoCache({ key, value });
   }
 }
 
 export async function DELETE(request) {
   if (!isAuthorized(request)) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    return jsonNoCache({ error: "unauthorized" }, { status: 401 });
   }
   const { searchParams } = new URL(request.url);
   const key = searchParams.get("key");
-  if (!key) return NextResponse.json({ error: "missing key" }, { status: 400 });
+  if (!key) return jsonNoCache({ error: "missing key" }, { status: 400 });
   try {
     const store = getBlobStore();
     await store.delete(key);
-    return NextResponse.json({ key, deleted: true });
+    return jsonNoCache({ key, deleted: true });
   } catch {
     await memoryFallback.delete(key);
-    return NextResponse.json({ key, deleted: true });
+    return jsonNoCache({ key, deleted: true });
   }
 }
