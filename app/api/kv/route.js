@@ -40,7 +40,7 @@ function isAuthorized(request) {
 }
 
 function isSensitiveListPrefix(prefix) {
-  return prefix.startsWith("student:") || prefix.startsWith("app-rating:");
+  return prefix.startsWith("infas-hemato:student:") || prefix.startsWith("infas-hemato:cand:") || prefix.startsWith("app-rating:");
 }
 
 // NOTE IMPORTANTE : la lecture d'une fiche étudiant précise (key=student:...) ne
@@ -108,7 +108,8 @@ export async function POST(request) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  if (key.startsWith("student:") && !authorized) {
+  const isStudentKey = key.startsWith("infas-hemato:student:") || key.startsWith("infas-hemato:cand:");
+  if (isStudentKey && !authorized) {
     try {
       const store = getBlobStoreStrong();
       const existingRaw = await store.get(key);
