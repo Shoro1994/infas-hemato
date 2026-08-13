@@ -20351,24 +20351,25 @@ function LoginScreen({ onLogin }) {
         background: COLORS.surface,
       }}
     >
-      {/* Animations CSS : entrée en glissement diagonal (comme dans la vidéo promo)
-          au chargement, puis un mouvement continu très doux de l'angle du dégradé
-          pour que la bande reste "vivante" plutôt que figée une fois en place. */}
+      {/* Animations CSS : cycle de disparition/réapparition de la diagonale, en boucle,
+          avec deux couleurs différentes selon le mode (vert pour la connexion, doré pour
+          l'inscription) — l'animation se relance à chaque changement d'onglet grâce à la
+          "key" posée sur l'élément plus bas, qui force React à le recréer.
+          IMPORTANT : pointer-events: none sur la diagonale — un élément avec clip-path
+          garde une zone cliquable RECTANGULAIRE invisible malgré sa forme visuelle
+          découpée ; sans cette ligne, cette zone invisible recouvrait le bouton Aide
+          et absorbait le clic à sa place, même si le bouton avait un z-index supérieur. */}
       <style>{`
-        @keyframes diagSlideIn {
-          from { transform: translateX(35%) scale(1.15); opacity: 0; }
-          to { transform: translateX(0) scale(1); opacity: 1; }
-        }
-        @keyframes diagBreathe {
-          0%   { background: linear-gradient(125deg, ${COLORS.green}CC 0%, transparent 55%); }
-          50%  { background: linear-gradient(155deg, ${COLORS.green}CC 0%, transparent 60%); }
-          100% { background: linear-gradient(125deg, ${COLORS.green}CC 0%, transparent 55%); }
-        }
-        .diag-band {
-          animation: diagSlideIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        @keyframes diagAppearDisappear {
+          0%   { opacity: 1; transform: translateX(0) scale(1); }
+          35%  { opacity: 1; transform: translateX(0) scale(1); }
+          50%  { opacity: 0; transform: translateX(40%) scale(1.2); }
+          65%  { opacity: 0; transform: translateX(-40%) scale(1.2); }
+          100% { opacity: 1; transform: translateX(0) scale(1); }
         }
         .diag-overlay {
-          animation: diagBreathe 7s ease-in-out infinite;
+          animation: diagAppearDisappear 5s ease-in-out infinite;
+          pointer-events: none;
         }
       `}</style>
       {/* Bande diagonale d'accueil : logo, nom de l'app, message de bienvenue. Une
@@ -20380,16 +20381,19 @@ function LoginScreen({ onLogin }) {
           width: "100%",
           position: "relative",
           overflow: "hidden",
-          background: `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDeep})`,
+          background: COLORS.blueDeep,
           paddingBottom: 46,
         }}
       >
         <div
-          className="diag-band diag-overlay"
+          key={mode}
+          className="diag-overlay"
           style={{
             position: "absolute",
             inset: 0,
             clipPath: "polygon(0 0, 100% 0, 100% 65%, 0% 100%)",
+            background: `linear-gradient(135deg, ${mode === "login" ? COLORS.green : "#EDB65A"} 0%, transparent 60%)`,
+            opacity: 0.85,
           }}
         />
         <div style={{ position: "absolute", top: 16, right: 18, zIndex: 2 }}>
@@ -20418,6 +20422,7 @@ function LoginScreen({ onLogin }) {
           </div>
         </div>
       </div>
+
 
       {showAide && <AideModal onClose={() => setShowAide(false)} />}
 
