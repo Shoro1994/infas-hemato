@@ -20339,37 +20339,69 @@ function LoginScreen({ onLogin }) {
   };
 
   return (
-    <div className="anim-screen"
+    <div
+      className="anim-screen"
       style={{
-        minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
-        fontFamily: "'IBM Plex Sans', sans-serif", position: "relative",
-        backgroundImage: `linear-gradient(180deg, rgba(245,249,251,0.88) 0%, rgba(245,249,251,0.94) 55%, ${COLORS.bg} 100%), url(${LOGIN_BG_IMAGE})`,
-        backgroundSize: "cover", backgroundPosition: "center top", backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        fontFamily: "'IBM Plex Sans', sans-serif",
+        position: "relative",
+        background: COLORS.surface,
       }}
     >
-      <div style={{ position: "absolute", top: 18, right: 18, display: "flex", gap: 8 }}>
-        <button
-          onClick={() => setShowAide(true)}
+      {/* Bande diagonale d'accueil : logo, nom de l'app, message de bienvenue. Une
+          bande en haut plutôt qu'un partage gauche/droite plein écran, pour que
+          l'écran d'inscription (formulaire plus long) reste toujours lisible sans
+          jamais casser l'effet, quelle que soit la hauteur du contenu en dessous. */}
+      <div
+        style={{
+          width: "100%",
+          position: "relative",
+          overflow: "hidden",
+          background: `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDeep})`,
+          paddingBottom: 46,
+        }}
+      >
+        <div
           style={{
-            display: "flex", alignItems: "center", gap: 6, cursor: "pointer",
-            background: COLORS.greenSoft, color: COLORS.green, border: `1px solid ${COLORS.green}`,
-            borderRadius: 999, padding: "6px 12px", fontSize: 12.5, fontWeight: 700,
+            position: "absolute",
+            inset: 0,
+            background: `linear-gradient(200deg, ${COLORS.green}CC 0%, transparent 55%)`,
+            clipPath: "polygon(0 0, 100% 0, 100% 65%, 0% 100%)",
           }}
-        >
-          💡 Aide
-        </button>
-      </div>
-      {showAide && <AideModal onClose={() => setShowAide(false)} />}
-      <div style={{ width: "100%", maxWidth: 400 }}>
-        <div style={{ marginBottom: 22, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-          <img src={CADUCEUS_ICON} alt="Caducée" style={{ width: 64, height: "auto" }} />
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 17, color: COLORS.blueDeep }}>AGENT DE SANTÉ NOUVEAU</div>
-            <div style={{ fontSize: 10.5, color: COLORS.inkSoft, letterSpacing: 0.4 }}>PRÉPARATION AUX EXAMENS</div>
+        />
+        <div style={{ position: "absolute", top: 16, right: 18, zIndex: 2 }}>
+          <button
+            onClick={() => setShowAide(true)}
+            style={{
+              display: "flex", alignItems: "center", gap: 6, cursor: "pointer",
+              background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.4)",
+              borderRadius: 999, padding: "6px 12px", fontSize: 12.5, fontWeight: 700,
+            }}
+          >
+            💡 Aide
+          </button>
+        </div>
+        <div style={{ position: "relative", zIndex: 2, padding: "36px 24px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+          <img src={CADUCEUS_ICON} alt="Caducée" style={{ width: 52, height: "auto", filter: "brightness(0) invert(1)" }} />
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 16, color: "white", letterSpacing: 0.3, textAlign: "center" }}>
+            AGENT DE SANTÉ NOUVEAU
+          </div>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: 22, color: "white", textAlign: "center", marginTop: 6 }}>
+            {mode === "login" ? "Bon retour !" : "Rejoins-nous"}
+          </div>
+          <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.85)", textAlign: "center", maxWidth: 280 }}>
+            {mode === "login" ? "Tes révisions t'attendent." : "Crée ton compte en 30 secondes."}
           </div>
         </div>
+      </div>
 
-        <div style={{ display: "flex", gap: 6, marginBottom: 12, background: "#E9EFF2", borderRadius: 10, padding: 4 }}>
+      {showAide && <AideModal onClose={() => setShowAide(false)} />}
+
+      <div style={{ width: "100%", maxWidth: 400, padding: "0 20px", marginTop: -28, position: "relative", zIndex: 3 }}>
+        <div style={{ display: "flex", gap: 6, marginBottom: 12, background: "#E9EFF2", borderRadius: 10, padding: 4, boxShadow: "0 6px 20px rgba(15,39,51,0.12)" }}>
           <button
             onClick={() => { setMode("login"); setError(""); }}
             style={{
@@ -20399,10 +20431,9 @@ function LoginScreen({ onLogin }) {
         {mode === "login" ? (
           <form
             onSubmit={submitLogin}
-            style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: "28px 24px", boxShadow: "0 1px 3px rgba(15,39,51,0.06)" }}
+            style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: "28px 24px", boxShadow: "0 1px 3px rgba(15,39,51,0.06)", marginBottom: 30 }}
           >
-            <TraceDivider />
-            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, margin: "14px 0 4px" }}>Connexion</h1>
+            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, margin: "0 0 4px" }}>Connexion</h1>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 20px" }}>Identifiant = votre matricule. Mot de passe = votre année de naissance.</p>
 
             <Field label="MATRICULE / NUMÉRO DE TÉL." value={matricule} onChange={setMatricule} />
@@ -20411,16 +20442,15 @@ function LoginScreen({ onLogin }) {
             {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
 
             <button type="submit" disabled={busy} style={{ ...primaryBtn, width: "100%", marginTop: 20, opacity: busy ? 0.6 : 1 }}>
-              {busy ? "Connexion…" : "Se connecter"}
+              {busy ? "Connexion…" : "Se connecter →"}
             </button>
           </form>
         ) : (
           <form
             onSubmit={submitRegister}
-            style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: "28px 24px", boxShadow: "0 1px 3px rgba(15,39,51,0.06)" }}
+            style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: "28px 24px", boxShadow: "0 1px 3px rgba(15,39,51,0.06)", marginBottom: 30 }}
           >
-            <TraceDivider />
-            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, margin: "14px 0 4px" }}>Créer un compte</h1>
+            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, margin: "0 0 4px" }}>Créer un compte</h1>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 18px" }}>
               Votre <b>matricule</b> et votre <b>année de naissance</b> serviront respectivement d'identifiant et de mot de passe à chaque connexion — notez-les bien.
             </p>
@@ -20466,7 +20496,7 @@ function LoginScreen({ onLogin }) {
             {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
 
             <button type="submit" disabled={busy} style={{ ...primaryBtn, width: "100%", marginTop: 20, opacity: busy ? 0.6 : 1 }}>
-              {busy ? "Création…" : "Créer mon compte"}
+              {busy ? "Création…" : "Créer mon compte →"}
             </button>
           </form>
         )}
