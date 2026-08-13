@@ -20351,6 +20351,26 @@ function LoginScreen({ onLogin }) {
         background: COLORS.surface,
       }}
     >
+      {/* Animations CSS : entrée en glissement diagonal (comme dans la vidéo promo)
+          au chargement, puis un mouvement continu très doux de l'angle du dégradé
+          pour que la bande reste "vivante" plutôt que figée une fois en place. */}
+      <style>{`
+        @keyframes diagSlideIn {
+          from { transform: translateX(35%) scale(1.15); opacity: 0; }
+          to { transform: translateX(0) scale(1); opacity: 1; }
+        }
+        @keyframes diagBreathe {
+          0%   { background: linear-gradient(125deg, ${COLORS.green}CC 0%, transparent 55%); }
+          50%  { background: linear-gradient(155deg, ${COLORS.green}CC 0%, transparent 60%); }
+          100% { background: linear-gradient(125deg, ${COLORS.green}CC 0%, transparent 55%); }
+        }
+        .diag-band {
+          animation: diagSlideIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .diag-overlay {
+          animation: diagBreathe 7s ease-in-out infinite;
+        }
+      `}</style>
       {/* Bande diagonale d'accueil : logo, nom de l'app, message de bienvenue. Une
           bande en haut plutôt qu'un partage gauche/droite plein écran, pour que
           l'écran d'inscription (formulaire plus long) reste toujours lisible sans
@@ -20365,10 +20385,10 @@ function LoginScreen({ onLogin }) {
         }}
       >
         <div
+          className="diag-band diag-overlay"
           style={{
             position: "absolute",
             inset: 0,
-            background: `linear-gradient(200deg, ${COLORS.green}CC 0%, transparent 55%)`,
             clipPath: "polygon(0 0, 100% 0, 100% 65%, 0% 100%)",
           }}
         />
@@ -20378,6 +20398,7 @@ function LoginScreen({ onLogin }) {
             style={{
               display: "flex", alignItems: "center", gap: 6, cursor: "pointer",
               background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.4)",
+
               borderRadius: 999, padding: "6px 12px", fontSize: 12.5, fontWeight: 700,
             }}
           >
