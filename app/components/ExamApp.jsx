@@ -20338,129 +20338,106 @@ function LoginScreen({ onLogin }) {
     onLogin("student", record, true);
   };
 
+  const isLogin = mode === "login";
+  const accentColor = isLogin ? COLORS.green : "#EDB65A";
+  const welcomeTitle = isLogin ? "BON RETOUR !" : "REJOINS-NOUS !";
+  const welcomeSub = isLogin ? "Tes révisions t'attendent." : "Crée ton compte en 30 secondes.";
+
   return (
     <div
       className="anim-screen"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        fontFamily: "'IBM Plex Sans', sans-serif",
-        position: "relative",
-        background: COLORS.surface,
-      }}
+      style={{ minHeight: "100vh", position: "relative", background: COLORS.surface, fontFamily: "'IBM Plex Sans', sans-serif" }}
     >
-      {/* Animations CSS : cycle de disparition/réapparition de la diagonale, en boucle,
-          avec deux couleurs différentes selon le mode (vert pour la connexion, doré pour
-          l'inscription) — l'animation se relance à chaque changement d'onglet grâce à la
-          "key" posée sur l'élément plus bas, qui force React à le recréer.
-          IMPORTANT : pointer-events: none sur la diagonale — un élément avec clip-path
-          garde une zone cliquable RECTANGULAIRE invisible malgré sa forme visuelle
-          découpée ; sans cette ligne, cette zone invisible recouvrait le bouton Aide
-          et absorbait le clic à sa place, même si le bouton avait un z-index supérieur. */}
+      {/* Cycle de disparition/réapparition en boucle de la zone colorée, relancé à chaque
+          changement de mode grâce à la "key" posée plus bas. pointer-events: none reste
+          essentiel : un élément avec clip-path garde une zone cliquable RECTANGULAIRE
+          invisible malgré sa forme visuelle découpée en triangle. */}
       <style>{`
         @keyframes diagAppearDisappear {
           0%   { opacity: 1; transform: translateX(0) scale(1); }
           35%  { opacity: 1; transform: translateX(0) scale(1); }
-          50%  { opacity: 0; transform: translateX(40%) scale(1.2); }
-          65%  { opacity: 0; transform: translateX(-40%) scale(1.2); }
+          50%  { opacity: 0; transform: translateX(${isLogin ? "40%" : "-40%"}) scale(1.2); }
+          65%  { opacity: 0; transform: translateX(${isLogin ? "-40%" : "40%"}) scale(1.2); }
           100% { opacity: 1; transform: translateX(0) scale(1); }
         }
-        .diag-overlay {
-          animation: diagAppearDisappear 5s ease-in-out infinite;
-          pointer-events: none;
-        }
+        .diag-panel { animation: diagAppearDisappear 5s ease-in-out infinite; pointer-events: none; }
       `}</style>
-      {/* Bande diagonale d'accueil : logo, nom de l'app, message de bienvenue. Une
-          bande en haut plutôt qu'un partage gauche/droite plein écran, pour que
-          l'écran d'inscription (formulaire plus long) reste toujours lisible sans
-          jamais casser l'effet, quelle que soit la hauteur du contenu en dessous. */}
+
+      {/* Panneau coloré diagonal — plein écran, fixé (ne défile pas), du côté opposé au
+          formulaire. Le bouton Aide N'EST JAMAIS placé ici : c'est justement le fait de le
+          superposer à cet élément décoratif qui causait le clic bloqué dans une version
+          précédente ; il est maintenant entièrement dans la zone blanche, sans aucun
+          chevauchement possible. */}
       <div
+        key={mode}
+        className="diag-panel"
         style={{
-          width: "100%",
-          position: "relative",
-          overflow: "hidden",
+          position: "fixed",
+          top: 0, bottom: 0,
+          [isLogin ? "right" : "left"]: 0,
+          width: "44%",
+          minWidth: 150,
           background: COLORS.blueDeep,
-          paddingBottom: 46,
+          clipPath: isLogin ? "polygon(28% 0, 100% 0, 100% 100%, 0% 100%)" : "polygon(0 0, 72% 0, 100% 100%, 0% 100%)",
+          zIndex: 0,
         }}
       >
         <div
-          key={mode}
-          className="diag-overlay"
           style={{
-            position: "absolute",
-            inset: 0,
-            clipPath: "polygon(0 0, 100% 0, 100% 65%, 0% 100%)",
-            background: `linear-gradient(135deg, ${mode === "login" ? COLORS.green : "#EDB65A"} 0%, transparent 60%)`,
-            opacity: 0.85,
+            position: "absolute", inset: 0,
+            background: `linear-gradient(${isLogin ? "200deg" : "160deg"}, ${accentColor}, ${COLORS.blueDeep} 75%)`,
           }}
         />
-        <div style={{ position: "absolute", top: 16, right: 18, zIndex: 2 }}>
+        <div
+          style={{
+            position: "absolute", bottom: 40, left: isLogin ? 24 : "auto", right: isLogin ? "auto" : 24,
+            textAlign: isLogin ? "left" : "right", maxWidth: 180,
+          }}
+        >
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: 21, color: "white", lineHeight: 1.2 }}>
+            {welcomeTitle}
+          </div>
+          <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.85)", marginTop: 6 }}>{welcomeSub}</div>
+        </div>
+      </div>
+
+      {showAide && <AideModal onClose={() => setShowAide(false)} />}
+
+      {/* Colonne blanche : contient le vrai contenu, entièrement séparée du panneau
+          décoratif. C'est elle qui défile normalement si le formulaire est plus long
+          que l'écran (cas de l'inscription, 8 champs). */}
+      <div
+        style={{
+          position: "relative", zIndex: 1,
+          [isLogin ? "marginRight" : "marginLeft"]: "44%",
+          minHeight: "100vh",
+          display: "flex", flexDirection: "column",
+          padding: "20px 22px 40px",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <img src={CADUCEUS_ICON} alt="Caducée" style={{ width: 30, height: "auto" }} />
+            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 12.5, color: COLORS.blueDeep }}>
+              AGENT DE SANTÉ
+            </span>
+          </div>
           <button
             onClick={() => setShowAide(true)}
             style={{
               display: "flex", alignItems: "center", gap: 6, cursor: "pointer",
-              background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.4)",
-
+              background: COLORS.greenSoft, color: COLORS.green, border: `1px solid ${COLORS.green}`,
               borderRadius: 999, padding: "6px 12px", fontSize: 12.5, fontWeight: 700,
             }}
           >
             💡 Aide
           </button>
         </div>
-        <div style={{ position: "relative", zIndex: 2, padding: "36px 24px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-          <img src={CADUCEUS_ICON} alt="Caducée" style={{ width: 52, height: "auto", filter: "brightness(0) invert(1)" }} />
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 16, color: "white", letterSpacing: 0.3, textAlign: "center" }}>
-            AGENT DE SANTÉ NOUVEAU
-          </div>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: 22, color: "white", textAlign: "center", marginTop: 6 }}>
-            {mode === "login" ? "Bon retour !" : "Rejoins-nous"}
-          </div>
-          <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.85)", textAlign: "center", maxWidth: 280 }}>
-            {mode === "login" ? "Tes révisions t'attendent." : "Crée ton compte en 30 secondes."}
-          </div>
-        </div>
-      </div>
 
-
-      {showAide && <AideModal onClose={() => setShowAide(false)} />}
-
-      <div style={{ width: "100%", maxWidth: 400, padding: "0 20px", marginTop: -28, position: "relative", zIndex: 3 }}>
-        <div style={{ display: "flex", gap: 6, marginBottom: 12, background: "#E9EFF2", borderRadius: 10, padding: 4, boxShadow: "0 6px 20px rgba(15,39,51,0.12)" }}>
-          <button
-            onClick={() => { setMode("login"); setError(""); }}
-            style={{
-              flex: 1, padding: "8px 0", borderRadius: 8, border: "none", cursor: "pointer",
-              fontSize: 13, fontWeight: 700, fontFamily: "'IBM Plex Sans', sans-serif",
-              background: mode === "login" ? COLORS.surface : "transparent",
-              color: mode === "login" ? COLORS.blueDeep : COLORS.inkSoft,
-              boxShadow: mode === "login" ? "0 1px 2px rgba(15,39,51,0.08)" : "none",
-            }}
-          >
-            Se connecter
-          </button>
-          <button
-            onClick={() => { setMode("register"); setError(""); }}
-            style={{
-              flex: 1, padding: "8px 0", borderRadius: 8, border: "none", cursor: "pointer",
-              fontSize: 13, fontWeight: 700, fontFamily: "'IBM Plex Sans', sans-serif",
-              background: mode === "register" ? COLORS.surface : "transparent",
-              color: mode === "register" ? COLORS.blueDeep : COLORS.inkSoft,
-              boxShadow: mode === "register" ? "0 1px 2px rgba(15,39,51,0.08)" : "none",
-            }}
-          >
-            Créer un compte
-          </button>
-        </div>
-
-        {mode === "login" ? (
-          <form
-            onSubmit={submitLogin}
-            style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: "28px 24px", boxShadow: "0 1px 3px rgba(15,39,51,0.06)", marginBottom: 30 }}
-          >
-            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, margin: "0 0 4px" }}>Connexion</h1>
-            <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 20px" }}>Identifiant = votre matricule. Mot de passe = votre année de naissance.</p>
+        {isLogin ? (
+          <form onSubmit={submitLogin} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: "0 0 4px" }}>Connexion</h1>
+            <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 22px" }}>Identifiant = votre matricule. Mot de passe = votre année de naissance.</p>
 
             <Field label="MATRICULE / NUMÉRO DE TÉL." value={matricule} onChange={setMatricule} />
             <Field label="ANNÉE DE NAISSANCE" value={pwd} onChange={setPwd} type="password" style={{ marginTop: 14 }} />
@@ -20470,13 +20447,32 @@ function LoginScreen({ onLogin }) {
             <button type="submit" disabled={busy} style={{ ...primaryBtn, width: "100%", marginTop: 20, opacity: busy ? 0.6 : 1 }}>
               {busy ? "Connexion…" : "Se connecter →"}
             </button>
+
+            <button
+              type="button"
+              onClick={() => { setMode("register"); setError(""); }}
+              style={{
+                background: "none", border: "none", cursor: "pointer", marginTop: 18,
+                fontSize: 12.5, fontWeight: 700, color: COLORS.blueDeep, display: "flex", alignItems: "center", gap: 5,
+              }}
+            >
+              Pas encore de compte ? S'inscrire <span style={{ fontSize: 15 }}>→</span>
+            </button>
           </form>
         ) : (
-          <form
-            onSubmit={submitRegister}
-            style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: "28px 24px", boxShadow: "0 1px 3px rgba(15,39,51,0.06)", marginBottom: 30 }}
-          >
-            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, color: COLORS.ink, margin: "0 0 4px" }}>Créer un compte</h1>
+          <form onSubmit={submitRegister} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <button
+              type="button"
+              onClick={() => { setMode("login"); setError(""); }}
+              style={{
+                background: "none", border: "none", cursor: "pointer", marginBottom: 14,
+                fontSize: 12.5, fontWeight: 700, color: COLORS.blueDeep, display: "flex", alignItems: "center", gap: 5, alignSelf: "flex-start",
+              }}
+            >
+              <span style={{ fontSize: 15 }}>←</span> Déjà un compte ? Se connecter
+            </button>
+
+            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: "0 0 4px" }}>Créer un compte</h1>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 18px" }}>
               Votre <b>matricule</b> et votre <b>année de naissance</b> serviront respectivement d'identifiant et de mot de passe à chaque connexion — notez-les bien.
             </p>
@@ -20492,22 +20488,20 @@ function LoginScreen({ onLogin }) {
                 {ANTENNES.map((a) => <option key={a} value={a}>{a}</option>)}
               </select>
             </div>
-            <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
-              <div style={{ flex: 1 }}>
-                <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>NIVEAU</label>
-                <select value={niveau} onChange={(e) => setNiveau(e.target.value)} style={inputStyle}>
-                  {NIVEAUX.map((n) => <option key={n.id} value={n.id}>{n.label}</option>)}
-                </select>
-              </div>
-              <div style={{ flex: 1 }}>
-                <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>SPÉCIALITÉ</label>
-                <select value={specialite} onChange={(e) => setSpecialite(e.target.value)} style={inputStyle}>
-                  {SPECIALITES.map((s) => <option key={s.id} value={s.id}>{s.id}</option>)}
-                </select>
-              </div>
+            <div style={{ marginTop: 14 }}>
+              <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>NIVEAU</label>
+              <select value={niveau} onChange={(e) => setNiveau(e.target.value)} style={inputStyle}>
+                {NIVEAUX.map((n) => <option key={n.id} value={n.id}>{n.label}</option>)}
+              </select>
+            </div>
+            <div style={{ marginTop: 14 }}>
+              <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>SPÉCIALITÉ</label>
+              <select value={specialite} onChange={(e) => setSpecialite(e.target.value)} style={inputStyle}>
+                {SPECIALITES.map((s) => <option key={s.id} value={s.id}>{s.id}</option>)}
+              </select>
             </div>
 
-            <div style={{ marginTop: 12 }}>
+            <div style={{ marginTop: 14 }}>
               <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>
                 CODE DE PARRAINAGE (facultatif)
               </label>
