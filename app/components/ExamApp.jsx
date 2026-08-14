@@ -5205,6 +5205,26 @@ const SANTEPUB_RAW = [
     "La lutte contre les moustiques adultes recommande de dormir sous une moustiquaire imprégnée, de poser des grillages, de pulvériser les maisons d'insecticides et de porter des vêtements longs et clairs le soir ; vider les récipients d'eau relève plutôt de la lutte contre les larves.",
     "Santé publique – PNLP, II.2 La lutte contre les moustiques adultes"],
   /* ===== Épidémiologie ===== */
+  ["QCU","santepub_systeme_def",2,"Le Système National de Santé Ivoirien se caractérise, selon sa structure globale, par :",
+    ["Trois niveaux et deux versants","Deux niveaux et trois versants","Trois versants et trois niveaux","Deux niveaux et quatre versants"],[0],
+    "Le Système National de Santé Ivoirien se caractérise par trois niveaux (primaire, secondaire, tertiaire) et deux versants (prestataire et gestionnaire).",
+    "Santé publique — Système national de santé, VII. Le système de santé ivoirien (sujet d'examen, Évaluation Santé Publique L1, juillet 2025)"],
+  ["QCU","santepub_systeme_def",2,"Au niveau primaire de la pyramide sanitaire du système de santé ivoirien, on trouve :",
+    ["Les ESPC (Établissements Sanitaires de Premier Contact)","Les EPHD (Établissements Publics Hospitaliers Départementaux)","Les EPHR (Établissements Publics Hospitaliers Régionaux)","Les EPHN (Établissements Publics Hospitaliers Nationaux)"],[0],
+    "Au niveau primaire de la pyramide sanitaire, on trouve les ESPC (Établissements Sanitaires de Premier Contact), base large de la pyramide.",
+    "Santé publique — Système national de santé, VII. Le système de santé ivoirien (sujet d'examen, Évaluation Santé Publique L1, juillet 2025)"],
+  ["QCU","commu_communication_elements",2,"Dans le processus de communication, l'encodage correspond à :",
+    ["La constitution du message par l'émetteur","La transcription du message par le récepteur","La transmission du message par un canal","La compréhension du message par le récepteur"],[0],
+    "L'encodage est l'ensemble de signes et de règles de combinaison que l'émetteur puise pour constituer son message ; le destinataire, lui, identifie ce système de signes lors du décodage.",
+    "Santé communautaire — IEC/CCSC, V.6 Le codage (sujet d'examen, Évaluation Santé Publique L1, juillet 2025)"],
+  ["QCU","santepub_pnlt_dots",2,"Dans l'approche épidémiologique, la thérapie repose sur :",
+    ["Le contrôle, l'éradication, l'élimination et la maîtrise de la maladie","La disparition des signes cliniques uniquement","La guérison du malade uniquement","L'analyse de l'impact des interventions uniquement"],[0],
+    "Dans l'approche épidémiologique, la thérapie (intervention) consiste au contrôle, à l'éradication, à l'élimination et à la maîtrise de la maladie — à distinguer de l'approche clinique, centrée sur la guérison du malade individuel.",
+    "Santé publique — Épidémiologie, V. Différence entre l'approche épidémiologique et l'approche clinique (sujet d'examen, Évaluation Santé Publique L1, juillet 2025)"],
+  ["QCM","commu_plaidoyer_elements",2,"Parmi les populations cibles du plaidoyer figurent les décideurs politiques et :",
+    ["Les organisations civiles nationales et internationales","Les données probantes, élément clé et non population cible","Uniquement les professionnels de santé","Uniquement les organismes internationaux"],[0],
+    "Les populations cibles du plaidoyer sont les décideurs politiques et les organisations civiles nationales et internationales ; les données probantes constituent, elles, un élément clé du plaidoyer, pas une population cible.",
+    "Santé communautaire — Plaidoyer, V. Populations cibles du plaidoyer (sujet d'examen, Évaluation Santé Publique L1, juillet 2025)"],
   ["QCU","santepub_epidemio_def",1,"Selon l'OMS (1968), l'épidémiologie est une discipline scientifique qui étudie la distribution et les déterminants des états de santé et des maladies :",
     ["Dans les populations humaines","Uniquement chez l'individu isolé","Uniquement chez l'animal","Uniquement dans les laboratoires"],[0],
     "L'épidémiologie est une discipline scientifique qui étudie la distribution et les déterminants des états de santé et des maladies dans les populations humaines ainsi que des influences qui déterminent cette distribution (OMS, 1968).",
@@ -12508,6 +12528,23 @@ const RAW_CASES = [
 
 /* ---- Déontologie — dilemmes éthiques (exercices du cours) ---- */
 const SANTEPUB_RAW_CASES = [
+  {
+    chapterId: "santepub_infra_2025", level: 3,
+    vignette:
+      "Le tableau ci-dessous présente la répartition des villages desservis par le Centre de Santé Rural Village A (CSRA) en fin d'année 2024 : Village A (population du centre) : 4500 habitants, à 0 km ; A1 : 1500 habitants, à 15 km ; A2 : 850 habitants, à 16,5 km ; A3 : 3500 habitants, à 5 km ; A4 : 2150 habitants, à 2 km ; A5 : 1845 habitants, à 10 km ; A6 : 650 habitants, à 4 km.",
+    ref: "Santé publique — Étude de cas (sujet d'examen, Évaluation Santé Publique L1, 30 juin 2025)",
+    qs: [
+      { stem: "Quelle est la population totale de l'aire sanitaire en fin d'année 2024 ?",
+        options: ["14 995 habitants", "14 145 habitants", "2 350 habitants", "6 845 habitants"], correct: [0],
+        explanation: "En additionnant toutes les localités : 4500+1500+850+3500+2150+1845+650 = 14 995 habitants." },
+      { stem: "Quelle est la population couverte par la stratégie avancée (localités situées entre 5 et 15 km du centre) ?",
+        options: ["6 845 habitants (A1 + A3 + A5)", "14 995 habitants (toute l'aire sanitaire)", "3 345 habitants", "850 habitants (A2 uniquement)"], correct: [0],
+        explanation: "La stratégie avancée couvre les localités entre 5 et 15 km : A1 (15 km, 1500) + A3 (5 km, 3500) + A5 (10 km, 1845) = 6845 habitants. A2 (16,5 km) est hors zone (stratégie mobile), A4 (2 km) et A6 (4 km) relèvent de la stratégie fixe (moins de 5 km)." },
+      { stem: "En appliquant le taux de 5% de femmes enceintes ou grossesses attendues, quelle est l'estimation de la population cible des femmes enceintes pour la stratégie avancée ?",
+        options: ["343 femmes", "268 femmes", "750 femmes", "375 femmes"], correct: [0],
+        explanation: "6845 (population de la stratégie avancée) x 5% = 342,25, arrondi à 343 femmes enceintes." },
+    ],
+  },
   {
     chapterId: "santepub_pev_rattrapage", level: 3,
     vignette:
@@ -20697,6 +20734,10 @@ function isVIPMatricule(matricule) {
 }
 
 const INTRO_SEEN_KEY = "infas-hemato:intro-seen";
+// Stocke uniquement le matricule — jamais le mot de passe — pour retrouver la session
+// après un rafraîchissement de page, sans jamais servir à l'authentification elle-même
+// (celle-ci reste exclusivement gérée par /api/student-auth, côté serveur).
+const SESSION_KEY = "infas-hemato:session-matricule";
 const INTRO_MESSAGE =
   "Cette solution a été créée pour aider les étudiants de l'Institut des Sciences de la Santé à mieux préparer leurs examens. Merci d'en faire bon usage.";
 
@@ -25216,10 +25257,42 @@ export default function App() {
     })();
   }, [student, screen]);
 
+  // Persistance de la session : sans ceci, tout rafraîchissement de la page renvoyait
+  // l'étudiant à l'écran de connexion, même juste après s'être connecté — le matricule
+  // n'était jamais sauvegardé nulle part, donc rien ne permettait de le reconnaître au
+  // rechargement suivant.
   useEffect(() => {
-    try {
-      if (window.localStorage.getItem(INTRO_SEEN_KEY)) setScreen("login");
-    } catch {}
+    (async () => {
+      let savedMatricule = null;
+      try {
+        savedMatricule = window.localStorage.getItem(SESSION_KEY);
+      } catch {}
+      if (savedMatricule) {
+        // Les deux formats de clé (ancien "cand:" et actuel "student:") doivent être
+        // vérifiés, exactement comme pour la connexion elle-même — sans quoi les
+        // comptes créés avant le 15 juillet 2026 perdraient leur session à chaque
+        // rafraîchissement, malgré une connexion initiale réussie.
+        let record = null;
+        for (const key of [studentKey(savedMatricule), `infas-hemato:cand:${sanitizeKeyPart(savedMatricule)}`]) {
+          try {
+            const r = await storage.get(key, true);
+            if (r) { record = JSON.parse(r.value); break; }
+          } catch {}
+        }
+        if (record) {
+          setRole("student");
+          setStudent(record);
+          setScreen("dashboard");
+          return;
+        }
+        // Le compte sauvegardé n'existe plus (supprimé depuis) : on nettoie la trace
+        // locale pour ne pas retenter indéfiniment une restauration impossible.
+        try { window.localStorage.removeItem(SESSION_KEY); } catch {}
+      }
+      try {
+        if (window.localStorage.getItem(INTRO_SEEN_KEY)) setScreen("login");
+      } catch {}
+    })();
   }, []);
 
   useEffect(() => {
@@ -25240,6 +25313,7 @@ export default function App() {
       touchStudentLastSeen(studentRecord.matricule);
       setWelcomeInfo({ prenom: studentRecord.prenom, isNew: !!isNew });
       setScreen("dashboard");
+      try { window.localStorage.setItem(SESSION_KEY, studentRecord.matricule); } catch {}
     }
   };
   const handleDismissWelcome = () => setWelcomeInfo(null);
@@ -25248,6 +25322,7 @@ export default function App() {
   const handleLogout = () => {
     setScreen("login"); setExam(null); setTrainingSession(null);
     setLastResult(null); setStudent(null); setRole(null);
+    try { window.localStorage.removeItem(SESSION_KEY); } catch {}
   };
   const handleStart = () => { setFlowMode("exam"); setScreen("matieres"); };
   const handleTrain = () => { setFlowMode("training"); setScreen("matieres"); };
