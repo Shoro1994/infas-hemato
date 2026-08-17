@@ -22313,6 +22313,14 @@ function AdminScreen({ onBack }) {
   const refreshRatings = () => loadAllAppRatings().then((list) => setRatings(list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))));
 
   useEffect(() => { refreshStudents(); refreshAnnouncements(); refreshRatings(); }, []);
+  // Actualisation automatique toutes les 30 secondes : sans ça, la liste des étudiants
+  // ne se rechargeait qu'une seule fois à l'ouverture du panneau admin — un paiement
+  // réclamé par un étudiant PENDANT que l'admin reste ouvert n'apparaissait donc jamais,
+  // sauf à recharger la page entière soi-même.
+  useEffect(() => {
+    const interval = setInterval(() => { refreshStudents(); }, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   const total = students?.length ?? null;
   const totalExams = students ? students.reduce((a, s) => a + (s.examsCount || 0), 0) : 0;
@@ -22388,7 +22396,7 @@ function AdminScreen({ onBack }) {
           {[["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
             <button
               key={id}
-              onClick={() => setTab(id)}
+              onClick={() => { setTab(id); refreshStudents(); }}
               style={{
                 flex: 1, padding: "8px 6px", borderRadius: 8, border: "none", cursor: "pointer",
                 fontSize: 12.5, fontWeight: 700, fontFamily: "'IBM Plex Sans', sans-serif",
