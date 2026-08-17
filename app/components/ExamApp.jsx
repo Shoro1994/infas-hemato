@@ -12992,11 +12992,17 @@ async function createStudent(profile) {
 
 async function touchStudentLastSeen(matricule) {
   try {
-    const r = await storage.get(studentKey(matricule), true);
+    let key = studentKey(matricule);
+    let r = await storage.get(key, true);
+    if (!r) {
+      const legacyKey = `infas-hemato:cand:${sanitizeKeyPart(matricule)}`;
+      const legacyR = await storage.get(legacyKey, true);
+      if (legacyR) { key = legacyKey; r = legacyR; }
+    }
     if (!r) return;
     const rec = JSON.parse(r.value);
     rec.lastSeen = new Date().toISOString();
-    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(key, JSON.stringify(rec), true);
   } catch (e) {
     console.error("Erreur mise à jour compte", e);
   }
@@ -13019,14 +13025,29 @@ async function applyTrialReset15IfNeeded(student) {
   // d'une source ayant volontairement ou accidentellement omis certains champs
   // (ex. le mot de passe, retiré par précaution dans une réponse serveur). Ça
   // évite qu'une fiche complète soit écrasée par une version partielle.
+  //
+  // IMPORTANT — bug corrigé : cette fonction ne vérifiait et n'écrivait auparavant
+  // que sur le format de clé actuel ("infas-hemato:student:"). Pour un compte créé
+  // avant le 15 juillet 2026 (clé "infas-hemato:cand:"), la relecture échouait
+  // silencieusement et l'écriture partait sur une clé fantôme, jamais relue par la
+  // suite — trialReset15Applied ne se sauvegardait donc jamais réellement sur la
+  // vraie fiche. Résultat : à CHAQUE connexion explicite, ces comptes se voyaient
+  // réinitialisés à un essai flambant neuf de 15 jours, écrasant leur progression
+  // réelle (jours déjà écoulés, statut bloqué légitime, etc.).
   let updated = { ...student, trialResetAt: now, trialReset15Applied: true };
   try {
-    const fresh = await storage.get(studentKey(student.matricule), true);
+    const candidateKeys = [studentKey(student.matricule), `infas-hemato:cand:${sanitizeKeyPart(student.matricule)}`];
+    let realKey = candidateKeys[0];
+    let fresh = null;
+    for (const key of candidateKeys) {
+      const r = await storage.get(key, true);
+      if (r) { fresh = r; realKey = key; break; }
+    }
     if (fresh) {
       const freshRec = JSON.parse(fresh.value);
       updated = { ...freshRec, trialResetAt: now, trialReset15Applied: true };
     }
-    await storage.set(studentKey(student.matricule), JSON.stringify(updated), true);
+    await storage.set(realKey, JSON.stringify(updated), true);
   } catch (e) {
     console.error("Erreur réinitialisation essai 15 jours", e);
   }
@@ -13035,12 +13056,18 @@ async function applyTrialReset15IfNeeded(student) {
 
 async function incrementStudentExamCount(matricule) {
   try {
-    const r = await storage.get(studentKey(matricule), true);
+    let key = studentKey(matricule);
+    let r = await storage.get(key, true);
+    if (!r) {
+      const legacyKey = `infas-hemato:cand:${sanitizeKeyPart(matricule)}`;
+      const legacyR = await storage.get(legacyKey, true);
+      if (legacyR) { key = legacyKey; r = legacyR; }
+    }
     if (!r) return;
     const rec = JSON.parse(r.value);
     rec.examsCount = (rec.examsCount || 0) + 1;
     rec.lastSeen = new Date().toISOString();
-    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(key, JSON.stringify(rec), true);
   } catch (e) {
     console.error("Erreur mise à jour compte", e);
   }
@@ -23186,20 +23213,21 @@ function SubscriptionGauge({ student, onMarkPending }) {
         <div style={{ fontSize: 12, color: COLORS.amber, background: COLORS.amberSoft, borderRadius: 8, padding: "8px 10px" }}>
           Paiement signalé, en attente de vérification par l'administrateur.
         </div>
-      ) : access.isBlocked ? (
-        // Le bouton de réclamation n'apparaît que pour un compte bloqué (essai terminé)
-        // et non déjà payé — jamais pendant un essai encore actif, pour ne pas laisser
-        // penser qu'un paiement est nécessaire ou possible avant que ce soit réellement
-        // le cas.
+      ) : (
+        // Le bouton de réclamation reste visible dans tous les cas où le compte n'est
+        // ni déjà payé ni déjà en attente de vérification — qu'il soit bloqué ou encore
+        // en plein essai gratuit (donc toujours à moins de 20 jours, l'essai en durant 15).
         <div>
           <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginBottom: 10 }}>
-            Votre essai gratuit est terminé. Avez-vous déjà réglé un abonnement ? Réclamez votre paiement ci-dessous pour le faire vérifier, ou abonnez-vous si ce n'est pas encore fait.
+            {access.isBlocked
+              ? "Votre essai gratuit est terminé. Avez-vous déjà réglé un abonnement ? Réclamez votre paiement ci-dessous pour le faire vérifier, ou abonnez-vous si ce n'est pas encore fait."
+              : `Essai gratuit de ${TRIAL_DAYS} jours en cours. Vous pouvez vous abonner dès maintenant, ou réclamer un paiement déjà effectué.`}
           </div>
           <button onClick={() => setShowModal(true)} style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12.5, padding: "9px 16px" }}>
             💳 Réclamer un paiement
           </button>
         </div>
-      ) : null}
+      )}
 
       {showModal && <SubscriptionModal onClose={() => setShowModal(false)} onMarkPending={onMarkPending} />}
     </div>
