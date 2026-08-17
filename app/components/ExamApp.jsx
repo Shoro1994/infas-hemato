@@ -13175,9 +13175,17 @@ async function confirmPayment(storageKey, planIdOverride) {
     const rec = JSON.parse(r.value);
     const plan = SUBSCRIPTION_PLANS.find((p) => p.id === (planIdOverride || rec.pendingPlan));
     const isFirstPayment = !rec.paidAt; // avant mise à jour : jamais payé jusqu'ici
+    // Cumul : les jours restants (essai en cours ou abonnement déjà payé, non encore
+    // épuisé) s'ajoutent à ceux du nouveau forfait, plutôt que d'être perdus. Un étudiant
+    // à qui il restait 10 jours et qui paie un forfait d'un mois se retrouve donc avec
+    // 40 jours, pas 30. computeAccess doit être appelé AVANT toute modification du
+    // compte, pour lire son vrai solde de jours restants au moment du paiement.
+    const accessBefore = computeAccess(rec);
+    const remainingDays = accessBefore.isBlocked ? 0 : (Number.isFinite(accessBefore.daysLeft) ? accessBefore.daysLeft : 0);
+    const newPlanDays = plan ? plan.days : PAID_DAYS;
     rec.paymentStatus = "paid";
     rec.paidAt = new Date().toISOString();
-    rec.paidDays = plan ? plan.days : PAID_DAYS;
+    rec.paidDays = newPlanDays + remainingDays;
     rec.pendingSince = null;
     rec.pendingPlan = null;
     // Récompense du parrain : uniquement au tout premier paiement du filleul, jamais renouvelée.
@@ -22525,16 +22533,50 @@ function AdminScreen({ onBack }) {
               ) : (
                 pending.map((s, i) => {
                   const plan = SUBSCRIPTION_PLANS.find((p) => p.id === s.pendingPlan);
+                  const isPickingPlan = payManualMatricule === `pending-${s._displayId}`;
                   return (
-                    <div key={s._storageKey} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}`, fontSize: 13, gap: 10 }}>
-                      <div>
-                        <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s._displayId}</span></div>
-                        <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · signalé le {fmtDate(s.pendingSince)}</div>
-                        {plan && <Badge tone="amber">{plan.label} · {plan.price} F</Badge>}
+                    <div key={s._storageKey} style={{ borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}` }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", fontSize: 13, gap: 10 }}>
+                        <div>
+                          <div style={{ fontWeight: 600, color: COLORS.ink }}>{s.prenom} {s.nom} <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>· {s._displayId}</span></div>
+                          <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{s.antenne} · signalé le {fmtDate(s.pendingSince)}</div>
+                          {plan ? (
+                            <Badge tone="amber">{plan.label} · {plan.price} F</Badge>
+                          ) : (
+                            <Badge tone="red">Forfait non reconnu — précisez-le avant de confirmer</Badge>
+                          )}
+                        </div>
+                        {plan ? (
+                          <button onClick={() => handleConfirm(s)} style={{ ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px" }}>
+                            Confirmer le paiement
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => setPayManualMatricule(isPickingPlan ? null : `pending-${s._displayId}`)}
+                            style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12, padding: "8px 12px" }}
+                          >
+                            {isPickingPlan ? "Fermer" : "Préciser le forfait"}
+                          </button>
+                        )}
                       </div>
-                      <button onClick={() => handleConfirm(s)} style={{ ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px" }}>
-                        Confirmer le paiement
-                      </button>
+                      {isPickingPlan && (
+                        <div style={{ padding: "0 16px 14px" }}>
+                          <div style={{ fontSize: 12, color: COLORS.inkSoft, marginBottom: 8 }}>
+                            Ce signalement date d'avant l'introduction des 3 forfaits actuels (ou son identifiant de forfait est introuvable) — sans précision, la confirmation attribuerait par défaut 365 jours. Choisir le forfait réellement payé :
+                          </div>
+                          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                            {SUBSCRIPTION_PLANS.map((p) => (
+                              <button
+                                key={p.id}
+                                onClick={() => handleManualPayment(s, p.id)}
+                                style={{ ...secondaryBtn, padding: "7px 12px", fontSize: 12, borderColor: p.color, color: p.color }}
+                              >
+                                {p.label} · {p.price} F
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })
@@ -23136,18 +23178,20 @@ function SubscriptionGauge({ student, onMarkPending }) {
         <div style={{ fontSize: 12, color: COLORS.amber, background: COLORS.amberSoft, borderRadius: 8, padding: "8px 10px" }}>
           Paiement signalé, en attente de vérification par l'administrateur.
         </div>
-      ) : (
+      ) : access.isBlocked ? (
+        // Le bouton de réclamation n'apparaît que pour un compte bloqué (essai terminé)
+        // et non déjà payé — jamais pendant un essai encore actif, pour ne pas laisser
+        // penser qu'un paiement est nécessaire ou possible avant que ce soit réellement
+        // le cas.
         <div>
           <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginBottom: 10 }}>
-            {access.isBlocked
-              ? "Votre essai gratuit est terminé. Abonnez-vous pour continuer à utiliser la plateforme."
-              : `Essai gratuit de ${TRIAL_DAYS} jours. Abonnez-vous dès maintenant pour ne pas être coupé, et débloquer Diagnostic infirmier et Patient virtuel.`}
+            Votre essai gratuit est terminé. Avez-vous déjà réglé un abonnement ? Réclamez votre paiement ci-dessous pour le faire vérifier, ou abonnez-vous si ce n'est pas encore fait.
           </div>
           <button onClick={() => setShowModal(true)} style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12.5, padding: "9px 16px" }}>
-            💳 Abonnement
+            💳 Réclamer un paiement
           </button>
         </div>
-      )}
+      ) : null}
 
       {showModal && <SubscriptionModal onClose={() => setShowModal(false)} onMarkPending={onMarkPending} />}
     </div>
