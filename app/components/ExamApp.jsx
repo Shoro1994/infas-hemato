@@ -23098,7 +23098,7 @@ function computeChapterMastery(history) {
   return agg;
 }
 
-function SubscriptionModal({ onClose, onMarkPending }) {
+function SubscriptionModal({ onClose, onMarkPending, reclaimMode }) {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [busy, setBusy] = useState(false);
 
@@ -23120,11 +23120,15 @@ function SubscriptionModal({ onClose, onMarkPending }) {
         style={{ width: "100%", maxWidth: 420, background: COLORS.surface, borderRadius: 18, padding: 22, fontFamily: "'IBM Plex Sans', sans-serif" }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.ink }}>Choisir un abonnement</div>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.ink }}>
+            {reclaimMode ? "Réclamer un paiement déjà effectué" : "Choisir un abonnement"}
+          </div>
           <button onClick={onClose} style={{ background: "none", border: "none", fontSize: 18, color: COLORS.inkSoft, cursor: "pointer", padding: 4 }}>✕</button>
         </div>
         <p style={{ fontSize: 12, color: COLORS.inkSoft, margin: "0 0 16px" }}>
-          1. Payez via Wave (nouvel onglet). 2. Revenez ici et confirmez le forfait payé.
+          {reclaimMode
+            ? "Sélectionnez le forfait que vous avez déjà payé, puis confirmez ci-dessous pour le faire vérifier par l'administrateur."
+            : "1. Payez via Wave (nouvel onglet). 2. Revenez ici et confirmez le forfait payé."}
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
@@ -23143,18 +23147,20 @@ function SubscriptionModal({ onClose, onMarkPending }) {
                 <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: plan.color }}>{plan.label}</div>
                 <div style={{ fontSize: 12, color: COLORS.inkSoft }}>{plan.price} F CFA</div>
               </div>
-              <a
-                href={plan.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => { e.stopPropagation(); setSelectedPlan(plan); }}
-                style={{
-                  textDecoration: "none", color: "white", background: plan.color, fontWeight: 700,
-                  fontSize: 12.5, borderRadius: 999, padding: "8px 16px",
-                }}
-              >
-                Payer →
-              </a>
+              {!reclaimMode && (
+                <a
+                  href={plan.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => { e.stopPropagation(); setSelectedPlan(plan); }}
+                  style={{
+                    textDecoration: "none", color: "white", background: plan.color, fontWeight: 700,
+                    fontSize: 12.5, borderRadius: 999, padding: "8px 16px",
+                  }}
+                >
+                  Payer →
+                </a>
+              )}
             </div>
           ))}
         </div>
@@ -23214,22 +23220,32 @@ function SubscriptionGauge({ student, onMarkPending }) {
           Paiement signalé, en attente de vérification par l'administrateur.
         </div>
       ) : (
-        // Le bouton de réclamation reste visible dans tous les cas où le compte n'est
-        // ni déjà payé ni déjà en attente de vérification — qu'il soit bloqué ou encore
-        // en plein essai gratuit (donc toujours à moins de 20 jours, l'essai en durant 15).
+        // Deux entrées visibles côte à côte, plutôt qu'une seule cachant l'autre : le
+        // bouton principal "Abonnement" pour découvrir les forfaits et payer, et juste à
+        // côté "Déjà payé ? Réclamer ici", pour l'étudiant qui a payé ailleurs (ex. Wave)
+        // puis fermé le site sans avoir cliqué sur "J'ai payé" — un cas fréquent qu'il
+        // ne faut jamais laisser bloqué sans issue simple et directe.
         <div>
           <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginBottom: 10 }}>
             {access.isBlocked
-              ? "Votre essai gratuit est terminé. Avez-vous déjà réglé un abonnement ? Réclamez votre paiement ci-dessous pour le faire vérifier, ou abonnez-vous si ce n'est pas encore fait."
-              : `Essai gratuit de ${TRIAL_DAYS} jours en cours. Vous pouvez vous abonner dès maintenant, ou réclamer un paiement déjà effectué.`}
+              ? "Votre essai gratuit est terminé. Abonnez-vous pour continuer, ou réclamez un paiement déjà effectué."
+              : `Essai gratuit de ${TRIAL_DAYS} jours en cours. Vous pouvez vous abonner dès maintenant.`}
           </div>
-          <button onClick={() => setShowModal(true)} style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12.5, padding: "9px 16px" }}>
-            💳 Réclamer un paiement
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+            <button onClick={() => setShowModal(true)} style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12.5, padding: "9px 16px" }}>
+              💳 Abonnement
+            </button>
+            <button
+              onClick={() => setShowModal("reclaim")}
+              style={{ background: "none", border: "none", color: COLORS.blueDeep, fontWeight: 700, fontSize: 12, cursor: "pointer", textDecoration: "underline", padding: 0 }}
+            >
+              Déjà payé ? Réclamer ici
+            </button>
+          </div>
         </div>
       )}
 
-      {showModal && <SubscriptionModal onClose={() => setShowModal(false)} onMarkPending={onMarkPending} />}
+      {showModal && <SubscriptionModal onClose={() => setShowModal(false)} onMarkPending={onMarkPending} reclaimMode={showModal === "reclaim"} />}
     </div>
   );
 }
