@@ -13048,13 +13048,25 @@ async function incrementStudentExamCount(matricule) {
 
 async function markPaymentPending(matricule, planId) {
   try {
-    const r = await storage.get(studentKey(matricule), true);
+    // Comme pour la connexion, deux formats de clé coexistent : "infas-hemato:student:"
+    // (comptes créés depuis le 15 juillet 2026) et "infas-hemato:cand:" (comptes plus
+    // anciens). Cette fonction ne vérifiait jusqu'ici que le premier format — pour un
+    // compte ancien, le signalement de paiement échouait silencieusement : rien n'était
+    // enregistré, et l'étudiant n'apparaissait donc jamais dans la liste des paiements
+    // en attente de l'admin, même après avoir cliqué sur "J'ai payé".
+    let key = studentKey(matricule);
+    let r = await storage.get(key, true);
+    if (!r) {
+      const legacyKey = `infas-hemato:cand:${sanitizeKeyPart(matricule)}`;
+      const legacyR = await storage.get(legacyKey, true);
+      if (legacyR) { key = legacyKey; r = legacyR; }
+    }
     if (!r) return null;
     const rec = JSON.parse(r.value);
     rec.paymentStatus = "pending";
     rec.pendingSince = new Date().toISOString();
     rec.pendingPlan = planId;
-    await storage.set(studentKey(matricule), JSON.stringify(rec), true);
+    await storage.set(key, JSON.stringify(rec), true);
     return rec;
   } catch (e) {
     console.error("Erreur signalement paiement", e);
@@ -13152,12 +13164,16 @@ async function toggleStudentVIP(storageKey, newValue) {
   }
 }
 
-async function confirmPayment(storageKey) {
+// planIdOverride permet à l'admin d'activer un paiement directement, avec le plan de son
+// choix, même si l'étudiant n'a jamais cliqué sur "J'ai payé" dans l'application (cas
+// fréquent : un paiement Wave visible côté compte business, mais jamais signalé côté app).
+// Sans ce paramètre, le comportement reste inchangé : on se base sur rec.pendingPlan.
+async function confirmPayment(storageKey, planIdOverride) {
   try {
     const r = await storage.get(storageKey, true);
     if (!r) return null;
     const rec = JSON.parse(r.value);
-    const plan = SUBSCRIPTION_PLANS.find((p) => p.id === rec.pendingPlan);
+    const plan = SUBSCRIPTION_PLANS.find((p) => p.id === (planIdOverride || rec.pendingPlan));
     const isFirstPayment = !rec.paidAt; // avant mise à jour : jamais payé jusqu'ici
     rec.paymentStatus = "paid";
     rec.paidAt = new Date().toISOString();
@@ -22302,6 +22318,18 @@ function AdminScreen({ onBack }) {
     setReferralsRefreshTrigger((n) => n + 1);
   };
 
+  // Activation manuelle d'un paiement depuis la liste principale des étudiants — pour les
+  // cas où un paiement Wave est visible côté compte business, mais que l'étudiant n'a
+  // jamais cliqué sur "J'ai payé" dans l'application (le compte reste alors bloqué à tort,
+  // sans jamais apparaître dans l'onglet "Paiements en attente").
+  const [payManualMatricule, setPayManualMatricule] = useState(null);
+  const handleManualPayment = async (s, planId) => {
+    await confirmPayment(s._storageKey, planId);
+    setPayManualMatricule(null);
+    refreshStudents();
+    setReferralsRefreshTrigger((n) => n + 1);
+  };
+
   const [vipBusyMatricule, setVipBusyMatricule] = useState(null);
   const handleToggleVIP = async (s, currentValue) => {
     setVipBusyMatricule(s._displayId);
@@ -22406,6 +22434,14 @@ function AdminScreen({ onBack }) {
                           >
                             {isEditing ? "Fermer" : "🔑 Mot de passe"}
                           </button>
+                          {!access.isVIP && !access.isPaid && (
+                            <button
+                              onClick={() => setPayManualMatricule(payManualMatricule === s._displayId ? null : s._displayId)}
+                              style={{ ...secondaryBtn, padding: "5px 10px", fontSize: 11, color: COLORS.green, borderColor: COLORS.green }}
+                            >
+                              {payManualMatricule === s._displayId ? "Fermer" : "💰 Activer paiement"}
+                            </button>
+                          )}
                           {!isVIPMatricule(s.matricule) && (
                             <button
                               onClick={() => handleToggleVIP(s, s.isVIP === true)}
@@ -22431,6 +22467,27 @@ function AdminScreen({ onBack }) {
                           </Badge>
                         </div>
                       </div>
+                      {payManualMatricule === s._displayId && (
+                        <div style={{ padding: "0 16px 14px" }}>
+                          <div style={{ fontSize: 12, color: COLORS.inkSoft, marginBottom: 8 }}>
+                            À utiliser uniquement si le paiement est confirmé ailleurs (ex. compte Wave) sans que l'étudiant ait réclamé de plan dans l'application. Choisir la formule réellement payée :
+                          </div>
+                          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                            {SUBSCRIPTION_PLANS.map((p) => (
+                              <button
+                                key={p.id}
+                                onClick={() => handleManualPayment(s, p.id)}
+                                style={{
+                                  ...secondaryBtn, padding: "7px 12px", fontSize: 12,
+                                  borderColor: p.color, color: p.color,
+                                }}
+                              >
+                                {p.label} · {p.price} F
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       {isEditing && (
                         <div style={{ padding: "0 16px 14px", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                           <div style={{ fontSize: 12, color: COLORS.inkSoft }}>
