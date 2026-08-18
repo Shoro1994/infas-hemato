@@ -91,7 +91,7 @@ export async function GET(request) {
   }
 }
 
-const PROTECTED_STUDENT_FIELDS = ["isVIP", "paymentStatus", "paidAt", "paidDays", "parrainRecompense"];
+const PROTECTED_STUDENT_FIELDS = ["isVIP", "paidAt", "paidDays", "parrainRecompense"];
 
 function isAdminOnlyWritePrefix(key) {
   return key.startsWith("referral-balance:") || key === "infas-hemato:admin-messages" || key === "infas-hemato:announcements";
@@ -116,7 +116,17 @@ export async function POST(request) {
       const existing = existingRaw ? JSON.parse(existingRaw) : null;
       const incoming = JSON.parse(value);
       for (const field of PROTECTED_STUDENT_FIELDS) {
-        incoming[field] = existing ? existing[field] : (field === "isVIP" ? false : field === "paymentStatus" ? "trial" : null);
+        incoming[field] = existing ? existing[field] : (field === "isVIP" ? false : null);
+      }
+      // paymentStatus est un cas particulier : un étudiant non authentifié ne doit
+      // jamais pouvoir s'attribuer "paid" lui-même (ça resterait bloqué ici), mais
+      // DOIT pouvoir passer légitimement à "pending" — c'est précisément l'action de
+      // "réclamer un paiement" depuis l'application, qui n'accorde aucun accès en
+      // elle-même et attend une confirmation manuelle de l'admin. Une version
+      // antérieure de cette protection bloquait aussi ce cas légitime par erreur,
+      // empêchant silencieusement toute réclamation de paiement d'aboutir.
+      if (incoming.paymentStatus === "paid" && (!existing || existing.paymentStatus !== "paid")) {
+        incoming.paymentStatus = existing ? existing.paymentStatus : "trial";
       }
       value = JSON.stringify(incoming);
     } catch {
