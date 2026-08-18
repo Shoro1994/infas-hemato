@@ -12938,7 +12938,12 @@ async function saveSeen(matricule, seen) {
 
 /* ---- Comptes étudiants (matricule = identifiant, année de naissance = mot de passe) ---- */
 const STUDENT_PREFIX = "infas-hemato:student:";
-const TRIAL_DAYS = 15;
+const TRIAL_DAYS = 15; // essai des comptes déjà inscrits avant le passage à 7 jours (voir ci-dessous)
+// À partir de cette date, tout NOUVEAU compte reçoit un essai de 7 jours au lieu de 15.
+// Les comptes déjà inscrits avant cette date gardent leurs 15 jours d'origine, sans
+// aucun changement pour eux — seule la durée proposée aux futures inscriptions change.
+const TRIAL_DAYS_NEW = 7;
+const TRIAL_LENGTH_CHANGE_AT = new Date("2026-08-18T00:00:00Z").getTime();
 const PAID_DAYS = 365; // repli si un compte "paid" existant n'a pas de plan enregistré
 
 const SUBSCRIPTION_PLANS = [
@@ -13325,7 +13330,14 @@ function computeAccess(student) {
   const startMs = trialStart ? new Date(trialStart).getTime() : NaN;
   const isPaidStartMs = isPaid ? new Date(student.paidAt).getTime() : NaN;
   const start = isPaid ? isPaidStartMs : startMs;
-  const totalDays = isPaid ? (student.paidDays || PAID_DAYS) : TRIAL_DAYS;
+  // Un compte inscrit à partir du 18 août 2026 reçoit 7 jours d'essai ; un compte
+  // inscrit avant cette date garde ses 15 jours d'origine, quelle que soit la date à
+  // laquelle ce calcul s'exécute. On se base sur createdAt (date d'inscription réelle)
+  // en priorité — trialResetAt ne sert qu'à des comptes très anciens n'ayant jamais eu
+  // de vraie date d'inscription enregistrée, donc traités comme "anciens" par défaut.
+  const registeredAt = student.createdAt ? new Date(student.createdAt).getTime() : null;
+  const isNewRegistration = Number.isFinite(registeredAt) && registeredAt >= TRIAL_LENGTH_CHANGE_AT;
+  const totalDays = isPaid ? (student.paidDays || PAID_DAYS) : (isNewRegistration ? TRIAL_DAYS_NEW : TRIAL_DAYS);
   // Filet de sécurité : si aucune date exploitable n'a été trouvée (très anciens comptes
   // incomplets), on ne calcule jamais un résultat "NaN" affiché à l'écran — on considère
   // plutôt, par défaut, un essai gratuit qui démarre aujourd'hui.
@@ -23229,7 +23241,7 @@ function SubscriptionGauge({ student, onMarkPending }) {
           <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginBottom: 10 }}>
             {access.isBlocked
               ? "Votre essai gratuit est terminé. Abonnez-vous pour continuer, ou réclamez un paiement déjà effectué."
-              : `Essai gratuit de ${TRIAL_DAYS} jours en cours. Vous pouvez vous abonner dès maintenant.`}
+              : `Essai gratuit de ${access.totalDays} jours en cours. Vous pouvez vous abonner dès maintenant.`}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <button onClick={() => setShowModal(true)} style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12.5, padding: "9px 16px" }}>
