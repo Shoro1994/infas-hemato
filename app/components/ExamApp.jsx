@@ -22367,10 +22367,19 @@ function AdminScreen({ onBack }) {
   const paid = students ? students.filter((s) => s.paymentStatus === "paid") : [];
 
   const [referralsRefreshTrigger, setReferralsRefreshTrigger] = useState(0);
+  // Protection anti-double-clic : l'action de confirmation prend un court instant (appel
+  // réseau), et sans retour visuel immédiat, il est naturel de croire que le clic n'a pas
+  // fonctionné et de recliquer — chaque clic supplémentaire active le paiement une fois de
+  // plus, et comme les paiements se cumulent désormais, cela peut gonfler artificiellement
+  // le nombre de jours accordés (plusieurs forfaits activés au lieu d'un seul).
+  const [confirmingKey, setConfirmingKey] = useState(null);
   const handleConfirm = async (s) => {
+    if (confirmingKey) return;
+    setConfirmingKey(s._storageKey);
     await confirmPayment(s._storageKey);
-    refreshStudents();
+    await refreshStudents();
     setReferralsRefreshTrigger((n) => n + 1);
+    setConfirmingKey(null);
   };
 
   // Activation manuelle d'un paiement depuis la liste principale des étudiants — pour les
@@ -22379,10 +22388,13 @@ function AdminScreen({ onBack }) {
   // sans jamais apparaître dans l'onglet "Paiements en attente").
   const [payManualMatricule, setPayManualMatricule] = useState(null);
   const handleManualPayment = async (s, planId) => {
+    if (confirmingKey) return;
+    setConfirmingKey(s._storageKey);
     await confirmPayment(s._storageKey, planId);
     setPayManualMatricule(null);
-    refreshStudents();
+    await refreshStudents();
     setReferralsRefreshTrigger((n) => n + 1);
+    setConfirmingKey(null);
   };
 
   const [vipBusyMatricule, setVipBusyMatricule] = useState(null);
@@ -22532,12 +22544,15 @@ function AdminScreen({ onBack }) {
                               <button
                                 key={p.id}
                                 onClick={() => handleManualPayment(s, p.id)}
+                                disabled={confirmingKey === s._storageKey}
                                 style={{
                                   ...secondaryBtn, padding: "7px 12px", fontSize: 12,
                                   borderColor: p.color, color: p.color,
+                                  opacity: confirmingKey === s._storageKey ? 0.5 : 1,
+                                  cursor: confirmingKey === s._storageKey ? "wait" : "pointer",
                                 }}
                               >
-                                {p.label} · {p.price} F
+                                {confirmingKey === s._storageKey ? "Activation…" : `${p.label} · ${p.price} F`}
                               </button>
                             ))}
                           </div>
@@ -22594,8 +22609,16 @@ function AdminScreen({ onBack }) {
                           )}
                         </div>
                         {plan ? (
-                          <button onClick={() => handleConfirm(s)} style={{ ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px" }}>
-                            Confirmer le paiement
+                          <button
+                            onClick={() => handleConfirm(s)}
+                            disabled={confirmingKey === s._storageKey}
+                            style={{
+                              ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px",
+                              opacity: confirmingKey === s._storageKey ? 0.5 : 1,
+                              cursor: confirmingKey === s._storageKey ? "wait" : "pointer",
+                            }}
+                          >
+                            {confirmingKey === s._storageKey ? "Activation…" : "Confirmer le paiement"}
                           </button>
                         ) : (
                           <button
@@ -22616,9 +22639,14 @@ function AdminScreen({ onBack }) {
                               <button
                                 key={p.id}
                                 onClick={() => handleManualPayment(s, p.id)}
-                                style={{ ...secondaryBtn, padding: "7px 12px", fontSize: 12, borderColor: p.color, color: p.color }}
+                                disabled={confirmingKey === s._storageKey}
+                                style={{
+                                  ...secondaryBtn, padding: "7px 12px", fontSize: 12, borderColor: p.color, color: p.color,
+                                  opacity: confirmingKey === s._storageKey ? 0.5 : 1,
+                                  cursor: confirmingKey === s._storageKey ? "wait" : "pointer",
+                                }}
                               >
-                                {p.label} · {p.price} F
+                                {confirmingKey === s._storageKey ? "Activation…" : `${p.label} · ${p.price} F`}
                               </button>
                             ))}
                           </div>
