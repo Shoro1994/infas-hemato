@@ -22367,18 +22367,24 @@ function AdminScreen({ onBack }) {
   const paid = students ? students.filter((s) => s.paymentStatus === "paid") : [];
 
   const [referralsRefreshTrigger, setReferralsRefreshTrigger] = useState(0);
-  // Protection anti-double-clic : l'action de confirmation prend un court instant (appel
-  // réseau), et sans retour visuel immédiat, il est naturel de croire que le clic n'a pas
-  // fonctionné et de recliquer — chaque clic supplémentaire active le paiement une fois de
-  // plus, et comme les paiements se cumulent désormais, cela peut gonfler artificiellement
-  // le nombre de jours accordés (plusieurs forfaits activés au lieu d'un seul).
+  // Protection anti-double-clic. IMPORTANT : useState seul ne suffit pas ici — son
+  // changement ne devient visible qu'au rendu SUIVANT, donc deux clics rapprochés
+  // (avant que l'écran n'ait eu le temps de se mettre à jour) peuvent tous les deux lire
+  // encore "confirmingKey = null" et donc tous les deux passer le verrou, malgré l'appel
+  // à setConfirmingKey(...) fait par le premier. Un useRef, lui, change sa valeur
+  // immédiatement et de façon synchrone — le second clic, même immédiat, voit forcément
+  // la valeur mise à jour par le premier. On garde confirmingKey (useState) uniquement
+  // pour l'affichage visuel du bouton ("Activation…"), jamais pour la décision de bloquer.
+  const confirmingKeyRef = useRef(null);
   const [confirmingKey, setConfirmingKey] = useState(null);
   const handleConfirm = async (s) => {
-    if (confirmingKey) return;
+    if (confirmingKeyRef.current) return;
+    confirmingKeyRef.current = s._storageKey;
     setConfirmingKey(s._storageKey);
     await confirmPayment(s._storageKey);
     await refreshStudents();
     setReferralsRefreshTrigger((n) => n + 1);
+    confirmingKeyRef.current = null;
     setConfirmingKey(null);
   };
 
@@ -22388,12 +22394,14 @@ function AdminScreen({ onBack }) {
   // sans jamais apparaître dans l'onglet "Paiements en attente").
   const [payManualMatricule, setPayManualMatricule] = useState(null);
   const handleManualPayment = async (s, planId) => {
-    if (confirmingKey) return;
+    if (confirmingKeyRef.current) return;
+    confirmingKeyRef.current = s._storageKey;
     setConfirmingKey(s._storageKey);
     await confirmPayment(s._storageKey, planId);
     setPayManualMatricule(null);
     await refreshStudents();
     setReferralsRefreshTrigger((n) => n + 1);
+    confirmingKeyRef.current = null;
     setConfirmingKey(null);
   };
 
