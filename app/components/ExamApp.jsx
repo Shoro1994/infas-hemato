@@ -1214,9 +1214,9 @@ const FAQ_ENTRIES = [
   { keywords: ["repet", "répét", "meme question", "même question", "toujours les meme"],
     question: "Pourquoi je revois parfois les mêmes questions ?",
     answer: "La plateforme évite de vous répéter une question tant que vous n'avez pas fait le tour de tout ce qui est disponible dans une matière. Avec un stock encore limité de questions dans certaines matières, il peut arriver d'en revoir plus vite que dans d'autres." },
-  { keywords: ["payer", "paiement", "abonnement", "wave", "1000", "gratuit", "essai", "expir", "bloqu"],
+  { keywords: ["payer", "paiement", "abonnement", "wave", "300", "500", "800", "2000", "gratuit", "essai", "expir", "bloqu", "reclamer", "réclamer"],
     question: "Comment fonctionne l'abonnement ?",
-    answer: "Vous disposez de 30 jours gratuits à l'inscription. Ensuite, un paiement unique de 1000 F via Wave (bouton « Payer » dans votre tableau de bord) débloque un an complet. Après avoir payé, cliquez sur « J'ai payé, faire vérifier » : l'administrateur confirmera votre paiement et votre compteur repassera à 365 jours." },
+    answer: "Vous disposez d'un essai gratuit à l'inscription. Trois formules sont ensuite proposées via Wave : 1 mois (500 F), 2 mois (800 F) ou 6 mois (2000 F), depuis le bouton « Abonnement » de votre tableau de bord. Si vous avez déjà payé sans avoir cliqué sur confirmer, utilisez le lien « Déjà payé ? Réclamer ici » : l'administrateur vérifiera et débloquera votre compte. Les jours restants d'un abonnement en cours s'ajoutent à ceux du nouveau paiement, ils ne sont jamais perdus." },
   { keywords: ["antenne", "changer antenne", "mauvaise antenne"],
     question: "Je me suis trompé d'antenne à l'inscription, que faire ?",
     answer: "Contactez le concepteur via le bouton « Parler au concepteur » ci-dessous en précisant votre matricule et la bonne antenne : il pourra corriger votre profil depuis l'espace administrateur." },
@@ -1225,7 +1225,7 @@ const FAQ_ENTRIES = [
     answer: "Sur le tableau de bord, cliquez sur « Choisir une matière » : la liste complète du programme officiel s'affiche par semestre et par UE. Seules les matières marquées « Disponible » ont déjà leur contenu chargé ; les autres arriveront progressivement." },
   { keywords: ["don", "faire un don", "soutenir"],
     question: "Comment soutenir le projet ?",
-    answer: "Le bouton « Faire un don » historique a été remplacé par l'abonnement (1000 F/an) qui finance directement le développement de la plateforme. Vous pouvez aussi simplement en parler autour de vous !" },
+    answer: "Le bouton « Faire un don » historique a été remplacé par l'abonnement, qui finance directement le développement de la plateforme. Vous pouvez aussi parrainer d'autres étudiants (100 F par filleul qui s'abonne), ou simplement en parler autour de vous !" },
   { keywords: ["apprendre", "resume", "résumé", "lecon", "leçon"],
     question: "À quoi sert le bouton « Apprendre » ?",
     answer: "« Apprendre » propose un résumé clair des notions à connaître, chapitre par chapitre, avant de passer à l'entraînement. C'est fait pour lire et comprendre, pas pour être interrogé — idéal en tout début de révision sur une nouvelle matière." },
@@ -12947,9 +12947,9 @@ const TRIAL_LENGTH_CHANGE_AT = new Date("2026-08-18T00:00:00Z").getTime();
 const PAID_DAYS = 365; // repli si un compte "paid" existant n'a pas de plan enregistré
 
 const SUBSCRIPTION_PLANS = [
-  { id: "1mois", label: "1 mois", price: 300, days: 30, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=300", color: "#1E8F5E" },
-  { id: "2mois", label: "2 mois", price: 500, days: 60, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=500", color: "#0B5D8C" },
-  { id: "6mois", label: "6 mois", price: 1000, days: 180, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=1000", color: "#2D6E6B" },
+  { id: "1mois", label: "1 mois", price: 500, days: 30, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=500", color: "#1E8F5E" },
+  { id: "2mois", label: "2 mois", price: 800, days: 60, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=800", color: "#0B5D8C" },
+  { id: "6mois", label: "6 mois", price: 2000, days: 180, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=2000", color: "#2D6E6B" },
 ];
 
 function studentKey(matricule) {
@@ -21166,6 +21166,18 @@ function LoginScreen({ onLogin }) {
             </button>
           </form>
         )}
+
+        <a
+          href="https://whatsapp.com/channel/0029Vb9GKoL1XqufEwolKM02"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+            marginTop: 18, fontSize: 12, fontWeight: 700, color: "#25D366", textDecoration: "none",
+          }}
+        >
+          <span style={{ fontSize: 14 }}>💬</span> Rejoignez notre chaîne WhatsApp
+        </a>
       </div>
     </div>
   );
