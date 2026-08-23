@@ -22493,6 +22493,8 @@ function DefiMonthlyRankingScreen({ onBack, student }) {
 function AdminScreen({ onBack }) {
   const [tab, setTab] = useState("students"); // students | payments | announcements | ratings
   const [students, setStudents] = useState(null);
+  const [showExportNumbers, setShowExportNumbers] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState(null);
   const [announcements, setAnnouncements] = useState(null);
   const [ratings, setRatings] = useState(null);
   const [pwdEditMatricule, setPwdEditMatricule] = useState(null);
@@ -22630,6 +22632,57 @@ function AdminScreen({ onBack }) {
               <StatCard label="Examens réalisés (total)" value={total === null ? "…" : totalExams} tone="green" />
               <StatCard label="Étudiants parrainés" value={students === null ? "…" : students.filter((s) => s.parrainMatricule).length} tone="blue" />
             </div>
+            {students && students.length > 0 && (
+              <div style={{ marginBottom: 16 }}>
+                <button
+                  onClick={() => setShowExportNumbers((v) => !v)}
+                  style={{ ...secondaryBtn, padding: "8px 14px", fontSize: 12.5 }}
+                >
+                  {showExportNumbers ? "Fermer l'export" : "📋 Exporter les numéros de téléphone"}
+                </button>
+                {showExportNumbers && (() => {
+                  // Un numéro de téléphone ivoirien commence par 0 et compte 10 chiffres — ce qui
+                  // exclut naturellement les vrais matricules officiels (format "25-01015"), qui ne
+                  // sont pas des numéros joignables sur WhatsApp.
+                  const phoneNumbers = students
+                    .map((s) => s._displayId)
+                    .filter((id) => /^0\d{9}$/.test(id));
+                  const uniquePhones = [...new Set(phoneNumbers)];
+                  const text = uniquePhones.join("\n");
+                  return (
+                    <div style={{ marginTop: 10, background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 14 }}>
+                      <div style={{ fontSize: 12, color: COLORS.inkSoft, marginBottom: 8 }}>
+                        {uniquePhones.length} numéro(s) trouvé(s) sur {students.length} comptes (les matricules officiels, non joignables sur WhatsApp, sont automatiquement exclus). Copiez la liste ci-dessous et collez-la dans une <b>liste de diffusion WhatsApp Business</b>.
+                      </div>
+                      <textarea
+                        readOnly
+                        value={text}
+                        onClick={(e) => e.target.select()}
+                        style={{
+                          width: "100%", height: 160, fontFamily: "'IBM Plex Mono', monospace", fontSize: 12.5,
+                          padding: 10, borderRadius: 8, border: `1px solid ${COLORS.line}`, resize: "vertical", boxSizing: "border-box",
+                        }}
+                      />
+                      <button
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(text);
+                            setCopyFeedback("Copié !");
+                            setTimeout(() => setCopyFeedback(null), 2000);
+                          } catch {
+                            setCopyFeedback("Sélectionnez le texte ci-dessus et copiez-le manuellement (Ctrl+C).");
+                            setTimeout(() => setCopyFeedback(null), 4000);
+                          }
+                        }}
+                        style={{ ...primaryBtn, background: COLORS.green, marginTop: 8, padding: "7px 14px", fontSize: 12.5 }}
+                      >
+                        {copyFeedback || "Copier la liste"}
+                      </button>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
             <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, overflow: "hidden" }}>
               {students === null ? (
                 <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Chargement…</div>
