@@ -1198,10 +1198,10 @@ const DIAGNOSTIC_ENTRIES = [
 const FAQ_ENTRIES = [
   { keywords: ["inscri", "créer un compte", "creer un compte", "nouveau compte"],
     question: "Comment créer un compte ?",
-    answer: "Sur l'écran de connexion, cliquez sur l'onglet « Créer un compte », puis renseignez votre matricule, votre année de naissance, votre nom, prénom, antenne, niveau et spécialité. Notez bien votre matricule et votre année de naissance : ce sont vos identifiants pour toujours." },
-  { keywords: ["mot de passe", "matricule oubli", "identifiant oubli", "perdu mon matricule", "oublié"],
-    question: "J'ai oublié mon matricule ou mon mot de passe, que faire ?",
-    answer: "Votre mot de passe est toujours votre année de naissance (4 chiffres). Si vous avez oublié votre matricule, contactez le concepteur via le bouton « Parler au concepteur » ci-dessous avec votre nom, prénom et numéro de téléphone : il pourra le retrouver dans l'espace administrateur." },
+    answer: "Sur l'écran de connexion, cliquez sur l'onglet « Créer un compte », puis renseignez votre numéro de téléphone, votre année de naissance, votre nom, prénom, antenne, niveau et spécialité. Notez bien votre numéro et votre année de naissance : ce sont vos identifiants pour toujours." },
+  { keywords: ["mot de passe", "numero oubli", "identifiant oubli", "perdu mon numero", "oublié"],
+    question: "J'ai oublié mon numéro ou mon mot de passe, que faire ?",
+    answer: "Votre mot de passe est toujours votre année de naissance (4 chiffres). Si vous avez oublié le numéro utilisé à l'inscription, contactez le concepteur via le bouton « Parler au concepteur » ci-dessous avec votre nom et prénom : il pourra le retrouver dans l'espace administrateur." },
   { keywords: ["entrainement", "entraînement", "entrainer", "revision", "révision"],
     question: "Comment fonctionne le mode Entraînement ?",
     answer: "Dans « Entraînement », choisissez un chapitre (ou « Tous les chapitres »). Il n'y a pas de limite de temps : après chaque réponse, la correction et l'explication s'affichent immédiatement, pour vous aider à apprendre au fur et à mesure." },
@@ -1219,7 +1219,7 @@ const FAQ_ENTRIES = [
     answer: "Vous disposez d'un essai gratuit à l'inscription. Trois formules sont ensuite proposées via Wave : 1 mois (500 F), 2 mois (800 F) ou 6 mois (2000 F), depuis le bouton « Abonnement » de votre tableau de bord. Si vous avez déjà payé sans avoir cliqué sur confirmer, utilisez le lien « Déjà payé ? Réclamer ici » : l'administrateur vérifiera et débloquera votre compte. Les jours restants d'un abonnement en cours s'ajoutent à ceux du nouveau paiement, ils ne sont jamais perdus." },
   { keywords: ["antenne", "changer antenne", "mauvaise antenne"],
     question: "Je me suis trompé d'antenne à l'inscription, que faire ?",
-    answer: "Contactez le concepteur via le bouton « Parler au concepteur » ci-dessous en précisant votre matricule et la bonne antenne : il pourra corriger votre profil depuis l'espace administrateur." },
+    answer: "Contactez le concepteur via le bouton « Parler au concepteur » ci-dessous en précisant votre numéro et la bonne antenne : il pourra corriger votre profil depuis l'espace administrateur." },
   { keywords: ["matiere", "matière", "ecue", "programme", "cours disponible"],
     question: "Quelles matières sont disponibles ?",
     answer: "Sur le tableau de bord, cliquez sur « Choisir une matière » : la liste complète du programme officiel s'affiche par semestre et par UE. Seules les matières marquées « Disponible » ont déjà leur contenu chargé ; les autres arriveront progressivement." },
@@ -1423,6 +1423,10 @@ const CHAPTERS = [
   { id: "mt_diphterie", label: "La Diphtérie", subjectId: "maladies-non-transmissibles" },
   { id: "mt_oreillons", label: "Les Oreillons", subjectId: "maladies-non-transmissibles" },
   { id: "mt_raa", label: "Rhumatisme Articulaire Aigu (RAA)", subjectId: "maladies-non-transmissibles" },
+  { id: "mt_cholera", label: "Le Choléra", subjectId: "maladies-non-transmissibles" },
+  { id: "mt_tetanos", label: "Le Tétanos", subjectId: "maladies-non-transmissibles" },
+  { id: "mt_typhoide", label: "La Fièvre typhoïde (approfondi)", subjectId: "maladies-non-transmissibles" },
+  { id: "mt_eruptives", label: "Maladies éruptives comparées", subjectId: "maladies-non-transmissibles" },
   { id: "mnt_rhumato", label: "Rhumatologie", subjectId: "maladies-non-transmissibles" },
   { id: "mnt_gastrite", label: "Gastrites", subjectId: "maladies-non-transmissibles" },
   { id: "istvih_ist_gen", label: "Généralités sur les IST", subjectId: "ist-vih" },
@@ -1440,6 +1444,10 @@ const CHAPTERS = [
   { id: "angsante_test_officiel", label: "Test officiel du cours", subjectId: "anglais-sante" },
   { id: "si_soins_essentiels", label: "Soins essentiels au nouveau-né", subjectId: "sante-infantile" },
   { id: "si_incubateur", label: "Incubateur néonatal", subjectId: "sante-infantile" },
+  { id: "si_allaitement", label: "Allaitement (généralités, anatomie du sein)", subjectId: "sante-infantile" },
+  { id: "si_allaitement_complications", label: "Difficultés et complications de l'allaitement", subjectId: "sante-infantile" },
+  { id: "si_hygiene_nourrice", label: "Hygiène de la nourrice", subjectId: "sante-infantile" },
+  { id: "si_anje_vih", label: "Alimentation du nourrisson dans le contexte du VIH (ANJE)", subjectId: "sante-infantile" },
   { id: "si_mensurations", label: "Mensurations", subjectId: "sante-infantile" },
   { id: "si_allaitement_physio", label: "Allaitement (anatomie et physiologie)", subjectId: "sante-infantile" },
   { id: "si_malnutrition", label: "Malnutrition : types et formes cliniques", subjectId: "sante-infantile" },
@@ -2002,10 +2010,7 @@ const ECUE_LIST = [
   { id: "TLB1211", ueId: "TLB1210", code: "TLB 1211", label: "Biochimie", credits: 1, subjectId: null },
   { id: "TLB1212", ueId: "TLB1210", code: "TLB 1212", label: "Immunologie", credits: 1, subjectId: null },
   { id: "TLB1213", ueId: "TLB1210", code: "TLB 1213", label: "Hématologie", credits: 1, subjectId: "hematologie" },
-  { id: "SCO1221", ueId: "SCO1220", code: "SCO 1221", label: "Santé communautaire", credits: 1, subjectId: "sante-communautaire" },
-  { id: "SCO1222", ueId: "SCO1220", code: "SCO 1222", label: "Santé communautaire", credits: 1, subjectId: "sante-communautaire" },
-  { id: "SCO1223", ueId: "SCO1220", code: "SCO 1223", label: "Santé communautaire", credits: 1, subjectId: "sante-communautaire" },
-  { id: "SCO1224", ueId: "SCO1220", code: "SCO 1224", label: "Santé communautaire", credits: 1, subjectId: "sante-communautaire" },
+  { id: "SCO1221", ueId: "SCO1220", code: "SCO 1221", label: "Santé communautaire", credits: 4, subjectId: "sante-communautaire" },
   { id: "STG1221", ueId: "STG1220", code: "STG 1221", label: "Stage péri-urbain + rapport", credits: 3, subjectId: null },
   { id: "STG1222", ueId: "STG1220", code: "STG 1222", label: "Stage en milieu hospitalier + rapport", credits: 4, subjectId: null },
   { id: "MSO1231", ueId: "MSO1230", code: "MSO 1231", label: "Démarche de soin", credits: 1, subjectId: null },
@@ -5448,6 +5453,10 @@ const SANTECOMMU_RAW = [
     ["Les cyanures","L'eau de pluie uniquement","Le sable uniquement","L'oxygène"],[0],
     "En milieu urbain, les eaux résiduelles industrielles contiennent des produits toxiques tels que les cyanures et le mercure, pouvant contaminer la mer et la faune ; elles doivent donc être épurées et traitées avant évacuation.",
     "Santé communautaire — Hygiène, VIII.2.1 Les eaux résiduelles industrielles"],
+  ["QCU","santecommu_hygiene_excreta",2,"Le traitement des déchets radioactifs pose un problème particulier de traitement et de lieu de dépôt, tant pour les pays industrialisés que pour :",
+    ["Les pays en voie de développement","Aucun autre pays n'est concerné","Uniquement les pays producteurs d'énergie nucléaire","Uniquement les pays côtiers"],[0],
+    "La gestion des déchets radioactifs est une préoccupation tant pour les pays industrialisés que pour les pays en voie de développement ; les pays développés, producteurs de ces déchets, sont eux-mêmes confrontés au traitement correct de ces déchets du fait du coût élevé de ces traitements.",
+    "Santé communautaire — Hygiène, IX.2 Le traitement des déchets radioactifs"],
   ["QCU","santecommu_hygiene_excreta",2,"Les déchets toxiques, produits notamment par les industries métallurgiques, doivent être traités par des unités spécialisées avant leur évacuation, sous peine de :",
     ["Polluer les points d'eau","N'avoir aucune conséquence","Améliorer la qualité de l'eau","Réduire automatiquement la pollution"],[0],
     "Les nombreuses industries, surtout métallurgiques, créent d'énormes quantités de déchets toxiques qui, s'ils ne sont pas traités, pourraient polluer les points d'eau ; ces industries devraient donc posséder des unités de traitement des déchets avant leur évacuation.",
@@ -5588,6 +5597,10 @@ const SANTECOMMU_RAW = [
     ["Éviter un débit de langage trop rapide, en ménageant des pauses","Éviter d'alterner stationnements et déplacements","Rester dans un seul lieu pendant toute l'animation","Faire les interventions assis pour se rapprocher des participants"],[0],
     "Les qualités d'un bon animateur comprennent : accepter d'être « sous le regard » des participants, éviter de monopoliser la parole, éviter un débit trop rapide (ménager des pauses), alterner stationnements et déplacements, mettre le groupe en mouvement vers les objectifs, et faire les interventions debout pour créer un ascendant sur les participants.",
     "Santé communautaire — Technique d'animation de groupe, III. Les qualités d'un bon animateur"],
+  ["QCU","commu_animation_taxonomie",2,"Selon la taxonomie de la technique d'animation de groupe, la dernière étape consiste à :",
+    ["Éviter si possible les interprètes, sources de déperdition de l'information","Saluer les participants et se présenter","Commencer l'animation dès l'entrée en salle","Introduire le thème de façon vivante"],[0],
+    "La dernière étape de la taxonomie de l'animation de groupe consiste à éviter, si possible, le recours à des interprètes, qui constituent une source de déperdition de l'information transmise.",
+    "Santé communautaire – Technique d'animation de groupe, IV. Taxonomie de la technique d'animation de groupe"],
   ["QCU","commu_animation_taxonomie",2,"Selon la taxonomie de la technique d'animation de groupe, la première étape consiste à :",
     ["Saluer les participants et se présenter","Distribuer un questionnaire final","Clôturer immédiatement la séance","Facturer les participants"],[0],
     "Toute animation de groupe doit obéir à l'ordre suivant : saluer les participants et se présenter, demander aux participants de se présenter, commencer l'animation dès l'entrée en salle, introduire le thème de façon vivante, animer dans la langue connue de tous.",
@@ -9175,6 +9188,22 @@ const PSYCHOANTHRO_SUPP_RAW = [
 
 const SANTEINFANT_RAW = [
   // ===== Soins essentiels au nouveau-né =====
+  ["QCU","si_soins_essentiels",2,"Dans la chronologie des soins essentiels du nouveau-né, la ligature et la section du cordon ombilical doivent se faire entre :",
+    ["1 et 3 minutes de vie","10 et 15 minutes de vie","30 et 45 minutes de vie","Immédiatement à la naissance, sans délai"],[0],
+    "Durant la période 0-1 minute de vie, la ligature et la section du cordon ombilical du nouveau-né se font entre 1 et 3 minutes de vie.",
+    "Santé infantile — Soins essentiels aux nouveau-nés, I.2 Technique de soins, 1-60 minutes de vie"],
+  ["QCU","si_soins_essentiels",2,"Durant la période 1-60 minutes de vie, la température du nouveau-né doit être mesurée :",
+    ["Toutes les 15 minutes, soit 4 fois dans l'heure","Une seule fois, à la naissance","Toutes les 5 minutes","Uniquement en cas de signe d'hypothermie"],[0],
+    "Durant les 60 premières minutes de vie, la température du nouveau-né doit être mesurée toutes les 15 minutes, soit 4 fois dans l'heure.",
+    "Santé infantile — Soins essentiels aux nouveau-nés, I.2 Technique de soins, 1-60 minutes de vie"],
+  ["QCM","si_soins_essentiels",3,"Durant la période 60-90 minutes de vie, les soins au nouveau-né comprennent l'instillation de 2 gouttes de collyre antiseptique dans chaque œil, l'examen à la recherche de malformations et de réflexes archaïques, et :",
+    ["L'administration de vitamine K1", "Les soins ombilicaux", "Habiller chaudement le nouveau-né", "La première vaccination BCG systématique"],[0,1,2],
+    "Durant la période 60-90 minutes de vie : collyre antiseptique (2 gouttes/œil), recherche de malformations et réflexes archaïques, soins ombilicaux, administration de vitamine K1, et habillage chaud du nouveau-né.",
+    "Santé infantile — Soins essentiels aux nouveau-nés, I.2 Technique de soins, 60-90 minutes de vie"],
+  ["QCU","si_soins_essentiels",3,"La dose de vitamine K1 administrée en intramusculaire à un nouveau-né dont le poids est supérieur ou égal à 1500 g est de :",
+    ["1 mg","0,5 mg","5 mg","10 mg"],[0],
+    "Pour un nouveau-né de poids ≥ 1500 g, la dose de vitamine K1 est de 1 mg en IM ; pour un poids < 1500 g, la dose est de 0,5 mg en IM (ou 3 gouttes/kg de poids en per os).",
+    "Santé infantile — Soins essentiels aux nouveau-nés, I.2 Technique de soins, 60-90 minutes de vie"],
   ["QCU","si_soins_essentiels",1,"Dans le cadre de ce cours, à quelle période sont limités les soins essentiels du nouveau-né ?",
     ["Aux 90 premières minutes de vie","Aux 24 premières heures de vie","À la première semaine de vie","Au premier mois de vie"],[0],
     "Dans le cadre de ce cours, les soins essentiels du nouveau-né sont limités aux 90 premières minutes de vie.",
@@ -9237,6 +9266,22 @@ const SANTEINFANT_RAW = [
     ["PB inférieur à 11,5 cm","PB inférieur à 15 cm","PB inférieur à 20 cm","PB inférieur à 5 cm"],[0],
     "Dans la tranche 6-59 mois, tout enfant dont le PB est inférieur à 11,5 cm est considéré comme malnutri.",
     "Santé infantile – Mensurations"],
+  ["QCU","si_mensurations",2,"Selon le tableau récapitulatif des repères de croissance, à quel âge le poids de l'enfant atteint-il normalement le double du poids de naissance (PNx2) ?",
+    ["3 mois","9 mois","12 mois","24 mois"],[0],
+    "Selon le tableau de croissance, à 3 mois, le poids de l'enfant atteint normalement le double du poids de naissance (PNx2), soit environ 6 kg si le poids de naissance était de 3 kg.",
+    "Santé infantile — Mensurations, VI. Tableau récapitulatif des repères normaux de croissance"],
+  ["QCU","si_mensurations",2,"Selon le tableau récapitulatif des repères de croissance, à quel âge le poids de l'enfant atteint-il normalement le triple du poids de naissance (PNx3) ?",
+    ["12 mois","3 mois","24 mois","4 ans"],[0],
+    "Selon le tableau de croissance, à 12 mois, le poids de l'enfant atteint normalement le triple du poids de naissance (PNx3).",
+    "Santé infantile — Mensurations, VI. Tableau récapitulatif des repères normaux de croissance"],
+  ["QCU","si_mensurations",2,"Selon le tableau récapitulatif des repères de croissance, la taille de naissance est normalement comprise entre :",
+    ["46 et 54 cm","30 et 40 cm","60 et 70 cm","20 et 30 cm"],[0],
+    "Selon le tableau de croissance, la taille normale à la naissance est comprise entre 46 et 54 cm, pour un périmètre crânien (PC) de 35 cm.",
+    "Santé infantile — Mensurations, VI. Tableau récapitulatif des repères normaux de croissance"],
+  ["QCU","si_mensurations",3,"Chez un enfant de plus de 24 mois (mesurant plus de 87 cm), lorsque la taille est prise en position couchée, il faut :",
+    ["Soustraire 0,7 cm de la taille prise couchée","Ajouter 0,7 cm à la taille prise couchée","Ne rien corriger, la mesure couchée est directement valable","Multiplier la mesure par 1,5"],[0],
+    "Chez l'enfant de plus de 24 mois (87 cm), si la taille est exceptionnellement prise en position couchée, il faut soustraire 0,7 cm de la valeur obtenue pour obtenir l'équivalent en position debout.",
+    "Santé infantile — Mensurations, III.2 Mesure de la taille"],
   ["QCU","si_mensurations",2,"Quelle est la formule citée pour estimer le périmètre crânien (PC) attendu à partir de la taille de l'enfant ?",
     ["PC = [Taille actuelle en cm / 2] + 10 cm","PC = Taille en cm × 2","PC = Poids en kg + 10 cm","PC = Taille en cm - 10 cm"],[0],
     "La formule citée est : PC = [Taille actuelle en cm / 2] + 10 cm.",
@@ -9757,7 +9802,15 @@ const MNT_RAW = [
     ["Risque de mort subite en cas de mouvement violent et brusque","Risque de fracture osseuse","Risque de chute uniquement","Aucune précaution particulière n'est nécessaire"],[0],
     "Tout patient chez qui l'on a diagnostiqué une péricardite doit être mobilisé avec précaution et douceur, du fait d'un risque de mort subite en cas de mouvement violent et brusque.",
     "Maladies non transmissibles – Péricardite aiguë, prise en charge infirmière"],
+  ["QCU","mnt_pericardite",2,"Dans la prise en charge de la péricardite, le drainage chirurgical se pratique systématiquement en cas de tout épanchement liquidien. Cette affirmation est :",
+    ["Fausse", "Vraie"],[0],
+    "Faux : le drainage chirurgical ne se pratique qu'en cas de liquide purulent, épais et difficile à retirer à l'aide d'un trocart ; une ponction péricardique simple suffit généralement pour un épanchement liquidien courant.",
+    "Maladies non transmissibles — Péricardite, cas clinique, traitement"],
   // ===== Lithiase urinaire =====
+  ["QCU","mnt_lithiase",2,"Dans la lithiase urinaire, la radiographie de l'abdomen sans préparation (ASP) montre des calculs radio-opaques. Cette affirmation est :",
+    ["Vraie", "Fausse"],[0],
+    "Vrai, la radiographie de l'abdomen sans préparation permet de visualiser les calculs radio-opaques (notamment calciques ou phospho-ammoniaco-magnésiens), examen radiologique simple et peu coûteux en première intention.",
+    "Maladies non transmissibles — Lithiase urinaire, examens complémentaires"],
   ["QCU","mnt_lithiase",1,"Quel est le syndrome douloureux caractéristique de la lithiase urinaire, traduisant une souffrance urinaire aiguë unilatérale ?",
     ["La colique néphrétique","La colique hépatique","La cystalgie chronique","La dysurie isolée"],[0],
     "La crise de colique néphrétique est le syndrome douloureux unilatéral caractéristique, traduisant une mise en rétention aiguë des urines par obstacle sur la voie excrétrice.",
@@ -11814,6 +11867,86 @@ const SANTEINFANT_SUPP_RAW = [
     ["Le nouveau-né prématuré est très vulnérable aux infections nosocomiales","L'incubateur n'a besoin d'aucun entretien particulier","C'est uniquement pour des raisons esthétiques","L'entretien ne concerne que l'aspect extérieur de l'appareil"],[0],
     "L'entretien rigoureux de l'incubateur est essentiel car le nouveau-né prématuré, du fait de son immaturité immunitaire, est particulièrement vulnérable aux infections nosocomiales.",
     "Santé infantile — Incubateur néonatal, entretien"],
+  ["QCU","si_allaitement",2,"Selon le cours, l'allaitement maternel exclusif au cours des six premiers mois permet d'éviter les grossesses rapprochées avec une efficacité de :",
+    ["Plus de 98%","Environ 50%","Environ 20%","Il n'a aucun effet contraceptif"],[0],
+    "L'allaitement exclusif au cours des six premiers mois permet d'éviter les grossesses rapprochées avec une efficacité de plus de 98%, du fait de l'aménorrhée lactationnelle.",
+    "Santé infantile — Allaitement, 4.2 Avantages pour la mère"],
+  ["QCM","si_allaitement",2,"Parmi les avantages de l'allaitement pour la mère figurent le fait de faciliter l'expulsion du placenta (par stimulation des contractions utérines), de réduire les risques d'hémorragie après l'accouchement, et :",
+    ["De prévenir l'engorgement des seins","D'aider l'utérus à retrouver sa taille normale, réduisant les risques d'anémie","De réduire les risques de cancer du sein et des ovaires","D'augmenter systématiquement le poids de la mère"],[0,1,2],
+    "Les avantages pour la mère comprennent notamment : faciliter l'expulsion du placenta, réduire les risques d'hémorragie, prévenir l'engorgement des seins, aider l'utérus à retrouver sa taille normale (réduisant les risques d'anémie), et réduire les risques de cancer du sein, des ovaires et pré-ménopausique.",
+    "Santé infantile — Allaitement, 4.2 Avantages pour la mère"],
+  ["QCM","si_allaitement",2,"Pour la famille, l'allaitement maternel présente notamment les avantages suivants :",
+    ["Moins de dépenses (pas d'achat de lait commercial, de bois ou de combustible)","Un effet contraceptif permettant d'espacer les naissances","Un gain de temps, le lait étant toujours disponible et prêt à l'emploi","Une augmentation des dépenses de santé familiales"],[0,1,2],
+    "Pour la famille, l'allaitement réduit les dépenses (lait, combustible), a un effet contraceptif espaçant les naissances, fait gagner du temps (lait toujours disponible) et réduit les problèmes de santé/dépenses liés aux maladies infantiles.",
+    "Santé infantile — Allaitement, 4.3 Avantages pour la famille"],
+  ["QCM","si_allaitement",2,"Pour la communauté et la nation, l'allaitement maternel contribue notamment à :",
+    ["Réduire la morbidité et la mortalité infantiles", "Préserver l'environnement (pas de bois utilisé comme combustible)", "Réduire les dépenses nationales liées au traitement des maladies infantiles", "Augmenter la déforestation"],[0,1,2],
+    "Pour la communauté et la nation, l'allaitement favorise la survie de l'enfant (réduction morbidité/mortalité), contribue à préserver l'environnement (moins de bois brûlé), réduit les dépenses nationales de santé, et constitue une ressource naturelle renouvelable.",
+    "Santé infantile — Allaitement, 4.4 Avantages pour la communauté/nation"],
+  ["QCU","si_allaitement_complications",2,"Le diagnostic de la galactophorite se fait notamment par le signe (test) de Buddin, qui consiste à :",
+    ["Verser un peu de lait sur du coton hydrophile", "Palper directement le sein", "Réaliser une échographie mammaire", "Mesurer la température rectale"],[0],
+    "Le signe de Buddin consiste à verser un peu de lait sur du coton hydrophile ; en cas de galactophorite, le lait s'infiltre en laissant une tache jaune verdâtre représentant le pus.",
+    "Santé infantile — Allaitement, difficultés, la galactophorite"],
+  ["QCU","si_allaitement_complications",2,"Devant un abcès du sein (mastite), le traitement associe une antibiothérapie prolongée adaptée à l'antibiogramme et :",
+    ["Le drainage chirurgical du pus collecté par incision de l'abcès", "L'arrêt définitif et permanent de tout allaitement futur", "L'ablation chirurgicale du sein", "Aucun traitement particulier n'est nécessaire"],[0],
+    "Le traitement de l'abcès du sein associe une antibiothérapie prolongée adaptée à l'antibiogramme et le drainage du pus collecté par incision chirurgicale de l'abcès ; la mère peut continuer à allaiter du côté sain.",
+    "Santé infantile — Allaitement, difficultés, abcès du sein/mastite"],
+  ["QCM","si_allaitement_complications",2,"Parmi les difficultés liées à l'enfant pouvant compromettre l'allaitement figurent l'absence de succion (ex. nouveau-né prématuré), le refus de téter, et :",
+    ["Le muguet du bébé, traité par un gel antimycosique après chaque tétée", "Le bébé paresseux, qui dort et ne réclame pas à téter", "L'excès permanent et systématique de succion", "L'impossibilité totale et définitive d'allaiter dans tous les cas"],[0,1],
+    "Les difficultés liées à l'enfant comprennent : l'absence de succion (prématuré, alimentation à la tasse ou par gavage), le refus de téter (maladie, tétanos, gêne respiratoire), le bébé paresseux (nécessitant patience et persévérance), et le muguet du bébé (traité par un gel antimycosique après chaque tétée).",
+    "Santé infantile — Allaitement, 6.2 Difficultés liées à l'enfant"],
+  ["QCM","si_hygiene_nourrice",2,"Parmi les facteurs entravant la bonne montée laiteuse figurent le stress, la compression des seins, et :",
+    ["Un soutien-gorge trop serré","L'ergot de seigle et ses dérivés (Méthergin)","Une hydratation abondante","Le repos suffisant"],[0,1],
+    "Les facteurs entravant la bonne montée laiteuse comprennent : le stress, la compression des seins, un soutien-gorge trop serré, et l'ergot de seigle et ses dérivés (Méthergin), qui inhibent la lactation.",
+    "Santé infantile — Allaitement, 8.2 Facteurs entravant la bonne montée laiteuse"],
+  ["QCU","si_hygiene_nourrice",2,"Concernant l'hygiène alimentaire de la nourrice, l'apport hydrique recommandé est de :",
+    ["2 à 3 litres par jour","Moins de 500 ml par jour","5 à 6 litres par jour","Aucun apport hydrique particulier n'est recommandé"],[0],
+    "L'hygiène alimentaire de la nourrice recommande un apport de 2 à 3 litres d'eau par jour, avec un verre de jus de fruits avant ou entre chaque tétée.",
+    "Santé infantile — Hygiène de la nourrice, 9.2 Hygiène alimentaire"],
+  ["QCU","si_hygiene_nourrice",2,"Concernant les aliments à éviter pendant l'allaitement, la consommation de thon blanc doit être limitée à :",
+    ["300 g par semaine","3 kg par semaine","30 g par semaine","Le thon blanc est totalement interdit, sans exception"],[0],
+    "Le thon blanc doit être limité à 300 g par semaine pendant l'allaitement, du fait de sa teneur en mercure.",
+    "Santé infantile — Hygiène de la nourrice, 9.2.2 Aliments à éviter"],
+  ["QCU","si_hygiene_nourrice",2,"Concernant la caféine (thé, café, chocolat, boissons gazeuses type cola) pendant l'allaitement, il est recommandé de ne pas dépasser :",
+    ["Deux tasses par jour","Dix tasses par jour","Une tasse par semaine","Aucune limite n'est recommandée"],[0],
+    "Il est recommandé de ne pas boire plus de deux tasses de boissons contenant de la caféine par jour pendant l'allaitement, la caféine passant dans le lait maternel.",
+    "Santé infantile — Hygiène de la nourrice, 9.2.2 Aliments à éviter"],
+  ["QCM","si_hygiene_nourrice",1,"Parmi les recommandations générales pour un allaitement exclusif réussi figurent le fait de mettre l'enfant au sein dans l'heure qui suit la naissance, de donner à téter à l'enfant à la demande, et :",
+    ["De laisser l'enfant au sein jusqu'à ce qu'il soit rassasié","D'imposer un horaire strict et rigide de tétées, sans exception","De réserver l'autre sein pour la tétée suivante","De limiter systématiquement chaque tétée à 2 minutes maximum"],[0,2],
+    "Les recommandations générales incluent : mettre l'enfant au sein dans l'heure suivant la naissance, donner à téter à la demande, laisser l'enfant au sein jusqu'à satiété, et réserver l'autre sein pour la tétée suivante (sauf si l'enfant réclame les deux seins).",
+    "Santé infantile — Allaitement, III. Recommandations générales"],
+  ["QCM","si_anje_vih",2,"En Côte d'Ivoire, deux options d'alimentation sont recommandées pour le nourrisson et le jeune enfant dans le contexte du VIH/SIDA :",
+    ["L'allaitement exclusif de 0 à 6 mois","L'alimentation de remplacement exclusive de 0 à 6 mois, si les conditions AFADS sont réunies","L'allaitement mixte systématique dès la naissance","L'introduction précoce d'aliments solides dès le premier mois"],[0,1],
+    "Les deux options recommandées en Côte d'Ivoire sont l'allaitement exclusif de 0 à 6 mois, et l'alimentation de remplacement exclusive de 0 à 6 mois si les conditions AFADS (Acceptable, Faisable, Abordable, Durable, Sûre) sont réunies.",
+    "Santé infantile — ANJE dans le contexte du VIH, I. Directives pour l'alimentation du nourrisson"],
+  ["QCU","si_anje_vih",2,"Que signifie l'acronyme AFADS, conditions à réunir pour une alimentation de remplacement sûre dans le contexte du VIH ?",
+    ["Acceptable, Faisable, Abordable, Durable, Sûre","Adaptée, Fiable, Analysée, Documentée, Standardisée","Aucune signification particulière, un simple nom de code","Alimentation Familiale Africaine De Santé"],[0],
+    "AFADS signifie : Acceptable, Faisable, Abordable, Durable et Sûre — les 5 conditions devant être réunies pour qu'une alimentation de remplacement soit considérée comme sûre dans le contexte du VIH.",
+    "Santé infantile — ANJE dans le contexte du VIH, Directive 5"],
+  ["QCU","si_anje_vih",2,"Selon la Directive 2, en cas d'allaitement d'un enfant né de mère séropositive, l'allaitement exclusif doit se poursuivre pendant les six premiers mois, puis, après introduction d'une alimentation de complément appropriée, se poursuivre jusqu'à :",
+    ["Une durée totale de 12 mois","Une durée totale de 3 mois seulement","Une durée totale de 24 heures après la naissance","Il doit être arrêté immédiatement à 6 mois, sans exception"],[0],
+    "Selon la Directive 2, après les 6 premiers mois d'allaitement exclusif, l'allaitement doit être poursuivi pendant une durée totale de 12 mois, avec une alimentation de complément appropriée introduite dès 6 mois.",
+    "Santé infantile — ANJE dans le contexte du VIH, Directive 2"],
+  ["QCU","si_anje_vih",3,"Selon la Directive 3, l'arrêt de l'allaitement doit être graduel sur une période d'un mois, sauf si l'enfant a :",
+    ["Moins de six mois de vie","Plus de deux ans","Exactement douze mois","Aucune exception n'est prévue"],[0],
+    "Selon la Directive 3, l'arrêt de l'allaitement doit être graduel sur une période d'un mois, sauf si l'enfant a moins de six mois de vie ; la prophylaxie ARV doit être continuée dix jours après l'arrêt complet de l'allaitement.",
+    "Santé infantile — ANJE dans le contexte du VIH, Directive 3"],
+  ["QCU","si_anje_vih",2,"Selon la Directive 7, chez un enfant infecté par le VIH, il est recommandé d'allaiter exclusivement pendant 6 mois après la naissance et de poursuivre l'allaitement jusqu'à :",
+    ["2 ans ou plus","6 mois seulement","1 an maximum, jamais plus","3 mois uniquement"],[0],
+    "Selon la Directive 7, chez l'enfant infecté par le VIH, il faut allaiter exclusivement pendant 6 mois après la naissance et poursuivre l'allaitement jusqu'à 2 ans ou plus.",
+    "Santé infantile — ANJE dans le contexte du VIH, Directive 7"],
+  ["QCU","si_allaitement_complications",2,"En cas de crevasses étendues du mamelon, la conduite à tenir consiste notamment à :",
+    ["Arrêter les tétées pendant 12 heures et traiter les lésions","Arrêter définitivement tout allaitement","Ne rien faire de particulier, les crevasses guérissent seules","Appliquer immédiatement une antibiothérapie systémique"],[0],
+    "En cas de crevasses étendues du mamelon, il faut arrêter les tétées pendant 12 heures et traiter les lésions ; les crevasses sont traitées avec des antimycosiques (Fungizone) après chaque tétée en cas de forme simple.",
+    "Santé infantile — Allaitement, 8.1 Difficultés liées à la mère, les crevasses"],
+  ["QCU","si_allaitement_complications",2,"Pour prévenir les engorgements mammaires, il est recommandé de débuter très tôt l'allaitement par des tétées :",
+    ["Très courtes et fréquentes","Longues et espacées","Une seule fois par jour, longue et complète","Il n'existe aucune mesure préventive"],[0],
+    "Pour la prévention des engorgements mammaires, il faut débuter très tôt l'allaitement par des tétées très courtes et fréquentes.",
+    "Santé infantile — Allaitement, engorgements mammaires, prévention"],
+  ["QCU","si_allaitement_complications",1,"L'hypogalactie se définit comme :",
+    ["Une insuffisance quantitative du lait sécrété","Un excès de production de lait","Une infection du sein","Une malformation congénitale du mamelon"],[0],
+    "L'hypogalactie est l'insuffisance quantitative du lait sécrété ; le cours précise que presque toutes les mères peuvent produire suffisamment de lait pour 1, 2 ou 3 bébés, et que la crainte maternelle de manquer de lait est souvent infondée.",
+    "Santé infantile — Allaitement, hypogalactie"],
   ["QCM","si_malnutrition",1,"Quels sont les principaux critères diagnostiques de la malnutrition aiguë sévère ?",
     ["Périmètre brachial inférieur à 11,5 cm","Œdèmes bilatéraux des pieds","Rapport Poids/Taille inférieur à -3 Z-score","Une simple perte d'appétit isolée"],[0,1,2],
     "Les critères diagnostiques de la MAS sont un périmètre brachial inférieur à 11,5 cm, la présence d'œdèmes bilatéraux des pieds, et un rapport Poids/Taille inférieur à -3 Z-score.",
@@ -11821,6 +11954,122 @@ const SANTEINFANT_SUPP_RAW = [
 ];
 
 const MT_URGENT_RAW = [
+  /* ===== Le Choléra ===== */
+  ["QCM","mt_cholera",1,"Les deux mesures essentielles pour lutter contre le choléra sont :",
+    ["L'accès à l'eau potable", "L'assainissement du milieu (élimination des excréta)", "La vaccination systématique de toute la population", "L'antibiothérapie préventive de masse"],[0,1],
+    "Les deux mesures essentielles de lutte contre le choléra reposent sur l'accès à l'eau potable et l'assainissement du milieu (élimination correcte des excréta), qui interrompent la voie de transmission oro-fécale du Vibrio cholerae.",
+    "Maladies transmissibles — Le Choléra, prévention"],
+  ["QCU","mt_cholera",2,"Un sujet pesant initialement 70 kg présente une déshydratation après une crise cholérique ; son poids actuel est de 63 kg. Cette perte de poids peut être évaluée à :",
+    ["10 %", "5 %", "7 %", "12 %"],[0],
+    "La perte de poids se calcule ainsi : (70-63)/70 × 100 = 10 %.",
+    "Maladies transmissibles — Le Choléra, cas clinique, évaluation de la déshydratation"],
+  ["QCU","mt_cholera",2,"Selon la classification OMS, une perte de poids de 10 % lors d'une déshydratation cholérique correspond à une déshydratation :",
+    ["Sévère, plan C", "Légère, plan A", "Modérée, plan B", "Il n'existe pas de classification par plan"],[0],
+    "Une perte de poids ≥ 10 % correspond à une déshydratation sévère, relevant du plan C (réhydratation IV en urgence) ; le plan A concerne la déshydratation légère (< 5 %), le plan B la déshydratation modérée (5 à 10 %).",
+    "Maladies transmissibles — Le Choléra, cas clinique, classification de la déshydratation"],
+
+  /* ===== Le Tétanos ===== */
+  ["QCU","mt_tetanos",1,"Dans le tétanos, le trismus désigne :",
+    ["La contracture des muscles masticateurs, empêchant l'ouverture de la bouche", "Une paralysie des membres inférieurs", "Une éruption cutanée généralisée", "Une perte de connaissance prolongée"],[0],
+    "Le trismus est la contracture permanente et invincible des muscles masticateurs, empêchant l'ouverture normale de la bouche — signe précoce et caractéristique du tétanos.",
+    "Maladies transmissibles — Le Tétanos, signes cliniques"],
+  ["QCU","mt_tetanos",3,"Devant une plaie tétanigène chez un sujet correctement vacciné dont la dernière injection remonte à moins de 5 ans, le geste à NE PAS faire est :",
+    ["Faire le SAT (sérothérapie antitétanique)", "Désinfecter la porte d'entrée", "Administrer une dose supplémentaire de vaccin si le schéma vaccinal l'exige"], [0],
+    "Chez un sujet correctement vacciné il y a moins de 5 ans, la sérothérapie antitétanique (SAT) n'est pas indiquée car l'immunité est déjà suffisante ; seuls les soins locaux de la plaie (désinfection) sont nécessaires, la SAT étant réservée aux sujets non vaccinés ou au statut vaccinal incertain.",
+    "Maladies transmissibles — Le Tétanos, cas clinique, conduite à tenir devant une plaie tétanigène"],
+
+  /* ===== La Fièvre typhoïde (approfondi) ===== */
+  ["QCU","mt_typhoide",3,"Dans la fièvre typhoïde, la symptomatologie désignée par le mnémonique CIVET (Céphalées, Insomnie, Vertiges, État typhique/Encéphalite, Tuphos) est observée au :",
+    ["2ème septénaire (phase d'état)", "1er septénaire (invasion)", "3ème septénaire (déclin)", "Pendant l'incubation uniquement"],[0],
+    "Le mnémonique CIVET résume les signes neurologiques caractéristiques du 2ème septénaire (phase d'état) de la fièvre typhoïde : Céphalées, Insomnie, Vertiges, état typhique/Encéphalite, Tuphos.",
+    "Maladies transmissibles — La Fièvre typhoïde, phase d'état, 2ème septénaire"],
+  ["QCM","mt_typhoide",3,"La clinique de la fièvre typhoïde comporte trois périodes appelées septénaires. Parmi les propositions suivantes, laquelle n'est PAS l'un de ces trois septénaires ?",
+    ["L'incubation", "L'invasion (1er septénaire)", "La période d'état (2ème septénaire)", "Le déclin/la convalescence (3ème septénaire)"],[0],
+    "Les trois septénaires de la fièvre typhoïde sont : l'invasion (1er septénaire), la période d'état (2ème septénaire) et le déclin/la convalescence (3ème septénaire) ; l'incubation, silencieuse, précède ces trois septénaires et n'en fait pas partie.",
+    "Maladies transmissibles — La Fièvre typhoïde, les trois septénaires"],
+  ["QCU","mt_typhoide",2,"À la phase d'état de la fièvre typhoïde, les taches rosées lenticulaires (punctiformes) sont classiquement visibles au niveau :",
+    ["De l'abdomen (flancs)", "Du visage exclusivement", "De la plante des pieds", "Du cuir chevelu"],[0],
+    "Les taches rosées lenticulaires de la fièvre typhoïde sont classiquement observées au niveau de l'abdomen, sur les flancs, lors de la phase d'état.",
+    "Maladies transmissibles — La Fièvre typhoïde, phase d'état, signes cutanés"],
+  ["QCU","mt_typhoide",3,"Dans une pathologie infectieuse comme la fièvre typhoïde, l'angine de Duguet désigne :",
+    ["Des ulcérations superficielles des piliers antérieurs du voile du palais", "Une inflammation purulente des amygdales", "Une atteinte du larynx avec voix rauque", "Une atteinte exclusivement cutanée"],[0],
+    "L'angine de Duguet correspond à des ulcérations superficielles, peu profondes, situées sur les piliers antérieurs du voile du palais — un signe évocateur observé au cours de la fièvre typhoïde.",
+    "Maladies transmissibles — La Fièvre typhoïde, signes ORL"],
+  ["QCU","mt_typhoide",2,"Le signe pathognomonique correspondant à l'angine de Duguet, observé au cours de la fièvre typhoïde, est :",
+    ["L'angine de Duguet elle-même, spécifique de la fièvre typhoïde", "Le signe de Köplik", "Le signe de Kernig", "Le trismus"],[0],
+    "L'angine de Duguet (ulcérations des piliers antérieurs du voile du palais) est elle-même considérée comme un signe évocateur, pathognomonique, de la fièvre typhoïde — à distinguer du signe de Köplik (rougeole) ou de Kernig (méningite).",
+    "Maladies transmissibles — La Fièvre typhoïde, signes ORL"],
+
+  /* ===== Maladies éruptives comparées ===== */
+  ["QCM","mt_eruptives",3,"Parmi les associations suivantes entre maladies éruptives et leurs caractéristiques, lesquelles sont exactes ?",
+    ["Rougeole : signe de Köplik, catarrhe oculo-naso-bronchique", "Varicelle : éruption vésiculeuse polymorphe (macules, vésicules, croûtes coexistant)", "Syphilis secondaire : roséole syphilitique, éruption non prurigineuse", "Toutes ces maladies ont une éruption strictement identique"],[0,1,2],
+    "La rougeole se distingue par le signe de Köplik et un catarrhe oculo-naso-bronchique ; la varicelle par une éruption vésiculeuse polymorphe (plusieurs stades coexistants) ; la syphilis secondaire par la roséole syphilitique, une éruption typiquement non prurigineuse — chacune a des caractéristiques cliniques bien distinctes.",
+    "Maladies transmissibles — Maladies éruptives, comparaison syphilis/rougeole/varicelle"],
+
+  /* ===== Le Paludisme, compléments ===== */
+  ["QCU","palu_simple_tdr",1,"La réalisation du TDR (Test de Diagnostic Rapide) ou de la GE/FS (Goutte Épaisse/Frottis Sanguin) doit être envisagée :",
+    ["Avant d'instituer le traitement antipaludique", "Uniquement après le traitement, pour contrôle", "Seulement si le traitement échoue", "Elle n'est jamais nécessaire"],[0],
+    "La confirmation biologique du paludisme par TDR ou GE/FS doit être envisagée avant d'instituer le traitement antipaludique, conformément aux recommandations de l'OMS, afin d'éviter tout traitement présomptif inutile.",
+    "Paludisme — Diagnostic biologique, TDR et GE/FS"],
+  ["QCU","palu_vecteur",2,"Dans la transmission du germe, l'anophèle femelle est au paludisme ce que Aedes aegypti est :",
+    ["À la fièvre jaune", "À la tuberculose", "Au tétanos", "À la lithiase urinaire"],[0],
+    "L'anophèle femelle est le vecteur du paludisme (Plasmodium), tout comme Aedes aegypti est le principal vecteur de la fièvre jaune (et de la dengue) — chacun transmettant son agent pathogène spécifique par piqûre infestante.",
+    "Paludisme — Vecteur et transmission, comparaison avec la fièvre jaune"],
+  ["QCU","palu_epidemio",1,"Le cycle du paludisme comporte deux étapes essentielles :",
+    ["Une phase chez le moustique (sporogonie) et une phase chez l'homme (schizogonie)", "Une phase exclusivement aquatique", "Une phase exclusivement aérienne", "Une seule et unique phase, uniquement chez l'homme"],[0],
+    "Le cycle du paludisme comporte deux phases essentielles : la phase sexuée (sporogonie) chez le moustique anophèle, et la phase asexuée (schizogonie) chez l'homme.",
+    "Paludisme — Cycle du parasite"],
+
+  /* ===== L'HTA, compléments ===== */
+  ["QCU","mnt_hta",2,"L'HTA primaire, encore appelée HTA essentielle, est de cause inconnue (idiopathique) dans :",
+    ["90 % des cas", "50 % des cas", "10 % des cas", "100 % des cas, sans exception"],[0],
+    "L'HTA primaire, ou HTA essentielle, est de cause inconnue (idiopathique) dans 90 % des cas ; elle résulterait de la conjugaison de plusieurs facteurs modifiables et non modifiables.",
+    "Maladies non transmissibles — HTA, types d'HTA"],
+  ["QCU","mnt_hta",2,"L'HTA secondaire est aussi appelée HTA essentielle. Cette affirmation est :",
+    ["Fausse", "Vraie"],[0],
+    "C'est l'HTA PRIMAIRE, et non l'HTA secondaire, qui est également appelée HTA essentielle. L'HTA secondaire, elle, survient à la suite d'une cause identifiable (abus médicamenteux, maladie préexistante, mauvaise hygiène de vie).",
+    "Maladies non transmissibles — HTA, types d'HTA"],
+  ["QCU","mnt_hta",1,"La mesure de la tension artérielle ne doit pas se faire sur un bras porteur d'une perfusion, d'une fistule artério-veineuse, ni sur un bras hémiplégique. Cette affirmation est :",
+    ["Vraie", "Fausse"],[0],
+    "En effet, la mesure ne doit pas se faire sur un bras porteur de perfusion, de fistule artério-veineuse, ni sur un bras hémiplégique, afin d'éviter une mesure faussée ou un risque pour le patient.",
+    "Maladies non transmissibles — HTA, technique de mesure"],
+  ["QCM","mnt_hta",2,"L'HTA peut être diagnostiquée au cours de trois événements, à savoir :",
+    ["La découverte fortuite lors d'un examen de routine", "La découverte lors de la manifestation de signes fonctionnels", "La découverte lors de la manifestation de complications", "Elle ne peut jamais être découverte de façon fortuite"],[0,1,2],
+    "L'HTA peut être diagnostiquée au cours de trois événements : découverte fortuite (bilan de santé, bilan d'embauche), découverte lors de signes fonctionnels (céphalées, acouphènes), ou découverte lors de complications (AVC, OAP, épistaxis).",
+    "Maladies non transmissibles — HTA, diagnostic"],
+
+  /* ===== La Méningite, complément ===== */
+  ["QCM","mt_meningite",2,"Dans la méningite, les signes fonctionnels sont représentés par le trépied méningitique, comprenant :",
+    ["Les vomissements qui se font par jets", "Les céphalées en casque", "La constipation", "La diarrhée profuse"],[0,1,2],
+    "Le trépied méningitique comprend : les vomissements qui se font par jets, les céphalées en casque, et la constipation (signe inconstant).",
+    "Maladies transmissibles — La Méningite, signes fonctionnels"],
+
+  /* ===== Endocrinologie ===== */
+  ["QCU","pancreas_endocrine",2,"L'insuline est une hormone hyperglycémiante alors que le glucagon est hypoglycémiant. Cette affirmation est :",
+    ["Fausse", "Vraie"],[0],
+    "C'est l'inverse : l'insuline est hypoglycémiante (elle abaisse la glycémie), tandis que le glucagon est hyperglycémiant (il augmente la glycémie).",
+    "Endocrinologie — Insuline et glucagon"],
+
+  /* ===== Infection à VIH ===== */
+  ["QCU","vih_pediatrique",2,"Dans l'infection à VIH, l'infection du fœtus ou du nouveau-né a lieu le plus souvent :",
+    ["Au moment de l'accouchement (transmission per-partum)", "Uniquement après la naissance, par l'allaitement", "Uniquement pendant la grossesse (in utero)", "Jamais avant l'âge de 5 ans"],[0],
+    "La transmission mère-enfant du VIH a lieu le plus souvent au moment de l'accouchement (transmission per-partum), bien qu'elle puisse aussi survenir in utero ou après la naissance via l'allaitement.",
+    "Infection à VIH — Transmission mère-enfant"],
+
+  /* ===== Rhumatologie, compléments ===== */
+  ["QCU","mnt_rhumato",1,"Les rhumatismes forment un groupe de maladies qui s'expriment par des signes articulaires, musculaires ou tendineux. Cette affirmation est :",
+    ["Vraie", "Fausse"],[0],
+    "Les rhumatismes constituent effectivement un groupe hétérogène de maladies touchant les structures de l'appareil locomoteur : articulations, muscles et tendons.",
+    "Maladies non transmissibles — Rhumatologie, définition"],
+  ["QCU","mnt_rhumato",2,"L'instabilité articulaire, marquée par une sensation de dérobement et d'insécurité, traduit le plus souvent :",
+    ["Une lésion ligamentaire ou tendineuse", "Une fracture osseuse récente", "Une infection cutanée locale", "Une carence vitaminique"],[0],
+    "L'instabilité articulaire, avec sensation de dérobement et d'insécurité, traduit le plus souvent une lésion ligamentaire ou tendineuse qui ne stabilise plus correctement l'articulation.",
+    "Maladies non transmissibles — Rhumatologie, signes fonctionnels"],
+  ["QCU","mnt_rhumato",2,"La prophylaxie collective du Rhumatisme Articulaire Aigu (RAA) repose principalement sur :",
+    ["Le dépistage et le traitement précoce des angines streptococciques", "La vaccination systématique de toute la population", "L'éviction scolaire prolongée de tous les enfants", "Aucune prophylaxie collective n'est possible"],[0],
+    "La prophylaxie collective du RAA repose sur le dépistage et le traitement antibiotique précoce et rigoureux des angines streptococciques, afin de prévenir le déclenchement du rhumatisme articulaire aigu.",
+    "Maladies transmissibles — RAA, prophylaxie collective"],
+
   /* ===== La Méningite ===== */
   ["QCM","mt_meningite",2,"Le syndrome méningé, lors de la phase d'état d'une méningite, comporte des signes fonctionnels (vomissements en jets, céphalées en casque) et des signes physiques, dont la raideur méningée mise en évidence notamment par :",
     ["Le signe de Kernig","Le signe de Brudzinski","La raideur de la nuque","Le signe de Köplik"],[0,1,2],
@@ -12596,6 +12845,10 @@ const SANTEPUB_MILIEU_RAW = [
     ["Les décideurs politiques","Les organisations civiles nationales et internationales","Le grand public exclusivement","Les enfants uniquement"],[0,1],
     "Les populations cibles du plaidoyer sont les décideurs politiques et les organisations civiles nationales et internationales.",
     "Santé publique — Plaidoyer, populations cibles"],
+  ["QCM","santecommu_plaidoyer_def",2,"L'importance du plaidoyer dans le domaine de la santé réside notamment dans le fait d'obtenir un engagement politique et des ressources financières pour les programmes de santé, de promouvoir des changements de comportement favorables à la santé, et de :",
+    ["Lutter contre les discriminations et les inégalités en matière de santé","Renforcer les droits des patients","Réduire systématiquement le nombre de programmes de santé","Supprimer toute forme de communication avec les décideurs"],[0,1],
+    "L'importance du plaidoyer en santé réside dans l'obtention d'un engagement politique et de ressources financières, la promotion de changements de comportement favorables à la santé, la lutte contre les discriminations et inégalités, et le renforcement des droits des patients.",
+    "Santé communautaire — Plaidoyer, III. Importance du plaidoyer dans le domaine de la santé"],
   ["QCM","santecommu_plaidoyer_def",2,"Parmi les éléments clés du plaidoyer en santé figurent l'influence des décideurs, la mobilisation de la communauté, la communication stratégique et :",
     ["Les données probantes, appuyées sur des recherches scientifiques","Le seul financement gouvernemental","La seule sensibilisation médiatique","Le seul lobbying international"],[0],
     "Les éléments clés du plaidoyer en santé sont : l'influence des décideurs (à tous les niveaux), la mobilisation de la communauté (société civile, professionnels), la communication stratégique (médias, réseaux sociaux) et les données probantes (recherches scientifiques étayant les arguments).",
@@ -12664,6 +12917,10 @@ const SANTEPUB_MILIEU_RAW = [
     ["Les principales cultures vivrières (riz, igname, mil, manioc)","Les principaux aliments de base de la population","Les interdits alimentaires de la communauté","Le nombre exact de commerçants du marché"],[0,1,2],
     "Les informations relatives à l'agriculture et à l'alimentation comprennent : les cultures pérennes (café, cacao, coton), les cultures vivrières (riz, igname, mil, manioc), les principaux aliments de base, et les interdits alimentaires de la communauté.",
     "Santé communautaire — Étude du milieu, IV.8 Les informations relatives à l'agriculture et à l'alimentation"],
+  ["QCM","santecommu_milieu_elements",2,"Les informations sanitaires que l'agent de santé doit connaître, pour répertorier les centres de soins publics et privés de son aire, comprennent le nombre de structures sanitaires privées et publiques, le nombre de cliniques médicales et infirmeries privées, et :",
+    ["Le nombre de pharmacies et de dépôts pharmaceutiques","Les maladies sous surveillance et à déclaration obligatoire","Les maladies endémiques de la zone","Uniquement le nombre de médecins étrangers en poste"],[0,1,2],
+    "Les informations sanitaires comprennent : le nombre de structures sanitaires privées/publiques, de cliniques et infirmeries privées, de pharmacies et dépôts pharmaceutiques, ainsi que les maladies rencontrées, les maladies endémiques et les maladies sous surveillance/à déclaration obligatoire dans l'aire sanitaire.",
+    "Santé communautaire — Étude du milieu, IV.7 Les informations sanitaires"],
   ["QCM","santecommu_milieu_elements",2,"Les informations d'ordre économique, social, culturel et spirituel, permettant de mieux connaître l'organisation sociale de la communauté, comprennent les jours de marché, les noms des chefs de village et :",
     ["La hiérarchisation de la communauté (organisation sociale)","Les jours de repos ou jours tabous","Les principales religions implantées dans l'aire sanitaire","Le taux de change de la monnaie locale"],[0,1,2],
     "Les informations d'ordre économique, social, culturel et spirituel comprennent : les jours de marché, les noms des chefs de village/terre/notables, la hiérarchisation de la communauté, les responsables des groupes cibles, les leaders d'opinion, les jours de repos ou tabous, les fêtes culturelles et les religions implantées.",
@@ -13043,6 +13300,77 @@ const SANTEPUB_RAW_CASES = [
   },
 ];
 
+const SANTEINFANT_RAW_CASES = [
+  {
+    chapterId: "si_soins_essentiels", level: 3,
+    vignette:
+      "Un nouveau-né de 2800 g vient de naître par voie basse, à terme, sans complication. L'équipe soignante doit dérouler les soins essentiels du nouveau-né durant les 90 premières minutes de vie.",
+    ref: "Santé infantile — Soins essentiels aux nouveau-nés",
+    qs: [
+      { stem: "Durant la période 0-1 minute de vie, quel est le premier geste à effectuer après avoir vérifié la respiration du nouveau-né ?",
+        options: ["Sécher le nouveau-né avec un linge propre, sec et chaud", "Ligaturer immédiatement le cordon ombilical", "Peser le nouveau-né", "Administrer la vitamine K1"], correct: [0],
+        explanation: "Durant la période 0-1 minute de vie, après vérification de la respiration, il faut sécher le nouveau-né avec un linge propre, sec et chaud, avant de le placer en contact peau à peau sur le ventre de sa mère." },
+      { stem: "Le cordon ombilical de ce nouveau-né doit être ligaturé et sectionné entre :",
+        options: ["1 et 3 minutes de vie", "10 et 15 minutes de vie", "30 et 45 minutes de vie", "Immédiatement, sans délai"], correct: [0],
+        explanation: "La ligature et la section du cordon ombilical se font entre 1 et 3 minutes de vie, durant la période 1-60 minutes." },
+      { stem: "Ce nouveau-né pèse 2800 g. Quelle dose de vitamine K1 doit-il recevoir en intramusculaire ?",
+        options: ["1 mg, car son poids est ≥ 1500 g", "0,5 mg, car son poids est < 1500 g", "5 mg, dose unique pour tous les poids", "Aucune vitamine K1 n'est nécessaire à cette naissance"], correct: [0],
+        explanation: "Le poids de naissance étant de 2800 g (≥ 1500 g), la dose de vitamine K1 recommandée est de 1 mg en intramusculaire." },
+    ],
+  },
+  {
+    chapterId: "si_incubateur", level: 3,
+    vignette:
+      "Un nouveau-né prématuré de faible poids de naissance présente une hypothermie à l'admission en néonatologie. Le médecin prescrit sa mise en incubateur.",
+    ref: "Santé infantile — Incubateur néonatal",
+    qs: [
+      { stem: "Parmi les indications de l'incubateur citées dans le cours, laquelle correspond à la situation de cet enfant ?",
+        options: ["L'hypothermie et le faible poids de naissance", "Un enfant né à terme, en parfaite santé", "Un enfant de plus de 2 ans", "Un enfant nécessitant uniquement une vaccination"], correct: [0],
+        explanation: "Les indications de l'incubateur comprennent notamment le nouveau-né de petit poids de naissance, l'hypothermie, et le transport médicalisé — correspondant exactement à la situation de cet enfant." },
+      { stem: "Une fois l'enfant installé dans l'incubateur, à quelle fréquence l'habitacle doit-il être décontaminé au quotidien ?",
+        options: ["Chaque jour, par nettoyage à l'HIBITANE (Chlorhexidine) à 0,05%", "Une seule fois par mois", "Uniquement en cas de souillure visible", "Il n'y a pas de fréquence recommandée"], correct: [0],
+        explanation: "Chaque jour, l'habitacle de l'incubateur est décontaminé par nettoyage à l'HIBITANE (Chlorhexidine) à 0,05%, pour prévenir les infections nosocomiales chez cet enfant vulnérable." },
+      { stem: "Pourquoi l'entretien rigoureux de cet incubateur est-il particulièrement important pour cet enfant prématuré ?",
+        options: ["Le nouveau-né prématuré est très vulnérable aux infections nosocomiales", "L'incubateur n'a besoin d'aucun entretien particulier", "C'est uniquement pour des raisons esthétiques", "L'entretien ne concerne que l'aspect extérieur de l'appareil"], correct: [0],
+        explanation: "L'entretien rigoureux est essentiel car le nouveau-né prématuré, du fait de son immaturité immunitaire, est particulièrement vulnérable aux infections nosocomiales." },
+    ],
+  },
+  {
+    chapterId: "si_malnutrition", level: 3,
+    vignette:
+      "Un enfant de 18 mois est amené en consultation. À l'examen, on mesure un périmètre brachial (PB) de 10,8 cm, associé à des œdèmes bilatéraux des deux pieds.",
+    ref: "Santé infantile — Mensurations et malnutrition",
+    qs: [
+      { stem: "Ce périmètre brachial de 10,8 cm, chez un enfant de 18 mois, est-il normal ?",
+        options: ["Non, il est très inférieur à la normale (12,5 à 16 cm) et signe une malnutrition", "Oui, il est parfaitement normal pour cet âge", "Le périmètre brachial ne s'interprète pas à cet âge", "Il faudrait d'abord mesurer le périmètre crânien pour interpréter"], correct: [0],
+        explanation: "Entre 6 et 59 mois, le PB normal est compris entre 12,5 et 16 cm. Un PB de 10,8 cm, très inférieur à 11,5 cm, signe une malnutrition." },
+      { stem: "Associé aux œdèmes bilatéraux des pieds, ce tableau évoque :",
+        options: ["Une malnutrition aiguë sévère", "Une simple perte d'appétit sans gravité", "Une croissance normale pour l'âge", "Une déshydratation isolée sans lien avec la nutrition"], correct: [0],
+        explanation: "Les critères diagnostiques de la malnutrition aiguë sévère comprennent un PB inférieur à 11,5 cm et la présence d'œdèmes bilatéraux des pieds — les deux éléments sont ici réunis." },
+      { stem: "Quel outil de mesure est utilisé sur le terrain pour ce dépistage rapide du périmètre brachial ?",
+        options: ["La bandelette de Shakir (MUAC)", "Le stéthoscope", "Le tensiomètre", "L'otoscope"], correct: [0],
+        explanation: "La bandelette de Shakir, encore appelée bandelette MUAC (Mid Upper Arm Circumference), est l'outil utilisé pour mesurer le périmètre brachial et dépister rapidement la malnutrition sur le terrain." },
+    ],
+  },
+  {
+    chapterId: "si_anje_vih", level: 3,
+    vignette:
+      "Une femme séropositive au VIH, connaissant son statut sérologique, vient d'accoucher. Elle souhaite allaiter son enfant et demande conseil à l'infirmier sur la conduite à tenir.",
+    ref: "Santé infantile — ANJE dans le contexte du VIH",
+    qs: [
+      { stem: "Quelle est la durée recommandée de l'allaitement exclusif chez cet enfant exposé au VIH ?",
+        options: ["6 mois", "1 mois", "12 mois", "Aucun allaitement n'est jamais autorisé"], correct: [0],
+        explanation: "Chez l'enfant exposé au VIH, l'allaitement exclusif doit être choisi comme mode d'alimentation du nourrisson jusqu'à 6 mois, selon la Directive 2." },
+      { stem: "Si cette mère choisit finalement une alimentation de remplacement plutôt que l'allaitement, quelles conditions (AFADS) doivent impérativement être réunies ?",
+        options: ["Acceptable, Faisable, Abordable, Durable, Sûre", "Aucune condition particulière n'est requise", "Uniquement une condition financière", "Uniquement l'accord du conjoint"], correct: [0],
+        explanation: "AFADS signifie Acceptable, Faisable, Abordable, Durable et Sûre — ces 5 conditions doivent être réunies pour qu'une alimentation de remplacement soit considérée comme sûre dans le contexte du VIH." },
+      { stem: "Si l'allaitement est choisi et doit être arrêté après plusieurs mois, comment cet arrêt doit-il être conduit ?",
+        options: ["De façon graduelle, sur une période d'un mois (sauf si l'enfant a moins de 6 mois)", "De façon brutale et immédiate, dans tous les cas", "Il ne faut jamais arrêter l'allaitement, quelle que soit la situation", "L'arrêt doit se faire en une seule journée, sans transition"], correct: [0],
+        explanation: "Selon la Directive 3, l'arrêt de l'allaitement doit être graduel sur une période d'un mois, sauf si l'enfant a moins de six mois de vie ; la prophylaxie ARV doit être continuée dix jours après l'arrêt complet." },
+    ],
+  },
+];
+
 const MNT_RAW_CASES = [
   {
     chapterId: "mnt_hta", level: 3,
@@ -13233,6 +13561,7 @@ const CASES = [
   ...buildCases(RAW_CASES, "hematologie", "case"),
   ...buildCases(DEONTO_RAW_CASES, "deontologie", "dcase"),
   ...buildCases(SANTEPUB_RAW_CASES, "sante-publique", "spcase"),
+  ...buildCases(SANTEINFANT_RAW_CASES, "sante-infantile", "sicase"),
   ...buildCases(MNT_RAW_CASES, "maladies-non-transmissibles", "mntcase"),
   ...buildCases(SANTECOMMU_RAW_CASES, "sante-communautaire", "sccase"),
 ];
@@ -21353,6 +21682,7 @@ function LoginScreen({ onLogin }) {
   const [niveau, setNiveau] = useState(NIVEAUX[0].id);
   const [specialite, setSpecialite] = useState(SPECIALITES[0].id);
   const [parrainMatricule, setParrainMatricule] = useState("");
+  const [registerStep, setRegisterStep] = useState(1);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [showAide, setShowAide] = useState(false);
@@ -21452,6 +21782,28 @@ function LoginScreen({ onLogin }) {
     onLogin("student", student);
   };
 
+  // Valide uniquement les champs de la 1ère étape (identité) avant de passer à la 2nde
+  // (parcours académique) — la validation complète du numéro/année reste ici, à l'identique
+  // de celle utilisée dans submitRegister, pour ne jamais laisser passer une valeur invalide
+  // qui ne serait détectée qu'à la toute fin du parcours.
+  const goToStep2 = (e) => {
+    e.preventDefault();
+    setError("");
+    if (!matricule.trim() || !pwd.trim() || !nom.trim() || !prenom.trim()) {
+      setError("Merci de renseigner tous les champs.");
+      return;
+    }
+    if (!/^0[0-9]{9}$/.test(matricule.trim())) {
+      setError("Le numéro de téléphone doit comporter exactement 10 chiffres et commencer par 0 (ex : 0102030405).");
+      return;
+    }
+    if (!/^[0-9]{4}$/.test(pwd.trim())) {
+      setError("L'année de naissance doit comporter exactement 4 chiffres (ex : 1900).");
+      return;
+    }
+    setRegisterStep(2);
+  };
+
   const submitRegister = async (e) => {
     e.preventDefault();
     setError("");
@@ -21463,7 +21815,7 @@ function LoginScreen({ onLogin }) {
     // matricule — les comptes déjà inscrits avec un matricule (format 25-00000) continuent de
     // fonctionner normalement pour la connexion, sans aucun changement pour eux.
     if (!/^0[0-9]{9}$/.test(matricule.trim())) {
-      setError("Le numéro de téléphone doit comporter exactement 10 chiffres et commencer par 0 (ex : 0101010101).");
+      setError("Le numéro de téléphone doit comporter exactement 10 chiffres et commencer par 0 (ex : 0102030405).");
       return;
     }
     if (!/^[0-9]{4}$/.test(pwd.trim())) {
@@ -21600,9 +21952,9 @@ function LoginScreen({ onLogin }) {
         {isLogin ? (
           <form onSubmit={submitLogin} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
             <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: "0 0 4px" }}>Connexion</h1>
-            <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 22px" }}>Identifiant = votre matricule. Mot de passe = votre année de naissance.</p>
+            <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 22px" }}>Identifiant = votre numéro. Mot de passe = votre année de naissance.</p>
 
-            <Field label="MATRICULE / NUMÉRO DE TÉL." value={matricule} onChange={setMatricule} />
+            <Field label="NUMÉRO DE TÉLÉPHONE" value={matricule} onChange={setMatricule} />
             <Field label="ANNÉE DE NAISSANCE" value={pwd} onChange={setPwd} type="password" style={{ marginTop: 14 }} />
 
             {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
@@ -21613,7 +21965,7 @@ function LoginScreen({ onLogin }) {
 
             <button
               type="button"
-              onClick={() => { setMode("register"); setError(""); }}
+              onClick={() => { setMode("register"); setError(""); setRegisterStep(1); }}
               style={{
                 background: "none", border: "none", cursor: "pointer", marginTop: 18,
                 fontSize: 12.5, fontWeight: 700, color: COLORS.blueDeep, display: "flex", alignItems: "center", gap: 5,
@@ -21622,8 +21974,8 @@ function LoginScreen({ onLogin }) {
               Pas encore de compte ? S'inscrire <span style={{ fontSize: 15 }}>→</span>
             </button>
           </form>
-        ) : (
-          <form onSubmit={submitRegister} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        ) : registerStep === 1 ? (
+          <form onSubmit={goToStep2} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
             <button
               type="button"
               onClick={() => { setMode("login"); setError(""); }}
@@ -21635,17 +21987,41 @@ function LoginScreen({ onLogin }) {
               <span style={{ fontSize: 15 }}>←</span> Déjà un compte ? Se connecter
             </button>
 
-            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: "0 0 4px" }}>Créer un compte</h1>
+            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: "0 0 4px" }}>Bienvenue sur Agent de Santé Nouveau 🩺</h1>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 18px" }}>
-              Votre <b>matricule</b> et votre <b>année de naissance</b> serviront respectivement d'identifiant et de mot de passe à chaque connexion — notez-les bien.
+              Créons ton espace de révision en quelques secondes. Ton <b>numéro</b> et ton <b>année de naissance</b> serviront respectivement d'identifiant et de mot de passe à chaque connexion — note-les bien.
             </p>
 
-            <Field label="NUMÉRO DE TÉLÉPHONE (ex : 0101010101)" value={matricule} onChange={setMatricule} />
+            <Field label="NUMÉRO DE TÉLÉPHONE (ex : 0102030405)" value={matricule} onChange={setMatricule} />
             <Field label="ANNÉE DE NAISSANCE (ex : 1900)" value={pwd} onChange={setPwd} style={{ marginTop: 14 }} />
             <Field label="NOM" value={nom} onChange={setNom} style={{ marginTop: 14 }} />
             <Field label="PRÉNOM" value={prenom} onChange={setPrenom} style={{ marginTop: 14 }} />
 
-            <div style={{ marginTop: 14 }}>
+            {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
+
+            <button type="submit" style={{ ...primaryBtn, width: "100%", marginTop: 20 }}>
+              Continuer →
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={submitRegister} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <button
+              type="button"
+              onClick={() => { setRegisterStep(1); setError(""); }}
+              style={{
+                background: "none", border: "none", cursor: "pointer", marginBottom: 14,
+                fontSize: 12.5, fontWeight: 700, color: COLORS.blueDeep, display: "flex", alignItems: "center", gap: 5, alignSelf: "flex-start",
+              }}
+            >
+              <span style={{ fontSize: 15 }}>←</span> Retour
+            </button>
+
+            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: "0 0 4px" }}>Ton parcours</h1>
+            <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 18px" }}>
+              Dernière étape : dis-nous où tu étudies pour te proposer le bon contenu.
+            </p>
+
+            <div>
               <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>ANTENNE</label>
               <select value={antenne} onChange={(e) => setAntenne(e.target.value)} style={inputStyle}>
                 {ANTENNES.map((a) => <option key={a} value={a}>{a}</option>)}
@@ -21679,7 +22055,7 @@ function LoginScreen({ onLogin }) {
             {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
 
             <button type="submit" disabled={busy} style={{ ...primaryBtn, width: "100%", marginTop: 20, opacity: busy ? 0.6 : 1 }}>
-              {busy ? "Création…" : "Créer mon compte →"}
+              {busy ? "Création…" : "Terminer mon inscription →"}
             </button>
           </form>
         )}
@@ -24742,7 +25118,26 @@ function MatieresScreen({ onBack, onSelect }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {UE_LIST.filter((u) => u.semester === sem).map((ue) => {
         const color = UE_COLOR[ue.id];
-        const ecues = ECUE_LIST.filter((e) => e.ueId === ue.id);
+        // Certaines UE officielles déclinent une même matière en plusieurs ECUE
+        // (crédits répartis) — cas de Santé publique (3 ECUE) et Santé communautaire
+        // (4 ECUE), entre autres. Sans regroupement, l'étudiant voyait la même matière
+        // listée plusieurs fois de suite, toutes menant exactement au même contenu une
+        // fois cliquées — source de confusion. On ne fusionne que les ECUE partageant
+        // un même subjectId réel (les matières encore "Bientôt disponibles", sans
+        // subjectId, restent distinctes et non fusionnées) ; les crédits de chaque ECUE
+        // fusionnée s'additionnent pour rester fidèles au total réel de la matière.
+        const rawEcues = ECUE_LIST.filter((e) => e.ueId === ue.id);
+        const seenSubjects = new Map();
+        const ecues = [];
+        for (const e of rawEcues) {
+          if (e.subjectId && seenSubjects.has(e.subjectId)) {
+            seenSubjects.get(e.subjectId).credits += e.credits;
+          } else {
+            const merged = { ...e };
+            ecues.push(merged);
+            if (e.subjectId) seenSubjects.set(e.subjectId, merged);
+          }
+        }
         const isOpen = expanded.has(ue.id);
         return (
           <div className="anim-fade-up" key={ue.id} style={{ borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.line}` }}>
