@@ -21893,6 +21893,14 @@ function LoginScreen({ onLogin }) {
           100% { opacity: 1; transform: translateX(0) scale(1); }
         }
         .diag-panel { animation: diagAppearDisappear 5s ease-in-out infinite; pointer-events: none; }
+        @keyframes ecgDraw {
+          0% { stroke-dashoffset: 340; opacity: 0; }
+          8% { opacity: 0.9; }
+          55% { stroke-dashoffset: 0; opacity: 0.9; }
+          70% { opacity: 0; }
+          100% { stroke-dashoffset: 0; opacity: 0; }
+        }
+        .ecg-line { stroke-dasharray: 340; animation: ecgDraw 3.6s ease-in-out infinite; }
       `}</style>
 
       {/* Panneau coloré diagonal — plein écran, fixé (ne défile pas), du côté opposé au
@@ -21920,6 +21928,24 @@ function LoginScreen({ onLogin }) {
             background: `linear-gradient(${isLogin ? "200deg" : "160deg"}, ${accentColor}, ${COLORS.blueDeep} 75%)`,
           }}
         />
+        {/* Ligne d'électrocardiogramme, discrète et non interactive — se redessine en boucle
+            au centre du panneau, pour ancrer visuellement l'identité "santé" de l'app dès
+            l'écran de connexion, sans le côté potentiellement kitsch d'une icône littérale
+            (stéthoscope, croix) animée. */}
+        <svg
+          viewBox="0 0 340 80"
+          style={{ position: "absolute", top: "38%", left: "50%", transform: "translate(-50%, -50%)", width: "70%", maxWidth: 220 }}
+        >
+          <path
+            className="ecg-line"
+            d="M0,40 L60,40 L75,40 L85,12 L100,68 L112,40 L130,40 L145,20 L160,40 L340,40"
+            fill="none"
+            stroke="rgba(255,255,255,0.55)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
         <div
           style={{
             position: "absolute", bottom: 40, left: isLogin ? 24 : "auto", right: isLogin ? "auto" : 24,
