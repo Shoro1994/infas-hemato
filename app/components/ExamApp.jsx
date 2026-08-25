@@ -1948,81 +1948,85 @@ const CH = Object.fromEntries(CHAPTERS.map((c) => [c.id, c.label]));
 // Chaque ECUE porte, si le cours a été fourni, l'id de la matière correspondante (subjectId) ;
 // sinon elle reste affichée mais non cliquable ("Bientôt").
 const UE_LIST = [
-  // --- Semestre 1 ---
-  { id: "CHF1110", semester: 1, code: "CHF 1110", label: "Connaissance de base du corps humain et de son fonctionnement", credits: 5 },
-  { id: "SIN1110", semester: 1, code: "SIN 1110", label: "Santé infantile", credits: 5 },
-  { id: "NBS1110", semester: 1, code: "NBS 1110", label: "Notions de base sur les situations cliniques se référant aux pathologies I", credits: 2 },
-  { id: "SPB1110", semester: 1, code: "SPB 1110", label: "Santé publique", credits: 4 },
-  { id: "PMC1120", semester: 1, code: "PMC 1120", label: "Pathologies médico-chirurgicales", credits: 4 },
-  { id: "SHU1120", semester: 1, code: "SHU 1120", label: "Santé humaine", credits: 3 },
-  { id: "IRE1130", semester: 1, code: "IRE 1130", label: "Initiation à la recherche", credits: 1 },
-  { id: "MSO1130", semester: 1, code: "MSO 1130", label: "Méthodes et techniques de base en soins infirmiers et obstétricaux (Phase I)", credits: 3 },
-  { id: "CFI1140", semester: 1, code: "CFI 1140", label: "Connaissances de base liées aux fonctions infirmières et sages-femmes", credits: 2 },
-  { id: "OMC1140", semester: 1, code: "OMC 1140", label: "Outils de communication I", credits: 1 },
+  // --- Semestre 1 --- (Source : MAQUETTE ET CRÉDITS L1 SIO, officielle)
+  { id: "ISF1101", semester: 1, code: "ISF 1101", label: "Notions de base des fonctions infirmière et sages-femmes", credits: 3 },
+  { id: "CHA1102", semester: 1, code: "CHA 1102", label: "Notions de base du corps humain et de l'alimentation", credits: 7 },
+  { id: "BIO1103", semester: 1, code: "BIO 1103", label: "Sciences biologiques", credits: 3 },
+  { id: "CRP1104", semester: 1, code: "CRP 1104", label: "Notions de base sur les situations cliniques se référant aux pathologies", credits: 6 },
+  { id: "SPB1105", semester: 1, code: "SPB 1105", label: "Santé publique", credits: 4 },
+  { id: "SIO1106", semester: 1, code: "SIO 1106", label: "Méthodes et techniques en soins infirmiers et obstétricaux de base", credits: 5 },
+  { id: "RCH1107", semester: 1, code: "RCH 1107", label: "Outils de recherche", credits: 2 },
   // --- Semestre 2 ---
-  { id: "CHF1210", semester: 2, code: "CHF 1210", label: "Connaissance de base du corps humain et de son fonctionnement", credits: 3 },
-  { id: "PAC1210", semester: 2, code: "PAC 1210", label: "Prise en charge des affections courantes", credits: 5 },
-  { id: "TLB1210", semester: 2, code: "TLB 1210", label: "Techniques de laboratoire", credits: 3 },
-  { id: "SCO1220", semester: 2, code: "SCO 1220", label: "Santé communautaire", credits: 4 },
-  { id: "STG1220", semester: 2, code: "STG 1220", label: "Stage de découverte", credits: 7 },
-  { id: "MSO1230", semester: 2, code: "MSO 1230", label: "Méthodes et techniques de base en soins infirmiers et obstétricaux (Phase II)", credits: 3 },
-  { id: "PRR1230", semester: 2, code: "PRR 1230", label: "Processus de rédaction d'un rapport de stage", credits: 1 },
-  { id: "SSA1240", semester: 2, code: "SSA 1240", label: "Sport et santé", credits: 2 },
-  { id: "DRT1240", semester: 2, code: "DRT 1240", label: "Droit", credits: 2 },
-  { id: "GOB1110", semester: 1, code: "GOB 1110", label: "Gynécologie-Obstétrique", credits: 3 },
+  { id: "BPR1201", semester: 2, code: "BPR 1201", label: "Biologie et physiologie de la reproduction", credits: 2 },
+  { id: "OAD1202", semester: 2, code: "OAD 1202", label: "Outils d'aide au diagnostic", credits: 2 },
+  { id: "AFP1203", semester: 2, code: "AFP 1203", label: "Prise en charge des affections primaires", credits: 4 },
+  { id: "SCO1204", semester: 2, code: "SCO 1204", label: "Santé communautaire", credits: 3 },
+  { id: "SHU1205", semester: 2, code: "SHU 1205", label: "Sciences humaines", credits: 3 },
+  { id: "SIO1206", semester: 2, code: "SIO 1206", label: "Méthodes et techniques des soins infirmiers et obstétricaux", credits: 3 },
+  { id: "SIO1207", semester: 2, code: "SIO 1207", label: "Méthodes et techniques des soins infirmiers et obstétricaux", credits: 2 },
+  { id: "RCH1208", semester: 2, code: "RCH 1208", label: "Notions de base de recherche en santé", credits: 2 },
+  { id: "STG1209", semester: 2, code: "STG 1209", label: "Stages 1", credits: 9 },
 ];
 
 const ECUE_LIST = [
   // Semestre 1
-  { id: "CHF1111", ueId: "CHF1110", code: "CHF 1111", label: "Anatomie Physiologie : cellules et tissus, ostéologie, myologie, système nerveux", credits: 3, subjectId: "anat-physio" },
-  { id: "CHF1112", ueId: "CHF1110", code: "CHF 1112", label: "Anatomie physiologie obstétricale", credits: 2, subjectId: null },
-  { id: "SIN1111", ueId: "SIN1110", code: "SIN 1111", label: "Soins aux enfants", credits: 2, subjectId: "sante-infantile" },
-  { id: "SIN1112", ueId: "SIN1110", code: "SIN 1112", label: "Pédiatrie", credits: 1, subjectId: "pediatrie" },
-  { id: "SIN1113", ueId: "SIN1110", code: "SIN 1113", label: "Diététique", credits: 2, subjectId: "sante-infantile" },
-  { id: "NBS1111", ueId: "NBS1110", code: "NBS 1111", label: "Bactériologie-Virologie", credits: 1, subjectId: "bacteriologie" },
-  { id: "NBS1112", ueId: "NBS1110", code: "NBS 1112", label: "Parasitologie", credits: 1, subjectId: "parasitologie" },
-  { id: "SPB1111", ueId: "SPB1110", code: "SPB 1111", label: "Santé publique", credits: 2, subjectId: "sante-publique" },
-  { id: "SPB1112", ueId: "SPB1110", code: "SPB 1112", label: "Santé publique", credits: 1, subjectId: "sante-publique" },
-  { id: "SPB1113", ueId: "SPB1110", code: "SPB 1113", label: "Santé publique", credits: 1, subjectId: "sante-publique" },
-  { id: "PMC1121", ueId: "PMC1120", code: "PMC 1121", label: "IST / VIH", credits: 1, subjectId: "ist-vih" },
-  { id: "PMC1122", ueId: "PMC1120", code: "PMC 1122", label: "Pathologies chirurgicales / Sémiologie", credits: 1, subjectId: "semio-chir" },
-  { id: "PMC1123", ueId: "PMC1120", code: "PMC 1123", label: "Pathologies médicales / Sémiologie", credits: 2, subjectId: "semio-medicale" },
-  { id: "PMC1124", ueId: "PMC1120", code: "PMC 1124", label: "Pharmacologie", credits: 1, subjectId: "pharmacologie" },
-  { id: "SHU1121", ueId: "SHU1120", code: "SHU 1121", label: "Théorie et concepts des Soins Infirmiers / Obstétricaux / Relation d'aide", credits: 1, subjectId: "concepts-sciences-inf" },
-  { id: "SHU1122", ueId: "SHU1120", code: "SHU 1122", label: "Psychosociologie & Anthropologie de la santé", credits: 1, subjectId: "psycho-anthropo" },
-  { id: "SHU1123", ueId: "SHU1120", code: "SHU 1123", label: "Psychosociologie & Anthropologie de la santé", credits: 1, subjectId: "psycho-anthropo" },
-  { id: "IRE1131", ueId: "IRE1130", code: "IRE 1131", label: "Généralités de la recherche en Soins Infirmiers et Obstétricaux", credits: 0.5, subjectId: "biostatistique" },
-  { id: "IRE1132", ueId: "IRE1130", code: "IRE 1132", label: "Revue de littérature et Note d'étude", credits: 0.5, subjectId: null },
-  { id: "MSO1131", ueId: "MSO1130", code: "MSO 1131", label: "Techniques de soins de base en médecine et en chirurgie", credits: 1, subjectId: null },
-  { id: "MSO1132", ueId: "MSO1130", code: "MSO 1132", label: "Secourisme", credits: 1, subjectId: "secourisme" },
-  { id: "MSO1133", ueId: "MSO1130", code: "MSO 1133", label: "Prévention des infections / Hygiène hospitalière", credits: 1, subjectId: null },
-  { id: "CFI1141", ueId: "CFI1140", code: "CFI 1141", label: "Déontologie et éthique professionnelle", credits: 0.5, subjectId: "deontologie" },
-  { id: "CFI1142", ueId: "CFI1140", code: "CFI 1142", label: "Législation du travail", credits: 1, subjectId: "legislation-travail" },
-  { id: "CFI1143", ueId: "CFI1140", code: "CFI 1143", label: "Profession infirmière / sage-femme", credits: 0.5, subjectId: null },
-  { id: "OMC1141", ueId: "OMC1140", code: "OMC 1141", label: "Anglais de la santé", credits: 0.5, subjectId: "anglais-sante" },
-  { id: "OMC1142", ueId: "OMC1140", code: "OMC 1142", label: "Informatique : Bureautique", credits: 0.5, subjectId: null },
+  { id: "1ISF1101", ueId: "ISF1101", code: "1ISF1101", label: "Éthique en santé / Éducation aux Droits de l'Homme et à la Citoyenneté (EDHC)", credits: 1, subjectId: null },
+  { id: "2ISF1101", ueId: "ISF1101", code: "2ISF1101", label: "Législation du travail et des professions infirmière et sage-femme", credits: 1, subjectId: "legislation-travail" },
+  { id: "3ISF1101", ueId: "ISF1101", code: "3ISF1101", label: "Professions infirmière et sage-femme / Déontologie / Accueil du bénéficiaire", credits: 1, subjectId: "deontologie" },
+
+  { id: "1CHA1102", ueId: "CHA1102", code: "1CHA1102", label: "Biologie : Cellules et tissus — Anatomie et Physiologie générale — Anatomie et physiologie obstétricale", credits: 3, subjectId: "anat-physio" },
+  { id: "2CHA1102", ueId: "CHA1102", code: "2CHA1102", label: "Pédiatrie", credits: 2, subjectId: "pediatrie" },
+  { id: "3CHA1102", ueId: "CHA1102", code: "3CHA1102", label: "Puériculture (Diététique / Nutrition / Soins aux enfants)", credits: 2, subjectId: "sante-infantile" },
+
+  { id: "1BIO1103", ueId: "BIO1103", code: "1BIO1103", label: "Bactériologie / Virologie", credits: 1, subjectId: "bacteriologie" },
+  { id: "2BIO1103", ueId: "BIO1103", code: "2BIO1103", label: "Hématologie", credits: 1, subjectId: "hematologie" },
+  { id: "3BIO1103", ueId: "BIO1103", code: "3BIO1103", label: "Parasitologie / Mycologie", credits: 1, subjectId: "parasitologie" },
+
+  { id: "1CRP1104", ueId: "CRP1104", code: "1CRP1104", label: "Infections Sexuellement Transmises (IST) / VIH - SIDA / OEV", credits: 2, subjectId: "ist-vih" },
+  { id: "2CRP1104", ueId: "CRP1104", code: "2CRP1104", label: "Sémiologie médicale", credits: 2, subjectId: "semio-medicale" },
+  { id: "3CRP1104", ueId: "CRP1104", code: "3CRP1104", label: "Sémiologie chirurgicale / Prévention des Infections", credits: 2, subjectId: "semio-chir" },
+
+  { id: "1SPB1105", ueId: "SPB1105", code: "1SPB1105", label: "Généralités sur la santé publique et définition des concepts", credits: 1, subjectId: "sante-publique" },
+  { id: "2SPB1105", ueId: "SPB1105", code: "2SPB1105", label: "Système national de santé et programme de santé", credits: 2, subjectId: "sante-publique" },
+  { id: "3SPB1105", ueId: "SPB1105", code: "3SPB1105", label: "Étude du milieu", credits: 1, subjectId: "sante-publique" },
+
+  { id: "1SIO1106", ueId: "SIO1106", code: "1SIO1106", label: "Concepts et théories en sciences infirmières / obstétricales", credits: 1, subjectId: "concepts-sciences-inf" },
+  { id: "2SIO1106", ueId: "SIO1106", code: "2SIO1106", label: "Techniques de soins infirmiers / obstétricaux de base", credits: 3, subjectId: null },
+  { id: "3SIO1106", ueId: "SIO1106", code: "3SIO1106", label: "Secourisme / Sport et Santé", credits: 1, subjectId: "secourisme" },
+
+  { id: "1RCH1107", ueId: "RCH1107", code: "1RCH1107", label: "Anglais professionnel", credits: 1, subjectId: "anglais-sante" },
+  { id: "2RCH1107", ueId: "RCH1107", code: "2RCH1107", label: "Statistiques", credits: 1, subjectId: "biostatistique" },
+
   // Semestre 2
-  { id: "CHF1211", ueId: "CHF1210", code: "CHF 1211", label: "Anatomie Physiologie : appareil respiratoire, cardiovasculaire, urinaire, reproducteur", credits: 2, subjectId: null },
-  { id: "CHF1212", ueId: "CHF1210", code: "CHF 1212", label: "Anatomie physiologie obstétricale : bassin osseux, bassin mou", credits: 1, subjectId: null },
-  { id: "PAC1211", ueId: "PAC1210", code: "PAC 1211", label: "Maladies parasitaires et infectieuses (Paludisme)", credits: 2, subjectId: "paludisme" },
-  { id: "PAC1212", ueId: "PAC1210", code: "PAC 1212", label: "Pathologies respiratoires", credits: 2, subjectId: null },
-  { id: "PAC1213", ueId: "PAC1210", code: "PAC 1213", label: "Maladies non transmissibles / Maladies transmissibles", credits: 1, subjectId: "maladies-non-transmissibles" },
-  { id: "TLB1211", ueId: "TLB1210", code: "TLB 1211", label: "Biochimie", credits: 1, subjectId: null },
-  { id: "TLB1212", ueId: "TLB1210", code: "TLB 1212", label: "Immunologie", credits: 1, subjectId: null },
-  { id: "TLB1213", ueId: "TLB1210", code: "TLB 1213", label: "Hématologie", credits: 1, subjectId: "hematologie" },
-  { id: "SCO1221", ueId: "SCO1220", code: "SCO 1221", label: "Santé communautaire", credits: 4, subjectId: "sante-communautaire" },
-  { id: "STG1221", ueId: "STG1220", code: "STG 1221", label: "Stage péri-urbain + rapport", credits: 3, subjectId: null },
-  { id: "STG1222", ueId: "STG1220", code: "STG 1222", label: "Stage en milieu hospitalier + rapport", credits: 4, subjectId: null },
-  { id: "MSO1231", ueId: "MSO1230", code: "MSO 1231", label: "Démarche de soin", credits: 1, subjectId: null },
-  { id: "MSO1232", ueId: "MSO1230", code: "MSO 1232", label: "Techniques de soins de base", credits: 1, subjectId: null },
-  { id: "MSO1233", ueId: "MSO1230", code: "MSO 1233", label: "Soins infirmiers obstétricaux / néonataux de base / infantiles", credits: 1, subjectId: null },
-  { id: "PRR1231", ueId: "PRR1230", code: "PRR 1231", label: "Informatique : Internet", credits: 0.5, subjectId: null },
-  { id: "PRR1232", ueId: "PRR1230", code: "PRR 1232", label: "Méthodologie de rédaction de rapport de stage", credits: 0.5, subjectId: null },
-  { id: "SSA1241", ueId: "SSA1240", code: "SSA 1241", label: "Sport et pathologies", credits: 1, subjectId: null },
-  { id: "SSA1242", ueId: "SSA1240", code: "SSA 1242", label: "Sport et société", credits: 1, subjectId: null },
-  { id: "DRT1241", ueId: "DRT1240", code: "DRT 1241", label: "Droit administratif", credits: 1, subjectId: null },
-  { id: "DRT1242", ueId: "DRT1240", code: "DRT 1242", label: "Droit civil", credits: 1, subjectId: null },
-  { id: "GOB1111", ueId: "GOB1110", code: "GOB 1111", label: "Gynécologie-Obstétrique", credits: 3, subjectId: "gyneco-obstetrique" },
+  { id: "1BPR1201", ueId: "BPR1201", code: "1BPR1201", label: "Biologie de reproduction humaine", credits: 1, subjectId: null },
+  { id: "2PBR1201", ueId: "BPR1201", code: "2PBR1201", label: "Physiologie de la grossesse et Consultation Prénatale", credits: 1, subjectId: "gyneco-obstetrique" },
+
+  { id: "1OAD1202", ueId: "OAD1202", code: "1OAD1202", label: "Immunologie / Techniques de laboratoire", credits: 1, subjectId: null },
+  { id: "2OAD1202", ueId: "OAD1202", code: "2OAD1202", label: "Biochimie / Techniques de laboratoire", credits: 1, subjectId: null },
+
+  { id: "1AFP1203", ueId: "AFP1203", code: "1AFP1203", label: "Pathologies respiratoires", credits: 1, subjectId: null },
+  { id: "2AFP1203", ueId: "AFP1203", code: "2AFP1203", label: "Maladies non transmissibles / Maladies transmissibles", credits: 2, subjectId: "maladies-non-transmissibles" },
+  { id: "3AFP1203", ueId: "AFP1203", code: "3AFP1203", label: "Pharmacologie Générale", credits: 1, subjectId: "pharmacologie" },
+
+  { id: "1SCO1204", ueId: "SCO1204", code: "1SCO1204", label: "Hygiène et assainissement / Généralités sur la vaccination", credits: 1, subjectId: "sante-communautaire" },
+  { id: "2SCO1204", ueId: "SCO1204", code: "2SCO1204", label: "Épidémiologie : Généralités", credits: 1, subjectId: "sante-publique" },
+  { id: "3SCO1204", ueId: "SCO1204", code: "3SCO1204", label: "Soins de Santé Primaires / IEC-CCSC - Plaidoyer / Techniques d'animation de groupes", credits: 1, subjectId: "sante-communautaire" },
+
+  { id: "1SHU1205", ueId: "SHU1205", code: "1SHU1205", label: "Relation d'aide", credits: 1, subjectId: null },
+  { id: "2SHU1205", ueId: "SHU1205", code: "2SHU1205", label: "Psychosociologie de la santé", credits: 1, subjectId: "psycho-anthropo" },
+  { id: "3SHU1205", ueId: "SHU1205", code: "3SHU1205", label: "Anthropologie de la santé", credits: 1, subjectId: "psycho-anthropo" },
+
+  { id: "1SIO1206", ueId: "SIO1206", code: "1SIO1206", label: "Techniques de Soins Infirmiers (Techniques de soins avancées)", credits: 2, subjectId: null },
+  { id: "2SIO1206", ueId: "SIO1206", code: "2SIO1206", label: "Soins Infirmiers obstétricaux", credits: 1, subjectId: null },
+
+  { id: "1SIO1207", ueId: "SIO1207", code: "1SIO1207", label: "Démarche de soins (Collecte de données)", credits: 1, subjectId: null },
+  { id: "2SIO1207", ueId: "SIO1207", code: "2SIO1207", label: "Techniques de soins néonataux et infantiles", credits: 1, subjectId: "sante-infantile" },
+
+  { id: "1RCH1208", ueId: "RCH1208", code: "1RCH1208", label: "Initiation à la recherche", credits: 1, subjectId: null },
+  { id: "2RCH1208", ueId: "RCH1208", code: "2RCH1208", label: "TIC (Bureautique et Internet)", credits: 1, subjectId: null },
+
+  { id: "1STG1209", ueId: "STG1209", code: "1STG1209", label: "Processus de mise en stage", credits: 1, subjectId: null },
+  { id: "2STG1209", ueId: "STG1209", code: "2STG1209", label: "Stage en soins infirmiers / obstétricaux", credits: 8, subjectId: null },
 ];
 
 // Palette de teintes, une par UE, utilisée pour la couleur d'accent de l'UE et le fond tamisé de ses ECUE
@@ -21954,8 +21958,8 @@ function LoginScreen({ onLogin }) {
             <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, margin: "0 0 4px" }}>Connexion</h1>
             <p style={{ fontSize: 12.5, color: COLORS.inkSoft, margin: "0 0 22px" }}>Identifiant = votre numéro. Mot de passe = votre année de naissance.</p>
 
-            <Field label="NUMÉRO DE TÉLÉPHONE" value={matricule} onChange={setMatricule} />
-            <Field label="ANNÉE DE NAISSANCE" value={pwd} onChange={setPwd} type="password" style={{ marginTop: 14 }} />
+            <Field label="NUMÉRO DE TÉLÉPHONE" value={matricule} onChange={setMatricule} placeholder="0102030405" />
+            <Field label="ANNÉE DE NAISSANCE" value={pwd} onChange={setPwd} type="password" style={{ marginTop: 14 }} placeholder="1900" />
 
             {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
 
@@ -21992,10 +21996,10 @@ function LoginScreen({ onLogin }) {
               Créons ton espace de révision en quelques secondes. Ton <b>numéro</b> et ton <b>année de naissance</b> serviront respectivement d'identifiant et de mot de passe à chaque connexion — note-les bien.
             </p>
 
-            <Field label="NUMÉRO DE TÉLÉPHONE (ex : 0102030405)" value={matricule} onChange={setMatricule} />
-            <Field label="ANNÉE DE NAISSANCE (ex : 1900)" value={pwd} onChange={setPwd} style={{ marginTop: 14 }} />
-            <Field label="NOM" value={nom} onChange={setNom} style={{ marginTop: 14 }} />
-            <Field label="PRÉNOM" value={prenom} onChange={setPrenom} style={{ marginTop: 14 }} />
+            <Field label="NUMÉRO DE TÉLÉPHONE" value={matricule} onChange={setMatricule} placeholder="0102030405" />
+            <Field label="ANNÉE DE NAISSANCE" value={pwd} onChange={setPwd} style={{ marginTop: 14 }} placeholder="1900" />
+            <Field label="NOM" value={nom} onChange={setNom} style={{ marginTop: 14 }} placeholder="KOUKOUGNO" />
+            <Field label="PRÉNOM" value={prenom} onChange={setPrenom} style={{ marginTop: 14 }} placeholder="Aya Dagobertine" />
 
             {error && <div style={{ color: COLORS.red, fontSize: 12.5, marginTop: 10 }}>{error}</div>}
 
@@ -22105,11 +22109,11 @@ const secondaryBtn = {
   get boxShadow() { return `0 1px 3px ${COLORS.ink}0F`; },
 };
 
-function Field({ label, value, onChange, type = "text", style }) {
+function Field({ label, value, onChange, type = "text", style, placeholder }) {
   return (
     <div style={style}>
       <label style={{ fontSize: 11.5, fontWeight: 600, color: COLORS.blueDeep, display: "block", marginBottom: 5 }}>{label}</label>
-      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} style={inputStyle} />
+      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} style={inputStyle} />
     </div>
   );
 }
@@ -25152,6 +25156,12 @@ function MatieresScreen({ onBack, onSelect }) {
               <div>
                 <div style={{ fontSize: 10, opacity: 0.85, letterSpacing: 0.4, fontFamily: "'IBM Plex Mono', monospace" }}>{ue.code}</div>
                 <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 13.5, marginTop: 2 }}>{ue.label}</div>
+                {ue.altLabel && (
+                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 12, marginTop: 3, opacity: 0.9 }}>{ue.altLabel}</div>
+                )}
+                {ue.subtitle && (
+                  <div style={{ fontSize: 10.5, fontStyle: "italic", opacity: 0.8, marginTop: 2 }}>({ue.subtitle})</div>
+                )}
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
                 <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, background: "rgba(255,255,255,0.2)", padding: "3px 9px", borderRadius: 999 }}>
