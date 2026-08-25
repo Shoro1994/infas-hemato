@@ -1373,6 +1373,14 @@ function letters(n) {
 }
 
 /* ---------------- Chapters ---------------- */
+// Matières ayant reçu un enrichissement de contenu majeur récemment — affiche un petit
+// badge "Nouveau" dans la liste des matières, pour inciter les étudiants à y retourner.
+// À mettre à jour manuellement / à vider au fil du temps, à mesure que "récent" ne l'est
+// plus vraiment.
+const RECENTLY_UPDATED_SUBJECTS = [
+  "anat-physio", "maladies-non-transmissibles", "sante-infantile", "sante-communautaire", "sante-publique",
+];
+
 const CHAPTERS = [
   { id: "santepub_milieu_def", label: "Étude du milieu (définitions)", subjectId: "sante-publique" },
   { id: "santepub_milieu_strategies", label: "Types de stratégies (fixe/avancée/mobile)", subjectId: "sante-publique" },
@@ -2007,6 +2015,11 @@ const ECUE_LIST = [
   { id: "1AFP1203", ueId: "AFP1203", code: "1AFP1203", label: "Pathologies respiratoires", credits: 1, subjectId: null },
   { id: "2AFP1203", ueId: "AFP1203", code: "2AFP1203", label: "Maladies non transmissibles / Maladies transmissibles", credits: 2, subjectId: "maladies-non-transmissibles" },
   { id: "3AFP1203", ueId: "AFP1203", code: "3AFP1203", label: "Pharmacologie Générale", credits: 1, subjectId: "pharmacologie" },
+  // Le paludisme fait partie intégrante des "maladies transmissibles" (2AFP1203) mais n'apparaît
+  // pas comme ECUE distinct dans la maquette officielle. Pour ne pas rendre inaccessibles les 59
+  // questions déjà construites sur ce sujet, on l'ajoute ici en crédit 0 (n'affecte donc jamais le
+  // total officiel de l'UE, qui reste 1+2+1=4) — uniquement pour garder la matière cliquable.
+  { id: "BONUS_PALU", ueId: "AFP1203", code: "—", label: "Paludisme (inclus dans Maladies transmissibles)", credits: 0, subjectId: "paludisme" },
 
   { id: "1SCO1204", ueId: "SCO1204", code: "1SCO1204", label: "Hygiène et assainissement / Généralités sur la vaccination", credits: 1, subjectId: "sante-communautaire" },
   { id: "2SCO1204", ueId: "SCO1204", code: "2SCO1204", label: "Épidémiologie : Généralités", credits: 1, subjectId: "sante-publique" },
@@ -24096,6 +24109,13 @@ function MessagesAdmin({ students }) {
 }
 
 /* ---------------- Dashboard ---------------- */
+// Nom lisible d'une matière à partir de son subjectId, dérivé automatiquement du libellé du
+// premier ECUE qui la référence — évite d'entretenir une deuxième liste de noms en double.
+const SUBJECT_DISPLAY_NAMES = {};
+ECUE_LIST.forEach((e) => {
+  if (e.subjectId && !SUBJECT_DISPLAY_NAMES[e.subjectId]) SUBJECT_DISPLAY_NAMES[e.subjectId] = e.label;
+});
+
 function computeChapterMastery(history) {
   const agg = {};
   history.forEach((h) => {
@@ -24106,6 +24126,25 @@ function computeChapterMastery(history) {
     });
   });
   return agg;
+}
+
+// Agrège les statistiques chapitre par chapitre (déjà calculées par computeChapterMastery)
+// au niveau de la matière, pour donner une vue d'ensemble "où j'en suis" — plutôt que le
+// seul classement du Défi Infirmier. Renvoie uniquement les matières réellement pratiquées
+// au moins une fois (total > 0), triées de la moins maîtrisée à la mieux maîtrisée.
+function computeSubjectMastery(history) {
+  const chapterMastery = computeChapterMastery(history);
+  const bySubject = {};
+  CHAPTERS.forEach((ch) => {
+    const stats = chapterMastery[ch.id];
+    if (!stats || stats.total === 0) return;
+    bySubject[ch.subjectId] = bySubject[ch.subjectId] || { correct: 0, total: 0 };
+    bySubject[ch.subjectId].correct += stats.correct;
+    bySubject[ch.subjectId].total += stats.total;
+  });
+  return Object.entries(bySubject)
+    .map(([subjectId, s]) => ({ subjectId, correct: s.correct, total: s.total, pct: s.total ? (s.correct / s.total) * 100 : 0 }))
+    .sort((a, b) => a.pct - b.pct);
 }
 
 function SubscriptionModal({ onClose, onMarkPending, reclaimMode }) {
@@ -24446,6 +24485,7 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
   const mastery = computeChapterMastery(history);
   const mastered = CHAPTERS.filter((c) => mastery[c.id] && mastery[c.id].total >= 2 && mastery[c.id].correct / mastery[c.id].total >= 0.7);
   const toReview = CHAPTERS.filter((c) => mastery[c.id] && mastery[c.id].total >= 2 && mastery[c.id].correct / mastery[c.id].total < 0.5);
+  const subjectMastery = computeSubjectMastery(history);
   const access = computeAccess(student);
 
   useEffect(() => {
@@ -24515,6 +24555,21 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
         </div>
 
         <div style={{ marginBottom: 22 }}>
+          {!access.isPaid && !access.isBlocked && access.daysLeft <= 2 && Number.isFinite(access.daysLeft) && (
+            <div
+              className="anim-slide-down"
+              style={{
+                marginBottom: 18, borderRadius: 14, padding: "14px 18px", display: "flex", alignItems: "center", gap: 12,
+                background: COLORS.amberSoft, border: `1.5px solid ${COLORS.amber}`,
+              }}
+            >
+              <span style={{ fontSize: 20 }}>⏳</span>
+              <div style={{ fontSize: 12.5, color: COLORS.ink, lineHeight: 1.4 }}>
+                <b>{access.daysLeft <= 0 ? "Votre essai gratuit se termine aujourd'hui." : `Il vous reste ${access.daysLeft} jour${access.daysLeft > 1 ? "s" : ""} d'essai gratuit.`}</b>{" "}
+                Abonnez-vous dès maintenant pour ne pas être coupé dans vos révisions.
+              </div>
+            </div>
+          )}
           <SubscriptionGauge student={student} onMarkPending={onMarkPending} />
         </div>
 
@@ -24526,6 +24581,34 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           <StatCard label="Meilleur score" value={examCount ? `${best.toFixed(1)}/20` : "—"} tone="green" />
           <StatCard label="Chapitres maîtrisés" value={mastered.length} tone="green" />
         </div>
+
+        {subjectMastery.length > 0 && (
+          <div style={{ marginBottom: 30 }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 700, color: COLORS.inkSoft, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 12 }}>
+              Où j'en suis, par matière
+            </h2>
+            <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: "6px 18px" }}>
+              {subjectMastery.map((s, i) => {
+                const tone = s.pct >= 70 ? COLORS.emerald : s.pct >= 50 ? COLORS.amber : COLORS.red;
+                return (
+                  <div key={s.subjectId} style={{ padding: "12px 0", borderTop: i === 0 ? "none" : `1px solid ${COLORS.line}` }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: COLORS.ink }}>
+                        {SUBJECT_DISPLAY_NAMES[s.subjectId] || s.subjectId}
+                      </span>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: tone, fontFamily: "'IBM Plex Mono', monospace" }}>
+                        {s.pct.toFixed(0)}%
+                      </span>
+                    </div>
+                    <div style={{ height: 6, background: "#EEF2F1", borderRadius: 999, overflow: "hidden" }}>
+                      <div style={{ height: "100%", width: `${Math.max(4, s.pct)}%`, background: tone, borderRadius: 999 }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 700, color: COLORS.inkSoft, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 12 }}>Réviser &amp; s'évaluer</h2>
         <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14, marginBottom: 30 }}>
@@ -25175,6 +25258,7 @@ function MatieresScreen({ onBack, onSelect }) {
               <div style={{ background: `${color}14`, padding: 10, display: "flex", flexDirection: "column", gap: 8 }}>
                 {ecues.map((e) => {
                   const active = !!e.subjectId;
+                  const isBonus = e.credits === 0;
                   return (
                     <button
                       key={e.id}
@@ -25189,11 +25273,18 @@ function MatieresScreen({ onBack, onSelect }) {
                       }}
                     >
                       <div>
-                        <div style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: COLORS.inkSoft }}>{e.code}</div>
-                        <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.ink, marginTop: 2 }}>{e.label}</div>
+                        {!isBonus && <div style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", color: COLORS.inkSoft }}>{e.code}</div>}
+                        <div style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.ink, marginTop: isBonus ? 0 : 2, display: "flex", alignItems: "center", gap: 6 }}>
+                          {e.label}
+                          {active && RECENTLY_UPDATED_SUBJECTS.includes(e.subjectId) && (
+                            <span style={{ fontSize: 9.5, fontWeight: 800, color: COLORS.emerald, background: "#E8F7F0", borderRadius: 999, padding: "2px 7px", flexShrink: 0 }}>
+                              🆕 Nouveau
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-                        <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>{e.credits} cr.</span>
+                        {!isBonus && <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: COLORS.inkSoft }}>{e.credits} cr.</span>}
                         <Badge tone={active ? "green" : "amber"}>{active ? "Disponible" : "Bientôt"}</Badge>
                       </div>
                     </button>
@@ -26304,8 +26395,92 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
 }
 
 /* ---------------- Results ---------------- */
-function ResultsScreen({ result, levelId, durationSec, onBackToDashboard }) {
+/* ---------------- Révision ciblée des erreurs ---------------- */
+// Un mini-parcours de relecture, pas un nouvel examen noté : uniquement les questions
+// ratées ou passées, avec la bonne réponse et l'explication déjà mises en évidence — pour
+// transformer l'examen en vrai outil de révision, sans toucher au moteur d'examen principal
+// (aucun impact sur l'historique, le suivi des questions vues, ou la file du Défi).
+function RevisionErreursScreen({ items, onFinish }) {
+  const [index, setIndex] = useState(0);
+  const q = items[index];
+  const correctSet = new Set(q.correctIds);
+
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onFinish} />
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "26px 18px 70px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 17, color: COLORS.ink }}>
+            📝 Révision de mes erreurs
+          </div>
+          <div style={{ fontSize: 12.5, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace" }}>{index + 1} / {items.length}</div>
+        </div>
+
+        {q.caseVignette && (
+          <div style={{ background: "#F0F4F3", borderRadius: 12, padding: 16, marginBottom: 14, fontSize: 13, color: COLORS.ink, lineHeight: 1.5, fontStyle: "italic" }}>
+            {q.caseVignette}
+          </div>
+        )}
+
+        <div style={{ background: COLORS.surface, borderRadius: 14, border: `1px solid ${COLORS.line}`, padding: 20 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12, gap: 10 }}>
+            <div style={{ fontWeight: 700, fontSize: 14.5, color: COLORS.ink, lineHeight: 1.4 }}>{q.stem}</div>
+            <Badge tone={q.status === "oubliee" ? "amber" : "red"}>{q.status === "oubliee" ? "Passée" : "Ratée"}</Badge>
+          </div>
+
+          {q.options.map((o) => {
+            const wasSelected = (q.selected || []).includes(o.id);
+            const isCorrect = correctSet.has(o.id);
+            let bg = COLORS.surface, border = COLORS.line, icon = null;
+            if (isCorrect) { bg = "#E8F7F0"; border = COLORS.emerald; icon = "✓"; }
+            else if (wasSelected && !isCorrect) { bg = "#FCEBEA"; border = COLORS.red; icon = "✗"; }
+            return (
+              <div
+                key={o.id}
+                style={{
+                  display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 9,
+                  border: `1.5px solid ${border}`, background: bg, marginBottom: 8,
+                }}
+              >
+                <span style={{ fontSize: 13, color: COLORS.ink, flex: 1 }}>{o.text}</span>
+                {icon && <span style={{ fontWeight: 800, color: isCorrect ? COLORS.emerald : COLORS.red }}>{icon}</span>}
+              </div>
+            );
+          })}
+
+          {q.explanation && (
+            <div style={{ marginTop: 14, padding: "12px 14px", background: "#F0F4F3", borderRadius: 10, fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.5 }}>
+              💡 {q.explanation}
+            </div>
+          )}
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20, gap: 10 }}>
+          <button
+            onClick={() => setIndex((i) => Math.max(0, i - 1))}
+            disabled={index === 0}
+            style={{ ...secondaryBtn, padding: "10px 18px", opacity: index === 0 ? 0.4 : 1 }}
+          >
+            ← Précédente
+          </button>
+          {index < items.length - 1 ? (
+            <button onClick={() => setIndex((i) => i + 1)} style={{ ...primaryBtn, padding: "10px 18px" }}>
+              Suivante →
+            </button>
+          ) : (
+            <button onClick={onFinish} style={{ ...primaryBtn, background: COLORS.emerald, padding: "10px 18px" }}>
+              Terminer la révision ✓
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ResultsScreen({ result, levelId, durationSec, onBackToDashboard, onReviewErrors }) {
   const { note20, obtained, maxTotal, percent, bonnes, mauvaises, oubliees, details } = result;
+  const errorItems = details.filter((d) => d.status !== "bonne");
   return (
     <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <TopBar onLogout={onBackToDashboard} />
@@ -26377,7 +26552,12 @@ function ResultsScreen({ result, levelId, durationSec, onBackToDashboard }) {
           ))}
         </div>
 
-        <button onClick={onBackToDashboard} style={{ ...primaryBtn, width: "100%", marginTop: 24 }}>
+        {errorItems.length > 0 && (
+          <button onClick={() => onReviewErrors(errorItems)} style={{ ...primaryBtn, background: COLORS.amber, width: "100%", marginTop: 24 }}>
+            📝 Réviser mes {errorItems.length} erreur{errorItems.length > 1 ? "s" : ""}
+          </button>
+        )}
+        <button onClick={onBackToDashboard} style={{ ...primaryBtn, width: "100%", marginTop: errorItems.length > 0 ? 10 : 24 }}>
           Retour au tableau de bord
         </button>
       </div>
@@ -26430,6 +26610,7 @@ export default function App() {
   const [pendingCase, setPendingCase] = useState(null);
   const [pendingLevel, setPendingLevel] = useState(null);
   const [lastResult, setLastResult] = useState(null);
+  const [revisionItems, setRevisionItems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState(null);
 
@@ -26685,6 +26866,10 @@ export default function App() {
 
   if (screen === "exam" && exam) return <ExamScreen exam={exam} onSubmit={handleSubmit} onAbort={handleAbort} onFraud={handleFraud} />;
 
+  if (screen === "revision" && revisionItems) {
+    return <RevisionErreursScreen items={revisionItems} onFinish={() => { setRevisionItems(null); setScreen("results"); }} />;
+  }
+
   if (screen === "fraud") return <FraudScreen onBack={handleAbort} />;
 
   if (screen === "results" && lastResult) {
@@ -26694,6 +26879,7 @@ export default function App() {
         levelId={lastResult.levelId}
         durationSec={lastResult.durationSec}
         onBackToDashboard={() => setScreen("dashboard")}
+        onReviewErrors={(items) => { setRevisionItems(items); setScreen("revision"); }}
       />
     );
   }
