@@ -13929,6 +13929,15 @@ async function applyTrialReset15IfNeeded(student) {
     }
     if (fresh) {
       const freshRec = JSON.parse(fresh.value);
+      // CORRECTIF : si la fiche réellement enregistrée en stockage a déjà reçu son
+      // reset (trialReset15Applied déjà à true), on ne le refait JAMAIS — même si
+      // l'objet "student" reçu en paramètre (ex. réponse de /api/student-auth) ne
+      // portait pas ce champ. Sans cette vérification, la fonction croyait à
+      // chaque connexion explicite qu'il s'agissait d'un premier reset et
+      // réécrivait trialResetAt = maintenant, ce qui redonnait un essai flambant
+      // neuf à des comptes pourtant réellement expirés (et affichés "Bloqué" côté
+      // admin, qui lit directement la fiche en stockage).
+      if (freshRec.trialReset15Applied) return freshRec;
       updated = { ...freshRec, trialResetAt: now, trialReset15Applied: true };
     }
     await storage.set(realKey, JSON.stringify(updated), true);
@@ -21975,17 +21984,22 @@ function LoginScreen({ onLogin }) {
         <div
           style={{
             position: "absolute", top: "38%", left: "50%", transform: "translate(-50%, -50%)",
-            width: "78%", maxWidth: 260, height: 70, overflow: "hidden",
+            width: "46%", maxWidth: 150, height: 36, overflow: "hidden",
           }}
         >
-          <svg viewBox="0 0 480 80" width="480" height="80" className="ecg-line" style={{ display: "block" }}>
+          {/* SVG en taille responsive (100%/100%) plutôt qu'en pixels fixes (480x80) : avant,
+              une taille fixe plus grande que le conteneur se faisait découper par le
+              "overflow: hidden" du parent, ce qui donnait un tracé qui semblait grossier et
+              tronqué une fois la zone agrandie. Ici le tracé épouse toujours exactement la
+              taille (discrète) du conteneur, quel que soit l'écran. */}
+          <svg viewBox="0 0 480 80" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" className="ecg-line" style={{ display: "block" }}>
             <defs>
               <path id="ecgPattern" d="M0,40 L50,40 L65,40 L75,12 L90,68 L102,40 L120,40 L135,18 L150,40 L240,40" />
             </defs>
-            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(4px)" }} />
-            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(4px)" }} />
-            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(3px)" }} />
+            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(3px)" }} />
+            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
         <div
