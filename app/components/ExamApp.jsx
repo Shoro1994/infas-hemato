@@ -13848,6 +13848,15 @@ async function createStudent(profile) {
     paidDays: null,
     pendingSince: null,
     pendingPlan: null,
+    // Empêche le mécanisme historique de "réinitialisation ponctuelle 45→15 jours" (voir
+    // applyTrialReset15IfNeeded) de s'appliquer par erreur à ce compte, qui est neuf et n'a
+    // donc jamais eu besoin de cette migration. Sans ce marqueur posé dès la création, un
+    // étudiant pouvait utiliser l'app sans jamais se reconnecter explicitement (grâce à la
+    // persistance de session), se faire bloquer en fin d'essai, puis — à la toute première
+    // reconnexion EXPLICITE suivant ce blocage (nouvel appareil, cache vidé, session
+    // expirée...) — se voir accorder un essai de 15 jours flambant neuf et gratuit, la
+    // fonction croyant alors qu'il s'agissait de sa première connexion historique.
+    trialReset15Applied: true,
   };
   try {
     await storage.set(studentKey(profile.matricule), JSON.stringify(record), true);
@@ -13886,6 +13895,13 @@ async function applyTrialReset15IfNeeded(student) {
   if (student.paymentStatus === "paid" && student.paidAt) return student;
   if (isVIPMatricule(student.matricule)) return student;
   if (student.trialReset15Applied) return student;
+  // Filet de sécurité supplémentaire : même si le marqueur trialReset15Applied venait à
+  // manquer pour une raison quelconque, un compte créé à partir de la même date que le
+  // dernier changement de durée d'essai (TRIAL_LENGTH_CHANGE_AT) est forcément un compte
+  // récent qui n'a jamais eu besoin de cette migration historique 45→15 jours — on
+  // n'applique donc jamais ce reset dans ce cas, peu importe le marqueur.
+  const createdAtMs = student.createdAt ? new Date(student.createdAt).getTime() : NaN;
+  if (Number.isFinite(createdAtMs) && createdAtMs >= TRIAL_LENGTH_CHANGE_AT) return student;
   const now = new Date().toISOString();
   // Sécurité : on relit la fiche actuellement enregistrée juste avant d'écrire,
   // et on ne fait qu'y AJOUTER les deux champs concernés — jamais remplacer
@@ -14092,6 +14108,31 @@ async function confirmPayment(storageKey, planIdOverride) {
     return rec;
   } catch (e) {
     console.error("Erreur confirmation paiement", e);
+    return null;
+  }
+}
+
+// Permet de rejeter proprement une réclamation de paiement infondée (l'étudiant a cliqué
+// "J'ai payé" sans avoir réellement payé, par erreur ou de mauvaise foi) : le compte revient
+// à son état réel (essai en cours ou bloqué, selon ses vraies dates), sans qu'aucun jour ne
+// lui soit jamais accordé. Sans cette fonction, une fausse réclamation restait indéfiniment
+// affichée dans l'onglet Paiements, sans aucun moyen de la faire disparaître autrement qu'en
+// la confirmant à tort.
+async function rejectPendingPayment(storageKey) {
+  try {
+    const r = await storage.get(storageKey, true);
+    if (!r) return null;
+    const rec = JSON.parse(r.value);
+    rec.pendingSince = null;
+    rec.pendingPlan = null;
+    // paymentStatus revient à "trial" seulement s'il n'était pas déjà "paid" par ailleurs
+    // (cas rare mais possible : un compte déjà payé qui réclamerait un renouvellement par
+    // erreur ne doit jamais perdre son accès déjà acquis).
+    if (rec.paymentStatus === "pending") rec.paymentStatus = "trial";
+    await storage.set(storageKey, JSON.stringify(rec), true);
+    return rec;
+  } catch (e) {
+    console.error("Erreur rejet réclamation", e);
     return null;
   }
 }
@@ -21893,14 +21934,11 @@ function LoginScreen({ onLogin }) {
           100% { opacity: 1; transform: translateX(0) scale(1); }
         }
         .diag-panel { animation: diagAppearDisappear 5s ease-in-out infinite; pointer-events: none; }
-        @keyframes ecgDraw {
-          0% { stroke-dashoffset: 340; opacity: 0; }
-          8% { opacity: 0.9; }
-          55% { stroke-dashoffset: 0; opacity: 0.9; }
-          70% { opacity: 0; }
-          100% { stroke-dashoffset: 0; opacity: 0; }
+        @keyframes ecgScroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-240px); }
         }
-        .ecg-line { stroke-dasharray: 340; animation: ecgDraw 3.6s ease-in-out infinite; }
+        .ecg-line { animation: ecgScroll 3.2s linear infinite; }
       `}</style>
 
       {/* Panneau coloré diagonal — plein écran, fixé (ne défile pas), du côté opposé au
@@ -21928,24 +21966,28 @@ function LoginScreen({ onLogin }) {
             background: `linear-gradient(${isLogin ? "200deg" : "160deg"}, ${accentColor}, ${COLORS.blueDeep} 75%)`,
           }}
         />
-        {/* Ligne d'électrocardiogramme, discrète et non interactive — se redessine en boucle
-            au centre du panneau, pour ancrer visuellement l'identité "santé" de l'app dès
-            l'écran de connexion, sans le côté potentiellement kitsch d'une icône littérale
-            (stéthoscope, croix) animée. */}
-        <svg
-          viewBox="0 0 340 80"
-          style={{ position: "absolute", top: "38%", left: "50%", transform: "translate(-50%, -50%)", width: "70%", maxWidth: 220 }}
+        {/* Ligne d'électrocardiogramme animée façon "vrai moniteur" : le tracé défile en
+            continu vers la gauche (comme sur un écran de surveillance cardiaque), sans temps
+            mort ni fondu. Le motif est répété deux fois bout à bout et le conteneur masque le
+            débordement, pour que le défilement soit parfaitement continu sans saut visible au
+            raccord. Une légère lueur (filter blur dupliqué) renforce sa présence sans jamais
+            devenir criarde. */}
+        <div
+          style={{
+            position: "absolute", top: "38%", left: "50%", transform: "translate(-50%, -50%)",
+            width: "78%", maxWidth: 260, height: 70, overflow: "hidden",
+          }}
         >
-          <path
-            className="ecg-line"
-            d="M0,40 L60,40 L75,40 L85,12 L100,68 L112,40 L130,40 L145,20 L160,40 L340,40"
-            fill="none"
-            stroke="rgba(255,255,255,0.55)"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+          <svg viewBox="0 0 480 80" width="480" height="80" className="ecg-line" style={{ display: "block" }}>
+            <defs>
+              <path id="ecgPattern" d="M0,40 L50,40 L65,40 L75,12 L90,68 L102,40 L120,40 L135,18 L150,40 L240,40" />
+            </defs>
+            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(4px)" }} />
+            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(4px)" }} />
+            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
         <div
           style={{
             position: "absolute", bottom: 40, left: isLogin ? 24 : "auto", right: isLogin ? "auto" : 24,
@@ -23338,6 +23380,16 @@ function AdminScreen({ onBack }) {
     setConfirmingKey(null);
   };
 
+  const handleReject = async (s) => {
+    if (confirmingKeyRef.current) return;
+    confirmingKeyRef.current = s._storageKey;
+    setConfirmingKey(s._storageKey);
+    await rejectPendingPayment(s._storageKey);
+    await refreshStudents();
+    confirmingKeyRef.current = null;
+    setConfirmingKey(null);
+  };
+
   // Activation manuelle d'un paiement depuis la liste principale des étudiants — pour les
   // cas où un paiement Wave est visible côté compte business, mais que l'étudiant n'a
   // jamais cliqué sur "J'ai payé" dans l'application (le compte reste alors bloqué à tort,
@@ -23617,26 +23669,35 @@ function AdminScreen({ onBack }) {
                             <Badge tone="red">Forfait non reconnu — précisez-le avant de confirmer</Badge>
                           )}
                         </div>
-                        {plan ? (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
+                          {plan ? (
+                            <button
+                              onClick={() => handleConfirm(s)}
+                              disabled={confirmingKey === s._storageKey}
+                              style={{
+                                ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px",
+                                opacity: confirmingKey === s._storageKey ? 0.5 : 1,
+                                cursor: confirmingKey === s._storageKey ? "wait" : "pointer",
+                              }}
+                            >
+                              {confirmingKey === s._storageKey ? "Activation…" : "Confirmer le paiement"}
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => setPayManualMatricule(isPickingPlan ? null : `pending-${s._displayId}`)}
+                              style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12, padding: "8px 12px" }}
+                            >
+                              {isPickingPlan ? "Fermer" : "Préciser le forfait"}
+                            </button>
+                          )}
                           <button
-                            onClick={() => handleConfirm(s)}
+                            onClick={() => handleReject(s)}
                             disabled={confirmingKey === s._storageKey}
-                            style={{
-                              ...primaryBtn, background: COLORS.green, fontSize: 12, padding: "8px 12px",
-                              opacity: confirmingKey === s._storageKey ? 0.5 : 1,
-                              cursor: confirmingKey === s._storageKey ? "wait" : "pointer",
-                            }}
+                            style={{ background: "none", border: "none", color: COLORS.red, fontSize: 11.5, fontWeight: 700, cursor: "pointer", padding: "2px 4px" }}
                           >
-                            {confirmingKey === s._storageKey ? "Activation…" : "Confirmer le paiement"}
+                            ✕ Rejeter (aucun paiement reçu)
                           </button>
-                        ) : (
-                          <button
-                            onClick={() => setPayManualMatricule(isPickingPlan ? null : `pending-${s._displayId}`)}
-                            style={{ ...primaryBtn, background: COLORS.amber, fontSize: 12, padding: "8px 12px" }}
-                          >
-                            {isPickingPlan ? "Fermer" : "Préciser le forfait"}
-                          </button>
-                        )}
+                        </div>
                       </div>
                       {isPickingPlan && (
                         <div style={{ padding: "0 16px 14px" }}>
