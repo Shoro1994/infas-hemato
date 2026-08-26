@@ -2096,15 +2096,61 @@ const TOTAL_COEF = Object.values(SUBJECT_CREDITS).reduce((a, b) => a + b, 0);
 // (chacune n'étant proposée qu'une seule fois) ; (2) quand une nouvelle matière est ajoutée
 // au programme (donc redéployée avec ses questions), les objectifs se recalculent tout seuls
 // dès l'affichage suivant, sans qu'aucun chiffre n'ait besoin d'être retouché à la main.
-function computeWeeklyTargets(totalAvailable) {
-  const shape = [7.5, 7, 6, 6]; // répartition relative d'origine (légèrement dégressive)
-  const shapeSum = shape.reduce((a, b) => a + b, 0);
-  const raw = shape.map((s) => Math.round(((s / shapeSum) * totalAvailable) * 2) / 2); // arrondi au 0,5
-  const roundedSum = raw.reduce((a, b) => a + b, 0);
-  // La dernière semaine absorbe l'écart d'arrondi, pour que la somme colle exactement
-  // au total disponible — condition nécessaire pour que "tout couvrir" reste atteignable.
-  raw[3] = Math.round((raw[3] + (totalAvailable - roundedSum)) * 2) / 2;
-  return raw;
+// ANCIEN MÉCANISME (bugué) : les 4 objectifs étaient calculés d'un coup, dès le début du
+// mois, comme une simple répartition proportionnelle (7,5 / 7 / 6 / 6) du total arrondie au
+// 0,5 — SANS jamais vérifier qu'une vraie combinaison de matières pouvait exactement
+// atteindre ce chiffre. Résultat : selon les crédits réels des matières encore disponibles,
+// certaines semaines devenaient mathématiquement impossibles à valider (aucune combinaison
+// de matières ne sommait exactement au quota imposé).
+//
+// NOUVEAU MÉCANISME : l'objectif de la semaine N n'est plus fixé à l'avance. Il est
+// recalculé au moment précis où l'étudiant l'aborde, à partir des matières RÉELLEMENT
+// encore non utilisées à cet instant (donc en tenant compte de ce qu'il a déjà choisi les
+// semaines précédentes, quel qu'ait été son choix) — et surtout, via une vraie recherche de
+// sous-ensemble (subset-sum) qui ne retient QUE des valeurs prouvées atteignables avec les
+// matières disponibles. La dernière semaine récupère systématiquement l'intégralité du
+// reste, ce qui garantit qu'aucune matière ne peut jamais être oubliée sur le mois.
+//
+// remainingCredits : tableau des crédits (coefficients) des matières encore non utilisées.
+// weeksRemaining : nombre de semaines restantes, EN COMPTANT la semaine en cours (donc 4
+// pour la semaine 1, 1 pour la semaine 4).
+function computeAchievableWeekTarget(remainingCredits, weeksRemaining) {
+  const total = remainingCredits.reduce((a, b) => a + b, 0);
+  if (weeksRemaining <= 1 || remainingCredits.length === 0) return Math.round(total * 2) / 2;
+
+  // Travaille en demi-crédits (x2) pour rester en entiers : tous les coefficients du
+  // programme officiel sont des multiples de 0,5, donc aucune perte de précision.
+  const scaled = remainingCredits.map((c) => Math.round(c * 2));
+  const totalScaled = scaled.reduce((a, b) => a + b, 0);
+
+  // Table des sommes atteignables (subset-sum classique) : reachable[s] = vrai s'il existe
+  // un sous-ensemble des matières restantes dont la somme des crédits vaut exactement s.
+  const reachable = new Array(totalScaled + 1).fill(false);
+  reachable[0] = true;
+  for (const c of scaled) {
+    for (let s = totalScaled; s >= c; s--) {
+      if (reachable[s - c]) reachable[s] = true;
+    }
+  }
+
+  // Cible idéale : une part égale du total restant sur le nombre de semaines qui restent —
+  // répartition simple et robuste, qui converge naturellement vers "tout le reste" à la
+  // dernière semaine sans jamais avoir besoin d'un ajustement d'arrondi séparé.
+  const idealScaled = Math.round((totalScaled / weeksRemaining));
+
+  // Recherche, en s'écartant progressivement de l'idéal des deux côtés à la fois, la
+  // première somme prouvée atteignable — tout en s'assurant de ne jamais choisir la
+  // totalité (0 ou 100% du reste) pour une semaine qui n'est pas la dernière, afin de
+  // garder un volant de matières pour les semaines suivantes.
+  for (let delta = 0; delta <= totalScaled; delta++) {
+    const below = idealScaled - delta;
+    const above = idealScaled + delta;
+    if (below > 0 && below < totalScaled && reachable[below]) return below / 2;
+    if (above > 0 && above < totalScaled && reachable[above]) return above / 2;
+  }
+  // Filet de sécurité (ne devrait jamais se produire : 0 et le total sont toujours
+  // atteignables) — retourne la moitié du reste, arrondie à un demi-crédit près.
+  return Math.round((total / 2) * 2) / 2;
 }
 
 async function loadDefiRecord(matricule, isoMonth = currentIsoMonth()) {
@@ -21943,11 +21989,14 @@ function LoginScreen({ onLogin }) {
           100% { opacity: 1; transform: translateX(0) scale(1); }
         }
         .diag-panel { animation: diagAppearDisappear 5s ease-in-out infinite; pointer-events: none; }
-        @keyframes ecgScroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-240px); }
+        @keyframes ecgDraw {
+          0% { stroke-dashoffset: 340; opacity: 0; }
+          8% { opacity: 0.9; }
+          55% { stroke-dashoffset: 0; opacity: 0.9; }
+          70% { opacity: 0; }
+          100% { stroke-dashoffset: 0; opacity: 0; }
         }
-        .ecg-line { animation: ecgScroll 3.2s linear infinite; }
+        .ecg-line { stroke-dasharray: 340; animation: ecgDraw 3.6s ease-in-out infinite; }
       `}</style>
 
       {/* Panneau coloré diagonal — plein écran, fixé (ne défile pas), du côté opposé au
@@ -21975,33 +22024,24 @@ function LoginScreen({ onLogin }) {
             background: `linear-gradient(${isLogin ? "200deg" : "160deg"}, ${accentColor}, ${COLORS.blueDeep} 75%)`,
           }}
         />
-        {/* Ligne d'électrocardiogramme animée façon "vrai moniteur" : le tracé défile en
-            continu vers la gauche (comme sur un écran de surveillance cardiaque), sans temps
-            mort ni fondu. Le motif est répété deux fois bout à bout et le conteneur masque le
-            débordement, pour que le défilement soit parfaitement continu sans saut visible au
-            raccord. Une légère lueur (filter blur dupliqué) renforce sa présence sans jamais
-            devenir criarde. */}
-        <div
-          style={{
-            position: "absolute", top: "38%", left: "50%", transform: "translate(-50%, -50%)",
-            width: "46%", maxWidth: 150, height: 36, overflow: "hidden",
-          }}
+        {/* Ligne d'électrocardiogramme, discrète et non interactive — se redessine en boucle
+            au centre du panneau, pour ancrer visuellement l'identité "santé" de l'app dès
+            l'écran de connexion, sans le côté potentiellement kitsch d'une icône littérale
+            (stéthoscope, croix) animée. */}
+        <svg
+          viewBox="0 0 340 80"
+          style={{ position: "absolute", top: "38%", left: "50%", transform: "translate(-50%, -50%)", width: "70%", maxWidth: 220 }}
         >
-          {/* SVG en taille responsive (100%/100%) plutôt qu'en pixels fixes (480x80) : avant,
-              une taille fixe plus grande que le conteneur se faisait découper par le
-              "overflow: hidden" du parent, ce qui donnait un tracé qui semblait grossier et
-              tronqué une fois la zone agrandie. Ici le tracé épouse toujours exactement la
-              taille (discrète) du conteneur, quel que soit l'écran. */}
-          <svg viewBox="0 0 480 80" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" className="ecg-line" style={{ display: "block" }}>
-            <defs>
-              <path id="ecgPattern" d="M0,40 L50,40 L65,40 L75,12 L90,68 L102,40 L120,40 L135,18 L150,40 L240,40" />
-            </defs>
-            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(3px)" }} />
-            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "blur(3px)" }} />
-            <use href="#ecgPattern" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <use href="#ecgPattern" x="240" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
+          <path
+            className="ecg-line"
+            d="M0,40 L60,40 L75,40 L85,12 L100,68 L112,40 L130,40 L145,20 L160,40 L340,40"
+            fill="none"
+            stroke="rgba(255,255,255,0.55)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
         <div
           style={{
             position: "absolute", bottom: 40, left: isLogin ? 24 : "auto", right: isLogin ? "auto" : 24,
@@ -23054,14 +23094,14 @@ function DefiScreen({ onBack, student, onLaunchCombo, onViewMonthly }) {
   const allSubjectsDone = allSubjectIds.length > 0 && remainingSubjects.length === 0 && notYetReadyCount === 0;
   const monthFullyCompleted = week === null;
 
-  // Total du coefficient RÉELLEMENT disponible ce mois-ci (uniquement les matières qui ont
-  // du contenu) : c'est sur cette base que les objectifs hebdomadaires se calculent, pour
-  // que couvrir les 4 semaines impose de couvrir absolument toutes les matières proposées.
-  const totalAvailableCoef = allSubjectIds
-    .filter((id) => subjectsWithQuestions.has(id))
-    .reduce((sum, id) => sum + (SUBJECT_CREDITS[id] || 1), 0);
-  const WEEKLY_TARGETS = computeWeeklyTargets(totalAvailableCoef);
-  const weekTarget = week ? WEEKLY_TARGETS[week - 1] : 0;
+  // Objectif de la semaine en cours : recalculé à chaque affichage, à partir des seules
+  // matières RÉELLEMENT encore non utilisées (remainingSubjects, déjà calculé ci-dessus en
+  // excluant celles déjà tentées) et du nombre de semaines qu'il reste à jouer en comptant
+  // la semaine en cours — garantit mathématiquement un objectif atteignable, quel qu'ait
+  // été le choix de l'étudiant les semaines précédentes.
+  const remainingCreditsNow = remainingSubjects.map((id) => SUBJECT_CREDITS[id] || 1);
+  const weeksRemainingNow = week ? 4 - week + 1 : 0;
+  const weekTarget = week ? computeAchievableWeekTarget(remainingCreditsNow, weeksRemainingNow) : 0;
 
   const selectedCoef = selected.reduce((sum, id) => sum + (SUBJECT_CREDITS[id] || 1), 0);
   // Le quota doit être atteint EXACTEMENT (ni plus, ni moins) pour pouvoir lancer le combo —
