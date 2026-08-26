@@ -13747,7 +13747,19 @@ function flattenGradable(items) {
   const flat = [];
   items.forEach((it) => {
     if (it.kind === "single") flat.push(it);
-    else it.questions.forEach((q) => flat.push({ kind: "caseq", caseId: it.id, caseVignette: it.vignette, ...q }));
+    else it.questions.forEach((q) => {
+      // BUG CORRIGÉ : deux cas cliniques différents peuvent tout à fait réutiliser les
+      // mêmes identifiants internes pour leurs sous-questions (ex. "q1", "q2", "q3" dans
+      // chaque cas). Sans préfixer par l'identifiant du cas, deux sous-questions de cas
+      // différents partageaient alors la MÊME clé dans l'objet "answers" — répondre au
+      // second cas écrasait silencieusement la réponse déjà donnée au premier, sous le
+      // même nom. Résultat concret signalé par plusieurs étudiants : la question semblait
+      // bien répondue à l'écran, mais le compteur "X/Y répondues" restait bloqué en
+      // retard, empêchant la soumission (et, plus grave, faussant potentiellement la
+      // correction de la question ainsi écrasée). Le préfixe par it.id garantit un
+      // identifiant unique sur tout l'examen, quel que soit le nombre de cas cliniques.
+      flat.push({ kind: "caseq", caseId: it.id, caseVignette: it.vignette, ...q, id: `${it.id}__${q.id}` });
+    });
   });
   return flat;
 }
@@ -26360,7 +26372,14 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
     });
   };
 
-  const canSubmit = lockNavigation ? true : allAnswered;
+  // Sur demande explicite : la soumission est désormais toujours autorisée, même si
+  // certaines questions restent sans réponse (elles compteront simplement comme "oubliées"
+  // dans la correction, comme n'importe quelle question passée). Ceci sert aussi de filet
+  // de sécurité : même si un cas de figure imprévu venait à fausser un jour le comptage
+  // "répondues/total" (comme celui qui vient d'être corrigé à sa source ci-dessus, sur les
+  // identifiants de sous-questions de cas cliniques), un étudiant ne se retrouve plus
+  // jamais bloqué, incapable de rendre son examen.
+  const canSubmit = true;
 
   const submit = () => {
     const durationSec = Math.floor((Date.now() - startTime) / 1000);
@@ -26494,8 +26513,8 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
           )}
         </div>
         {isLast && !lockNavigation && !allAnswered && (
-          <div style={{ textAlign: "right", fontSize: 11.5, color: COLORS.red, marginTop: 8 }}>
-            Répondez aux {flat.length - answeredCount} question(s) restante(s) pour soumettre.
+          <div style={{ textAlign: "right", fontSize: 11.5, color: COLORS.amber, marginTop: 8 }}>
+            {flat.length - answeredCount} question(s) sans réponse — elles seront comptées comme telles si vous soumettez maintenant.
           </div>
         )}
         {isLast && lockNavigation && !allAnswered && (
