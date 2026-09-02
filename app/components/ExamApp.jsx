@@ -23193,22 +23193,44 @@ function PaperSimSelectScreen({ onBack, onSelect }) {
   );
 }
 
+// Case ovale d'une grille de réponses — reproduit le style exact de la vraie feuille INFAS
+// (une pilule ovale avec la lettre à l'intérieur, jamais un simple carré ou rond).
+function AnswerBubble({ letter, state, onClick, disabled }) {
+  // state: "empty" | "chosen" | "correct" | "wrong"
+  const styles = {
+    empty: { bg: COLORS.surface, border: "#C64A5C", color: "#C64A5C" },
+    chosen: { bg: COLORS.ink, border: COLORS.ink, color: COLORS.white },
+    correct: { bg: COLORS.emerald, border: COLORS.emerald, color: COLORS.white },
+    wrong: { bg: COLORS.red, border: COLORS.red, color: COLORS.white },
+  }[state];
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={{
+        width: 24, height: 15, borderRadius: 999, border: `1.3px solid ${styles.border}`,
+        background: styles.bg, color: styles.color, fontSize: 9, fontWeight: 700,
+        cursor: disabled ? "default" : "pointer", flexShrink: 0, lineHeight: 1, padding: 0,
+      }}
+    >
+      {letter}
+    </button>
+  );
+}
+
 function PaperSimulationScreen({ module, student, onBack }) {
-  // Tire 20 questions au hasard dans la matière choisie, une seule fois à l'ouverture de
-  // l'écran (useMemo) pour que le jeu de questions reste stable pendant toute la session,
-  // même si l'étudiant fait défiler ou change de réponse plusieurs fois.
+  // Tire 20 questions au hasard dans la matière choisie — tous types confondus (QCU, QCM,
+  // QCD), une seule fois à l'ouverture de l'écran (useMemo) pour que le jeu de questions
+  // reste stable pendant toute la session.
   const questions = useMemo(() => {
     const pool = QUESTIONS.filter((q) => q.subjectId === module.subjectId);
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, Math.min(20, shuffled.length));
   }, [module.subjectId]);
 
-  // Type d'épreuve tiré au hasard une seule fois, pour reproduire fidèlement l'en-tête de
-  // la vraie feuille de réponses (voir CompoSurTableGuideScreen pour l'explication donnée
-  // à l'étudiant sur ce que ça signifie).
   const typeEpreuve = useMemo(() => ["A", "B", "C", "D"][Math.floor(Math.random() * 4)], []);
 
-  const [answers, setAnswers] = useState({}); // index question -> index option choisie
+  const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
   const selectAnswer = (qi, optIdx) => {
@@ -23227,37 +23249,105 @@ function PaperSimulationScreen({ module, student, onBack }) {
 
   const answeredCount = Object.keys(answers).length;
   const LETTERS = ["A", "B", "C", "D", "E", "F"];
+  const studentName = `${student?.nom || ""} ${student?.prenom || ""}`.trim();
 
   return (
-    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
-      <div style={{ maxWidth: 780, margin: "0 auto", padding: "20px 18px 90px" }}>
+    <div className="anim-screen" style={{ minHeight: "100vh", background: "#EDEDED", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: "20px 14px 90px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, padding: "8px 14px", fontSize: 12.5, marginBottom: 14 }}>← Quitter la simulation</button>
 
-        {/* --- En-tête façon vraie feuille de réponses --- */}
-        <div style={{ background: COLORS.surface, border: `1.5px solid ${COLORS.ink}`, borderRadius: 10, padding: 16, marginBottom: 22 }}>
-          <div style={{ textAlign: "center", fontSize: 11, fontWeight: 700, color: COLORS.inkSoft, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>
-            Institut National de Formation des Agents de Santé — Simulation d'entraînement
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
-            <div style={{ flex: 1, minWidth: 200, border: `1px dashed ${COLORS.line}`, borderRadius: 8, padding: "8px 12px" }}>
-              <div style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.blueDeep }}>IDENTIFICATION DE L'ÉTUDIANT</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.ink, marginTop: 2 }}>{student?.nom || ""} {student?.prenom || ""}</div>
+        {/* ============ RÉPLIQUE DE LA VRAIE FEUILLE DE RÉPONSES INFAS ============ */}
+        <div style={{ background: "#FFFFFF", border: "1px solid #999", borderRadius: 4, padding: "18px 20px", marginBottom: 26, boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
+          {/* --- En-tête : République + identification (double cadre comme l'original) --- */}
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 14, flexWrap: "wrap", marginBottom: 14 }}>
+            <div style={{ fontSize: 10.5, lineHeight: 1.5 }}>
+              <div style={{ fontWeight: 700 }}>RÉPUBLIQUE DE CÔTE D'IVOIRE</div>
+              <div style={{ color: "#555" }}>Ministère de la Santé et de l'Hygiène Publique</div>
+              <div style={{ fontWeight: 700, marginTop: 6 }}>INSTITUT NATIONAL DE FORMATION</div>
+              <div style={{ fontWeight: 700 }}>DES AGENTS DE SANTÉ</div>
             </div>
-            <div style={{ border: `1px dashed ${COLORS.line}`, borderRadius: 8, padding: "8px 16px", textAlign: "center" }}>
-              <div style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.blueDeep }}>TYPE D'ÉPREUVE</div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: COLORS.ink, marginTop: 2 }}>{typeEpreuve}</div>
+            <div style={{ position: "relative", minWidth: 230 }}>
+              <div style={{ position: "absolute", top: -6, left: 6, right: -6, border: "1px solid #C64A5C", borderRadius: 3, padding: "4px 10px", background: "#FFFFFF" }}>
+                <div style={{ fontSize: 9, fontWeight: 700, color: "#C64A5C", textAlign: "center" }}>IDENTIFICATION DE L'ÉTUDIANT</div>
+              </div>
+              <div style={{ border: "1px solid #C64A5C", borderRadius: 3, padding: "16px 10px 8px", background: "#FFFFFF", position: "relative" }}>
+                <div style={{ fontSize: 9, fontWeight: 700, color: "#C64A5C", textAlign: "center", marginBottom: 8 }}>IDENTIFICATION DE L'ÉTUDIANT</div>
+                <div style={{ borderBottom: "1px dotted #999", textAlign: "center", fontSize: 13, fontWeight: 700, color: COLORS.ink, paddingBottom: 4 }}>
+                  {studentName || "________________________"}
+                </div>
+              </div>
             </div>
           </div>
-          <div style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 10, textAlign: "center" }}>
-            {module.label} — {questions.length} questions
-          </div>
-        </div>
 
-        {/* --- BLOC 1 (haut) : le questionnaire --- */}
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.ink, marginBottom: 10 }}>
-          📖 Questionnaire
+          {/* --- Type d'épreuve --- */}
+          <div style={{ display: "inline-block", border: "1px solid #999", borderRadius: 3, padding: "6px 14px", marginBottom: 14 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, textAlign: "center", marginBottom: 4 }}>TYPE D'ÉPREUVE</div>
+            <div style={{ display: "flex", gap: 10 }}>
+              {["A", "B", "C", "D"].map((l) => (
+                <div key={l} style={{ textAlign: "center" }}>
+                  <div style={{
+                    width: 20, height: 13, borderRadius: 999, border: `1.3px solid ${l === typeEpreuve ? COLORS.ink : "#C64A5C"}`,
+                    background: l === typeEpreuve ? COLORS.ink : "#FFFFFF", color: l === typeEpreuve ? "#FFF" : "#C64A5C",
+                    fontSize: 8.5, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* --- Instructions et exemple de marquage --- */}
+          <div style={{ fontSize: 10.5, color: "#333", lineHeight: 1.5, marginBottom: 10 }}>
+            <b>À l'attention du candidat :</b> Pour remplir ce document, cliquez sur la bulle correspondant à votre réponse.
+          </div>
+          <div style={{ display: "flex", gap: 20, alignItems: "center", marginBottom: 16, flexWrap: "wrap" }}>
+            <div style={{ fontSize: 9.5, fontWeight: 700, color: "#333" }}>EXEMPLE DE MARQUAGE :</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.emerald }}>FAIRE</span>
+              <div style={{ width: 24, height: 15, borderRadius: 999, background: COLORS.ink }} />
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.red }}>NE PAS FAIRE</span>
+              <span style={{ fontSize: 14, color: COLORS.red }}>✗</span>
+              <div style={{ width: 24, height: 15, borderRadius: 999, border: "1.3px solid #C64A5C" }} />
+            </div>
+          </div>
+
+          <div style={{ borderTop: "1px dashed #999", marginBottom: 16 }} />
+
+          {/* --- Grille de réponses : 4 colonnes, comme l'original, bulles ovales A-F --- */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "10px 14px" }}>
+            {questions.map((q, qi) => {
+              const chosen = answers[qi];
+              return (
+                <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 4, border: "1px solid #DDD", borderRadius: 999, padding: "3px 8px" }}>
+                  <span style={{ width: 16, fontSize: 10, fontWeight: 700, color: "#333", flexShrink: 0 }}>{qi + 1}</span>
+                  {q.options.map((o, oi) => {
+                    let state = "empty";
+                    const isChosen = chosen === oi;
+                    if (submitted) {
+                      if (o.correct) state = "correct";
+                      else if (isChosen) state = "wrong";
+                    } else if (isChosen) state = "chosen";
+                    return (
+                      <AnswerBubble key={o.id} letter={LETTERS[oi]} state={state} disabled={submitted} onClick={() => selectAnswer(qi, oi)} />
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+
+          <div style={{ borderTop: "1px solid #999", marginTop: 16, paddingTop: 8, textAlign: "center", fontSize: 8.5, color: "#777" }}>
+            INSTITUT NATIONAL DE FORMATION DES AGENTS DE SANTÉ (INFAS) — Simulation d'entraînement — {module.label}
+          </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 30 }}>
+        {/* ============ FIN RÉPLIQUE DE LA FEUILLE ============ */}
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.ink }}>📖 Questionnaire</div>
+          <span style={{ fontSize: 11.5, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace" }}>{answeredCount}/{questions.length} répondues</span>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}>
           {questions.map((q, qi) => (
             <div key={q.id} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 14 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.ink, marginBottom: 8 }}>{qi + 1}. {q.stem}</div>
@@ -23275,51 +23365,6 @@ function PaperSimulationScreen({ module, student, onBack }) {
               )}
             </div>
           ))}
-        </div>
-
-        {/* --- BLOC 2 (bas) : la grille de réponses --- */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.ink }}>
-            ✏️ Grille de réponses
-          </div>
-          <span style={{ fontSize: 11.5, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace" }}>{answeredCount}/{questions.length}</span>
-        </div>
-        <div style={{ background: COLORS.surface, border: `1.5px solid ${COLORS.ink}`, borderRadius: 12, padding: 16, marginBottom: 20 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {questions.map((q, qi) => {
-              const chosen = answers[qi];
-              return (
-                <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ width: 22, fontSize: 12, fontWeight: 700, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", flexShrink: 0 }}>{qi + 1}</span>
-                  {q.options.map((o, oi) => {
-                    const isChosen = chosen === oi;
-                    const isCorrectOpt = o.correct;
-                    let bg = isChosen ? COLORS.ink : COLORS.surface;
-                    let border = isChosen ? COLORS.ink : COLORS.line;
-                    let textColor = isChosen ? COLORS.white : COLORS.inkSoft;
-                    if (submitted) {
-                      if (isCorrectOpt) { bg = COLORS.emerald; border = COLORS.emerald; textColor = COLORS.white; }
-                      else if (isChosen && !isCorrectOpt) { bg = COLORS.red; border = COLORS.red; textColor = COLORS.white; }
-                    }
-                    return (
-                      <button
-                        key={o.id}
-                        onClick={() => selectAnswer(qi, oi)}
-                        disabled={submitted}
-                        style={{
-                          width: 28, height: 28, borderRadius: 999, border: `1.5px solid ${border}`,
-                          background: bg, color: textColor, fontSize: 10.5, fontWeight: 700,
-                          cursor: submitted ? "default" : "pointer", flexShrink: 0,
-                        }}
-                      >
-                        {LETTERS[oi]}
-                      </button>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
         </div>
 
         {!submitted ? (
