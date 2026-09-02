@@ -23153,6 +23153,192 @@ function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
 // identification, versions du sujet). Beaucoup d'étudiants ne s'entraînent que sur ordinateur
 // ou téléphone et découvrent la vraie feuille de réponses le jour J — perdant parfois des
 // points par simple maladresse de remplissage, pas par manque de connaissances.
+/* ---------------- Simulation papier : questionnaire + grille de réponses ---------------- */
+// Modules d'entraînement disponibles pour la simulation papier — chacun tire 20 questions
+// au hasard dans la banque déjà existante de la matière correspondante. Liste volontairement
+// courte au départ (2 modules), pensée pour être étendue facilement plus tard.
+const PAPER_SIM_MODULES = [
+  { subjectId: "concepts-sciences-inf", label: "Concepts et théories en sciences infirmières" },
+  { subjectId: "semio-medicale", label: "Sémiologie médicale" },
+];
+
+function PaperSimSelectScreen({ onBack, onSelect }) {
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "26px 18px 70px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, padding: "8px 14px", fontSize: 12.5, marginBottom: 18 }}>← Retour au tableau de bord</button>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 20, color: COLORS.ink, marginBottom: 6 }}>
+          🗒️ Simulation papier
+        </div>
+        <p style={{ fontSize: 13, color: COLORS.inkSoft, lineHeight: 1.6, marginBottom: 24 }}>
+          Entraînez-vous exactement comme le jour de l'examen : questions numérotées en haut, grille de réponses à remplir en bas — 20 questions tirées de la banque existante. Choisissez un module :
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {PAPER_SIM_MODULES.map((m) => (
+            <button
+              key={m.subjectId}
+              onClick={() => onSelect(m)}
+              style={{
+                textAlign: "left", background: COLORS.surface, border: `1.5px solid ${COLORS.line}`, borderRadius: 14,
+                padding: "16px 18px", cursor: "pointer", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14.5, color: COLORS.ink,
+              }}
+            >
+              {m.label}
+              <div style={{ fontSize: 11.5, fontWeight: 400, color: COLORS.inkSoft, marginTop: 4, fontFamily: "'IBM Plex Sans', sans-serif" }}>20 questions · format papier</div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PaperSimulationScreen({ module, student, onBack }) {
+  // Tire 20 questions au hasard dans la matière choisie, une seule fois à l'ouverture de
+  // l'écran (useMemo) pour que le jeu de questions reste stable pendant toute la session,
+  // même si l'étudiant fait défiler ou change de réponse plusieurs fois.
+  const questions = useMemo(() => {
+    const pool = QUESTIONS.filter((q) => q.subjectId === module.subjectId);
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(20, shuffled.length));
+  }, [module.subjectId]);
+
+  // Type d'épreuve tiré au hasard une seule fois, pour reproduire fidèlement l'en-tête de
+  // la vraie feuille de réponses (voir CompoSurTableGuideScreen pour l'explication donnée
+  // à l'étudiant sur ce que ça signifie).
+  const typeEpreuve = useMemo(() => ["A", "B", "C", "D"][Math.floor(Math.random() * 4)], []);
+
+  const [answers, setAnswers] = useState({}); // index question -> index option choisie
+  const [submitted, setSubmitted] = useState(false);
+
+  const selectAnswer = (qi, optIdx) => {
+    if (submitted) return;
+    setAnswers((prev) => ({ ...prev, [qi]: optIdx }));
+  };
+
+  const score = useMemo(() => {
+    let correct = 0;
+    questions.forEach((q, qi) => {
+      const chosen = answers[qi];
+      if (chosen !== undefined && q.options[chosen]?.correct) correct += 1;
+    });
+    return correct;
+  }, [submitted]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const answeredCount = Object.keys(answers).length;
+  const LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "20px 18px 90px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, padding: "8px 14px", fontSize: 12.5, marginBottom: 14 }}>← Quitter la simulation</button>
+
+        {/* --- En-tête façon vraie feuille de réponses --- */}
+        <div style={{ background: COLORS.surface, border: `1.5px solid ${COLORS.ink}`, borderRadius: 10, padding: 16, marginBottom: 22 }}>
+          <div style={{ textAlign: "center", fontSize: 11, fontWeight: 700, color: COLORS.inkSoft, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>
+            Institut National de Formation des Agents de Santé — Simulation d'entraînement
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
+            <div style={{ flex: 1, minWidth: 200, border: `1px dashed ${COLORS.line}`, borderRadius: 8, padding: "8px 12px" }}>
+              <div style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.blueDeep }}>IDENTIFICATION DE L'ÉTUDIANT</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.ink, marginTop: 2 }}>{student?.nom || ""} {student?.prenom || ""}</div>
+            </div>
+            <div style={{ border: `1px dashed ${COLORS.line}`, borderRadius: 8, padding: "8px 16px", textAlign: "center" }}>
+              <div style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.blueDeep }}>TYPE D'ÉPREUVE</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: COLORS.ink, marginTop: 2 }}>{typeEpreuve}</div>
+            </div>
+          </div>
+          <div style={{ fontSize: 11, color: COLORS.inkSoft, marginTop: 10, textAlign: "center" }}>
+            {module.label} — {questions.length} questions
+          </div>
+        </div>
+
+        {/* --- BLOC 1 (haut) : le questionnaire --- */}
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.ink, marginBottom: 10 }}>
+          📖 Questionnaire
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 30 }}>
+          {questions.map((q, qi) => (
+            <div key={q.id} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 14 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.ink, marginBottom: 8 }}>{qi + 1}. {q.stem}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                {q.options.map((o, oi) => (
+                  <div key={o.id} style={{ fontSize: 12.5, color: COLORS.inkSoft }}>
+                    <b style={{ color: COLORS.ink }}>{LETTERS[oi]}.</b> {o.text}
+                  </div>
+                ))}
+              </div>
+              {submitted && (
+                <div style={{ marginTop: 10, padding: "8px 10px", background: "#F0F4F3", borderRadius: 8, fontSize: 11.5, color: COLORS.inkSoft, lineHeight: 1.5 }}>
+                  💡 {q.explanation}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* --- BLOC 2 (bas) : la grille de réponses --- */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.ink }}>
+            ✏️ Grille de réponses
+          </div>
+          <span style={{ fontSize: 11.5, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace" }}>{answeredCount}/{questions.length}</span>
+        </div>
+        <div style={{ background: COLORS.surface, border: `1.5px solid ${COLORS.ink}`, borderRadius: 12, padding: 16, marginBottom: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {questions.map((q, qi) => {
+              const chosen = answers[qi];
+              return (
+                <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ width: 22, fontSize: 12, fontWeight: 700, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", flexShrink: 0 }}>{qi + 1}</span>
+                  {q.options.map((o, oi) => {
+                    const isChosen = chosen === oi;
+                    const isCorrectOpt = o.correct;
+                    let bg = isChosen ? COLORS.ink : COLORS.surface;
+                    let border = isChosen ? COLORS.ink : COLORS.line;
+                    let textColor = isChosen ? COLORS.white : COLORS.inkSoft;
+                    if (submitted) {
+                      if (isCorrectOpt) { bg = COLORS.emerald; border = COLORS.emerald; textColor = COLORS.white; }
+                      else if (isChosen && !isCorrectOpt) { bg = COLORS.red; border = COLORS.red; textColor = COLORS.white; }
+                    }
+                    return (
+                      <button
+                        key={o.id}
+                        onClick={() => selectAnswer(qi, oi)}
+                        disabled={submitted}
+                        style={{
+                          width: 28, height: 28, borderRadius: 999, border: `1.5px solid ${border}`,
+                          background: bg, color: textColor, fontSize: 10.5, fontWeight: 700,
+                          cursor: submitted ? "default" : "pointer", flexShrink: 0,
+                        }}
+                      >
+                        {LETTERS[oi]}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {!submitted ? (
+          <button onClick={() => setSubmitted(true)} style={{ ...primaryBtn, width: "100%", background: COLORS.green }}>
+            Soumettre ma grille
+          </button>
+        ) : (
+          <div style={{ background: "#E8F7F0", border: `1.5px solid ${COLORS.emerald}`, borderRadius: 12, padding: 18, textAlign: "center" }}>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 18, color: COLORS.emerald }}>
+              {score} / {questions.length}
+            </div>
+            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Corrections affichées sur chaque question ci-dessus.</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function CompoSurTableGuideScreen({ onBack }) {
   const [filled, setFilled] = useState({}); // "questionIndex-optionLetter" -> bool
   const PRATIQUE_QUESTIONS = 8;
@@ -25299,7 +25485,7 @@ function MessagesScreen({ onBack, student, onRead }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onCompoGuide, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme, unreadCount, onOpenMessages, onOpenReferral }) {
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onCompoGuide, onPaperSim, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme, unreadCount, onOpenMessages, onOpenReferral }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -25480,6 +25666,9 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           <ModuleCard icon="📝" title="Réussir ma composition sur table" color="#1E8F5E" compact
             desc="Grille de réponses, identification, type d'épreuve — préparez-vous au format papier réel."
             onClick={onCompoGuide} ctaLabel="Ouvrir le guide" />
+          <ModuleCard icon="🗒️" title="Simulation papier" color="#C8622A" compact
+            desc="20 questions, questionnaire en haut, grille à remplir en bas — comme le vrai jour J."
+            onClick={onPaperSim} ctaLabel="S'entraîner" />
         </div>
 
         <div className="reveal-on-scroll" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 26 }}>
@@ -27443,6 +27632,7 @@ export default function App() {
   const [pendingLevel, setPendingLevel] = useState(null);
   const [lastResult, setLastResult] = useState(null);
   const [revisionItems, setRevisionItems] = useState(null);
+  const [paperSimModule, setPaperSimModule] = useState(null);
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState(null);
 
@@ -27660,7 +27850,7 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onCompoGuide={() => setScreen("compoguide")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} unreadCount={unreadCount} onOpenMessages={() => setScreen("messages")} onOpenReferral={() => setScreen("referral")} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onCompoGuide={() => setScreen("compoguide")} onPaperSim={() => setScreen("papersim-select")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} unreadCount={unreadCount} onOpenMessages={() => setScreen("messages")} onOpenReferral={() => setScreen("referral")} />;
   }
 
   if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
@@ -27668,6 +27858,8 @@ export default function App() {
   if (screen === "referral") return <ReferralScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "compoguide") return <CompoSurTableGuideScreen onBack={() => setScreen("dashboard")} />;
+  if (screen === "papersim-select") return <PaperSimSelectScreen onBack={() => setScreen("dashboard")} onSelect={(m) => { setPaperSimModule(m); setScreen("papersim-active"); }} />;
+  if (screen === "papersim-active" && paperSimModule) return <PaperSimulationScreen module={paperSimModule} student={student} onBack={() => setScreen("dashboard")} />;
   if (screen === "mynotes") return <MyNotesScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "rateapp") return <RateAppScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "defi") return <DefiScreen onBack={() => setScreen("dashboard")} student={student} onLaunchCombo={handleLaunchCombo} onViewMonthly={() => setScreen("defiMonthly")} />;
