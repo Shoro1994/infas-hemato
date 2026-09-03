@@ -23193,35 +23193,29 @@ function PaperSimSelectScreen({ onBack, onSelect }) {
   );
 }
 
-// Case ovale d'une grille de réponses — reproduit le style exact de la vraie feuille INFAS
-// (une pilule ovale avec la lettre à l'intérieur, jamais un simple carré ou rond).
-function AnswerBubble({ letter, state, onClick, disabled }) {
-  // state: "empty" | "chosen" | "correct" | "wrong"
-  const styles = {
-    empty: { bg: COLORS.surface, border: "#C64A5C", color: "#C64A5C" },
-    chosen: { bg: COLORS.ink, border: COLORS.ink, color: COLORS.white },
-    correct: { bg: COLORS.emerald, border: COLORS.emerald, color: COLORS.white },
-    wrong: { bg: COLORS.red, border: COLORS.red, color: COLORS.white },
-  }[state];
+// Une bulle simple de la grille (un seul état visuel à la fois). Une fois cochée
+// (state !== "empty"), elle ne peut plus jamais être décochée — reproduit le geste à
+// l'encre sur la vraie feuille, où revenir en arrière est impossible.
+function GridBubble({ letter, filled, onClick, disabled, tone }) {
+  const bg = filled ? (tone || COLORS.ink) : COLORS.surface;
+  const border = filled ? (tone || COLORS.ink) : "#C64A5C";
+  const color = filled ? COLORS.white : "#C64A5C";
   return (
     <button
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || filled}
       style={{
-        width: 24, height: 15, borderRadius: 999, border: `1.3px solid ${styles.border}`,
-        background: styles.bg, color: styles.color, fontSize: 9, fontWeight: 700,
-        cursor: disabled ? "default" : "pointer", flexShrink: 0, lineHeight: 1, padding: 0,
+        width: 24, height: 15, borderRadius: 999, border: `1.3px solid ${border}`,
+        background: bg, color, fontSize: 8.5, fontWeight: 700,
+        cursor: disabled || filled ? "default" : "pointer", flexShrink: 0, lineHeight: 1, padding: 0,
       }}
     >
-      {letter}
+      {filled ? "" : letter}
     </button>
   );
 }
 
 function PaperSimulationScreen({ module, student, onBack }) {
-  // Tire 20 questions au hasard dans la matière choisie — tous types confondus (QCU, QCM,
-  // QCD), une seule fois à l'ouverture de l'écran (useMemo) pour que le jeu de questions
-  // reste stable pendant toute la session.
   const questions = useMemo(() => {
     const pool = QUESTIONS.filter((q) => q.subjectId === module.subjectId);
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
@@ -23230,24 +23224,58 @@ function PaperSimulationScreen({ module, student, onBack }) {
 
   const typeEpreuve = useMemo(() => ["A", "B", "C", "D"][Math.floor(Math.random() * 4)], []);
 
-  const [answers, setAnswers] = useState({});
+  // Deux couches de sélection indépendantes par question — "haut" (réponse initiale) et
+  // "bas" (correction). Chaque couche est un tableau de booléens (un par option), et une
+  // fois passé à true, une case ne redevient jamais false (voir GridBubble : disabled dès
+  // que filled). C'est la couche "bas" qui prévaut sur la couche "haut" si elle contient au
+  // moins une coche — exactement le mécanisme de correction de la vraie grille papier
+  // (page "Comment modifier une réponse QCM" du guide officiel).
+  const [top, setTop] = useState({});
+  const [bottom, setBottom] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
-  const selectAnswer = (qi, optIdx) => {
+  const toggle = (layer, setLayer, qi, oi) => {
     if (submitted) return;
-    setAnswers((prev) => ({ ...prev, [qi]: optIdx }));
+    setLayer((prev) => {
+      const row = prev[qi] ? [...prev[qi]] : new Array(questions[qi].options.length).fill(false);
+      if (row[oi]) return prev; // déjà cochée : geste sans effet, jamais de retour en arrière
+      row[oi] = true;
+      return { ...prev, [qi]: row };
+    });
+  };
+
+  // Résultat final retenu par question, après application de la règle de correction et du
+  // cas de remplissage abusif (toutes les bulles hautes ET basses cochées => annulée).
+  const finalAnswerFor = (qi) => {
+    const n = questions[qi].options.length;
+    const t = top[qi] || new Array(n).fill(false);
+    const b = bottom[qi] || new Array(n).fill(false);
+    const tFull = t.every(Boolean) && t.length > 0;
+    const bFull = b.every(Boolean) && b.length > 0;
+    if (tFull && bFull) return { indices: [], voided: true };
+    const useBottom = b.some(Boolean);
+    const source = useBottom ? b : t;
+    const indices = source.map((v, i) => (v ? i : null)).filter((i) => i !== null);
+    return { indices, voided: false };
   };
 
   const score = useMemo(() => {
-    let correct = 0;
+    let total = 0;
     questions.forEach((q, qi) => {
-      const chosen = answers[qi];
-      if (chosen !== undefined && q.options[chosen]?.correct) correct += 1;
+      const { indices, voided } = finalAnswerFor(qi);
+      if (voided || indices.length === 0) return; // 0 point : remplissage abusif ou sans réponse
+      const correctIdx = q.options.map((o, i) => (o.correct ? i : null)).filter((i) => i !== null);
+      const isExactMatch = indices.length === correctIdx.length && indices.every((i) => correctIdx.includes(i));
+      total += isExactMatch ? 1 : -1;
     });
-    return correct;
+    return total;
   }, [submitted]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const answeredCount = Object.keys(answers).length;
+  const answeredCount = questions.filter((_, qi) => {
+    const { indices } = finalAnswerFor(qi);
+    return indices.length > 0;
+  }).length;
+
   const LETTERS = ["A", "B", "C", "D", "E", "F"];
   const studentName = `${student?.nom || ""} ${student?.prenom || ""}`.trim();
 
@@ -23256,51 +23284,37 @@ function PaperSimulationScreen({ module, student, onBack }) {
       <div style={{ maxWidth: 820, margin: "0 auto", padding: "20px 14px 90px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, padding: "8px 14px", fontSize: 12.5, marginBottom: 14 }}>← Quitter la simulation</button>
 
-        {/* ============ RÉPLIQUE DE LA VRAIE FEUILLE DE RÉPONSES INFAS ============ */}
+        {/* ============ GRILLE DE RÉPONSES (sans aucune référence institutionnelle) ============ */}
         <div style={{ background: "#FFFFFF", border: "1px solid #999", borderRadius: 4, padding: "18px 20px", marginBottom: 26, boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
-          {/* --- En-tête : République + identification (double cadre comme l'original) --- */}
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 14, flexWrap: "wrap", marginBottom: 14 }}>
-            <div style={{ fontSize: 10.5, lineHeight: 1.5 }}>
-              <div style={{ fontWeight: 700 }}>RÉPUBLIQUE DE CÔTE D'IVOIRE</div>
-              <div style={{ color: "#555" }}>Ministère de la Santé et de l'Hygiène Publique</div>
-              <div style={{ fontWeight: 700, marginTop: 6 }}>INSTITUT NATIONAL DE FORMATION</div>
-              <div style={{ fontWeight: 700 }}>DES AGENTS DE SANTÉ</div>
-            </div>
-            <div style={{ position: "relative", minWidth: 230 }}>
-              <div style={{ position: "absolute", top: -6, left: 6, right: -6, border: "1px solid #C64A5C", borderRadius: 3, padding: "4px 10px", background: "#FFFFFF" }}>
-                <div style={{ fontSize: 9, fontWeight: 700, color: "#C64A5C", textAlign: "center" }}>IDENTIFICATION DE L'ÉTUDIANT</div>
-              </div>
-              <div style={{ border: "1px solid #C64A5C", borderRadius: 3, padding: "16px 10px 8px", background: "#FFFFFF", position: "relative" }}>
-                <div style={{ fontSize: 9, fontWeight: 700, color: "#C64A5C", textAlign: "center", marginBottom: 8 }}>IDENTIFICATION DE L'ÉTUDIANT</div>
-                <div style={{ borderBottom: "1px dotted #999", textAlign: "center", fontSize: 13, fontWeight: 700, color: COLORS.ink, paddingBottom: 4 }}>
-                  {studentName || "________________________"}
-                </div>
+          <div style={{ position: "relative", maxWidth: 300, margin: "0 auto 16px" }}>
+            <div style={{ border: "1px solid #C64A5C", borderRadius: 3, padding: "10px 10px 8px", background: "#FFFFFF" }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#C64A5C", textAlign: "center", marginBottom: 8 }}>IDENTIFICATION DE L'ÉTUDIANT</div>
+              <div style={{ borderBottom: "1px dotted #999", textAlign: "center", fontSize: 13, fontWeight: 700, color: COLORS.ink, paddingBottom: 4 }}>
+                {studentName || "________________________"}
               </div>
             </div>
           </div>
 
-          {/* --- Type d'épreuve --- */}
-          <div style={{ display: "inline-block", border: "1px solid #999", borderRadius: 3, padding: "6px 14px", marginBottom: 14 }}>
-            <div style={{ fontSize: 9, fontWeight: 700, textAlign: "center", marginBottom: 4 }}>TYPE D'ÉPREUVE</div>
-            <div style={{ display: "flex", gap: 10 }}>
-              {["A", "B", "C", "D"].map((l) => (
-                <div key={l} style={{ textAlign: "center" }}>
-                  <div style={{
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+            <div style={{ border: "1px solid #999", borderRadius: 3, padding: "6px 14px" }}>
+              <div style={{ fontSize: 9, fontWeight: 700, textAlign: "center", marginBottom: 4 }}>TYPE D'ÉPREUVE</div>
+              <div style={{ display: "flex", gap: 10 }}>
+                {["A", "B", "C", "D"].map((l) => (
+                  <div key={l} style={{
                     width: 20, height: 13, borderRadius: 999, border: `1.3px solid ${l === typeEpreuve ? COLORS.ink : "#C64A5C"}`,
                     background: l === typeEpreuve ? COLORS.ink : "#FFFFFF", color: l === typeEpreuve ? "#FFF" : "#C64A5C",
                     fontSize: 8.5, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center",
                   }}>{l}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* --- Instructions et exemple de marquage --- */}
-          <div style={{ fontSize: 10.5, color: "#333", lineHeight: 1.5, marginBottom: 10 }}>
-            <b>À l'attention du candidat :</b> Pour remplir ce document, cliquez sur la bulle correspondant à votre réponse.
+          <div style={{ fontSize: 10.5, color: "#333", lineHeight: 1.6, marginBottom: 10 }}>
+            <b>À l'attention du candidat :</b> pour chaque lettre, deux bulles sont disponibles — une au-dessus, une en dessous. Cochez la bulle du <b>haut</b> pour votre réponse initiale. Si vous vous trompez, ne revenez pas en arrière : cochez la bulle du <b>bas</b> de la bonne lettre, qui fera foi. Cocher toutes les bulles d'une même question (haut et bas) annule la question.
           </div>
           <div style={{ display: "flex", gap: 20, alignItems: "center", marginBottom: 16, flexWrap: "wrap" }}>
-            <div style={{ fontSize: 9.5, fontWeight: 700, color: "#333" }}>EXEMPLE DE MARQUAGE :</div>
+            <div style={{ fontSize: 9.5, fontWeight: 700, color: "#333" }}>EXEMPLE :</div>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <span style={{ fontSize: 9.5, fontWeight: 700, color: COLORS.emerald }}>FAIRE</span>
               <div style={{ width: 24, height: 15, borderRadius: 999, background: COLORS.ink }} />
@@ -23314,34 +23328,35 @@ function PaperSimulationScreen({ module, student, onBack }) {
 
           <div style={{ borderTop: "1px dashed #999", marginBottom: 16 }} />
 
-          {/* --- Grille de réponses : 4 colonnes, comme l'original, bulles ovales A-F --- */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "10px 14px" }}>
+          {/* --- Grille : pour chaque question, une bulle haute + lettre + bulle basse par option --- */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {questions.map((q, qi) => {
-              const chosen = answers[qi];
+              const n = q.options.length;
+              const t = top[qi] || new Array(n).fill(false);
+              const b = bottom[qi] || new Array(n).fill(false);
+              const { voided } = submitted ? finalAnswerFor(qi) : { voided: false };
               return (
-                <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 4, border: "1px solid #DDD", borderRadius: 999, padding: "3px 8px" }}>
-                  <span style={{ width: 16, fontSize: 10, fontWeight: 700, color: "#333", flexShrink: 0 }}>{qi + 1}</span>
-                  {q.options.map((o, oi) => {
-                    let state = "empty";
-                    const isChosen = chosen === oi;
-                    if (submitted) {
-                      if (o.correct) state = "correct";
-                      else if (isChosen) state = "wrong";
-                    } else if (isChosen) state = "chosen";
-                    return (
-                      <AnswerBubble key={o.id} letter={LETTERS[oi]} state={state} disabled={submitted} onClick={() => selectAnswer(qi, oi)} />
-                    );
-                  })}
+                <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 10, borderBottom: "1px solid #EEE", paddingBottom: 8 }}>
+                  <span style={{ width: 18, fontSize: 11, fontWeight: 700, color: "#333", flexShrink: 0 }}>{qi + 1}</span>
+                  <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                    {q.options.map((o, oi) => {
+                      const correctTone = submitted && o.correct ? COLORS.emerald : undefined;
+                      return (
+                        <div key={o.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
+                          <GridBubble letter={LETTERS[oi]} filled={t[oi]} disabled={submitted} tone={correctTone} onClick={() => toggle("top", setTop, qi, oi)} />
+                          <span style={{ fontSize: 11, fontWeight: 700, color: submitted && o.correct ? COLORS.emerald : "#333" }}>{LETTERS[oi]}</span>
+                          <GridBubble letter={LETTERS[oi]} filled={b[oi]} disabled={submitted} tone={correctTone} onClick={() => toggle("bottom", setBottom, qi, oi)} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {voided && <span style={{ fontSize: 10, color: COLORS.red, fontWeight: 700, marginLeft: "auto" }}>Annulée (trop de bulles)</span>}
                 </div>
               );
             })}
           </div>
-
-          <div style={{ borderTop: "1px solid #999", marginTop: 16, paddingTop: 8, textAlign: "center", fontSize: 8.5, color: "#777" }}>
-            INSTITUT NATIONAL DE FORMATION DES AGENTS DE SANTÉ (INFAS) — Simulation d'entraînement — {module.label}
-          </div>
         </div>
-        {/* ============ FIN RÉPLIQUE DE LA FEUILLE ============ */}
+        {/* ============ FIN DE LA GRILLE ============ */}
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
           <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.ink }}>📖 Questionnaire</div>
@@ -23376,7 +23391,7 @@ function PaperSimulationScreen({ module, student, onBack }) {
             <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 18, color: COLORS.emerald }}>
               {score} / {questions.length}
             </div>
-            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Corrections affichées sur chaque question ci-dessus.</div>
+            <div style={{ fontSize: 12, color: COLORS.inkSoft, marginTop: 4 }}>Barème : +1 bonne réponse, -1 mauvaise réponse, 0 sans réponse ou grille surchargée.</div>
           </div>
         )}
       </div>

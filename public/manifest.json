@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "INFAS Prépa - Agent de Santé Nouveau",
-  "short_name": "INFAS Prépa",
+  "name": "ASN Santé - Agent de Santé Nouveau",
+  "short_name": "ASN Santé",
   "description": "Plateforme de préparation aux examens INFAS Licence 1 IDE-SFM : QCM, cas cliniques, examens blancs, dictionnaire médical et suivi de progression.",
   "start_url": "/",
   "scope": "/",

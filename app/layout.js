@@ -1,13 +1,13 @@
 import RegisterSW from "./components/RegisterSW";
 
 export const metadata = {
-  title: "INFAS · Hémato — Préparation aux examens",
+  title: "ASN Santé — Préparation aux examens",
   description: "Plateforme de préparation aux examens INFAS L1 IDE-SFM.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "INFAS Prépa",
+    title: "ASN Santé",
   },
   icons: {
     icon: [
