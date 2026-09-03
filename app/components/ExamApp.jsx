@@ -23196,22 +23196,19 @@ function PaperSimSelectScreen({ onBack, onSelect }) {
 // Une bulle simple de la grille (un seul état visuel à la fois). Une fois cochée
 // (state !== "empty"), elle ne peut plus jamais être décochée — reproduit le geste à
 // l'encre sur la vraie feuille, où revenir en arrière est impossible.
-function GridBubble({ letter, filled, onClick, disabled, tone }) {
+function GridBubble({ filled, onClick, disabled, tone }) {
   const bg = filled ? (tone || COLORS.ink) : COLORS.surface;
   const border = filled ? (tone || COLORS.ink) : "#C64A5C";
-  const color = filled ? COLORS.white : "#C64A5C";
   return (
     <button
       onClick={onClick}
       disabled={disabled || filled}
       style={{
         width: 24, height: 15, borderRadius: 999, border: `1.3px solid ${border}`,
-        background: bg, color, fontSize: 8.5, fontWeight: 700,
-        cursor: disabled || filled ? "default" : "pointer", flexShrink: 0, lineHeight: 1, padding: 0,
+        background: bg, padding: 0,
+        cursor: disabled || filled ? "default" : "pointer", flexShrink: 0,
       }}
-    >
-      {filled ? "" : letter}
-    </button>
+    />
   );
 }
 
@@ -23343,9 +23340,9 @@ function PaperSimulationScreen({ module, student, onBack }) {
                       const correctTone = submitted && o.correct ? COLORS.emerald : undefined;
                       return (
                         <div key={o.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-                          <GridBubble letter={LETTERS[oi]} filled={t[oi]} disabled={submitted} tone={correctTone} onClick={() => toggle("top", setTop, qi, oi)} />
+                          <GridBubble filled={t[oi]} disabled={submitted} tone={correctTone} onClick={() => toggle("top", setTop, qi, oi)} />
                           <span style={{ fontSize: 11, fontWeight: 700, color: submitted && o.correct ? COLORS.emerald : "#333" }}>{LETTERS[oi]}</span>
-                          <GridBubble letter={LETTERS[oi]} filled={b[oi]} disabled={submitted} tone={correctTone} onClick={() => toggle("bottom", setBottom, qi, oi)} />
+                          <GridBubble filled={b[oi]} disabled={submitted} tone={correctTone} onClick={() => toggle("bottom", setBottom, qi, oi)} />
                         </div>
                       );
                     })}
