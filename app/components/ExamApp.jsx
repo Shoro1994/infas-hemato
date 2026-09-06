@@ -12445,6 +12445,127 @@ const QCD_ENRICHISSEMENT_RAW = [
     "Santé communautaire — Technique d'animation de groupe, taxonomie"],
 ];
 
+const GYNECO_QCD2_RAW = [
+  ["QCU","gyneco_diag_grossesse",3,"Le signe de Tarnier, retrouvé au toucher vaginal, correspond à :",
+    ["Un col de consistance ramollie, mou comme les lèvres","Un comblement des culs de sacs latéraux par l'augmentation du volume utérin","Un utérus dont le corps semble détaché du col","Une glaire cervicale abondante et filante"],[0],
+    "Le signe de Tarnier correspond à un col de consistance ramollie, mou comme les lèvres, de position généralement postérieure — l'un des signes classiques de présomption de grossesse au toucher vaginal.",
+    "Gynéco-Obstétrique — Diagnostic de grossesse, signes au toucher vaginal, p.50"],
+  ["QCU","gyneco_diag_grossesse",3,"Le signe de Noble, retrouvé au toucher vaginal combiné au palper abdominal, correspond à :",
+    ["Le comblement des culs de sacs latéraux par l'augmentation du volume utérin","Un col mou comme les lèvres","Un utérus globuleux détaché du col","Une glaire cervicale coagulée ou absente"],[0],
+    "Le signe de Noble correspond au comblement des culs de sacs latéraux du vagin, causé par l'augmentation du volume utérin lors de la grossesse.",
+    "Gynéco-Obstétrique — Diagnostic de grossesse, signes au toucher vaginal, p.50"],
+  ["QCD","gyneco_anatomie",2,"Le segment inférieur de l'utérus, zone de transition entre le corps et le col utérin, se constitue dès le premier trimestre de la grossesse.",
+    ["Vrai","Faux"],[1],
+    "Faux, le segment inférieur se constitue au 3ème trimestre de la grossesse, et non au premier.",
+    "Gynéco-Obstétrique — Modifications gravidiques, segment inférieur, p.45"],
+  ["QCD","gyneco_anatomie",2,"La distance ano-vulvaire (périnée), longue de 2 à 3 cm en dehors de la grossesse, peut atteindre environ 12 cm au moment de l'expulsion du fœtus.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le périnée s'assouplit grâce aux imbibitions gravidiques et la distance ano-vulvaire s'allonge considérablement pour atteindre environ 12 cm au moment de l'expulsion.",
+    "Gynéco-Obstétrique — Modifications gravidiques, le périnée, p.45"],
+  ["QCU","gyneco_accouchement",3,"Lors du travail, la dilatation du col est dite complète lorsqu'elle atteint environ :",
+    ["10 cm","5 cm","15 cm","20 cm"],[0],
+    "La dilatation complète du col correspond à une ouverture d'environ 10 cm ; elle est plus lente au début du travail (environ 1 cm par heure) qu'à la fin.",
+    "Gynéco-Obstétrique — Accouchement, étapes du travail, dilatation du col, p.68"],
+  ["QCM","gyneco_accouchement",2,"La poche des eaux joue un double rôle pendant le travail :",
+    ["Un rôle de protection du fœtus","Un rôle de dilatation cervicale","Un rôle de nutrition du fœtus","Un rôle de production hormonale"],[0,1],
+    "La poche des eaux joue un rôle de protection (contre les infections, le traumatisme des contractions, isole le fœtus de la cavité vaginale) et un rôle de dilatation (favorise la dilatation cervicale).",
+    "Gynéco-Obstétrique — Accouchement, formation de la poche des eaux, p.68"],
+  ["QCU","gyneco_accouchement",3,"Lorsque la rupture de la poche des eaux survient avant le début du travail, on parle de rupture :",
+    ["Prématurée des membranes","Précoce des membranes","Tempestive des membranes","Artificielle des membranes"],[0],
+    "La rupture prématurée des membranes survient avant l'entrée en travail. La rupture précoce survient avant la dilatation complète, la rupture tempestive à dilatation complète, et la rupture artificielle est provoquée par l'accoucheur.",
+    "Gynéco-Obstétrique — Accouchement, formation de la poche des eaux, p.68"],
+  ["QCM","gyneco_avort_provoque",2,"Parmi les complications tardives de l'avortement provoqué figurent :",
+    ["La dyspareunie et la dysménorrhée","L'oligoménorrhée et l'aménorrhée","La béance du col","La guérison sans aucune séquelle systématique"],[0,1,2],
+    "Les complications tardives de l'avortement provoqué sont dominées par des séquelles : douleurs (dyspareunie, dysménorrhée), troubles menstruels (oligoménorrhée, aménorrhée), et béance du col pouvant causer des avortements à répétition.",
+    "Gynéco-Obstétrique — Avortement provoqué, complications tardives, p.97"],
+  ["QCD","gyneco_annexes",1,"L'annexe de l'utérus est constituée de l'ovaire, de la trompe et du ligament large.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte : annexe de l'utérus = ovaire + trompe + ligament large.",
+    "Gynéco-Obstétrique — Anatomie de l'appareil génital féminin, p.7"],
+];
+
+const GYNECO_QCD_RAW = [
+  ["QCD","gyneco_sonu",2,"Le SONUC (SONU Complet) inclut la possibilité de réaliser une césarienne et une transfusion sanguine, en plus des fonctions du SONU de Base.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le SONUC comprend toutes les fonctions du SONUB (antibiotiques, ocytociques, anticonvulsivants, délivrance artificielle, extraction, accouchement assisté, réanimation du nouveau-né) plus la chirurgie (césarienne) et la transfusion sanguine.",
+    "Gynéco-Obstétrique — SONU, définitions"],
+  ["QCD","gyneco_sonu",2,"Parmi les causes directes de décès maternels, les hémorragies représentent la première cause, avec 21%.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les hémorragies représentent 21% des causes directes de décès maternels, devant les avortements à risque (14%) et les éclampsies (13%).",
+    "Gynéco-Obstétrique — Causes de décès maternels"],
+  ["QCD","gyneco_sonu",2,"Les causes directes de décès maternels représentent la moitié (50%) des décès maternels.",
+    ["Vrai","Faux"],[1],
+    "Faux, les causes directes de décès maternels représentent les trois quarts (¾) des décès maternels, et non la moitié.",
+    "Gynéco-Obstétrique — Causes de décès maternels"],
+  ["QCD","gyneco_sonu",2,"Le paludisme, l'anémie, l'hépatite et le VIH-SIDA sont cités comme des causes indirectes de décès maternels.",
+    ["Vrai","Faux"],[0],
+    "Vrai, ces pathologies préexistantes sont citées comme causes indirectes de décès maternels, par opposition aux causes directes (hémorragies, éclampsies, etc.).",
+    "Gynéco-Obstétrique — Causes de décès maternels"],
+  ["QCD","gyneco_sonu",3,"Le premier retard, dans le modèle des « trois retards » de la mortalité maternelle, concerne le retard dans la décision d'aller consulter.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le 1er retard concerne la décision d'aller consulter (méconnaissance des signes de danger, lenteur de la décision, faible pouvoir de décision de la femme).",
+    "Gynéco-Obstétrique — Facteurs de mortalité maternelle, les trois retards"],
+  ["QCD","gyneco_presentation",2,"Dans la présentation de siège, le repère est le sacrum.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le repère de la présentation de siège (présentation longitudinale par le pôle pelvien) est le sacrum.",
+    "Gynéco-Obstétrique — Présentations fœtales, présentation de siège"],
+  ["QCD","gyneco_presentation",3,"Dans la présentation de siège, le diamètre bi-trochantérien (siège) mesure 9,5 cm.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le diamètre bi-trochantérien du siège mesure 9,5 cm ; le diamètre biacromial (épaule) mesure 11 cm, et le sous-occipito-frontal (tête) 12 cm.",
+    "Gynéco-Obstétrique — Présentations fœtales, présentation de siège"],
+  ["QCD","gyneco_avort_spontane",2,"Dans l'avortement spontané, le toucher vaginal retrouve typiquement un col ouvert, avec un utérus gravide non en rapport avec l'âge gestationnel.",
+    ["Vrai","Faux"],[0],
+    "Vrai, ce sont deux signes physiques caractéristiques de l'avortement spontané en cours, retrouvés au toucher vaginal combiné au palper.",
+    "Gynéco-Obstétrique — Avortement spontané, signes physiques"],
+  ["QCD","gyneco_avort_spontane",2,"Les métrorragies et les contractions utérines (douleurs pelviennes intenses) font partie des signes fonctionnels de l'avortement spontané.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les douleurs pelviennes/contractions utérines intenses et les métrorragies plus ou moins importantes sont les deux signes fonctionnels caractéristiques.",
+    "Gynéco-Obstétrique — Avortement spontané, signes fonctionnels"],
+];
+
+const PHARMACO_QCD_RAW = [
+  ["QCD","pharmaco_voies",2,"La voie sublinguale permet une action générale rapide et évite l'effet de premier passage hépatique.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la voie sublinguale (résorption sous la langue) permet une action générale rapide et évite l'effet de premier passage hépatique, contrairement à la voie orale classique.",
+    "Pharmacologie — Voies d'administration, voie transmuqueuse"],
+  ["QCD","pharmaco_prescription",3,"L'ordonnance pour un médicament de la Liste I est renouvelable par défaut, sauf mention contraire.",
+    ["Vrai","Faux"],[1],
+    "Faux, c'est l'inverse : l'ordonnance de Liste I est NON renouvelable par défaut (sauf mention contraire « à renouveler X fois »), alors que la Liste II est renouvelable par défaut (sauf mention contraire « à ne pas renouveler »).",
+    "Pharmacologie — Prescription des médicaments, conditions de prescription"],
+  ["QCD","pharmaco_prescription",2,"L'ordonnance des stupéfiants doit être une ordonnance sécurisée, avec une durée de prescription de 7 à 28 jours selon la substance.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les stupéfiants nécessitent une ordonnance sécurisée, avec une durée de prescription et une quantité délivrée allant de 7 à 28 jours selon la substance et la forme pharmaceutique.",
+    "Pharmacologie — Prescription des médicaments, conditions de prescription"],
+  ["QCD","pharmaco_interactions",2,"L'antagonisme médicamenteux correspond à une augmentation de l'efficacité par association de deux médicaments.",
+    ["Vrai","Faux"],[1],
+    "Faux, c'est la synergie (ou potentialisation) qui correspond à une efficacité augmentée par association ; l'antagonisme, lui, correspond à une inhibition partielle ou complète de l'action de l'un des deux médicaments.",
+    "Pharmacologie — Interactions médicamenteuses"],
+  ["QCD","pharmaco_interactions",1,"Les ordonnances trop chargées (comportant de nombreux médicaments) présentent un risque d'interactions majoré.",
+    ["Vrai","Faux"],[0],
+    "Vrai, plus une ordonnance comporte de médicaments associés, plus le risque d'interactions médicamenteuses est majoré.",
+    "Pharmacologie — Interactions médicamenteuses"],
+  ["QCD","pharmaco_indesirables",2,"Les effets secondaires (ou latéraux) d'un médicament sont généralement prévisibles, car liés au mécanisme d'action même du médicament.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les effets secondaires sont souvent prévisibles car directement liés au mécanisme d'action du médicament (exemple : somnolence après un antihistaminique).",
+    "Pharmacologie — Effets indésirables, pharmacovigilance"],
+  ["QCD","pharmaco_indesirables",2,"Les effets indésirables inattendus sont le plus souvent liés à l'état et aux caractéristiques physiopathologiques propres du patient.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les effets indésirables inattendus (imprévisibles) sont souvent liés à l'état du patient et à ses caractéristiques physiopathologiques (exemple : réactions allergiques).",
+    "Pharmacologie — Effets indésirables, pharmacovigilance"],
+  ["QCD","pharmaco_voies",2,"La voie intraveineuse (IV) permet une résorption complète et immédiate du médicament.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la voie IV permet une résorption complète et immédiate — c'est un avantage majeur de cette voie, avec cependant des inconvénients (capital veineux limité, durée d'action parfois courte).",
+    "Pharmacologie — Voies d'administration parentérale, avantages/inconvénients"],
+  ["QCD","pharmaco_cinetique",1,"La pharmacocinétique est l'étude du devenir du médicament dans l'organisme en fonction du temps.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte de la pharmacocinétique donnée dans le cours.",
+    "Pharmacologie — Pharmacocinétique, définition"],
+  ["QCD","pharmaco_medicament",2,"Selon le Code de la santé publique, un médicament peut aussi être un produit utilisé pour établir un diagnostic médical, sans nécessairement avoir de propriété curative ou préventive.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la définition légale du médicament inclut tout produit pouvant être administré en vue d'établir un diagnostic médical, ou de restaurer, corriger ou modifier les fonctions organiques — pas seulement les produits à visée curative ou préventive.",
+    "Pharmacologie — Le médicament, définition"],
+];
+
 const QCD_PUERICULTURE_ENRICHISSEMENT_RAW = [
   ["QCD","si_soins_essentiels",1,"Dans le cadre du cours, les soins essentiels du nouveau-né sont limités aux 24 premières heures de vie.",
     ["Vrai","Faux"],[1],
@@ -13710,6 +13831,9 @@ const QUESTIONS = [
   ...buildQuestions(HYGIENE_HOSPI_RAW, "hygiene-hospitaliere", "hh"),
   ...buildQuestions(EDHC_RAW, "edhc", "edhc"),
   ...buildQuestions(QCD_ENRICHISSEMENT_RAW, "sante-communautaire", "qcdc"),
+  ...buildQuestions(GYNECO_QCD2_RAW, "gyneco-obstetrique", "gyqcd2"),
+  ...buildQuestions(GYNECO_QCD_RAW, "gyneco-obstetrique", "gyqcd"),
+  ...buildQuestions(PHARMACO_QCD_RAW, "pharmacologie", "phqcd"),
   ...buildQuestions(QCD_PUERICULTURE_ENRICHISSEMENT_RAW, "sante-infantile", "qcdp"),
   ...buildQuestions(SANTEPUB2_EXAMEN_RAW, "sante-communautaire", "sp2"),
   ...buildQuestions(MT_URGENT_RAW, "maladies-non-transmissibles", "mtu"),
@@ -13900,6 +14024,80 @@ const SANTEPUB_RAW_CASES = [
       { stem: "Pour ce patient, quel objectif de taux de succès thérapeutique le PNLT s'est-il fixé au niveau national ?",
         options: ["Supérieur ou égal à 89%", "Supérieur ou égal à 50%", "Égal à 100% sans exception", "Aucun objectif chiffré n'est fixé"], correct: [0],
         explanation: "Les objectifs de lutte antituberculeuse incluent un taux de succès thérapeutique (nouveaux cas et rechutes) supérieur ou égal à 89%." },
+    ],
+  },
+];
+
+const GYNECO_RAW_CASES = [
+  {
+    chapterId: "gyneco_diag_grossesse", level: 3,
+    vignette:
+      "Une femme consulte pour un retard de règles de 6 semaines. Au toucher vaginal combiné au palper abdominal, l'infirmier retrouve un col long, de consistance ramollie et mou comme les lèvres, ainsi qu'un utérus augmenté de volume, arrondi, dont le corps semble détaché du col au niveau de l'isthme.",
+    ref: "Gynéco-Obstétrique — Diagnostic de grossesse, signes cliniques",
+    qs: [
+      { stem: "Le col long, mou comme les lèvres, correspond à quel signe classique ?",
+        options: ["Le signe de Tarnier", "Le signe de Hégar", "Le signe de Noble", "Le signe de Chadwick"], correct: [0],
+        explanation: "Le col de consistance ramollie, mou comme les lèvres, correspond au signe de Tarnier." },
+      { stem: "Le corps utérin semblant détaché du col au niveau de l'isthme correspond à quel signe ?",
+        options: ["Le signe de Hégar", "Le signe de Tarnier", "Le signe de Noble", "Le signe de Montgomery"], correct: [0],
+        explanation: "Le ramollissement de l'utérus au niveau de l'isthme, donnant l'impression que le corps utérin est détaché du col, est le signe de Hégar." },
+      { stem: "Si les culs de sacs vaginaux latéraux étaient également comblés par l'augmentation du volume utérin, quel signe cela évoquerait-il en plus ?",
+        options: ["Le signe de Noble", "Le signe de Tarnier", "Le signe de Hégar", "Le signe de Chadwick"], correct: [0],
+        explanation: "Le comblement des culs de sacs latéraux par l'augmentation du volume utérin correspond au signe de Noble." },
+    ],
+  },
+  {
+    chapterId: "gyneco_avort_spontane", level: 3,
+    vignette:
+      "Une femme enceinte de 10 semaines d'aménorrhée se présente aux urgences pour des douleurs pelviennes intenses et des métrorragies d'abondance modérée depuis quelques heures. Au toucher vaginal, le col est ouvert et l'utérus paraît gravide, non en rapport avec l'âge gestationnel annoncé.",
+    ref: "Gynéco-Obstétrique — Avortement spontané",
+    qs: [
+      { stem: "Quel diagnostic ce tableau clinique évoque-t-il en priorité ?",
+        options: ["Un avortement spontané en cours", "Une grossesse extra-utérine certaine", "Un accouchement prématuré à terme", "Une simple infection urinaire"], correct: [0],
+        explanation: "Douleurs pelviennes intenses, métrorragies, col ouvert et utérus non en rapport avec l'âge gestationnel sont les signes caractéristiques d'un avortement spontané en cours." },
+      { stem: "Quels sont les deux signes fonctionnels principaux retrouvés dans ce tableau ?",
+        options: ["Les douleurs pelviennes (contractions utérines) et les métrorragies", "La fièvre et les vomissements", "La toux et l'essoufflement", "Les céphalées et les vertiges"], correct: [0],
+        explanation: "Les deux signes fonctionnels caractéristiques de l'avortement spontané sont les douleurs pelviennes/contractions utérines intenses et les métrorragies plus ou moins importantes." },
+      { stem: "Quels examens complémentaires permettent de confirmer et préciser la situation de cette grossesse ?",
+        options: ["L'échographie et le dosage de beta-HCG", "La radiographie du bassin uniquement", "L'électrocardiogramme uniquement", "Aucun examen n'est utile, le diagnostic est clinique"], correct: [0],
+        explanation: "L'échographie confirme la grossesse et précise l'âge gestationnel et la vitalité, tandis que le dosage de beta-HCG participe au diagnostic de grossesse et à son suivi." },
+    ],
+  },
+  {
+    chapterId: "gyneco_sonu", level: 3,
+    vignette:
+      "Dans un centre de santé rural, une femme accouchée présente une hémorragie du post-partum sévère. Le centre ne dispose que des fonctions du SONU de Base (SONUB).",
+    ref: "Gynéco-Obstétrique — SONU et causes de décès maternels",
+    qs: [
+      { stem: "Parmi les causes directes de décès maternels, à quelle cause ce tableau correspond-il, et quelle est sa fréquence relative ?",
+        options: ["Les hémorragies, première cause avec 21%", "Les éclampsies, avec 13%", "Le travail dystocique, avec 8%", "L'infection, avec 8%"], correct: [0],
+        explanation: "Les hémorragies représentent la première cause directe de décès maternels, avec 21% des cas — exactement le tableau décrit ici." },
+      { stem: "Si l'état de la patiente nécessite une transfusion sanguine ou une intervention chirurgicale, que doit faire l'équipe de ce centre limité au SONUB ?",
+        options: ["Référer en urgence vers une structure disposant du SONUC", "Attendre que la patiente se stabilise spontanément", "Réaliser la transfusion sur place, sans réserve de sang", "Renvoyer la patiente à domicile"], correct: [0],
+        explanation: "La transfusion sanguine et la chirurgie (césarienne) relèvent du SONU Complet (SONUC), non disponible dans une structure limitée au SONUB — une référence en urgence est donc nécessaire." },
+      { stem: "Ce genre de retard dans la prise en charge (transfert vers une structure adaptée) illustre lequel des « trois retards » de la mortalité maternelle ?",
+        options: ["Le retard lié à l'accès à une structure de soins adaptée (référence/transport)", "Le retard dans la décision d'aller consulter uniquement", "Il ne s'agit pas d'un retard reconnu dans le modèle", "Le retard dans le diagnostic prénatal"], correct: [0],
+        explanation: "Le modèle des trois retards inclut le retard lié à l'accès à une structure de soins adaptée (distance, transport, référence) comme facteur de mortalité maternelle." },
+    ],
+  },
+];
+
+const PHARMACO_RAW_CASES = [
+  {
+    chapterId: "pharmaco_prescription", level: 3,
+    vignette:
+      "Un infirmier reçoit une ordonnance pour un patient devant recevoir un traitement à base de morphine (stupéfiant) contre une douleur chronique sévère, ainsi qu'un antihypertenseur de Liste II.",
+    ref: "Pharmacologie — Prescription, voies d'administration, effets indésirables",
+    qs: [
+      { stem: "Concernant l'ordonnance de morphine, quel type d'ordonnance est requis ?",
+        options: ["Une ordonnance sécurisée", "Une simple ordonnance verbale", "Aucune ordonnance n'est nécessaire", "Une ordonnance de Liste I suffit"], correct: [0],
+        explanation: "Les stupéfiants comme la morphine nécessitent une ordonnance sécurisée, avec une durée de prescription et une quantité délivrée allant de 7 à 28 jours selon la substance." },
+      { stem: "Avant d'administrer la morphine, l'infirmier applique la règle des « 5B ». Laquelle de ces vérifications n'en fait PAS partie ?",
+        options: ["Le bon prix du médicament", "Le bon patient", "La bonne dose", "La bonne voie d'administration"], correct: [0],
+        explanation: "Les 5B sont : le bon médicament, le bon patient, la bonne dose, la bonne voie d'administration et le bon moment — le prix n'en fait pas partie." },
+      { stem: "Le patient présente une somnolence après administration de la morphine, effet connu et lié au mécanisme d'action du médicament. Il s'agit :",
+        options: ["D'un effet secondaire (latéral), prévisible", "D'un effet indésirable inattendu et imprévisible", "D'une erreur de prescription", "D'un signe de surdosage uniquement"], correct: [0],
+        explanation: "La somnolence, connue et liée au mécanisme d'action du médicament, est un effet secondaire (latéral) prévisible — à distinguer des effets indésirables inattendus, souvent liés à l'état propre du patient (ex. réactions allergiques)." },
     ],
   },
 ];
@@ -14165,6 +14363,8 @@ const CASES = [
   ...buildCases(RAW_CASES, "hematologie", "case"),
   ...buildCases(DEONTO_RAW_CASES, "deontologie", "dcase"),
   ...buildCases(SANTEPUB_RAW_CASES, "sante-publique", "spcase"),
+  ...buildCases(GYNECO_RAW_CASES, "gyneco-obstetrique", "gycase"),
+  ...buildCases(PHARMACO_RAW_CASES, "pharmacologie", "phcase"),
   ...buildCases(SANTEINFANT_RAW_CASES, "sante-infantile", "sicase"),
   ...buildCases(MNT_RAW_CASES, "maladies-non-transmissibles", "mntcase"),
   ...buildCases(SANTECOMMU_RAW_CASES, "sante-communautaire", "sccase"),
@@ -24308,6 +24508,7 @@ function DefiMonthlyRankingScreen({ onBack, student }) {
 function AdminScreen({ onBack }) {
   const [tab, setTab] = useState("students"); // students | payments | announcements | ratings
   const [students, setStudents] = useState(null);
+  const [studentsSearchQuery, setStudentsSearchQuery] = useState("");
   const [showExportNumbers, setShowExportNumbers] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(null);
   const [announcements, setAnnouncements] = useState(null);
@@ -24508,13 +24709,33 @@ function AdminScreen({ onBack }) {
                 })()}
               </div>
             )}
+            <div style={{ marginBottom: 14 }}>
+              <input
+                value={studentsSearchQuery}
+                onChange={(e) => setStudentsSearchQuery(e.target.value)}
+                placeholder="🔍 Rechercher par nom, prénom ou numéro…"
+                style={{ ...inputStyle, fontSize: 13 }}
+              />
+            </div>
             <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, overflow: "hidden" }}>
               {students === null ? (
                 <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Chargement…</div>
               ) : students.length === 0 ? (
                 <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Aucun étudiant inscrit pour l'instant.</div>
-              ) : (
-                students.map((s, i) => {
+              ) : (() => {
+                // Filtre en temps réel sur nom, prénom ou numéro/matricule — casse et accents
+                // ignorés, pour retrouver un étudiant en 2 secondes plutôt qu'en défilant toute
+                // la liste à l'œil. La liste des STATISTIQUES en haut de l'onglet reste, elle,
+                // toujours calculée sur l'ensemble complet des étudiants (non filtré).
+                const norm = (s) => (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                const q = norm(studentsSearchQuery.trim());
+                const filtered = q
+                  ? students.filter((s) => norm(s.nom).includes(q) || norm(s.prenom).includes(q) || norm(s._displayId).includes(q))
+                  : students;
+                if (filtered.length === 0) {
+                  return <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Aucun résultat pour « {studentsSearchQuery} ».</div>;
+                }
+                return filtered.map((s, i) => {
                   const access = computeAccess(s);
                   const isEditing = pwdEditMatricule === s._displayId;
                   return (
@@ -24620,19 +24841,37 @@ function AdminScreen({ onBack }) {
                       )}
                     </div>
                   );
-                })
-              )}
+                });
+              })()}
             </div>
           </>
         )}
 
         {tab === "payments" && (
           <>
+            {pending.length > 3 && (
+              <div style={{ marginBottom: 14 }}>
+                <input
+                  value={studentsSearchQuery}
+                  onChange={(e) => setStudentsSearchQuery(e.target.value)}
+                  placeholder="🔍 Rechercher par nom, prénom ou numéro…"
+                  style={{ ...inputStyle, fontSize: 13 }}
+                />
+              </div>
+            )}
             <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, overflow: "hidden" }}>
               {pending.length === 0 ? (
                 <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Aucun paiement en attente de vérification.</div>
-              ) : (
-                pending.map((s, i) => {
+              ) : (() => {
+                const norm = (s) => (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                const q = norm(studentsSearchQuery.trim());
+                const filteredPending = q
+                  ? pending.filter((s) => norm(s.nom).includes(q) || norm(s.prenom).includes(q) || norm(s._displayId).includes(q))
+                  : pending;
+                if (filteredPending.length === 0) {
+                  return <div style={{ padding: 18, fontSize: 13, color: COLORS.inkSoft }}>Aucun résultat pour « {studentsSearchQuery} ».</div>;
+                }
+                return filteredPending.map((s, i) => {
                   const plan = SUBSCRIPTION_PLANS.find((p) => p.id === s.pendingPlan);
                   const isPickingPlan = payManualMatricule === `pending-${s._displayId}`;
                   return (
@@ -24702,8 +24941,8 @@ function AdminScreen({ onBack }) {
                       )}
                     </div>
                   );
-                })
-              )}
+                });
+              })()}
             </div>
             <div style={{ marginTop: 26 }}>
               <ReferralsAdmin students={students} refreshTrigger={referralsRefreshTrigger} />
