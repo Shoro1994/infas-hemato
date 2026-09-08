@@ -1420,6 +1420,11 @@ const CHAPTERS = [
   { id: "immuno_rubeole", label: "Sérodiagnostic de la rubéole", subjectId: "immunologie" },
   { id: "immuno_hepatite_b", label: "Sérodiagnostic de l'hépatite virale B", subjectId: "immunologie" },
   { id: "immuno_vih", label: "Sérodiagnostic de l'infection à VIH", subjectId: "immunologie" },
+  { id: "info_ordinateur", label: "Découverte de l'ordinateur", subjectId: "informatique" },
+  { id: "info_word", label: "Microsoft Office Word", subjectId: "informatique" },
+  { id: "info_elearning", label: "E-Learning", subjectId: "informatique" },
+  { id: "info_internet", label: "Découverte d'Internet", subjectId: "informatique" },
+  { id: "info_messagerie", label: "Messagerie électronique et réseaux sociaux", subjectId: "informatique" },
   { id: "ts_accueil_lit", label: "Accueil du malade, chambre et réfection du lit", subjectId: "techniques-soins-infirmiers" },
   { id: "ts_gants", label: "Port de gants propres et stériles", subjectId: "techniques-soins-infirmiers" },
   { id: "ts_soins_base", label: "Soins infirmiers de base (toilette, escarre, hygiène)", subjectId: "techniques-soins-infirmiers" },
@@ -2103,7 +2108,7 @@ const ECUE_LIST = [
   { id: "2SIO1207", ueId: "SIO1207", code: "2SIO1207", label: "Techniques de soins néonataux et infantiles", credits: 1, subjectId: "sante-infantile" },
 
   { id: "1RCH1208", ueId: "RCH1208", code: "1RCH1208", label: "Initiation à la recherche", credits: 1, subjectId: null },
-  { id: "2RCH1208", ueId: "RCH1208", code: "2RCH1208", label: "TIC (Bureautique et Internet)", credits: 1, subjectId: null },
+  { id: "2RCH1208", ueId: "RCH1208", code: "2RCH1208", label: "TIC (Bureautique et Internet)", credits: 1, subjectId: "informatique" },
 
   { id: "1STG1209", ueId: "STG1209", code: "1STG1209", label: "Processus de mise en stage", credits: 1, subjectId: null },
   { id: "2STG1209", ueId: "STG1209", code: "2STG1209", label: "Stage en soins infirmiers / obstétricaux", credits: 8, subjectId: null },
@@ -12273,6 +12278,118 @@ const IMMUNOLOGIE_RAW = [
     "Immunologie — Sérodiagnostic de l'hépatite B, vaccination"],
 ];
 
+const INFORMATIQUE_RAW = [
+  /* ===== Découverte de l'ordinateur ===== */
+  ["QCU","info_ordinateur",1,"Un ordinateur se définit comme :",
+    ["Une machine dont la mémoire permet l'exécution de programmes","Un simple écran d'affichage sans capacité de traitement","Un accessoire de téléphone mobile uniquement","Un logiciel de traitement de texte"],[0],
+    "Un ordinateur est une machine dont la mémoire permet l'exécution de programmes ; c'est un ensemble de circuits électroniques qui permet de traiter les informations de façon automatique.",
+    "Informatique — Découverte de l'ordinateur, définition"],
+  ["QCM","info_ordinateur",2,"Parmi les types d'ordinateurs personnels (PC), on distingue notamment :",
+    ["Les ordinateurs de bureau","Les ordinateurs portables","Les serveurs, utilisés dans de grandes entreprises pour des opérations lourdes","Les smartphones, qui sont un type d'ordinateur de bureau"],[0,1,2],
+    "Parmi les ordinateurs personnels, on distingue les ordinateurs de bureau et les ordinateurs portables ; les serveurs sont une catégorie à part, très puissante, utilisée dans de grandes entreprises. Les smartphones sont des téléphones aux fonctionnalités comparables à un ordinateur, pas une catégorie de PC de bureau.",
+    "Informatique — Découverte de l'ordinateur, types d'ordinateurs"],
+  ["QCU","info_ordinateur",2,"Contrairement aux ordinateurs de bureau, les ordinateurs portables :",
+    ["Combinent l'unité centrale, l'écran et le clavier en un boîtier unique","Nécessitent obligatoirement un écran séparé","Ne peuvent jamais fonctionner sur batterie","Sont toujours plus puissants que les ordinateurs de bureau"],[0],
+    "Les ordinateurs portables combinent l'unité centrale, l'écran et le clavier en un boîtier unique, et peuvent fonctionner sur batterie, ce qui permet de les emporter partout — contrairement aux ordinateurs de bureau.",
+    "Informatique — Découverte de l'ordinateur, types d'ordinateurs"],
+  ["QCU","info_ordinateur",1,"Un logiciel se définit comme :",
+    ["Un ensemble de programmes et de procédures nécessaires au fonctionnement d'un système informatique","Une pièce physique de l'ordinateur","Un type de mémoire vive","Un accessoire externe comme la souris"],[0],
+    "Un logiciel est un ensemble de programmes et de procédures nécessaires au fonctionnement d'un système informatique ; on distingue les systèmes d'exploitation (Windows, Mac OS) des logiciels d'application (Microsoft Office).",
+    "Informatique — Découverte de l'ordinateur, les logiciels"],
+  ["QCU","info_ordinateur",2,"Le nom « Windows » (fenêtre en anglais) illustre le fait que ce système d'exploitation :",
+    ["Constitue une interface graphique à multifenêtrage, permettant d'ouvrir plusieurs fenêtres simultanément","Ne peut afficher qu'une seule fenêtre à la fois","Fonctionne uniquement sans interface graphique","Est un logiciel de traitement de texte"],[0],
+    "Windows tient son nom du fait qu'il constitue une interface graphique à multifenêtrage, c'est-à-dire qu'on peut ouvrir simultanément plusieurs fenêtres.",
+    "Informatique — Découverte de l'ordinateur, les fenêtres"],
+  ["QCM","info_ordinateur",2,"Parmi les boutons de manipulation d'une fenêtre Windows figurent :",
+    ["Le trait, pour réduire la fenêtre dans la barre des tâches","Le carré, pour que la fenêtre occupe tout le bureau ou son état initial","La croix rouge, pour fermer la fenêtre","Le triangle, pour supprimer définitivement la fenêtre"],[0,1,2],
+    "Les boutons de manipulation d'une fenêtre sont : le trait (réduire dans la barre des tâches), le carré (occuper tout le bureau ou revenir à l'état initial), et la croix rouge (fermer la fenêtre).",
+    "Informatique — Découverte de l'ordinateur, manipulation des fenêtres"],
+  ["QCU","info_ordinateur",1,"Un dossier, en informatique, se définit comme :",
+    ["Une zone de stockage nommée d'un ordinateur, qui contient des fichiers et d'autres dossiers","Un ensemble de circuits électroniques","Un raccourci vers un fichier uniquement","Un type de logiciel d'application"],[0],
+    "Un dossier est une zone de stockage nommée d'un ordinateur, qui contient des fichiers et d'autres dossiers.",
+    "Informatique — Découverte de l'ordinateur, fichiers, dossiers, raccourcis"],
+  ["QCU","info_ordinateur",2,"Un raccourci se distingue du fichier auquel il renvoie par :",
+    ["La présence d'une flèche dans le coin inférieur gauche de l'icône le représentant","Une couleur systématiquement rouge","Une taille de fichier plus importante","L'absence totale d'icône"],[0],
+    "Un raccourci est un élément renvoyant à un fichier ; on le distingue du fichier auquel il renvoie par la présence d'une flèche dans le coin inférieur gauche de l'icône le représentant.",
+    "Informatique — Découverte de l'ordinateur, fichiers, dossiers, raccourcis"],
+
+  /* ===== Internet ===== */
+  ["QCU","info_internet",2,"Internet, aussi appelé « le net », est :",
+    ["Le plus grand réseau international d'ordinateurs au monde","Un logiciel de traitement de texte","Un type d'ordinateur portable","Une messagerie électronique uniquement"],[0],
+    "Internet (« le net ») est le plus grand réseau international d'ordinateurs au monde, reliant des réseaux nationaux, régionaux et privés par le biais d'un même protocole de communication appelé TCP/IP.",
+    "Informatique — Découverte de l'Internet, définition"],
+  ["QCU","info_internet",2,"Le sigle TCP/IP, protocole de communication commun à tous les ordinateurs reliés par Internet, signifie :",
+    ["Transmission Control Protocol / Internet Protocol","Technical Computer Program / Internet Provider","Total Control Password / Internal Provider","Transfer Content Protocol / Information Process"],[0],
+    "TCP/IP signifie Transmission Control Protocol / Internet Protocol — c'est le protocole de communication commun à tous les ordinateurs reliés par Internet.",
+    "Informatique — Découverte de l'Internet, définition"],
+  ["QCU","info_internet",2,"Le moteur de recherche le plus utilisé et le plus connu au monde est :",
+    ["Google","Firefox","Internet Explorer","Outlook"],[0],
+    "Le moteur de recherche le plus connu et le plus utilisé est « Google » ; Firefox est un navigateur, pas un moteur de recherche.",
+    "Informatique — Découverte de l'Internet, moteur de recherche"],
+  ["QCM","info_internet",1,"Parmi les navigateurs web (logiciels permettant de surfer sur Internet) figurent :",
+    ["Google Chrome","Firefox (Mozilla)","Opera ou Safari (Mac)","Google, qui est un navigateur et non un moteur de recherche"],[0,1,2],
+    "Les navigateurs web permettant de surfer sur Internet sont notamment Google Chrome, Microsoft Edge, Firefox (Mozilla), et Opera ou Safari (Mac) ; Google, lui, est un moteur de recherche, pas un navigateur.",
+    "Informatique — Découverte de l'Internet, le navigateur"],
+  ["QCU","info_internet",1,"Les sites favoris, dans un navigateur, permettent de :",
+    ["Conserver en mémoire vos sites préférés pour les retrouver rapidement sans devoir retaper l'adresse","Supprimer définitivement un site visité","Bloquer l'accès à certains sites","Envoyer un message électronique"],[0],
+    "Les sites favoris permettent de conserver en mémoire les sites que l'on visite régulièrement, pour les retrouver facilement sans avoir à retaper l'adresse à chaque fois.",
+    "Informatique — Découverte de l'Internet, les sites favoris"],
+
+  /* ===== Microsoft Office Word ===== */
+  ["QCU","info_word",1,"Pour sélectionner du texte dans un document Word, il faut :",
+    ["Placer le point d'insertion au début du texte à sélectionner, appuyer sur le bouton gauche de la souris, puis déplacer la souris jusqu'à la fin du texte avant de relâcher","Cliquer une seule fois n'importe où dans le document","Appuyer sur la touche Échap","Fermer puis rouvrir le document"],[0],
+    "La sélection du texte se fait en plaçant le point d'insertion au début du texte, en appuyant sur le bouton gauche de la souris, en la déplaçant jusqu'à la fin du texte à sélectionner, puis en relâchant le bouton.",
+    "Informatique — Microsoft Office Word, mise en forme du texte"],
+  ["QCU","info_word",2,"Pour enregistrer un nouveau document Word ne portant pas encore de nom, il faut :",
+    ["Cliquer sur Enregistrer, puis choisir le dossier et taper le nom du document","Cliquer directement sur Fermer","Appuyer sur la touche Échap","Redémarrer l'ordinateur"],[0],
+    "Pour enregistrer un nouveau document ne portant pas encore de nom, il faut cliquer sur Enregistrer, choisir le dossier dans lequel l'enregistrer, puis taper le nom du document.",
+    "Informatique — Microsoft Office Word, enregistrement d'un document"],
+  ["QCU","info_word",1,"Pour créer un nouveau document Word vierge, il faut notamment :",
+    ["Dans le menu Fichier, cliquer sur Nouveau, puis cliquer sur Document vierge","Cliquer directement sur Imprimer","Fermer le logiciel puis le rouvrir automatiquement","Appuyer sur la barre d'espace"],[0],
+    "Pour créer un document, dans le menu Fichier, il faut cliquer sur Nouveau, puis choisir Document vierge (ou un modèle/assistant selon le type de document souhaité).",
+    "Informatique — Microsoft Office Word, création d'un document"],
+
+  /* ===== E-Learning ===== */
+  ["QCU","info_elearning",1,"Le terme « E-learning » vient de « Electronic learning », le préfixe « e » signifiant :",
+    ["Électronique, numérique, ou cyber","Éducatif uniquement","Européen","Essentiel"],[0],
+    "Le E-learning vient de « Electronic learning » ; le préfixe « e » signifie électronique, numérique, ou cyber, et le learning signifie apprentissage.",
+    "Informatique — E-Learning, définition"],
+  ["QCU","info_elearning",2,"La principale fonction du E-learning est de :",
+    ["Diffuser des formations à tous les élèves sans barrière géographique, dès lors qu'ils disposent d'un accès à la plateforme","Remplacer totalement les enseignants dans tous les cas","Fonctionner uniquement sans connexion Internet","Servir uniquement à envoyer des e-mails"],[0],
+    "Le E-learning permet de diffuser les formations à tous les élèves sans problème d'organisation géographique, dès lors qu'ils disposent d'un accès à la plateforme proposant la formation.",
+    "Informatique — E-Learning, fonction"],
+  ["QCM","info_elearning",1,"Parmi les avantages du E-learning pour les apprenants figurent :",
+    ["Des coûts de formation moins élevés","La possibilité de se former à son rythme et non selon le rythme de sa classe","Un accès aux formations peu importe le lieu où l'on se trouve, selon sa connexion Internet","L'obligation de suivre la formation à heure fixe, comme en présentiel"],[0,1,2],
+    "Les avantages du E-learning pour les apprenants sont notamment des coûts moins élevés, la possibilité de se former à son propre rythme, et un accès facile aux formations peu importe le lieu, selon sa connexion Internet.",
+    "Informatique — E-Learning, avantages pour les apprenants"],
+
+  /* ===== Messagerie électronique et réseaux sociaux ===== */
+  ["QCU","info_messagerie",1,"Un « mail Web » (webmail) permet de :",
+    ["Consulter son courrier électronique depuis n'importe quel ordinateur connecté à Internet, sans installer de logiciel","Consulter son courrier uniquement depuis l'ordinateur sur lequel le compte a été créé","Envoyer uniquement des messages sans jamais pouvoir en recevoir","Naviguer sur Internet sans adresse e-mail"],[0],
+    "Un mail Web (webmail) permet de consulter son courrier électronique depuis n'importe quel ordinateur, quel que soit le logiciel installé, via une interface accessible depuis un navigateur.",
+    "Informatique — Messagerie électronique, création d'un mail"],
+  ["QCU","info_messagerie",1,"Dans une adresse e-mail, le symbole « @ » se nomme :",
+    ["Arobase","Astérisque","Dièse","Tilde"],[0],
+    "Le symbole « @ » présent dans toute adresse e-mail se nomme l'arobase.",
+    "Informatique — Messagerie électronique, création d'un compte"],
+  ["QCU","info_messagerie",2,"Pour joindre un fichier à un e-mail, on clique généralement sur un bouton représenté par le symbole d'un :",
+    ["Trombone","Parapluie","Cœur","Triangle"],[0],
+    "Pour joindre un fichier à un message, on reconnaît généralement le bouton par la présence d'un symbole représentant un trombone.",
+    "Informatique — Messagerie électronique, joindre un fichier"],
+  ["QCM","info_messagerie",2,"Dans la boîte de réception d'une messagerie électronique, les colonnes affichées pour chaque message comprennent généralement :",
+    ["La date et l'heure de réception du message","Le nom (ou l'adresse e-mail) de l'expéditeur","Le sujet ou l'objet du message","Le contenu intégral du corps du message, toujours affiché en entier dans la liste"],[0,1,2],
+    "La boîte de réception affiche généralement, pour chaque message, la date et l'heure de réception, le nom ou l'adresse de l'expéditeur, le sujet du message, et sa taille — pas le contenu intégral, qui n'apparaît qu'une fois le message ouvert.",
+    "Informatique — Messagerie électronique, la boîte de réception"],
+  ["QCU","info_messagerie",1,"Après avoir utilisé sa messagerie sur un ordinateur partagé, il est important de :",
+    ["Se déconnecter, pour verrouiller l'accès et éviter qu'une autre personne n'y accède","Laisser la session ouverte pour la prochaine utilisation","Changer immédiatement de mot de passe à chaque connexion","Supprimer définitivement son compte"],[0],
+    "Il est important de penser à se déconnecter de sa messagerie après utilisation, c'est-à-dire verrouiller l'accès afin qu'une autre personne ne puisse pas l'utiliser à votre place.",
+    "Informatique — Messagerie électronique, déconnexion"],
+  ["QCM","info_messagerie",1,"Parmi les catégories de sites permettant de se relier entre eux pour constituer un réseau social figurent :",
+    ["Les boutiques virtuelles (achat, vente, échanges, dons)","Les sites d'achat/vente de produits neufs ou d'occasion, entre particuliers ou professionnels","Les sites de jeux en ligne, seul ou en réseau","Uniquement les messageries électroniques, qui sont les seuls réseaux sociaux existants"],[0,1,2],
+    "Les réseaux sociaux sur Internet regroupent plusieurs catégories de sites : boutiques virtuelles, sites d'achat-vente entre particuliers/professionnels, jeux en ligne, sites de petites annonces, entre autres.",
+    "Informatique — Découverte des réseaux sociaux, à quoi servent-ils"],
+];
+
 const PATHO_CHIR_ENRICHISSEMENT_RAW = [
   ["QCU","asepsie_inflammation",2,"L'asepsie se définit comme :",
     ["Un ensemble de méthodes propres à empêcher tout apport de germes microbiens","Un produit utilisé pour lutter contre l'infection","L'ensemble des procédés pour détruire des germes sur une surface","Une infection généralisée avec décharges de germes dans le sang"],[0],
@@ -14516,6 +14633,7 @@ const QUESTIONS = [
   ...buildQuestions(ISTVIH_SUPP2_RAW, "ist-vih", "iv2"),
   ...buildQuestions(MNT_RAW, "maladies-non-transmissibles", "mn"),
   ...buildQuestions(IMMUNOLOGIE_RAW, "immunologie", "immuno"),
+  ...buildQuestions(INFORMATIQUE_RAW, "informatique", "info"),
   ...buildQuestions(PATHO_CHIR_ENRICHISSEMENT_RAW, "semio-chir", "pcenr"),
   ...buildQuestions(PATHOLOGIE_RESPI_RAW, "pathologie-respiratoire", "pr"),
   ...buildQuestions(TECHNIQUES_SOINS2_RAW, "techniques-soins-infirmiers", "ts2"),
@@ -24283,8 +24401,13 @@ function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
 // au hasard dans la banque déjà existante de la matière correspondante. Liste volontairement
 // courte au départ (2 modules), pensée pour être étendue facilement plus tard.
 const PAPER_SIM_MODULES = [
-  { subjectId: "concepts-sciences-inf", label: "Concepts et théories en sciences infirmières" },
-  { subjectId: "semio-medicale", label: "Sémiologie médicale" },
+  { subjectIds: ["concepts-sciences-inf"], label: "Concepts et théories en sciences infirmières" },
+  { subjectIds: ["semio-medicale"], label: "Sémiologie médicale" },
+  { subjectIds: ["sante-publique"], label: "Santé publique" },
+  { subjectIds: ["sante-communautaire"], label: "Santé communautaire" },
+  { subjectIds: ["sante-infantile", "pediatrie"], label: "Santé infantile (pédiatrie, soins aux enfants, diététique)" },
+  { subjectIds: ["anat-physio"], label: "Anatomie (physiologie et obstétricale)" },
+  { subjectIds: ["semio-medicale", "semio-chir", "ist-vih"], label: "Pathologie chirurgicale (sémiologie médicale, chirurgicale et VIH/SIDA)" },
 ];
 
 function PaperSimSelectScreen({ onBack, onSelect }) {
@@ -24301,7 +24424,7 @@ function PaperSimSelectScreen({ onBack, onSelect }) {
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {PAPER_SIM_MODULES.map((m) => (
             <button
-              key={m.subjectId}
+              key={m.subjectIds.join("-")}
               onClick={() => onSelect(m)}
               style={{
                 textAlign: "left", background: COLORS.surface, border: `1.5px solid ${COLORS.line}`, borderRadius: 14,
@@ -24338,11 +24461,14 @@ function GridBubble({ filled, onClick, disabled, tone }) {
 }
 
 function PaperSimulationScreen({ module, student, onBack }) {
+  // subjectIds : chaque module référence désormais un TABLEAU de matières (et non plus une
+  // seule) — certains modules combinent volontairement plusieurs matières proches (ex.
+  // Pathologie chirurgicale = sémiologie médicale + chirurgicale + IST/VIH réunies).
   const questions = useMemo(() => {
-    const pool = QUESTIONS.filter((q) => q.subjectId === module.subjectId);
+    const pool = QUESTIONS.filter((q) => module.subjectIds.includes(q.subjectId));
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, Math.min(20, shuffled.length));
-  }, [module.subjectId]);
+  }, [module.subjectIds]);
 
   const typeEpreuve = useMemo(() => ["A", "B", "C", "D"][Math.floor(Math.random() * 4)], []);
 
