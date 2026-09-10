@@ -1425,6 +1425,12 @@ const CHAPTERS = [
   { id: "info_elearning", label: "E-Learning", subjectId: "informatique" },
   { id: "info_internet", label: "Découverte d'Internet", subjectId: "informatique" },
   { id: "info_messagerie", label: "Messagerie électronique et réseaux sociaux", subjectId: "informatique" },
+  { id: "commu_nutrition_def", label: "Nutrition (définitions)", subjectId: "sante-communautaire" },
+  { id: "commu_nutrition_carences", label: "Maladies par carence alimentaire", subjectId: "sante-communautaire" },
+  { id: "si_traumatisme_obst", label: "Traumatisme obstétrical du nouveau-né", subjectId: "sante-infantile" },
+  { id: "ir_recherche_scientifique", label: "La recherche scientifique (définitions)", subjectId: "initiation-recherche" },
+  { id: "ir_concepts", label: "Concepts liés à la recherche (observation, concept, construit, variable)", subjectId: "initiation-recherche" },
+  { id: "ir_domaines_theme", label: "Domaines d'investigation et thème de recherche", subjectId: "initiation-recherche" },
   { id: "ts_accueil_lit", label: "Accueil du malade, chambre et réfection du lit", subjectId: "techniques-soins-infirmiers" },
   { id: "ts_gants", label: "Port de gants propres et stériles", subjectId: "techniques-soins-infirmiers" },
   { id: "ts_soins_base", label: "Soins infirmiers de base (toilette, escarre, hygiène)", subjectId: "techniques-soins-infirmiers" },
@@ -1540,6 +1546,8 @@ const CHAPTERS = [
   { id: "pharmaco_prescription", label: "Prescription et administration", subjectId: "pharmacologie" },
   { id: "pharmaco_voies", label: "Voies d'administration", subjectId: "pharmacologie" },
   { id: "pharmaco_antibiotiques", label: "Antibiotiques et résistances", subjectId: "pharmacologie" },
+  { id: "pharmaco_pharmacodynamie", label: "Pharmacodynamie (agoniste, antagoniste)", subjectId: "pharmacologie" },
+  { id: "pharmaco_formes_galeniques", label: "Formes galéniques", subjectId: "pharmacologie" },
   { id: "pharmaco_galenique", label: "Formes galéniques", subjectId: "pharmacologie" },
   { id: "pharmaco_cinetique", label: "Pharmacocinétique", subjectId: "pharmacologie" },
   { id: "pharmaco_activite", label: "Activité des médicaments", subjectId: "pharmacologie" },
@@ -2107,7 +2115,7 @@ const ECUE_LIST = [
   { id: "1SIO1207", ueId: "SIO1207", code: "1SIO1207", label: "Démarche de soins (Collecte de données)", credits: 1, subjectId: null },
   { id: "2SIO1207", ueId: "SIO1207", code: "2SIO1207", label: "Techniques de soins néonataux et infantiles", credits: 1, subjectId: "sante-infantile" },
 
-  { id: "1RCH1208", ueId: "RCH1208", code: "1RCH1208", label: "Initiation à la recherche", credits: 1, subjectId: null },
+  { id: "1RCH1208", ueId: "RCH1208", code: "1RCH1208", label: "Initiation à la recherche", credits: 1, subjectId: "initiation-recherche" },
   { id: "2RCH1208", ueId: "RCH1208", code: "2RCH1208", label: "TIC (Bureautique et Internet)", credits: 1, subjectId: "informatique" },
 
   { id: "1STG1209", ueId: "STG1209", code: "1STG1209", label: "Processus de mise en stage", credits: 1, subjectId: null },
@@ -12278,6 +12286,166 @@ const IMMUNOLOGIE_RAW = [
     "Immunologie — Sérodiagnostic de l'hépatite B, vaccination"],
 ];
 
+const PHARMACO_EXAM2026_RAW = [
+  ["QCU","pharmaco_medicament",2,"Un médicament princeps se définit comme :",
+    ["Le médicament de référence, pouvant être copié après expiration de son brevet","Un synonyme exact du médicament générique","Un médicament dépourvu de DCI","Un médicament nécessairement d'origine végétale"],[0],
+    "Le médicament princeps est le médicament de référence (original) ; il peut être copié sous forme de générique après l'expiration de son brevet.",
+    "Pharmacologie — Médicaments génériques, le princeps"],
+  ["QCD","pharmaco_prescription",2,"L'administration d'un médicament périmé peut entraîner une perte d'efficacité ou des risques pour le patient.",
+    ["Vrai","Faux"],[0],
+    "Vrai, un médicament périmé peut avoir perdu de son efficacité, voire présenter des risques pour le patient — d'où l'importance de toujours vérifier la date de péremption avant administration.",
+    "Pharmacologie — Distribution et administration, date de péremption"],
+  ["QCU","pharmaco_pharmacodynamie",3,"Un médicament agoniste, au niveau d'un récepteur cellulaire, a pour effet de :",
+    ["L'activer et reproduire ou stimuler une réponse biologique","L'empêcher ou réduire l'action d'un autre médicament sur ce récepteur","Le détruire définitivement","N'avoir aucun effet mesurable"],[0],
+    "Un agoniste active le récepteur sur lequel il se fixe, reproduisant ou stimulant une réponse biologique.",
+    "Pharmacologie — Pharmacodynamie, agoniste et antagoniste"],
+  ["QCU","pharmaco_pharmacodynamie",3,"Un médicament antagoniste, au niveau d'un récepteur cellulaire, a pour effet de :",
+    ["Empêcher ou réduire l'action d'un agoniste au niveau de ce récepteur","Activer systématiquement le récepteur","Augmenter la production du récepteur par la cellule","Être obligatoirement toxique"],[0],
+    "Un antagoniste empêche ou réduit l'action d'un agoniste au niveau du récepteur, sans l'activer lui-même.",
+    "Pharmacologie — Pharmacodynamie, agoniste et antagoniste"],
+  ["QCD","pharmaco_formes_galeniques",2,"Les comprimés effervescents doivent être complètement dissous dans l'eau avant d'être administrés.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les comprimés effervescents doivent être dissous dans un verre d'eau avant administration.",
+    "Pharmacologie — Formes galéniques, comprimés effervescents"],
+  ["QCD","pharmaco_formes_galeniques",2,"Un comprimé gastrorésistant peut être écrasé sans précaution particulière avant son administration.",
+    ["Vrai","Faux"],[1],
+    "Faux, écraser un comprimé gastrorésistant détruit sa protection contre l'acidité gastrique, compromettant son efficacité et sa tolérance.",
+    "Pharmacologie — Formes galéniques, comprimés gastrorésistants"],
+];
+
+const INITIATION_RECHERCHE_RAW = [
+  ["QCU","ir_recherche_scientifique",2,"La recherche scientifique se définit comme :",
+    ["Un processus systématique de collecte de données sur des phénomènes observables et vérifiables, en vue de décrire, expliquer, prédire ou contrôler ces phénomènes","Une simple opinion personnelle sur un sujet donné","Une lecture rapide de documents sans démarche particulière","Une activité réservée exclusivement aux médecins"],[0],
+    "La recherche scientifique est un processus systématique de collecte de données (empirique) sur des phénomènes observables et vérifiables, en vue de les décrire, expliquer, prédire ou contrôler.",
+    "Initiation à la recherche — La recherche scientifique, définitions"],
+  ["QCD","ir_recherche_scientifique",2,"La recherche scientifique consiste en une démarche rationnelle, organisée et rigoureuse, pour étudier et comprendre.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition donnée dans le cours : une démarche rationnelle, organisée et rigoureuse pour étudier et comprendre, qui élève le niveau de la pensée et approfondit la réflexion.",
+    "Initiation à la recherche — La recherche scientifique, remarque"],
+
+  ["QCU","ir_concepts",2,"En recherche scientifique, l'observation se définit comme le fait de :",
+    ["Considérer avec attention afin de mieux connaître et comprendre la réalité","Formuler une hypothèse sans aucune vérification","Copier les résultats d'une recherche antérieure","Ignorer les connaissances déjà acquises sur le sujet"],[0],
+    "Observer, c'est considérer avec attention afin de mieux connaître et comprendre la réalité ; l'observation est basée sur des connaissances préalables et reflète l'acuité et l'intuition du chercheur.",
+    "Initiation à la recherche — Concepts liés à la recherche, observation"],
+  ["QCU","ir_concepts",2,"Un concept, en recherche scientifique, se définit comme :",
+    ["Une idée abstraite qui représente les manifestations de certains comportements ou caractéristiques","Un résultat chiffré d'une expérience","Une méthode de collecte de données uniquement","Un type de graphique statistique"],[0],
+    "Un concept est une idée abstraite qui représente les manifestations de certains comportements ou caractéristiques.",
+    "Initiation à la recherche — Concepts liés à la recherche, le concept"],
+  ["QCU","ir_concepts",3,"Un construit se distingue du simple concept par le fait qu'il est :",
+    ["Spécialement inventé ou adopté par le chercheur dans un but scientifique précis","Toujours mesurable directement et objectivement, sans aucune abstraction","Uniquement utilisé en sciences exactes, jamais en sciences infirmières","Un synonyme strict du mot variable"],[0],
+    "Un construit est un concept spécialement inventé ou adopté par le chercheur dans un but scientifique précis (exemples : le foyer de contrôle de la santé, les autosoins).",
+    "Initiation à la recherche — Concepts liés à la recherche, le construit"],
+  ["QCU","ir_concepts",2,"Une variable, en recherche, se définit comme :",
+    ["Une qualité, propriété ou caractéristique d'objets, de personnes ou de situations qui sont étudiées dans une recherche","Un résultat déjà connu et non vérifiable","Un synonyme exact du mot hypothèse","Une méthode de recherche qualitative uniquement"],[0],
+    "Une variable est une qualité, propriété ou caractéristique d'objets, de personnes ou de situations qui sont étudiées dans une recherche.",
+    "Initiation à la recherche — Concepts liés à la recherche, la variable"],
+
+  ["QCM","ir_domaines_theme",2,"Les domaines d'investigation en sciences infirmières comprennent notamment :",
+    ["La personne","L'environnement de la personne","La santé et le soin infirmier","L'économie mondiale, qui n'est pas un domaine propre aux sciences infirmières"],[0,1,2],
+    "Les domaines d'investigation en sciences infirmières comprennent la personne, l'environnement de la personne, la santé, le soin infirmier, et l'interaction entre ces éléments.",
+    "Initiation à la recherche — Domaines d'investigation en sciences infirmières"],
+  ["QCU","ir_domaines_theme",2,"Un thème de recherche se définit comme :",
+    ["Une branche, une spécialité de la discipline qui a retenu l'attention, un champ d'intérêt associé aux préoccupations cliniques, professionnelles ou sociales","Un résultat final et définitif d'une recherche déjà achevée","Une simple opinion personnelle du chercheur","Un synonyme exact du mot hypothèse"],[0],
+    "Un thème de recherche est une branche, une spécialité de la discipline qui a retenu l'attention du chercheur, un champ d'intérêt associé aux préoccupations cliniques, professionnelles ou sociales (exemples : la santé maternelle et infantile, la santé publique).",
+    "Initiation à la recherche — Thème de recherche, définition"],
+];
+
+const AEPA_PHARMACO_RAW = [
+  ["QCD","pharmaco_medicament",1,"Les antipyrétiques agissent contre la fièvre.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les antipyrétiques sont des médicaments dont l'action vise justement à faire baisser la fièvre.",
+    "Pharmacologie — Familles thérapeutiques, antipyrétiques"],
+  ["QCU","pharmaco_medicament",1,"Une cellule se définit comme :",
+    ["La plus petite partie de la matière vivante capable de vivre de façon indépendante","Une centrale énergétique de l'organisme","Un centre de commandement de l'organisme","Un ensemble de tissus différents concourant à une même fonction"],[0],
+    "Une cellule est la plus petite partie de la matière vivante capable de vivre de façon indépendante.",
+    "Pharmacologie — Notions de biologie générale, la cellule"],
+  ["QCU","pharmaco_medicament",1,"Un ensemble de tissus différents concourant à une même fonction est appelé :",
+    ["Un organe","Une cellule","Un appareil uniquement, jamais un organe","Un tissu simple"],[0],
+    "Un ensemble de tissus différents concourant à une même fonction est appelé un organe.",
+    "Pharmacologie — Notions de biologie générale, l'organe"],
+  ["QCD","pharmaco_voies",2,"La voie cutanée (application sur la peau) est une voie générale.",
+    ["Vrai","Faux"],[1],
+    "Faux, la voie cutanée est généralement une voie locale (action au niveau de la peau elle-même), et non une voie générale (systémique), sauf exceptions comme certains patchs transdermiques.",
+    "Pharmacologie — Voies d'administration, voie cutanée"],
+  ["QCD","pharmaco_antibiotiques",1,"Les antibiotiques agissent contre l'inflammation.",
+    ["Vrai","Faux"],[1],
+    "Faux, les antibiotiques agissent contre les bactéries (infections bactériennes) ; ce sont les anti-inflammatoires qui agissent contre l'inflammation.",
+    "Pharmacologie — Antibiotiques, mécanisme d'action"],
+  ["QCU","pharmaco_medicament",1,"La pharmacologie se définit comme :",
+    ["L'étude des médicaments, de leur action et de leur emploi","L'étude exclusive des plantes médicinales","L'étude des maladies infectieuses uniquement","L'étude de l'anatomie humaine"],[0],
+    "La pharmacologie est l'étude des médicaments, de leur action et de leur emploi.",
+    "Pharmacologie — Généralités, définition"],
+  ["QCU","pharmaco_medicament",2,"La DCI (Dénomination Commune Internationale) du médicament commercialisé sous le nom de Doliprane est :",
+    ["Le paracétamol","L'ibuprofène","L'aspirine","L'amoxicilline"],[0],
+    "La DCI du Doliprane est le paracétamol ; Doliprane est un nom commercial (de marque), le paracétamol étant la dénomination commune internationale de la substance active.",
+    "Pharmacologie — Dénominations, DCI et nom commercial"],
+];
+
+const TRAUMATISME_OBST_RAW = [
+  ["QCM","si_traumatisme_obst",2,"Parmi les facteurs favorisants du traumatisme obstétrical du nouveau-né liés à la mère figurent :",
+    ["Le mauvais suivi de la grossesse","L'accouchement à domicile","La dystocie mécanique (bassin rétréci)","Un poids de naissance strictement normal, sans autre facteur associé"],[0,1,2],
+    "Les facteurs favorisants liés à la mère sont le mauvais suivi de la grossesse, l'accouchement à domicile, et la dystocie mécanique (bassin rétréci).",
+    "Santé infantile — Traumatisme obstétrical, facteurs favorisants"],
+  ["QCM","si_traumatisme_obst",2,"Parmi les facteurs favorisants du traumatisme obstétrical liés à l'enfant lui-même figurent :",
+    ["La prématurité et l'hypotrophie","La macrosomie et les malformations","La présentation vicieuse","Un Apgar strictement normal à la naissance"],[0,1,2],
+    "Les facteurs favorisants liés à l'enfant sont : la prématurité, l'hypotrophie, la macrosomie, les malformations, et la présentation vicieuse.",
+    "Santé infantile — Traumatisme obstétrical, facteurs favorisants"],
+  ["QCM","si_traumatisme_obst",2,"Parmi les facteurs favorisants du traumatisme obstétrical liés à l'agent de santé figurent :",
+    ["La césarienne, la ventouse ou le forceps mal maîtrisés","La manœuvre de Mauriceau","Une traction appuyée sur le membre","Le respect strict du protocole d'accouchement, sans aucune manœuvre"],[0,1,2],
+    "Les facteurs favorisants liés à l'agent de santé sont : la césarienne, la ventouse ou le forceps, la manœuvre de Mauriceau, et une traction appuyée sur le membre.",
+    "Santé infantile — Traumatisme obstétrical, facteurs favorisants"],
+  ["QCU","si_traumatisme_obst",3,"La paralysie du plexus brachial obstétricale, l'un des traumatismes du nouveau-né, résulte d'un étirement au niveau des racines nerveuses situées entre :",
+    ["C5 et Th1","L1 et L5","C1 et C4","S1 et S5"],[0],
+    "La paralysie du plexus brachial obstétricale résulte d'un étirement du plexus brachial, dont les racines s'étendent de C5 à Th1.",
+    "Santé infantile — Traumatisme obstétrical, paralysie du plexus brachial"],
+  ["QCD","si_traumatisme_obst",3,"Il est recommandé de masser un céphalhématome chez le nouveau-né afin d'accélérer sa résorption.",
+    ["Vrai","Faux"],[1],
+    "Faux, il ne faut jamais masser ni inciser une collection sanguine du crâne (céphalhématome) — cela complique son évolution au lieu de l'améliorer.",
+    "Santé infantile — Traumatisme obstétrical, céphalhématome"],
+  ["QCU","si_traumatisme_obst",2,"Parmi les traumatismes osseux fréquents du nouveau-né lié à l'accouchement figure notamment :",
+    ["La fracture de la clavicule","La fracture du crâne systématique","La fracture du fémur exclusivement","Aucune fracture n'est possible chez le nouveau-né"],[0],
+    "La fracture de la clavicule est l'un des traumatismes osseux les plus fréquents chez le nouveau-né, avec les fractures des os longs.",
+    "Santé infantile — Traumatisme obstétrical, traumatismes osseux"],
+  ["QCM","si_traumatisme_obst",2,"Selon la classification des rôles de soins infirmiers/sage-femme face au traumatisme obstétrical, relèvent du rôle propre (soins propres) :",
+    ["Panser une plaie","Placer le nouveau-né en incubateur ou sous table chauffante","Prendre les constantes","Administrer des médicaments, qui relève du rôle délégué"],[0,1,2],
+    "Les soins propres (rôle propre de l'infirmier/sage-femme) comprennent notamment : panser une plaie, placer le nouveau-né en incubateur, et prendre les constantes ; administrer des médicaments relève, lui, des soins délégués (sur prescription).",
+    "Santé infantile — Traumatisme obstétrical, rôles de soins IDE/SF"],
+  ["QCU","si_traumatisme_obst",2,"Brancher le nouveau-né sous oxygène et administrer des médicaments relèvent, dans la classification des rôles de soins, :",
+    ["Des soins délégués","Des soins propres","Des soins de collaboration","Des conseils et de la prévention"],[0],
+    "Brancher le nouveau-né sous oxygène et administrer des médicaments relèvent des soins délégués, c'est-à-dire réalisés sur prescription médicale.",
+    "Santé infantile — Traumatisme obstétrical, rôles de soins IDE/SF"],
+];
+
+const EXO_SANTEPUB_RAW = [
+  ["QCM","santepub_pev_vaccins",2,"Le matériel de sécurité des injections comprend notamment :",
+    ["Le dispositif d'injection","Les seringues à usage unique (non complexes)","Le dispositif de collecte des déchets","Les seringues à usage complexe"],[0,1,2],
+    "Le matériel de sécurité des injections comprend le dispositif d'injection, les seringues à usage unique, et le dispositif de collecte des déchets — pas des seringues « à usage complexe ».",
+    "Santé publique — PEV, sécurité des injections"],
+  ["QCU","santepub_pev_vaccins",2,"Parmi les dispositifs assurant la sécurité des injections dans le cadre de la vaccination, lequel N'EN FAIT PAS partie ?",
+    ["Le dispositif des seringues rétractables","Le dispositif d'injection","Le dispositif de collecte des déchets","Le dispositif de destruction des déchets issus des activités de soins"],[0],
+    "Contrairement aux trois autres, le dispositif des seringues rétractables ne fait pas partie des dispositifs de sécurité des injections cités dans ce cadre.",
+    "Santé publique — PEV, sécurité des injections"],
+];
+
+const EXO_SANTECOMMU_RAW = [
+  ["QCD","commu_nutrition_def",1,"Les aliments sont des substances naturelles complexes qui contiennent au moins deux nutriments.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte de l'aliment : une substance naturelle complexe contenant au moins deux nutriments.",
+    "Santé communautaire — Nutrition, définitions"],
+  ["QCD","commu_nutrition_carences",2,"Le goître est une maladie due à une carence en protéines et en énergie (carence protéino-énergétique).",
+    ["Vrai","Faux"],[1],
+    "Faux, le goître est dû à une carence en iode, et non à une carence protéino-énergétique (qui caractérise plutôt le kwashiorkor et le marasme).",
+    "Santé communautaire — Nutrition, maladies par carence alimentaire"],
+  ["QCD","commu_etude_milieu_def",2,"La cartographie, dans l'étude du milieu, permet de limiter l'aire sanitaire et le bassin de desserte.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la cartographie permet de limiter l'aire sanitaire et le bassin de desserte (ou bassin déservi) d'un centre de santé.",
+    "Santé communautaire — Étude du milieu, cartographie"],
+  ["QCD","commu_etude_milieu_def",2,"Le nombre de femmes en âge de reproduction représente environ 20% de la population totale.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les femmes en âge de reproduction représentent environ 20% de la population totale, une donnée démographique utilisée dans l'étude du milieu.",
+    "Santé communautaire — Étude du milieu, données démographiques"],
+];
+
 const INFORMATIQUE_RAW = [
   /* ===== Découverte de l'ordinateur ===== */
   ["QCU","info_ordinateur",1,"Un ordinateur se définit comme :",
@@ -13151,6 +13319,10 @@ const EDHC_RAW = [
 ];
 
 const QCD_ENRICHISSEMENT_RAW = [
+  ["QCD","commu_etude_milieu_def",2,"La zone silencieuse sanitaire est la zone se trouvant à plus de 15 km d'un centre de santé et dépourvue de structures sanitaires.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte de la zone silencieuse sanitaire donnée dans le cours d'étude du milieu.",
+    "Santé communautaire — Étude du milieu, zone silencieuse sanitaire"],
   /* ===== Santé communautaire — nouveaux QCD ===== */
   ["QCD","commu_etude_milieu_def",1,"L'étude du milieu (ou monographie) est la connaissance des hommes et de l'environnement dans lequel ils vivent, des problèmes et des moyens de résolution de ces problèmes qui existent dans ce milieu.",
     ["Vrai","Faux"],[0],
@@ -14633,6 +14805,12 @@ const QUESTIONS = [
   ...buildQuestions(ISTVIH_SUPP2_RAW, "ist-vih", "iv2"),
   ...buildQuestions(MNT_RAW, "maladies-non-transmissibles", "mn"),
   ...buildQuestions(IMMUNOLOGIE_RAW, "immunologie", "immuno"),
+  ...buildQuestions(PHARMACO_EXAM2026_RAW, "pharmacologie", "phex26"),
+  ...buildQuestions(INITIATION_RECHERCHE_RAW, "initiation-recherche", "ir"),
+  ...buildQuestions(AEPA_PHARMACO_RAW, "pharmacologie", "aepa"),
+  ...buildQuestions(TRAUMATISME_OBST_RAW, "sante-infantile", "trauobst"),
+  ...buildQuestions(EXO_SANTEPUB_RAW, "sante-publique", "exosp"),
+  ...buildQuestions(EXO_SANTECOMMU_RAW, "sante-communautaire", "exosc"),
   ...buildQuestions(INFORMATIQUE_RAW, "informatique", "info"),
   ...buildQuestions(PATHO_CHIR_ENRICHISSEMENT_RAW, "semio-chir", "pcenr"),
   ...buildQuestions(PATHOLOGIE_RESPI_RAW, "pathologie-respiratoire", "pr"),
@@ -14889,6 +15067,26 @@ const GYNECO_RAW_CASES = [
       { stem: "Ce genre de retard dans la prise en charge (transfert vers une structure adaptée) illustre lequel des « trois retards » de la mortalité maternelle ?",
         options: ["Le retard lié à l'accès à une structure de soins adaptée (référence/transport)", "Le retard dans la décision d'aller consulter uniquement", "Il ne s'agit pas d'un retard reconnu dans le modèle", "Le retard dans le diagnostic prénatal"], correct: [0],
         explanation: "Le modèle des trois retards inclut le retard lié à l'accès à une structure de soins adaptée (distance, transport, référence) comme facteur de mortalité maternelle." },
+    ],
+  },
+];
+
+const TRAUMATISME_OBST_RAW_CASES = [
+  {
+    chapterId: "si_traumatisme_obst", level: 3,
+    vignette:
+      "Un nouveau-né macrosome, issu d'un accouchement dystocique ayant nécessité une traction appuyée sur le membre supérieur, présente une absence de mouvement spontané du bras droit dès la naissance. Les parents le surnomment « Betchuinssa », qui signifie en dialecte baoulé « on a tiré sur mon bras ».",
+    ref: "Santé infantile — Traumatisme obstétrical",
+    qs: [
+      { stem: "Ce tableau évoque en priorité :",
+        options: ["Une paralysie du plexus brachial obstétricale", "Une fracture du crâne", "Un céphalhématome", "Une malformation congénitale sans rapport avec l'accouchement"], correct: [0],
+        explanation: "L'absence de mouvement du bras après une traction appuyée lors d'un accouchement dystocique évoque une paralysie du plexus brachial obstétricale, par étirement des racines nerveuses C5 à Th1." },
+      { stem: "Parmi les facteurs favorisants retrouvés dans ce tableau, lequel est lié à l'enfant lui-même ?",
+        options: ["La macrosomie", "L'accouchement à domicile", "Le mauvais suivi de la grossesse", "La manœuvre de traction, qui est liée à l'agent de santé"], correct: [0],
+        explanation: "La macrosomie est un facteur favorisant lié à l'enfant lui-même, distinct des facteurs liés à la mère (accouchement à domicile, mauvais suivi) ou à l'agent de santé (traction appuyée)." },
+      { stem: "Parmi les rôles de soins IDE/SF face à ce nouveau-né, lequel relève de la collaboration avec le médecin ?",
+        options: ["Accompagner le nouveau-né en rééducation fonctionnelle", "Prendre les constantes", "Panser une plaie", "Réaliser les conseils et la CCC aux parents"], correct: [0],
+        explanation: "Accompagner ou faire accompagner le nouveau-né en rééducation fonctionnelle relève des soins de collaboration avec le médecin, à distinguer des soins propres (constantes, pansement) et des conseils/prévention (CCC)." },
     ],
   },
 ];
@@ -15405,6 +15603,7 @@ const CASES = [
   ...buildCases(DEONTO_RAW_CASES, "deontologie", "dcase"),
   ...buildCases(SANTEPUB_RAW_CASES, "sante-publique", "spcase"),
   ...buildCases(GYNECO_RAW_CASES, "gyneco-obstetrique", "gycase"),
+  ...buildCases(TRAUMATISME_OBST_RAW_CASES, "sante-infantile", "trauobstcase"),
   ...buildCases(PATHOLOGIE_RESPI_RAW_CASES, "pathologie-respiratoire", "prcase"),
   ...buildCases(TECHNIQUES_SOINS_RAW_CASES, "techniques-soins-infirmiers", "tscase"),
   ...buildCases(PHARMACO_RAW_CASES, "pharmacologie", "phcase"),
@@ -15950,6 +16149,12 @@ async function confirmPayment(storageKey, planIdOverride) {
     rec.paidDays = newPlanDays + remainingDays;
     rec.pendingSince = null;
     rec.pendingPlan = null;
+    // Historique des paiements : chaque confirmation ajoute une ligne, avec le montant
+    // exact du forfait choisi. Permet de calculer le total réellement encaissé sur
+    // l'ensemble des étudiants, y compris ceux qui renouvellent plusieurs fois — sans
+    // ça, seul l'état courant (jours restants) serait connu, pas la somme historique.
+    rec.paymentHistory = Array.isArray(rec.paymentHistory) ? rec.paymentHistory : [];
+    rec.paymentHistory.push({ date: rec.paidAt, planId: plan ? plan.id : null, amount: plan ? plan.price : 0 });
     // Récompense du parrain : uniquement au tout premier paiement du filleul, jamais renouvelée.
     if (isFirstPayment && rec.parrainMatricule && !rec.parrainRecompense) {
       await addReferralCredit(rec.parrainMatricule, { matricule: rec.matricule, nom: rec.nom, prenom: rec.prenom });
@@ -24647,6 +24852,107 @@ function PaperSimulationScreen({ module, student, onBack }) {
   );
 }
 
+/* ---------------- Guide pratique : examen de geste technique ---------------- */
+// Contrairement au guide "composition sur table" (épreuve écrite), celui-ci prépare
+// l'étudiant au déroulement précis d'un examen pratique de geste technique (soins
+// infirmiers), à partir du protocole réel utilisé par les enseignants de l'INFAS.
+function ExamenPratiqueGuideScreen({ onBack }) {
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "26px 18px 70px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, padding: "8px 14px", fontSize: 12.5, marginBottom: 18 }}>← Retour au tableau de bord</button>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 20, color: COLORS.ink, marginBottom: 6 }}>
+          🩺 Réussir mon examen pratique
+        </div>
+        <p style={{ fontSize: 13, color: COLORS.inkSoft, lineHeight: 1.6, marginBottom: 24 }}>
+          L'examen pratique ne juge pas que votre geste technique — le déroulement, l'attitude et le respect du protocole comptent tout autant. Voici exactement comment il se déroule.
+        </p>
+
+        {/* --- Les 4 principes de sécurité, toujours valables --- */}
+        <div style={{ background: COLORS.surface, borderRadius: 14, border: `1px solid ${COLORS.line}`, padding: 20, marginBottom: 20 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.ink, marginBottom: 12 }}>
+            Avant tout geste : 4 principes toujours respectés
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {[
+              ["Hygiène", "Lavage des mains (solution hydro-alcoolique), port de gants — respect de l'asepsie pour prévenir les infections associées aux soins."],
+              ["Identito-vigilance", "Vérification stricte de l'identité du patient, pour éviter toute erreur de soin."],
+              ["Ergonomie", "Utilisation de techniques de manutention pour protéger le dos du soignant et assurer la sécurité du patient."],
+              ["Économie", "Utilisation rationnelle du matériel, sans jamais compromettre la qualité du soin."],
+            ].map(([titre, texte]) => (
+              <div key={titre} style={{ display: "flex", gap: 10 }}>
+                <div style={{ width: 6, borderRadius: 999, background: COLORS.blueDeep, flexShrink: 0 }} />
+                <div>
+                  <div style={{ fontSize: 12.5, fontWeight: 700, color: COLORS.ink }}>{titre}</div>
+                  <div style={{ fontSize: 12, color: COLORS.inkSoft, lineHeight: 1.5 }}>{texte}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* --- Avant la pratique --- */}
+        <div style={{ background: COLORS.surface, borderRadius: 14, border: `1px solid ${COLORS.line}`, padding: 20, marginBottom: 20 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.blueDeep, marginBottom: 10 }}>
+            1. Avant la pratique
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 12.5, color: COLORS.ink, lineHeight: 1.9 }}>
+            <li>Saluer les enseignants</li>
+            <li>Tirer un numéro d'ordre</li>
+            <li>Tirer le soin selon ce numéro d'ordre</li>
+            <li>Lire à haute voix le soin tiré</li>
+          </ul>
+        </div>
+
+        {/* --- Pendant la pratique --- */}
+        <div style={{ background: COLORS.surface, borderRadius: 14, border: `1px solid ${COLORS.line}`, padding: 20, marginBottom: 20 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.blueDeep, marginBottom: 10 }}>
+            2. Pendant la pratique
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 12.5, color: COLORS.ink, lineHeight: 1.9 }}>
+            <li>Aller au lit du client</li>
+            <li>Saluer le client et ses parents</li>
+            <li>Se présenter au client et à ses parents</li>
+            <li>Informer le client et ses parents du soin à faire</li>
+            <li>Prendre connaissance du dossier médical et infirmier du client</li>
+            <li>Se laver les mains à l'eau et au savon</li>
+            <li>Réunir le matériel nécessaire au soin</li>
+            <li>Informer le client et ses parents de l'imminence du soin</li>
+            <li>Faire sortir poliment les parents si nécessaire</li>
+            <li>Fermer les portes et fenêtres si nécessaire</li>
+            <li>Préparer le soin</li>
+            <li>Appliquer le soin selon la technique enseignée</li>
+            <li>Réinstaller le client</li>
+            <li>Noter le soin sur la feuille de température</li>
+            <li>Faire la CCC (communication pour le changement de comportement) au malade et/ou au parent en rapport avec le soin</li>
+            <li>Remercier le client et/ou ses parents</li>
+          </ul>
+        </div>
+
+        {/* --- Après la pratique --- */}
+        <div style={{ background: COLORS.surface, borderRadius: 14, border: `1px solid ${COLORS.line}`, padding: 20, marginBottom: 20 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.blueDeep, marginBottom: 10 }}>
+            3. Après la pratique
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 12.5, color: COLORS.ink, lineHeight: 1.9 }}>
+            <li>Présenter le soin selon le modèle enseigné</li>
+            <li>Répondre aux questions posées par les enseignants</li>
+            <li>Remercier les enseignants et prendre congé d'eux</li>
+          </ul>
+        </div>
+
+        {/* --- La règle des 5B --- */}
+        <div style={{ background: "#F0F4F3", borderRadius: 14, padding: 18 }}>
+          <div style={{ fontSize: 12.5, fontWeight: 700, color: COLORS.ink, marginBottom: 8 }}>💡 À retenir pour tout soin médical : la règle des 5B</div>
+          <div style={{ fontSize: 12, color: COLORS.inkSoft, lineHeight: 1.7 }}>
+            1. Bon patient — 2. Bon médicament (ou bon soin) — 3. Bonne dose — 4. Bonne voie — 5. Bon moment
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CompoSurTableGuideScreen({ onBack }) {
   const [filled, setFilled] = useState({}); // "questionIndex-optionLetter" -> bool
   const PRATIQUE_QUESTIONS = 8;
@@ -25588,6 +25894,35 @@ function AdminScreen({ onBack }) {
   const pending = students ? students.filter((s) => s.paymentStatus === "pending") : [];
   const paid = students ? students.filter((s) => s.paymentStatus === "paid") : [];
 
+  // Montant réellement encaissé : additionne l'historique des paiements quand il existe
+  // (fiable à 100%, y compris les renouvellements). Pour un étudiant payé mais SANS
+  // historique (paiement confirmé avant l'ajout de ce suivi), on retombe sur une
+  // estimation : le prix du forfait correspondant à ses jours payés actuels — exact pour
+  // un paiement unique, mais qui peut sous-estimer le total si la personne a renouvelé
+  // plusieurs fois avant que l'historique n'existe.
+  const revenueStats = useMemo(() => {
+    if (!students) return { total: 0, byPlan: {}, estimatedCount: 0 };
+    let totalAmount = 0;
+    let estimatedCount = 0;
+    const byPlan = {};
+    paid.forEach((s) => {
+      if (Array.isArray(s.paymentHistory) && s.paymentHistory.length > 0) {
+        s.paymentHistory.forEach((h) => {
+          totalAmount += h.amount || 0;
+          const label = SUBSCRIPTION_PLANS.find((p) => p.id === h.planId)?.label || "Forfait";
+          byPlan[label] = (byPlan[label] || 0) + 1;
+        });
+      } else {
+        // Repli : déduit le forfait le plus probable à partir des jours payés actuels.
+        const matchedPlan = SUBSCRIPTION_PLANS.find((p) => p.days === s.paidDays) || SUBSCRIPTION_PLANS[0];
+        totalAmount += matchedPlan.price;
+        byPlan[matchedPlan.label] = (byPlan[matchedPlan.label] || 0) + 1;
+        estimatedCount += 1;
+      }
+    });
+    return { total: totalAmount, byPlan, estimatedCount };
+  }, [students, paid]);
+
   const [referralsRefreshTrigger, setReferralsRefreshTrigger] = useState(0);
   // Protection anti-double-clic. IMPORTANT : useState seul ne suffit pas ici — son
   // changement ne devient visible qu'au rendu SUIVANT, donc deux clics rapprochés
@@ -25683,14 +26018,14 @@ function AdminScreen({ onBack }) {
           Vue d'ensemble des comptes étudiants (registre partagé, identifiés par matricule).
         </p>
 
-        <div style={{ display: "flex", gap: 6, marginBottom: 20, background: "#E9EFF2", borderRadius: 10, padding: 4, maxWidth: 460 }}>
-          {[["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
+        <div style={{ display: "flex", gap: 6, marginBottom: 20, background: "#E9EFF2", borderRadius: 10, padding: 4, maxWidth: 620, overflowX: "auto" }}>
+          {[["stats", "Statistiques"], ["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
             <button
               key={id}
               onClick={() => { setTab(id); refreshStudents(); }}
               style={{
-                flex: 1, padding: "8px 6px", borderRadius: 8, border: "none", cursor: "pointer",
-                fontSize: 12.5, fontWeight: 700, fontFamily: "'IBM Plex Sans', sans-serif",
+                flex: "0 0 auto", padding: "8px 12px", borderRadius: 8, border: "none", cursor: "pointer",
+                fontSize: 12.5, fontWeight: 700, fontFamily: "'IBM Plex Sans', sans-serif", whiteSpace: "nowrap",
                 background: tab === id ? COLORS.surface : "transparent",
                 color: tab === id ? COLORS.blueDeep : COLORS.inkSoft,
                 boxShadow: tab === id ? "0 1px 2px rgba(15,39,51,0.08)" : "none",
@@ -25700,6 +26035,41 @@ function AdminScreen({ onBack }) {
             </button>
           ))}
         </div>
+
+        {tab === "stats" && (
+          <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12, marginBottom: 20 }}>
+              <StatCard label="Étudiants inscrits" value={total === null ? "…" : total} />
+              <StatCard label="Abonnements payés" value={total === null ? "…" : paid.length} tone="green" />
+              <StatCard label="Montant encaissé" value={total === null ? "…" : `${revenueStats.total.toLocaleString("fr-FR")} F`} tone="green" />
+              <StatCard label="Part par personne (÷3)" value={total === null ? "…" : `${Math.floor(revenueStats.total / 3).toLocaleString("fr-FR")} F`} />
+            </div>
+
+            <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
+              <div style={{ fontSize: 13.5, fontWeight: 700, color: COLORS.ink, marginBottom: 12 }}>Répartition par forfait</div>
+              {total === null ? (
+                <div style={{ fontSize: 13, color: COLORS.inkSoft }}>Chargement…</div>
+              ) : Object.keys(revenueStats.byPlan).length === 0 ? (
+                <div style={{ fontSize: 13, color: COLORS.inkSoft }}>Aucun paiement enregistré pour l'instant.</div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {Object.entries(revenueStats.byPlan).map(([label, count]) => (
+                    <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: COLORS.ink }}>
+                      <span>{label}</span>
+                      <span style={{ fontWeight: 700 }}>{count} abonnement{count > 1 ? "s" : ""}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {revenueStats.estimatedCount > 0 && (
+              <div style={{ background: "#FFF7E6", border: "1px solid #F0C36D", borderRadius: 12, padding: 14, fontSize: 12, color: "#8A6416", lineHeight: 1.6 }}>
+                ⚠️ {revenueStats.estimatedCount} paiement{revenueStats.estimatedCount > 1 ? "s ont" : " a"} été confirmé{revenueStats.estimatedCount > 1 ? "s" : ""} avant la mise en place de l'historique détaillé — le montant {revenueStats.estimatedCount > 1 ? "les concernant est" : "le concernant est"} estimé à partir du forfait actuel, et peut être sous-évalué en cas de renouvellement antérieur. Tous les paiements confirmés à partir de maintenant sont, eux, comptabilisés avec certitude.
+              </div>
+            )}
+          </>
+        )}
 
         {tab === "students" && (
           <>
@@ -26832,7 +27202,7 @@ function MessagesScreen({ onBack, student, onRead }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onCompoGuide, onPaperSim, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme, unreadCount, onOpenMessages, onOpenReferral }) {
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onCompoGuide, onExamenPratiqueGuide, onPaperSim, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme, unreadCount, onOpenMessages, onOpenReferral }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -27013,6 +27383,9 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           <ModuleCard icon="📝" title="Réussir ma composition sur table" color="#1E8F5E" compact
             desc="Grille de réponses, identification, type d'épreuve — préparez-vous au format papier réel."
             onClick={onCompoGuide} ctaLabel="Ouvrir le guide" />
+          <ModuleCard icon="🩺" title="Réussir mon examen pratique" color="#6B4EA8" compact
+            desc="Le déroulement exact d'un examen de geste technique — avant, pendant, après."
+            onClick={onExamenPratiqueGuide} ctaLabel="Ouvrir le guide" />
           <ModuleCard icon="🗒️" title="Simulation papier" color="#C8622A" compact
             desc="20 questions, questionnaire en haut, grille à remplir en bas — comme le vrai jour J."
             onClick={onPaperSim} ctaLabel="S'entraîner" />
@@ -29197,7 +29570,7 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onCompoGuide={() => setScreen("compoguide")} onPaperSim={() => setScreen("papersim-select")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} unreadCount={unreadCount} onOpenMessages={() => setScreen("messages")} onOpenReferral={() => setScreen("referral")} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onCompoGuide={() => setScreen("compoguide")} onExamenPratiqueGuide={() => setScreen("examenpratiqueguide")} onPaperSim={() => setScreen("papersim-select")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} unreadCount={unreadCount} onOpenMessages={() => setScreen("messages")} onOpenReferral={() => setScreen("referral")} />;
   }
 
   if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
@@ -29205,6 +29578,7 @@ export default function App() {
   if (screen === "referral") return <ReferralScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "compoguide") return <CompoSurTableGuideScreen onBack={() => setScreen("dashboard")} />;
+  if (screen === "examenpratiqueguide") return <ExamenPratiqueGuideScreen onBack={() => setScreen("dashboard")} />;
   if (screen === "papersim-select") return <PaperSimSelectScreen onBack={() => setScreen("dashboard")} onSelect={(m) => { setPaperSimModule(m); setScreen("papersim-active"); }} />;
   if (screen === "papersim-active" && paperSimModule) return <PaperSimulationScreen module={paperSimModule} student={student} onBack={() => setScreen("dashboard")} />;
   if (screen === "mynotes") return <MyNotesScreen onBack={() => setScreen("dashboard")} student={student} />;
