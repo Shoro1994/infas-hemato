@@ -2120,7 +2120,7 @@ const ECUE_LIST = [
   { id: "2SCO1204", ueId: "SCO1204", code: "2SCO1204", label: "Épidémiologie : Généralités", credits: 1, subjectId: "sante-publique" },
   { id: "3SCO1204", ueId: "SCO1204", code: "3SCO1204", label: "Soins de Santé Primaires / IEC-CCSC - Plaidoyer / Techniques d'animation de groupes", credits: 1, subjectId: "sante-communautaire" },
 
-  { id: "1SHU1205", ueId: "SHU1205", code: "1SHU1205", label: "Relation d'aide", credits: 1, subjectId: null },
+  { id: "1SHU1205", ueId: "SHU1205", code: "1SHU1205", label: "Relation d'aide", credits: 1, subjectId: "concepts-sciences-inf" },
   { id: "2SHU1205", ueId: "SHU1205", code: "2SHU1205", label: "Psychosociologie de la santé", credits: 1, subjectId: "psycho-anthropo" },
   { id: "3SHU1205", ueId: "SHU1205", code: "3SHU1205", label: "Anthropologie de la santé", credits: 1, subjectId: "psycho-anthropo" },
 
@@ -12463,6 +12463,263 @@ const ANATOMIE_OBST_ENRICH_RAW = [
     "Soins Infirmiers Obstétricaux — Admission de la parturiente, examen d'entrée"],
 ];
 
+const RATTRAPAGE_TS_RAW = [
+  /* ===== Accueil du malade ===== */
+  ["QCM","ts_accueil_lit",1,"Le rôle de l'infirmier ou de la sage-femme lors de l'accueil du malade comprend plusieurs domaines, notamment :",
+    ["Le domaine administratif","Le domaine hygiénique","Le domaine médical et de surveillance","Le domaine financier, chargé de fixer les tarifs du séjour"],[0,1,2],
+    "Le rôle de l'infirmier ou de la sage-femme lors de l'accueil comprend le domaine administratif, le domaine hygiénique, le domaine médical et de surveillance, et le domaine relationnel et conseil.",
+    "Techniques de soins infirmiers — Accueil du malade, rôle de l'infirmier"],
+  ["QCD","ts_accueil_lit",2,"Un accueil de qualité vise notamment à éviter au malade ce qu'on appelle « le mal d'hospitalisation ».",
+    ["Vrai","Faux"],[0],
+    "Vrai, un bon accueil vise à répondre aux besoins d'apprendre et d'éviter le danger selon Virginia Henderson, et à éviter au malade le « mal d'hospitalisation », car l'entrée à l'hôpital est un univers nouveau pour lui.",
+    "Techniques de soins infirmiers — Accueil du malade, conclusion"],
+
+  /* ===== Coup de chaleur et insolation ===== */
+  ["QCU","ts_thermoregulation",3,"Le coup de chaleur est un accident grave dont la mortalité, en l'absence de traitement adapté, peut atteindre :",
+    ["70 à 100% des cas","Moins de 5% des cas","Environ 10% des cas","Il n'existe aucun risque de mortalité"],[0],
+    "Le coup de chaleur est un accident grave dont l'évolution peut entraîner la mort dans 70 à 100% des cas, ou des séquelles neurologiques chez le survivant.",
+    "Techniques de soins infirmiers — Coup de chaleur, évolution"],
+  ["QCU","ts_thermoregulation",2,"L'insolation se définit comme :",
+    ["Un coup de chaleur dû à une exposition directe et prolongée au soleil","Une simple rougeur cutanée sans gravité","Un refroidissement brutal de l'organisme","Une réaction allergique au soleil"],[0],
+    "L'insolation est un coup de chaleur dû à l'exposition directe et prolongée au soleil.",
+    "Techniques de soins infirmiers — Insolation, définition"],
+
+  /* ===== Immobilisations provisoires ===== */
+  ["QCM","ts_locomotrice",2,"Le matériel d'immobilisation provisoire à la disposition de l'infirmier ou de la sage-femme comprend notamment :",
+    ["Les attelles","Les gouttières","Les écharpes","Le plâtre définitif, qui relève exclusivement du médecin orthopédiste"],[0,1,2],
+    "Le matériel d'immobilisation provisoire comprend les attelles, les gouttières, et les écharpes (membres supérieurs et inférieurs).",
+    "Techniques de soins infirmiers — Immobilisations provisoires, matériel"],
+  ["QCD","ts_locomotrice",2,"L'immobilisation provisoire est un soin de première intention pour l'infirmier dans le cadre du prompt secours des blessés.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'immobilisation provisoire est un soin de première intention pour l'infirmier dans le cadre du prompt secours des blessés, en attendant une prise en charge définitive.",
+    "Techniques de soins infirmiers — Immobilisations provisoires, conclusion"],
+
+  /* ===== Accueil, chambre, repos ===== */
+  ["QCU","ts_accueil_lit",1,"Une chambre de malade est conçue, en général, pour un nombre de lits allant de 1 à :",
+    ["5 lits","2 lits","10 lits","20 lits"],[0],
+    "Dans les hôpitaux, une chambre est généralement conçue pour 1, 2, 3 voire 5 lits.",
+    "Techniques de soins infirmiers — Chambre du malade, description"],
+  ["QCM","ts_accueil_lit",1,"Le mobilier de base d'une chambre de malade comprend :",
+    ["Un lit et ses accessoires","Une table de chevet et une table de lit","Une chaise, un fauteuil et une armoire","Un réfrigérateur, obligatoire dans toute chambre individuelle"],[0,1,2],
+    "Le mobilier de base comprend un lit et ses accessoires, une table de chevet, une table de lit, la literie, une chaise, un fauteuil et une armoire ; le réfrigérateur n'est qu'un équipement parfois ajouté en chambre individuelle, non obligatoire.",
+    "Techniques de soins infirmiers — Chambre du malade, mobilier"],
+  ["QCM","ts_accueil_lit",2,"Parmi les facteurs favorisant le repos du malade figurent :",
+    ["Le confort de la pièce et l'absence de bruit","Un degré de luminosité convenable","L'absence de souci majeur","Le plus grand nombre de visites possible, sans aucune limite"],[0,1,2],
+    "Les facteurs favorisant le repos comprennent le confort de la pièce, l'absence de bruit, un degré de luminosité convenable, et l'absence de souci majeur ; les visites doivent au contraire être organisées pour ne pas perturber le repos.",
+    "Techniques de soins infirmiers — Repos du malade, facteurs favorisants"],
+
+  /* ===== Toilette générale et cavités naturelles ===== */
+  ["QCU","ts_soins_base",1,"La toilette du malade est avant tout un soin de :",
+    ["Confort et d'hygiène, moment privilégié de relation et d'observation","Punition en cas de mauvaise conduite du malade","Simple routine sans intérêt clinique particulier","Compétence exclusivement médicale, jamais infirmière"],[0],
+    "La toilette est un soin de confort et d'hygiène qui apporte bien-être et plaisir au malade ; c'est aussi un moment privilégié de relation et d'observation à ne pas négliger.",
+    "Techniques de soins infirmiers — Toilette générale du malade, généralités"],
+  ["QCM","ts_soins_base",1,"Lors de la toilette du malade, les principes à respecter envers le patient comprennent :",
+    ["Prévenir le malade avant le soin","Ménager sa pudeur","Mobiliser le malade avec douceur","Agir le plus lentement possible, sans se soucier du risque de refroidissement"],[0,1,2],
+    "Les principes de la toilette incluent prévenir le malade, ménager sa pudeur, le mobiliser avec douceur, et agir rapidement pour éviter les risques de fatigue et de refroidissement.",
+    "Techniques de soins infirmiers — Toilette générale du malade, principes"],
+
+  /* ===== Vessie de glace et bouillotte ===== */
+  ["QCD","ts_thermoregulation",2,"Il ne faut jamais poser une vessie de glace au niveau des poumons, pour éviter de provoquer des bronchites.",
+    ["Vrai","Faux"],[0],
+    "Vrai, il ne faut jamais poser la vessie de glace au niveau des poumons, pour éviter les bronchites.",
+    "Techniques de soins infirmiers — Vessie de glace, précautions"],
+  ["QCU","ts_thermoregulation",2,"La bouillotte contient de l'eau chaude à une température d'environ :",
+    ["70°C","30°C","100°C, en ébullition","50°C"],[0],
+    "La bouillotte est une poche en caoutchouc contenant de l'eau chaude à environ 70°C ; l'un de ses buts est de réchauffer le lit d'un opéré ou le berceau d'un prématuré.",
+    "Techniques de soins infirmiers — Bouillotte, définition"],
+  ["QCD","ts_thermoregulation",2,"La bouillotte doit être posée directement au contact de la peau du malade, sans aucune protection.",
+    ["Vrai","Faux"],[1],
+    "Faux, la bouillotte doit être enveloppée de coton cardé et recouverte d'une housse de gaze, et posée à environ 10 cm du pied du malade — jamais directement au contact de la peau.",
+    "Techniques de soins infirmiers — Bouillotte, préparation"],
+
+  /* ===== Chariot de soins ===== */
+  ["QCM","ts_locomotrice",1,"Le chariot de soins à plusieurs étages comprend généralement :",
+    ["Le matériel de contention (bande, sparadrap, coton)","Le matériel de protection à usage unique","Le matériel septique, destiné au recueil des compresses souillées","Le dossier médical complet du patient, qui n'a pas sa place sur le chariot"],[0,1,2],
+    "Le chariot de soins comprend le matériel de contention, le matériel de protection à usage unique, et un étage réservé au matériel septique (recueil des compresses souillées).",
+    "Techniques de soins infirmiers — Chariot de soins, organisation"],
+
+  /* ===== Pansements et bandage ===== */
+  ["QCM","ts_locomotrice",2,"Le pansement a quatre buts essentiels, à savoir :",
+    ["La protection de la plaie contre toute contamination","La désinfection, en détruisant les germes pathogènes","La compression, pour arrêter une hémorragie","L'esthétique, principal but recherché avant tout autre"],[0,1,2],
+    "Le pansement a quatre buts essentiels : protection, désinfection, compression (arrêt d'hémorragie), et absorption (des écoulements).",
+    "Techniques de soins infirmiers — Pansements, buts"],
+  ["QCU","ts_locomotrice",2,"Le bandage se compose de deux extrémités appelées :",
+    ["Chefs (un chef initial et un chef terminal)","Nœuds","Ligatures","Attelles"],[0],
+    "Le bandage comporte deux chefs (ou extrémités) : un chef initial par lequel on commence le bandage, et un chef terminal pour le terminer.",
+    "Techniques de soins infirmiers — Bandage, définition"],
+
+  /* ===== Injections : sites précis ===== */
+  ["QCU","ts_injections",2,"L'injection intradermique (ID) est indiquée notamment pour :",
+    ["L'injection de vaccins","L'administration d'insuline","L'administration d'anticoagulant","La transfusion sanguine"],[0],
+    "L'injection intradermique est indiquée pour l'injection de vaccins.",
+    "Techniques de soins infirmiers — Injection intradermique, indication"],
+  ["QCM","ts_injections",2,"L'injection sous-cutanée (SC) est notamment indiquée pour l'administration :",
+    ["D'anticoagulant","D'anesthésie locale","D'insuline, dans le traitement du diabète","De sang total, pour une transfusion"],[0,1,2],
+    "L'injection sous-cutanée est indiquée pour l'administration d'anticoagulant, d'anesthésie locale, et d'insuline dans le traitement du diabète.",
+    "Techniques de soins infirmiers — Injection sous-cutanée, indications"],
+
+  /* ===== Prélèvement de sang ===== */
+  ["QCU","ts_injections",2,"En cas de malaise vagal lors d'un prélèvement de sang par ponction veineuse, il faut :",
+    ["Stopper le soin et mettre le patient en position déclive","Continuer le prélèvement sans interruption","Rassurer verbalement le patient sans autre action","Faire lever immédiatement le patient"],[0],
+    "En cas de malaise vagal, il faut stopper le soin et mettre le patient en position déclive.",
+    "Techniques de soins infirmiers — Prélèvement de sang par ponction veineuse, complications"],
+
+  /* ===== Calcul des doses ===== */
+  ["QCU","ts_injections",3,"Selon la règle de trois utilisée pour le calcul des doses, si l'on dispose d'un flacon de 500 mg dans 5 mL, et qu'il faut injecter 250 mg, quel volume faut-il prélever ?",
+    ["2,5 mL","5 mL","1 mL","10 mL"],[0],
+    "5/500 = 0,01 mL pour 1 mg de produit ; pour 250 mg, on calcule 250 × 0,01 = 2,5 mL de solution à injecter.",
+    "Techniques de soins infirmiers — Calcul des doses et pourcentages, la règle de trois"],
+];
+
+const RESUME_SOINS_RAW = [
+  /* ===== Thermorégulation & constantes ===== */
+  ["QCU","ts_thermoregulation",2,"La thermorégulation correspond à :",
+    ["Un équilibre entre la production et la perte de chaleur","Une production de chaleur sans aucune perte","Une perte de chaleur sans aucune production","Un phénomène propre uniquement au nouveau-né"],[0],
+    "La thermorégulation correspond à l'équilibre entre la production et la perte de chaleur par l'organisme.",
+    "Techniques de soins infirmiers — Thermorégulation, définition"],
+  ["QCM","ts_thermoregulation",2,"Parmi les facteurs qui font varier la fréquence respiratoire figurent :",
+    ["L'âge","La douleur","L'activité musculaire et la température ambiante","La couleur des yeux, qui n'a aucune influence"],[0,1,2],
+    "Les facteurs qui font varier la fréquence respiratoire sont notamment l'âge, la douleur, l'activité musculaire, et la température ambiante.",
+    "Techniques de soins infirmiers — Thermorégulation, fréquence respiratoire"],
+  ["QCM","ts_cardiovasculaire",2,"La tension artérielle dépend de :",
+    ["Le travail cardiaque","Les résistances périphériques","La masse sanguine","La couleur de la peau, qui n'a aucune influence"],[0,1,2],
+    "La tension artérielle dépend du travail cardiaque, des résistances périphériques, et de la masse sanguine.",
+    "Techniques de soins infirmiers — Fonction cardio-vasculaire, tension artérielle"],
+  ["QCU","ts_cardiovasculaire",1,"La tachycardie correspond à :",
+    ["Une accélération du pouls","Un ralentissement du pouls","Une pause du pouls","Un pouls irrégulier uniquement"],[0],
+    "La tachycardie correspond à une accélération du pouls.",
+    "Techniques de soins infirmiers — Fonction cardio-vasculaire, le pouls"],
+  ["QCU","ts_thermoregulation",2,"Le thermomètre clinique classique mesure une plage de température allant de :",
+    ["35°C à 42°C","0°C à 100°C","20°C à 30°C","40°C à 50°C"],[0],
+    "Le thermomètre clinique classique mesure une plage de température allant de 35°C à 42°C.",
+    "Techniques de soins infirmiers — Thermorégulation, le thermomètre clinique"],
+  ["QCM","ts_thermoregulation",2,"Parmi les sites de prise de la température cutanée figurent :",
+    ["Le creux axillaire","Le pli du coude et le creux du genou","La région sous-mammaire et inguinale","La paume de la main, qui n'est pas un site utilisé"],[0,1,2],
+    "Les sites de prise de la température cutanée comprennent le creux axillaire, la région sous-mammaire, la région inguinale, le pli du coude, et le creux du genou.",
+    "Techniques de soins infirmiers — Thermorégulation, sites de prise de température"],
+  ["QCD","ts_thermoregulation",2,"L'état émotionnel du patient peut influencer sa température corporelle.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'état émotionnel fait partie des facteurs qui peuvent influencer la température corporelle.",
+    "Techniques de soins infirmiers — Thermorégulation, facteurs d'influence"],
+
+  /* ===== Prévention des escarres ===== */
+  ["QCU","ts_soins_base",1,"L'escarre se définit comme :",
+    ["Un trouble trophique lié à la compression des tissus","Une infection cutanée virale","Une réaction allergique cutanée","Une brûlure thermique"],[0],
+    "L'escarre est un trouble trophique lié à la compression des tissus.",
+    "Techniques de soins infirmiers — Prévention des escarres, définition"],
+  ["QCD","ts_soins_base",2,"Le massage trophique sur les zones à risque d'escarre est une pratique recommandée pour prévenir leur apparition.",
+    ["Vrai","Faux"],[1],
+    "Faux, le massage trophique sur les zones à risque est au contraire interdit dans la prévention des escarres.",
+    "Techniques de soins infirmiers — Prévention des escarres, pratiques interdites"],
+  ["QCU","ts_soins_base",2,"Pour prévenir les escarres, tout malade incapable de se mouvoir ne doit pas rester plus de :",
+    ["3 heures dans la même position","30 minutes dans la même position","12 heures dans la même position","24 heures dans la même position"],[0],
+    "Tout malade incapable de se mouvoir ne doit pas rester plus de trois (3) heures dans la même position, sinon risque d'escarres ; un tableau de changement de position peut être établi pour les grands malades.",
+    "Techniques de soins infirmiers — Positions du malade, changement de position des grands malades"],
+
+  /* ===== Sondage urinaire ===== */
+  ["QCU","ts_fonction_urinaire",2,"Lors d'un sondage urinaire chez l'homme, la verge doit être maintenue :",
+    ["Contre la paroi abdominale","Vers le bas, sans tension","Sur le côté, à angle droit","Il n'y a pas de position particulière à respecter"],[0],
+    "Chez l'homme, lors du sondage urinaire, la verge doit être maintenue contre la paroi abdominale.",
+    "Techniques de soins infirmiers — Sondage urinaire, technique chez l'homme"],
+  ["QCU","ts_fonction_urinaire",2,"Lors d'un sondage urinaire chez la femme, la sonde est fixée :",
+    ["Sur la face externe de la cuisse","Sur l'abdomen","Sur le dos","Elle n'est jamais fixée"],[0],
+    "Chez la femme, la sonde urinaire est fixée sur la face externe de la cuisse.",
+    "Techniques de soins infirmiers — Sondage urinaire, technique chez la femme"],
+
+  /* ===== Troubles respiratoires (compléments) ===== */
+  ["QCD","ts_fonction_respiratoire",2,"L'inspiration est un temps actif, tandis que l'expiration est un temps passif.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'inspiration est un temps actif (contraction musculaire), tandis que l'expiration est un temps passif au repos.",
+    "Techniques de soins infirmiers — Fonction respiratoire, mécanique ventilatoire"],
+
+  /* ===== Feuille de température ===== */
+  ["QCM","ts_thermoregulation",2,"Sur la feuille de température, les couleurs et représentations conventionnelles sont notamment :",
+    ["Le rouge pour le pouls (courbe)","La tension artérielle représentée par un histogramme hachuré rouge","Le vert pour la respiration (courbe), le jaune pour les urines (histogramme)","Le rose pour tous les paramètres, sans distinction"],[0,1,2],
+    "Sur la feuille de température : le pouls est représenté par une courbe rouge, la tension artérielle par un histogramme hachuré rouge, la respiration par une courbe verte, et les urines par un histogramme jaune ; la température, elle, est représentée par une courbe bleue.",
+    "Techniques de soins infirmiers — Feuille de température, caractéristiques des constantes"],
+
+  /* ===== Perfusion IV : calculs ===== */
+  ["QCU","ts_perfusion",3,"La formule permettant de calculer le débit d'une perfusion en gouttes par minute est :",
+    ["Débit (gttes/min) = Volume total × 20 / Temps en minutes","Débit = Volume total / 20","Débit = Temps en minutes × 20 / Volume total","Débit = Volume total × Temps en minutes"],[0],
+    "Le débit d'une perfusion en gouttes par minute se calcule par la formule : Volume total × 20 / Temps en minutes.",
+    "Techniques de soins infirmiers — Perfusion intraveineuse, calcul du débit"],
+  ["QCM","ts_perfusion",2,"La surveillance d'une perfusion intraveineuse comprend des signes généraux et des signes locaux, notamment :",
+    ["Frisson, cyanose, agitation (signes généraux)","Douleur au point d'injection, rougeur, tuméfaction (signes locaux)","La température, la tension artérielle et le pouls (signes généraux)","Uniquement la vitesse d'écoulement, sans autre surveillance"],[0,1,2],
+    "La surveillance d'une perfusion comprend des signes généraux (frisson, cyanose, agitation, température, tension artérielle, pouls) et des signes locaux (douleur au point d'injection, rougeur, tuméfaction).",
+    "Techniques de soins infirmiers — Perfusion intraveineuse, surveillance"],
+
+  /* ===== Urgences ===== */
+  ["QCD","ts_urgences",2,"Une perte de connaissance comporte un risque d'évolution vers un arrêt respiratoire puis un arrêt cardiaque.",
+    ["Vrai","Faux"],[0],
+    "Vrai, une perte de connaissance peut évoluer vers un arrêt respiratoire puis un arrêt cardiaque, d'où l'importance d'une surveillance et d'une prise en charge rapide.",
+    "Techniques de soins infirmiers — Notions d'urgences médicales, perte de connaissance"],
+];
+
+const RESUME_CONCEPTS_RAW = [
+  /* ===== Démarche de soins - Concepts ===== */
+  ["QCU","modele_henderson",2,"La démarche de soins, selon Virginia Henderson, comprend cinq étapes, dans l'ordre suivant :",
+    ["Collecte des données → Diagnostic → Planification → Exécution → Évaluation","Diagnostic → Collecte des données → Évaluation → Planification → Exécution","Planification → Exécution → Diagnostic → Collecte des données → Évaluation","Il n'existe que trois étapes dans la démarche de soins"],[0],
+    "La démarche de soins comprend cinq étapes : la collecte des données, le diagnostic, la planification, l'exécution, et l'évaluation.",
+    "Concepts et théories — Démarche de soins, les 5 étapes"],
+  ["QCU","henderson_besoins",2,"Dans la démarche de soins, on parle de « données d'indépendance » lorsque :",
+    ["Le client arrive à satisfaire lui-même ses besoins","Le client n'arrive pas à satisfaire ses besoins","Le client refuse tout soin","Le client est hospitalisé depuis plus d'une semaine"],[0],
+    "Les données d'indépendance désignent les situations où le client arrive à satisfaire lui-même ses besoins ; à l'inverse, les données de dépendance désignent celles où il n'y arrive pas.",
+    "Concepts et théories — Démarche de soins, indépendance et dépendance"],
+  ["QCU","henderson_besoins",3,"Dans la démarche de soins, la « source de difficulté » désigne :",
+    ["L'empêchement majeur à la satisfaction d'un besoin","La liste complète des 14 besoins fondamentaux","Le diagnostic médical du patient","Le nom du service hospitalier"],[0],
+    "La source de difficulté désigne l'empêchement majeur qui explique pourquoi le client n'arrive pas à satisfaire un besoin donné.",
+    "Concepts et théories — Démarche de soins, source de difficulté"],
+  ["QCM","modele_conceptuel",2,"Le modèle conceptuel de Virginia Henderson comprend quatre composantes, à savoir :",
+    ["La personne","L'environnement","La santé","Les soins"],[0,1,2,3],
+    "Le modèle de Virginia Henderson comprend quatre composantes : la personne, l'environnement, la santé, et les soins.",
+    "Concepts et théories — Modèle conceptuel, les 4 composantes"],
+
+  /* ===== Relation d'aide (compléments) ===== */
+  ["QCU","relation_aide",1,"La relation d'aide se définit comme un échange :",
+    ["Verbal, non verbal et physique","Uniquement verbal","Uniquement écrit","Exclusivement non verbal"],[0],
+    "La relation d'aide est définie comme un échange verbal, non verbal et physique entre le soignant et le soigné.",
+    "Concepts et théories — Relation d'aide, définition"],
+  ["QCU","relation_aide",1,"Le but principal de la relation d'aide est de créer :",
+    ["Un climat de confiance et de respect","Une distance stricte entre soignant et soigné","Une relation exclusivement administrative","Aucun objectif particulier n'est visé"],[0],
+    "Le but de la relation d'aide est de créer un climat de confiance et de respect entre le soignant et la personne soignée.",
+    "Concepts et théories — Relation d'aide, but"],
+];
+
+const PHARMACO_RAPPROCH_RAW = [
+  ["QCU","pharmaco_prescription",2,"En cas d'ordonnance illisible, l'infirmier doit :",
+    ["Demander confirmation au médecin","Administrer selon son expérience","Modifier la prescription lui-même","Refuser systématiquement d'administrer tout soin au patient"],[0],
+    "En cas d'ordonnance illisible, l'infirmier doit impérativement demander confirmation au médecin prescripteur, jamais interpréter ou modifier lui-même la prescription.",
+    "Pharmacologie — Prescription des médicaments, ordonnance illisible"],
+  ["QCU","pharmaco_medicament",1,"Le foie est le principal organe du métabolisme des médicaments.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le foie est le principal organe du métabolisme des médicaments dans l'organisme.",
+    "Pharmacologie — Métabolisme, le foie"],
+  ["QCM","pharmaco_prescription",2,"Une erreur médicamenteuse :",
+    ["Doit être signalée","Peut avoir des conséquences graves","Doit être dissimulée","Est toujours sans conséquence"],[0,1],
+    "Une erreur médicamenteuse doit toujours être signalée et peut avoir des conséquences graves pour le patient ; elle ne doit jamais être dissimulée.",
+    "Pharmacologie — Sécurité des injections, erreur médicamenteuse"],
+  ["QCD","pharmaco_medicament",2,"Les vaccins sont des médicaments d'origine microbiologique.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les vaccins sont classés parmi les médicaments d'origine microbiologique.",
+    "Pharmacologie — Origine des médicaments, les vaccins"],
+  ["QCU","pharmaco_voies",1,"La voie intramusculaire correspond à une injection :",
+    ["Dans un muscle profond","Sous la peau","Dans la veine","Dans une artère"],[0],
+    "La voie intramusculaire correspond à une injection réalisée dans un muscle profond.",
+    "Pharmacologie — Voies d'administration, voie intramusculaire"],
+  ["QCM","pharmaco_medicament",2,"La pharmacologie étudie notamment le devenir du médicament dans l'organisme, à travers les étapes :",
+    ["Absorption, Distribution, Métabolisme (A.D.M.)","Les interventions chirurgicales","Uniquement les récepteurs, sans autre étape","Uniquement l'élimination, sans les autres étapes"],[0],
+    "La pharmacologie étudie le devenir du médicament dans l'organisme à travers les étapes A.D.M. (Absorption, Distribution, Métabolisme) — et non les interventions chirurgicales ni les récepteurs seuls.",
+    "Pharmacologie — Pharmacocinétique, étapes ADM"],
+  ["QCU","pharmaco_medicament",2,"La morphine est un médicament d'origine :",
+    ["Végétale","Minérale","Animale","Microbiologique"],[0],
+    "La morphine est un médicament d'origine végétale, extrait de l'opium (pavot).",
+    "Pharmacologie — Origine des médicaments, origine végétale"],
+  ["QCD","pharmaco_prescription",1,"Toute administration médicamenteuse doit être tracée dans le dossier de soins.",
+    ["Vrai","Faux"],[0],
+    "Vrai, toute administration médicamenteuse doit systématiquement être tracée dans le dossier de soins du patient.",
+    "Pharmacologie — Distribution et administration, traçabilité"],
+];
+
 const PHARMACO_EXAM2026_RAW = [
   ["QCU","pharmaco_medicament",2,"Un médicament princeps se définit comme :",
     ["Le médicament de référence, pouvant être copié après expiration de son brevet","Un synonyme exact du médicament générique","Un médicament dépourvu de DCI","Un médicament nécessairement d'origine végétale"],[0],
@@ -14983,6 +15240,10 @@ const QUESTIONS = [
   ...buildQuestions(MNT_RAW, "maladies-non-transmissibles", "mn"),
   ...buildQuestions(IMMUNOLOGIE_RAW, "immunologie", "immuno"),
   ...buildQuestions(ANATOMIE_OBST_ENRICH_RAW, "soins-infirmiers-obstetricaux", "sio"),
+  ...buildQuestions(RESUME_CONCEPTS_RAW, "concepts-sciences-inf", "resc"),
+  ...buildQuestions(RATTRAPAGE_TS_RAW, "techniques-soins-infirmiers", "rats"),
+  ...buildQuestions(RESUME_SOINS_RAW, "techniques-soins-infirmiers", "ress"),
+  ...buildQuestions(PHARMACO_RAPPROCH_RAW, "pharmacologie", "pcr"),
   ...buildQuestions(PHARMACO_EXAM2026_RAW, "pharmacologie", "phex26"),
   ...buildQuestions(INITIATION_RECHERCHE_RAW, "initiation-recherche", "ir"),
   ...buildQuestions(AEPA_PHARMACO_RAW, "pharmacologie", "aepa"),
