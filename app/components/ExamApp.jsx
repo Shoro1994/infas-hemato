@@ -12463,6 +12463,28 @@ const ANATOMIE_OBST_ENRICH_RAW = [
     "Soins Infirmiers Obstétricaux — Admission de la parturiente, examen d'entrée"],
 ];
 
+const EVAL_DALOA_RAW = [
+  ["QCU","ts_soins_base",3,"Parmi les objectifs poursuivis par les soins préventifs des escarres, un seul énoncé n'est PAS correct. Lequel ?",
+    ["Réduire l'incidence des escarres, qui est un objectif global et non un objectif spécifique des soins préventifs","L'identification des facteurs de risque","Éduquer le patient et son entourage aux soins de prévention","Permettre l'adoption d'un comportement favorable au maintien d'une peau saine"],[0],
+    "« Réduire l'incidence des escarres » est un objectif global (une finalité), et non un objectif spécifique des soins préventifs eux-mêmes — piège classique à l'examen.",
+    "Techniques de soins infirmiers — Prévention des escarres, objectifs (piège)"],
+  ["QCD","ts_thermoregulation",1,"L'hyperthermie et l'hypothermie sont deux variations pathologiques de la température.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'hyperthermie et l'hypothermie constituent deux variations pathologiques de la température corporelle.",
+    "Techniques de soins infirmiers — Thermorégulation, variations pathologiques"],
+];
+
+const EVAL_DALOA_CONCEPTS_RAW = [
+  ["QCU","modele_conceptuel",2,"Un modèle conceptuel, pour une discipline donnée, se définit comme :",
+    ["Une façon de conceptualiser la discipline","Une méthode de calcul des doses médicamenteuses","Un protocole de soins d'urgence","Un synonyme exact de la démarche de soins"],[0],
+    "Un modèle conceptuel est une façon de conceptualiser une discipline donnée.",
+    "Concepts et théories — Modèle conceptuel, définition"],
+  ["QCM","modele_henderson",2,"Reliez chaque terme médical respiratoire à sa définition : la dyspnée, l'apnée, la tachypnée, la polypnée et la bradypnée désignent respectivement :",
+    ["Une difficulté à respirer avec modification du rythme et de l'amplitude (dyspnée)","Une pause plus ou moins prolongée des mouvements respiratoires (apnée)","Une accélération de la fréquence respiratoire (tachypnée)","Une augmentation de la fréquence respiratoire avec diminution du volume respiratoire (polypnée), et un ralentissement de la fréquence respiratoire (bradypnée)"],[0,1,2,3],
+    "Dyspnée : difficulté à respirer avec modification du rythme/amplitude. Apnée : pause des mouvements respiratoires. Tachypnée : accélération de la FR. Polypnée : FR augmentée avec volume respiratoire diminué. Bradypnée : ralentissement de la FR.",
+    "Techniques de soins infirmiers — Fonction respiratoire, termes et définitions"],
+];
+
 const RATTRAPAGE_TS_RAW = [
   /* ===== Accueil du malade ===== */
   ["QCM","ts_accueil_lit",1,"Le rôle de l'infirmier ou de la sage-femme lors de l'accueil du malade comprend plusieurs domaines, notamment :",
@@ -12633,10 +12655,10 @@ const RESUME_SOINS_RAW = [
     "Techniques de soins infirmiers — Fonction respiratoire, mécanique ventilatoire"],
 
   /* ===== Feuille de température ===== */
-  ["QCM","ts_thermoregulation",2,"Sur la feuille de température, les couleurs et représentations conventionnelles sont notamment :",
-    ["Le rouge pour le pouls (courbe)","La tension artérielle représentée par un histogramme hachuré rouge","Le vert pour la respiration (courbe), le jaune pour les urines (histogramme)","Le rose pour tous les paramètres, sans distinction"],[0,1,2],
-    "Sur la feuille de température : le pouls est représenté par une courbe rouge, la tension artérielle par un histogramme hachuré rouge, la respiration par une courbe verte, et les urines par un histogramme jaune ; la température, elle, est représentée par une courbe bleue.",
-    "Techniques de soins infirmiers — Feuille de température, caractéristiques des constantes"],
+  ["QCM","ts_thermoregulation",2,"Sur la feuille de température, les couleurs conventionnelles utilisées pour éviter de confondre les courbes sont notamment :",
+    ["Le rouge pour le pouls","Le bleu ou le noir pour la tension artérielle","Le vert pour la douleur et la respiration, le jaune pour les urines","Le rose pour tous les paramètres, sans distinction"],[0,1,2],
+    "Sur la feuille de température : rouge pour le pouls, bleu ou noir pour la tension artérielle, vert pour la douleur et la respiration, jaune pour les urines.",
+    "Techniques de soins infirmiers — Feuille de température, code couleurs"],
 
   /* ===== Perfusion IV : calculs ===== */
   ["QCU","ts_perfusion",3,"La formule permettant de calculer le débit d'une perfusion en gouttes par minute est :",
@@ -15241,6 +15263,7 @@ const QUESTIONS = [
   ...buildQuestions(IMMUNOLOGIE_RAW, "immunologie", "immuno"),
   ...buildQuestions(ANATOMIE_OBST_ENRICH_RAW, "soins-infirmiers-obstetricaux", "sio"),
   ...buildQuestions(RESUME_CONCEPTS_RAW, "concepts-sciences-inf", "resc"),
+  ...buildQuestions(EVAL_DALOA_CONCEPTS_RAW, "concepts-sciences-inf", "evdc"),
   ...buildQuestions(RATTRAPAGE_TS_RAW, "techniques-soins-infirmiers", "rats"),
   ...buildQuestions(RESUME_SOINS_RAW, "techniques-soins-infirmiers", "ress"),
   ...buildQuestions(PHARMACO_RAPPROCH_RAW, "pharmacologie", "pcr"),
@@ -15506,6 +15529,29 @@ const GYNECO_RAW_CASES = [
       { stem: "Ce genre de retard dans la prise en charge (transfert vers une structure adaptée) illustre lequel des « trois retards » de la mortalité maternelle ?",
         options: ["Le retard lié à l'accès à une structure de soins adaptée (référence/transport)", "Le retard dans la décision d'aller consulter uniquement", "Il ne s'agit pas d'un retard reconnu dans le modèle", "Le retard dans le diagnostic prénatal"], correct: [0],
         explanation: "Le modèle des trois retards inclut le retard lié à l'accès à une structure de soins adaptée (distance, transport, référence) comme facteur de mortalité maternelle." },
+    ],
+  },
+];
+
+const EVAL_DALOA_RAW_CASES = [
+  {
+    chapterId: "ts_injections", level: 3,
+    vignette:
+      "Dame Chigata, 44 ans, commerçante, est admise au dispensaire rural de Plibo. Le protocole de perfusion intraveineuse prescrit comprend : SGI 1 flacon de 500 ml, Paluject 400 mg (2 ampoules de 4 ml chacune), HPV 1 ampoule de 1 ml, Cael 1 ampoule de 10 ml, Nacl 1 ampoule de 10 ml, et Kel 1 ampoule de 10 ml. Le temps de perfusion prescrit est de 4 heures.",
+    ref: "Techniques de soins infirmiers — Perfusion intraveineuse, calcul du débit",
+    qs: [
+      { stem: "Quelle est la quantité totale à perfuser (en ml) ?",
+        options: ["540 ml", "500 ml", "600 ml"], correct: [0],
+        explanation: "La quantité totale à perfuser est d'environ 540 ml (500 ml de SGI + les ampoules ajoutées)." },
+      { stem: "Combien de gouttes au total faut-il perfuser (compte-gouttes standard, 20 gouttes/ml) ?",
+        options: ["10 800 gouttes", "10 000 gouttes", "12 000 gouttes"], correct: [0],
+        explanation: "Le nombre total de gouttes se calcule par Volume × 20 = 540 × 20 = 10 800 gouttes." },
+      { stem: "Quel est le débit de cette perfusion en gouttes par minute, sachant que le temps de perfusion est de 4 heures (240 minutes) ?",
+        options: ["45 gouttes/min", "40 gouttes/min", "50 gouttes/min"], correct: [0],
+        explanation: "Débit = Volume total × 20 / Temps en minutes = 540 × 20 / 240 = 10 800 / 240 = 45 gouttes/min." },
+      { stem: "Quel est le débit de cette perfusion ramené à 15 secondes ?",
+        options: ["11,25 gouttes/15 sec", "10 gouttes/15 sec", "15 gouttes/15 sec"], correct: [0],
+        explanation: "Le débit en 15 secondes se calcule en divisant le débit par minute par 4 : 45 / 4 = 11,25 gouttes/15 sec." },
     ],
   },
 ];
@@ -16096,6 +16142,7 @@ const CASES = [
   ...buildCases(DEONTO_RAW_CASES, "deontologie", "dcase"),
   ...buildCases(SANTEPUB_RAW_CASES, "sante-publique", "spcase"),
   ...buildCases(GYNECO_RAW_CASES, "gyneco-obstetrique", "gycase"),
+  ...buildCases(EVAL_DALOA_RAW_CASES, "techniques-soins-infirmiers", "evdcase"),
   ...buildCases(SOINS_INF_OBST_RAW_CASES, "soins-infirmiers-obstetricaux", "siocase"),
   ...buildCases(TRAUMATISME_OBST_RAW_CASES, "sante-infantile", "trauobstcase"),
   ...buildCases(PATHOLOGIE_RESPI_RAW_CASES, "pathologie-respiratoire", "prcase"),
