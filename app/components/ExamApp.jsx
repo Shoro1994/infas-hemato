@@ -2554,6 +2554,37 @@ const APP_GENITAL_RAW = [
     "Anatomie/Physiologie — Appareil génital, le périnée"],
 ];
 
+const BACT_RAPPROCH_RAW = [
+  ["QCU","arbovirus_vecteurs",2,"Le vecteur de la transmission de la fièvre West-Nile est :",
+    ["Le Culex","Aedes aegypti exclusivement","Aedes albopictus exclusivement","La tique"],[0],
+    "Le vecteur de la fièvre West-Nile est le moustique du genre Culex.",
+    "Bactériologie/Virologie — Vecteurs des arboviroses, fièvre West-Nile"],
+  ["QCD","bact_def",1,"La phycologie est la science qui étudie les algues.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la phycologie est la science qui étudie les algues.",
+    "Bactériologie/Virologie — Définitions, disciplines de la microbiologie"],
+  ["QCD","bact_saprophytisme",2,"Une bactérie saprophyte est une bactérie qui mène dans la nature une vie entièrement autonome, en y puisant son énergie et en y effectuant ses synthèses.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la définition exacte du saprophytisme bactérien : une vie totalement autonome dans le milieu naturel.",
+    "Bactériologie/Virologie — Le saprophytisme, définition"],
+  ["QCM","virus_defense",1,"Parmi les types de vaccins utilisés en Côte d'Ivoire contre la COVID-19 figurent notamment :",
+    ["Le vaccin BioNTech/Pfizer","Le vaccin Johnson & Johnson","Le vaccin Oxford/AstraZeneca","Le vaccin Sinopharm"],[0,1,2,3],
+    "Plusieurs types de vaccins anti-COVID-19 ont été utilisés en Côte d'Ivoire : BioNTech/Pfizer, Johnson & Johnson, Oxford/AstraZeneca, et Sinopharm.",
+    "Bactériologie/Virologie — Défense contre l'infection virale, vaccination anti-COVID"],
+  ["QCU","arbovirus_vecteurs",1,"Les vecteurs des arbovirus peuvent être notamment :",
+    ["Des moustiques","Des mycobactéries","Des parasites intestinaux","Des champignons"],[0],
+    "Les vecteurs des arbovirus sont des arthropodes, principalement des moustiques (Aedes, Culex, Anophèle selon la maladie).",
+    "Bactériologie/Virologie — Les arbovirus, vecteurs"],
+  ["QCM","virus_def",2,"Les éléments fondamentaux de la structure d'un virus comprennent notamment :",
+    ["Le génome","La capside","Le peplos (enveloppe), présent chez certains virus","La capsule, structure propre à certaines bactéries et non aux virus"],[0,1,2],
+    "Les éléments fondamentaux de la structure d'un virus sont le génome (matériel génétique), la capside (enveloppe protéique), et le peplos (enveloppe lipidique, présente chez les virus enveloppés) ; la capsule est, elle, une structure bactérienne.",
+    "Bactériologie/Virologie — Le virus, structure fondamentale"],
+  ["QCD","bact_prelevement",1,"Pour aider le laboratoire à donner des résultats de qualité, il faut renseigner correctement le bulletin d'analyse bactériologique en indiquant notamment : nom et prénoms, âge, sexe, examen demandé et le nom du produit biologique.",
+    ["Vrai","Faux"],[0],
+    "Vrai, un bulletin d'analyse bactériologique correctement renseigné (identité, âge, sexe, examen demandé, nature du prélèvement) est indispensable à la qualité des résultats du laboratoire.",
+    "Bactériologie/Virologie — Le prélèvement bactériologique, bulletin d'analyse"],
+];
+
 const IST_VIH_MASSIF2_RAW = [
   ["QCU","istvih_vih_gen",3,"En Côte d'Ivoire, la prévalence du VIH est plus élevée chez la femme que chez l'homme, avec approximativement :",
     ["Homme 1,5% — Femme 3,3%","Homme 3,3% — Femme 1,5%","Homme et femme à égalité stricte, autour de 2,5%","Homme 4,3% — Femme 4,3%"],[0],
@@ -16307,6 +16338,7 @@ const QUESTIONS = [
   ...buildQuestions(RESUME_CONCEPTS_RAW, "concepts-sciences-inf", "resc"),
   ...buildQuestions(APP_GENITAL_RAW, "anat-physio", "genit"),
   ...buildQuestions(EVAL2_TS_RAW, "techniques-soins-infirmiers", "ev2"),
+  ...buildQuestions(BACT_RAPPROCH_RAW, "bacteriologie", "bactr"),
   ...buildQuestions(IST_VIH_MASSIF2_RAW, "ist-vih", "istm2"),
   ...buildQuestions(IST_VIH_MASSIF_RAW, "ist-vih", "istm"),
   ...buildQuestions(EVAL_DALOA_RAW, "techniques-soins-infirmiers", "evd"),
@@ -17577,6 +17609,13 @@ function scoreExam(items, answers) {
 function sanitizeKeyPart(s) {
   return (s || "").replace(/[^A-Za-z0-9+]/g, "");
 }
+// Retour haptique léger (vibration courte) sur mobile lors d'une sélection ou d'une
+// confirmation. Ignoré silencieusement sur les appareils/navigateurs qui ne le supportent
+// pas (desktop, Safari iOS notamment) — jamais bloquant.
+function hapticTick(pattern = 10) {
+  try { if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(pattern); } catch (e) {}
+}
+
 function historyKey(matricule) {
   return `infas-hemato:history:${sanitizeKeyPart(matricule)}`;
 }
@@ -25032,6 +25071,18 @@ function dictFavKey(matricule) {
 function dictHistKey(matricule) {
   return `infas-hemato:dict-hist:${sanitizeKeyPart(matricule)}`;
 }
+function questionFavKey(matricule) {
+  return `infas-hemato:question-fav:${sanitizeKeyPart(matricule)}`;
+}
+async function loadQuestionFavorites(matricule) {
+  try {
+    const res = await storage.get(questionFavKey(matricule), true);
+    return res ? JSON.parse(res.value) : [];
+  } catch { return []; }
+}
+async function saveQuestionFavorites(matricule, favs) {
+  try { await storage.set(questionFavKey(matricule), JSON.stringify(favs), true); } catch (e) { console.error(e); }
+}
 async function loadDictFavorites(matricule) {
   try {
     const res = await storage.get(dictFavKey(matricule), true);
@@ -25100,6 +25151,73 @@ function dictEntryMatches(entry, normalizedQuery) {
     if (words.some((w) => w.length >= 3 && levenshtein(w, normalizedQuery) <= threshold)) return true;
   }
   return false;
+}
+
+// Recherche globale : cherche un terme dans l'énoncé, l'explication et le chapitre de
+// TOUTES les questions de la banque, tous sujets confondus — pour retrouver rapidement
+// "cette question sur Coombs" sans se souvenir de quelle matière elle vient.
+function GlobalSearchScreen({ onBack }) {
+  const [query, setQuery] = useState("");
+  const [expandedId, setExpandedId] = useState(null);
+  const normalizedQuery = normalizeForSearch(query);
+
+  const results = useMemo(() => {
+    if (normalizedQuery.length < 3) return [];
+    return QUESTIONS.filter((q) => {
+      const haystack = normalizeForSearch(`${q.stem} ${q.explanation} ${q.chapterLabel}`);
+      return haystack.includes(normalizedQuery);
+    }).slice(0, 40);
+  }, [normalizedQuery]);
+
+  return (
+    <div className="anim-screen" style={{ minHeight: "100vh", background: COLORS.bg, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <TopBar onLogout={onBack} />
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "24px 18px 70px" }}>
+        <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 16, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
+        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 21, color: COLORS.ink, marginBottom: 4 }}>🔍 Recherche globale</h1>
+        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 18 }}>
+          Retrouvez une question par mot-clé, dans toutes les matières à la fois.
+        </p>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Ex : Coombs, GATPA, Apgar…"
+          style={{
+            width: "100%", padding: "12px 14px", borderRadius: 10, border: `1px solid ${COLORS.line}`,
+            fontSize: 14, fontFamily: "'IBM Plex Sans', sans-serif", marginBottom: 16, boxSizing: "border-box",
+          }}
+        />
+        {normalizedQuery.length > 0 && normalizedQuery.length < 3 && (
+          <div style={{ fontSize: 12.5, color: COLORS.inkSoft }}>Continuez à taper (au moins 3 lettres)…</div>
+        )}
+        {normalizedQuery.length >= 3 && results.length === 0 && (
+          <div style={{ fontSize: 13, color: COLORS.inkSoft, textAlign: "center", padding: "30px 0" }}>
+            Aucune question trouvée pour « {query} ».
+          </div>
+        )}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {results.map((q) => {
+            const isOpen = expandedId === q.id;
+            return (
+              <div key={q.id} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 14, cursor: "pointer" }}
+                onClick={() => setExpandedId(isOpen ? null : q.id)}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginBottom: 6 }}>
+                  <Badge tone="blue">{SUBJECT_DISPLAY_NAMES[q.subjectId] || q.subjectId}</Badge>
+                  <span style={{ fontSize: 11, color: COLORS.inkSoft }}>{q.chapterLabel}</span>
+                </div>
+                <div style={{ fontSize: 13, color: COLORS.ink, fontWeight: 500 }}>{q.stem}</div>
+                {isOpen && (
+                  <div style={{ marginTop: 10, paddingTop: 10, borderTop: `1px dashed ${COLORS.line}`, fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.6 }}>
+                    <b style={{ color: COLORS.blueDeep }}>Explication : </b>{q.explanation}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function DictionaryScreen({ onBack, student }) {
@@ -25213,9 +25331,12 @@ function DictionaryScreen({ onBack, student }) {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 6 }}>
               <div>
                 <Badge tone="blue">{selectedTerm.categorie}</Badge>
-                <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, color: COLORS.ink, margin: "10px 0 0" }}>
-                  {selectedTerm.terme}
-                </h1>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10 }}>
+                  <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, color: COLORS.ink, margin: 0 }}>
+                    {selectedTerm.terme}
+                  </h1>
+                  <SpeakButton text={selectedTerm.terme} size={13} />
+                </div>
                 {selectedTerm.prononciation && (
                   <div style={{ fontSize: 12, color: COLORS.inkSoft, fontStyle: "italic", marginTop: 3 }}>[{selectedTerm.prononciation}]</div>
                 )}
@@ -25248,8 +25369,11 @@ function DictionaryScreen({ onBack, student }) {
             <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 16 }}>
               {fields.map(([label, value]) => (
                 <div key={label}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4, marginBottom: 4, textTransform: "uppercase" }}>
-                    {label}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4, textTransform: "uppercase" }}>
+                      {label}
+                    </div>
+                    <SpeakButton text={value} size={11} />
                   </div>
                   <div style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.6, whiteSpace: "pre-line" }}>{value}</div>
                 </div>
@@ -26362,7 +26486,10 @@ function SchemaQuestionCard({ question, onAnswer, selectedNum, showResult }) {
           <div style={{ fontSize: 13, fontWeight: 700, color: selectedNum === correctNum ? COLORS.green : COLORS.red, marginBottom: 4 }}>
             {selectedNum === correctNum ? "✓ Bonne réponse" : "✗ Réponse incorrecte"} — repère n°{correctNum} = {question.correctLabel}
           </div>
-          <div style={{ fontSize: 13, color: COLORS.ink, lineHeight: 1.5 }}>{question.explanation}</div>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+            <div style={{ fontSize: 13, color: COLORS.ink, lineHeight: 1.5, flex: 1 }}>{question.explanation}</div>
+            <SpeakButton text={question.explanation} />
+          </div>
           <div style={{ fontSize: 11, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace", marginTop: 8 }}>
             Réf. : {question.reference}
           </div>
@@ -26604,8 +26731,9 @@ function PaperSimulationScreen({ module, student, onBack }) {
                 ))}
               </div>
               {submitted && (
-                <div style={{ marginTop: 10, padding: "8px 10px", background: "#F0F4F3", borderRadius: 8, fontSize: 11.5, color: COLORS.inkSoft, lineHeight: 1.5 }}>
-                  💡 {q.explanation}
+                <div style={{ marginTop: 10, padding: "8px 10px", background: "#F0F4F3", borderRadius: 8, fontSize: 11.5, color: COLORS.inkSoft, lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: 8 }}>
+                  <span style={{ flex: 1 }}>💡 {q.explanation}</span>
+                  <SpeakButton text={q.explanation} size={11} />
                 </div>
               )}
             </div>
@@ -27647,6 +27775,9 @@ function AdminScreen({ onBack }) {
   const [copyFeedback, setCopyFeedback] = useState(null);
   const [announcements, setAnnouncements] = useState(null);
   const [ratings, setRatings] = useState(null);
+  const [examCalendarAdmin, setExamCalendarAdmin] = useState(null);
+  const [newExamDate, setNewExamDate] = useState("");
+  const [newExamLabel, setNewExamLabel] = useState("");
   const [pwdEditMatricule, setPwdEditMatricule] = useState(null);
   const [pwdEditValue, setPwdEditValue] = useState("");
   const [pwdSavedMatricule, setPwdSavedMatricule] = useState(null);
@@ -27655,8 +27786,9 @@ function AdminScreen({ onBack }) {
   const refreshStudents = () => loadAllStudents().then((list) => setStudents(list.sort((a, b) => new Date(b.lastSeen) - new Date(a.lastSeen))));
   const refreshAnnouncements = () => loadAnnouncements().then((list) => setAnnouncements(list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))));
   const refreshRatings = () => loadAllAppRatings().then((list) => setRatings(list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))));
+  const refreshExamCalendar = () => loadExamCalendar().then((list) => setExamCalendarAdmin(list.sort((a, b) => a.date.localeCompare(b.date))));
 
-  useEffect(() => { refreshStudents(); refreshAnnouncements(); refreshRatings(); }, []);
+  useEffect(() => { refreshStudents(); refreshAnnouncements(); refreshRatings(); refreshExamCalendar(); }, []);
   // Actualisation automatique toutes les 30 secondes : sans ça, la liste des étudiants
   // ne se rechargeait qu'une seule fois à l'ouverture du panneau admin — un paiement
   // réclamé par un étudiant PENDANT que l'admin reste ouvert n'apparaissait donc jamais,
@@ -27796,7 +27928,7 @@ function AdminScreen({ onBack }) {
         </p>
 
         <div style={{ display: "flex", gap: 6, marginBottom: 20, background: "#E9EFF2", borderRadius: 10, padding: 4, maxWidth: 620, overflowX: "auto" }}>
-          {[["stats", "Statistiques"], ["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
+          {[["stats", "Statistiques"], ["calendrier", "Calendrier"], ["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
             <button
               key={id}
               onClick={() => { setTab(id); refreshStudents(); }}
@@ -27843,6 +27975,77 @@ function AdminScreen({ onBack }) {
             {revenueStats.estimatedCount > 0 && (
               <div style={{ background: "#FFF7E6", border: "1px solid #F0C36D", borderRadius: 12, padding: 14, fontSize: 12, color: "#8A6416", lineHeight: 1.6 }}>
                 ⚠️ {revenueStats.estimatedCount} paiement{revenueStats.estimatedCount > 1 ? "s ont" : " a"} été confirmé{revenueStats.estimatedCount > 1 ? "s" : ""} avant la mise en place de l'historique détaillé — le montant {revenueStats.estimatedCount > 1 ? "les concernant est" : "le concernant est"} estimé à partir du forfait actuel, et peut être sous-évalué en cas de renouvellement antérieur. Tous les paiements confirmés à partir de maintenant sont, eux, comptabilisés avec certitude.
+              </div>
+            )}
+          </>
+        )}
+
+        {tab === "calendrier" && (
+          <>
+            <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18, marginBottom: 20 }}>
+              <div style={{ fontSize: 13.5, fontWeight: 700, color: COLORS.ink, marginBottom: 12 }}>Ajouter une composition</div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end" }}>
+                <div>
+                  <div style={{ fontSize: 11, color: COLORS.inkSoft, marginBottom: 4 }}>Date</div>
+                  <input type="date" value={newExamDate} onChange={(e) => setNewExamDate(e.target.value)}
+                    style={{ padding: "8px 10px", borderRadius: 8, border: `1px solid ${COLORS.line}`, fontSize: 13 }} />
+                </div>
+                <div style={{ flex: 1, minWidth: 180 }}>
+                  <div style={{ fontSize: 11, color: COLORS.inkSoft, marginBottom: 4 }}>Matière</div>
+                  <input value={newExamLabel} onChange={(e) => setNewExamLabel(e.target.value)} placeholder="Ex : VIH/SIDA"
+                    style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: `1px solid ${COLORS.line}`, fontSize: 13, boxSizing: "border-box" }} />
+                </div>
+                <button
+                  disabled={!newExamDate || !newExamLabel.trim()}
+                  onClick={async () => {
+                    const next = [...(examCalendarAdmin || []), { id: `exam-${Date.now()}`, date: newExamDate, label: newExamLabel.trim() }];
+                    await saveExamCalendar(next);
+                    setNewExamDate(""); setNewExamLabel("");
+                    refreshExamCalendar();
+                  }}
+                  style={{ ...primaryBtn, padding: "9px 16px", fontSize: 13, opacity: !newExamDate || !newExamLabel.trim() ? 0.5 : 1 }}
+                >
+                  Ajouter
+                </button>
+              </div>
+            </div>
+
+            <div style={{ fontSize: 13.5, fontWeight: 700, color: COLORS.ink, marginBottom: 10 }}>Compositions à venir</div>
+            {examCalendarAdmin === null ? (
+              <div style={{ fontSize: 13, color: COLORS.inkSoft }}>Chargement…</div>
+            ) : examCalendarAdmin.length === 0 ? (
+              <div style={{ fontSize: 13, color: COLORS.inkSoft }}>Aucune composition programmée pour l'instant.</div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {examCalendarAdmin.map((exam) => {
+                  const d = daysUntil(exam.date);
+                  const isPast = d < 0;
+                  return (
+                    <div key={exam.id} style={{
+                      display: "flex", justifyContent: "space-between", alignItems: "center",
+                      background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 10,
+                      padding: "10px 14px", opacity: isPast ? 0.5 : 1,
+                    }}>
+                      <div>
+                        <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.ink }}>{exam.label}</div>
+                        <div style={{ fontSize: 11.5, color: COLORS.inkSoft, fontFamily: "'IBM Plex Mono', monospace" }}>
+                          {new Date(exam.date + "T00:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}
+                          {" · "}{isPast ? "passée" : d === 0 ? "aujourd'hui" : d === 1 ? "demain" : `dans ${d} jours`}
+                        </div>
+                      </div>
+                      <button
+                        onClick={async () => {
+                          const next = examCalendarAdmin.filter((e) => e.id !== exam.id);
+                          await saveExamCalendar(next);
+                          refreshExamCalendar();
+                        }}
+                        style={{ ...secondaryBtn, padding: "6px 10px", fontSize: 12 }}
+                      >
+                        Supprimer
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </>
@@ -28979,7 +29182,29 @@ function MessagesScreen({ onBack, student, onRead }) {
   );
 }
 
-function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onSchemaPractice, onCompoGuide, onExamenPratiqueGuide, onPaperSim, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme, unreadCount, onOpenMessages, onOpenReferral }) {
+// Compte à rebours avant la prochaine composition. Stocké en localStorage (propre à
+// l'appareil) : {date: "YYYY-MM-DD", label: "Nom de la matière"}. Volontairement simple —
+// un seul examen à la fois, celui qui compte le plus pour l'étudiant à l'instant présent.
+// Calendrier des compositions, défini par l'admin depuis le panneau d'administration et
+// visible par tous les étudiants — stocké côté serveur (partagé), comme les annonces.
+// Format : liste de { id, date: "YYYY-MM-DD", label: "Nom de la matière" }.
+const EXAM_CALENDAR_KEY = "infas-hemato:exam-calendar";
+async function loadExamCalendar() {
+  try {
+    const res = await storage.get(EXAM_CALENDAR_KEY, true);
+    return res ? JSON.parse(res.value) : [];
+  } catch { return []; }
+}
+async function saveExamCalendar(list) {
+  try { await storage.set(EXAM_CALENDAR_KEY, JSON.stringify(list), true); } catch (e) { console.error(e); }
+}
+function daysUntil(dateStr) {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const target = new Date(dateStr + "T00:00:00");
+  return Math.round((target - today) / 86400000);
+}
+
+function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnosticInfirmier, onVirtualPatient, onDictionary, onGlobalSearch, onSchemaPractice, onCompoGuide, onExamenPratiqueGuide, onPaperSim, onMyNotes, onRateApp, onDefi, welcomeInfo, onDismissWelcome, onLogout, student, onMarkPending, theme, onChangeTheme, unreadCount, onOpenMessages, onOpenReferral }) {
   const validHistory = history.filter((h) => !h.aborted);
   const examCount = history.length;
   const avg = validHistory.length ? validHistory.reduce((a, h) => a + h.note20, 0) / validHistory.length : 0;
@@ -28989,6 +29214,21 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
   const toReview = CHAPTERS.filter((c) => mastery[c.id] && mastery[c.id].total >= 2 && mastery[c.id].correct / mastery[c.id].total < 0.5);
   const subjectMastery = computeSubjectMastery(history);
   const access = computeAccess(student);
+  const [examCalendar, setExamCalendar] = useState(null);
+  const weakestSubject = subjectMastery.length > 0 ? subjectMastery[0] : null;
+
+  useEffect(() => {
+    loadExamCalendar().then(setExamCalendar);
+  }, []);
+
+  // La prochaine composition à venir : la première dont la date n'est pas encore passée,
+  // triée par proximité — recalculé à chaque affichage, jamais mis en cache localement,
+  // pour refléter immédiatement toute mise à jour faite par l'admin.
+  const nextExam = useMemo(() => {
+    if (!examCalendar) return null;
+    const upcoming = examCalendar.filter((e) => daysUntil(e.date) >= 0).sort((a, b) => a.date.localeCompare(b.date));
+    return upcoming[0] || null;
+  }, [examCalendar]);
 
   useEffect(() => {
     if (!welcomeInfo) return;
@@ -29084,6 +29324,26 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           <StatCard label="Chapitres maîtrisés" value={mastered.length} tone="green" />
         </div>
 
+        {nextExam && (
+          <div style={{
+            background: `linear-gradient(135deg, ${COLORS.blueDeep}, #0A5A87)`, borderRadius: 14,
+            padding: "16px 20px", marginBottom: 26, color: "white", display: "flex",
+            alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12,
+          }}>
+            <div>
+              <div style={{ fontSize: 11, opacity: 0.8, letterSpacing: 0.4, textTransform: "uppercase" }}>Prochaine composition</div>
+              <div style={{ fontSize: 16, fontWeight: 700, marginTop: 3 }}>
+                {nextExam.label} — {daysUntil(nextExam.date) === 0 ? "aujourd'hui" : daysUntil(nextExam.date) === 1 ? "demain" : `dans ${daysUntil(nextExam.date)} jours`}
+              </div>
+            </div>
+            {weakestSubject && (
+              <div style={{ fontSize: 12.5, background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "8px 12px" }}>
+                💡 Point faible actuel : <b>{SUBJECT_DISPLAY_NAMES[weakestSubject.subjectId] || weakestSubject.subjectId}</b> ({weakestSubject.pct.toFixed(0)}%)
+              </div>
+            )}
+          </div>
+        )}
+
         {subjectMastery.length > 0 && (
           <div style={{ marginBottom: 30 }}>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 700, color: COLORS.inkSoft, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 12 }}>
@@ -29145,6 +29405,9 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           <ModuleCard icon="📖" title="Dictionnaire médical" color="#0E7C7B" compact
             desc="Recherchez un terme, une maladie, un médicament ou une abréviation."
             onClick={onDictionary} ctaLabel="Rechercher" />
+          <ModuleCard icon="🔍" title="Recherche globale" color="#6B4EA8" compact
+            desc="Retrouvez une question par mot-clé, dans toutes les matières à la fois."
+            onClick={onGlobalSearch} ctaLabel="Rechercher" />
           <ModuleCard icon="📝" title="Mes notes" color="#3E5A7A" compact
             desc="Notes personnelles au fil de vos révisions, exportables en PDF."
             onClick={onMyNotes} ctaLabel="Ouvrir" />
@@ -29621,6 +29884,92 @@ function TopBar({ onLogout, onAdmin, unreadCount, onOpenMessages, student }) {
 // Carte de module premium : fond surface (pas de couleur pleine), badge d'icône dégradé,
 // et un lien-CTA en texte plutôt qu'un bouton plein — remplace l'ancien mur de rectangles
 // de couleur unie par une vraie hiérarchie visuelle éditoriale.
+// Bouton de lecture vocale, réutilisé partout où une explication ou un résumé est
+// affiché. Utilise l'API native du navigateur (SpeechSynthesis) — gratuite, sans
+// service externe, fonctionne hors-ligne dès que la page est chargée. On coupe la
+// synthèse en cours avant d'en lancer une nouvelle pour éviter les chevauchements,
+// et un second clic sur le même bouton arrête la lecture (bascule play/stop).
+// Marque-page sur une question difficile, pour la retrouver facilement plus tard. Stocké
+// en localStorage (propre à cet appareil/navigateur) plutôt que sur le compte du serveur,
+// pour rester une fonctionnalité autonome sans avoir à faire transiter le matricule de
+// l'étudiant à travers plusieurs niveaux de composants d'examen.
+function getFavoriteQuestionIds() {
+  try { return JSON.parse(window.localStorage.getItem("infas-hemato:fav-questions") || "[]"); } catch (e) { return []; }
+}
+function isFavoriteQuestion(id) {
+  return getFavoriteQuestionIds().includes(id);
+}
+function toggleFavoriteQuestion(id) {
+  const list = getFavoriteQuestionIds();
+  const next = list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+  try { window.localStorage.setItem("infas-hemato:fav-questions", JSON.stringify(next)); } catch (e) {}
+  return next;
+}
+function FavoriteStarButton({ questionId, size = 13 }) {
+  const [fav, setFav] = useState(() => isFavoriteQuestion(questionId));
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); hapticTick(8); setFav(!fav); toggleFavoriteQuestion(questionId); }}
+      aria-label={fav ? "Retirer des questions à revoir" : "Marquer pour la revoir plus tard"}
+      title={fav ? "Retirer des questions à revoir" : "Marquer pour la revoir plus tard"}
+      style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        width: size + 14, height: size + 14, borderRadius: 999, border: "none", cursor: "pointer",
+        background: fav ? COLORS.amberSoft : "rgba(15,39,51,0.08)",
+        color: fav ? COLORS.amber : COLORS.inkSoft, fontSize: size, flexShrink: 0,
+        transition: "background 0.15s ease",
+      }}
+    >
+      {fav ? "★" : "☆"}
+    </button>
+  );
+}
+
+function SpeakButton({ text, size = 13 }) {
+  const [speaking, setSpeaking] = useState(false);
+
+  useEffect(() => {
+    return () => { try { window.speechSynthesis?.cancel(); } catch (e) {} };
+  }, []);
+
+  if (typeof window === "undefined" || !window.speechSynthesis) return null;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    const synth = window.speechSynthesis;
+    if (speaking) {
+      synth.cancel();
+      setSpeaking(false);
+      return;
+    }
+    synth.cancel(); // coupe toute lecture en cours ailleurs sur la page
+    const utter = new SpeechSynthesisUtterance(String(text || "").replace(/[*_#]/g, ""));
+    utter.lang = "fr-FR";
+    utter.rate = 0.98;
+    utter.onend = () => setSpeaking(false);
+    utter.onerror = () => setSpeaking(false);
+    synth.speak(utter);
+    setSpeaking(true);
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      aria-label={speaking ? "Arrêter la lecture" : "Écouter cette explication"}
+      title={speaking ? "Arrêter la lecture" : "Écouter cette explication"}
+      style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        width: size + 14, height: size + 14, borderRadius: 999, border: "none", cursor: "pointer",
+        background: speaking ? COLORS.blueDeep : "rgba(15,39,51,0.08)",
+        color: speaking ? "#fff" : COLORS.inkSoft, fontSize: size, flexShrink: 0,
+        transition: "background 0.15s ease",
+      }}
+    >
+      {speaking ? "⏹" : "🔊"}
+    </button>
+  );
+}
+
 function ModuleCard({ icon, title, desc, color, onClick, disabled, ctaLabel, badge, large, compact }) {
   return (
     <div
@@ -30470,7 +30819,10 @@ function LessonScreen({ subjectId, chapterId, onBack, onStartTraining }) {
                   <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 10 }}>
                     {s.facts.map((f, i) => (
                       <li key={i} style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.65 }}>
-                        {f.explanation}
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                          <span style={{ flex: 1 }}>{f.explanation}</span>
+                          <SpeakButton text={f.explanation} size={12} />
+                        </div>
                         <div style={{ fontSize: 10.5, color: COLORS.inkSoft, marginTop: 2, fontFamily: "'IBM Plex Mono', monospace" }}>{f.reference}</div>
                       </li>
                     ))}
@@ -30516,6 +30868,7 @@ function TrainingScreen({ session, onFinish }) {
 
   const toggle = (optId) => {
     if (checked) return;
+    hapticTick(8);
     if (current.type === "QCU") { setSelected([optId]); return; }
     setSelected((prev) => (prev.includes(optId) ? prev.filter((o) => o !== optId) : [...prev, optId]));
   };
@@ -30552,18 +30905,27 @@ function TrainingScreen({ session, onFinish }) {
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "24px 18px 80px" }}>
         {current.caseVignette && (
           <div style={{ background: COLORS.blueSoft, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 16 }}>
-            <div style={{ fontSize: 10.5, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4, marginBottom: 6 }}>CAS CLINIQUE</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+              <div style={{ fontSize: 10.5, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4 }}>CAS CLINIQUE</div>
+              <SpeakButton text={current.caseVignette} size={11} />
+            </div>
             <div style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.6 }}>{current.caseVignette}</div>
           </div>
         )}
 
-        <div style={{ marginBottom: 14, display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Badge tone="blue">{current.chapterLabel}</Badge>
-          {current.type === "QCM" && <Badge tone="amber">Une ou plusieurs réponses exactes</Badge>}
+        <div style={{ marginBottom: 14, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <Badge tone="blue">{current.chapterLabel}</Badge>
+            {current.type === "QCM" && <Badge tone="amber">Une ou plusieurs réponses exactes</Badge>}
+          </div>
+          <FavoriteStarButton questionId={current.id} />
         </div>
 
         <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: 20 }}>
-          <div style={{ fontSize: 15, color: COLORS.ink, lineHeight: 1.55, marginBottom: 16, fontWeight: 500 }}>{current.stem}</div>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginBottom: 16 }}>
+            <div style={{ fontSize: 15, color: COLORS.ink, lineHeight: 1.55, fontWeight: 500, flex: 1 }}>{current.stem}</div>
+            <SpeakButton text={current.stem} size={13} />
+          </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
             {current.options.map((opt, i) => {
               const isSel = selected.includes(opt.id);
@@ -30593,9 +30955,12 @@ function TrainingScreen({ session, onFinish }) {
 
         {checked && (
           <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginTop: 14 }}>
-            <div style={{ fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.6 }}>
-              <b style={{ color: COLORS.blueDeep }}>Explication : </b>{current.explanation}
-              <div style={{ fontSize: 11, marginTop: 8, fontFamily: "'IBM Plex Mono', monospace", color: COLORS.inkSoft }}>Réf. cours : {current.reference}</div>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+              <div style={{ fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.6, flex: 1 }}>
+                <b style={{ color: COLORS.blueDeep }}>Explication : </b>{current.explanation}
+                <div style={{ fontSize: 11, marginTop: 8, fontFamily: "'IBM Plex Mono', monospace", color: COLORS.inkSoft }}>Réf. cours : {current.reference}</div>
+              </div>
+              <SpeakButton text={current.explanation} />
             </div>
           </div>
         )}
@@ -30719,6 +31084,7 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
   }, [cursor]);
 
   const toggle = (optId) => {
+    hapticTick(8);
     setAnswers((prev) => {
       const prevSel = prev[current.id] || [];
       if (current.type === "QCU") {
@@ -30803,7 +31169,10 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "24px 18px 120px" }}>
         {current.caseVignette && (
           <div style={{ background: COLORS.blueSoft, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 16 }}>
-            <div style={{ fontSize: 10.5, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4, marginBottom: 6 }}>CAS CLINIQUE {isQuestionTimed && current.kind === "caseq" ? "· 30s" : ""}</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+              <div style={{ fontSize: 10.5, fontWeight: 700, color: COLORS.blueDeep, letterSpacing: 0.4 }}>CAS CLINIQUE {isQuestionTimed && current.kind === "caseq" ? "· 30s" : ""}</div>
+              <SpeakButton text={current.caseVignette} size={11} />
+            </div>
             <div style={{ fontSize: 13.5, color: COLORS.ink, lineHeight: 1.6 }}>{current.caseVignette}</div>
           </div>
         )}
@@ -30815,7 +31184,10 @@ function ExamScreen({ exam, onSubmit, onAbort, onFraud }) {
         )}
 
         <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: 20 }}>
-          <div style={{ fontSize: 15, color: COLORS.ink, lineHeight: 1.55, marginBottom: 16, fontWeight: 500 }}>{current.stem}</div>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginBottom: 16 }}>
+            <div style={{ fontSize: 15, color: COLORS.ink, lineHeight: 1.55, fontWeight: 500, flex: 1 }}>{current.stem}</div>
+            <SpeakButton text={current.stem} size={13} />
+          </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
             {current.options.map((opt, i) => {
               const sel = (answers[current.id] || []).includes(opt.id);
@@ -30967,8 +31339,9 @@ function RevisionErreursScreen({ items, onFinish }) {
           })}
 
           {q.explanation && (
-            <div style={{ marginTop: 14, padding: "12px 14px", background: "#F0F4F3", borderRadius: 10, fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.5 }}>
-              💡 {q.explanation}
+            <div style={{ marginTop: 14, padding: "12px 14px", background: "#F0F4F3", borderRadius: 10, fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: 8 }}>
+              <span style={{ flex: 1 }}>💡 {q.explanation}</span>
+              <SpeakButton text={q.explanation} />
             </div>
           )}
         </div>
@@ -31018,6 +31391,19 @@ function ResultsScreen({ result, levelId, durationSec, onBackToDashboard, onRevi
               <div><div style={{ opacity: 0.7 }}>Temps</div><div style={{ fontFamily: "'IBM Plex Mono', monospace" }}>{fmtTime(durationSec)}</div></div>
             </div>
           </div>
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(
+              `J'ai obtenu ${note20.toFixed(1)}/20 (${percent.toFixed(0)}%) sur ${LEVELS.find((l) => l.id === levelId)?.label || "un examen blanc"} sur ASN Santé 🩺`
+            )}`}
+            target="_blank" rel="noopener noreferrer"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, padding: "8px 14px",
+              borderRadius: 999, background: "rgba(255,255,255,0.15)", color: "white", fontSize: 12.5,
+              fontWeight: 600, textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)",
+            }}
+          >
+            📤 Partager ce résultat sur WhatsApp
+          </a>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 26 }}>
@@ -31060,11 +31446,14 @@ function ResultsScreen({ result, levelId, durationSec, onBackToDashboard, onRevi
                   );
                 })}
               </div>
-              <div style={{ fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.6, borderTop: `1px dashed ${COLORS.line}`, paddingTop: 10 }}>
-                <b style={{ color: COLORS.blueDeep }}>Explication : </b>{q.explanation}
-                <div style={{ fontSize: 11, marginTop: 6, fontFamily: "'IBM Plex Mono', monospace", color: COLORS.inkSoft }}>
-                  Réf. cours : {q.reference}
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 8, borderTop: `1px dashed ${COLORS.line}`, paddingTop: 10 }}>
+                <div style={{ fontSize: 12.5, color: COLORS.inkSoft, lineHeight: 1.6, flex: 1 }}>
+                  <b style={{ color: COLORS.blueDeep }}>Explication : </b>{q.explanation}
+                  <div style={{ fontSize: 11, marginTop: 6, fontFamily: "'IBM Plex Mono', monospace", color: COLORS.inkSoft }}>
+                    Réf. cours : {q.reference}
+                  </div>
                 </div>
+                <SpeakButton text={q.explanation} />
               </div>
             </div>
           ))}
@@ -31347,10 +31736,11 @@ export default function App() {
 
   if (screen === "dashboard") {
     if (loading) return <LoadingScreen />;
-    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onSchemaPractice={() => setScreen("schemas")} onCompoGuide={() => setScreen("compoguide")} onExamenPratiqueGuide={() => setScreen("examenpratiqueguide")} onPaperSim={() => setScreen("papersim-select")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} unreadCount={unreadCount} onOpenMessages={() => setScreen("messages")} onOpenReferral={() => setScreen("referral")} />;
+    return <Dashboard history={history} onStart={handleStart} onTrain={handleTrain} onLearn={handleLearn} onDiagnostic={handleDiagnostic} onDiagnosticInfirmier={handleDiagnosticInfirmier} onVirtualPatient={handleVirtualPatient} onDictionary={() => setScreen("dictionary")} onGlobalSearch={() => setScreen("globalsearch")} onSchemaPractice={() => setScreen("schemas")} onCompoGuide={() => setScreen("compoguide")} onExamenPratiqueGuide={() => setScreen("examenpratiqueguide")} onPaperSim={() => setScreen("papersim-select")} onMyNotes={() => setScreen("mynotes")} onRateApp={() => setScreen("rateapp")} onDefi={handleDefi} welcomeInfo={welcomeInfo} onDismissWelcome={handleDismissWelcome} onLogout={handleLogout} student={student} onMarkPending={handleMarkPending} theme={theme} onChangeTheme={changeTheme} unreadCount={unreadCount} onOpenMessages={() => setScreen("messages")} onOpenReferral={() => setScreen("referral")} />;
   }
 
   if (screen === "dictionary") return <DictionaryScreen onBack={() => setScreen("dashboard")} student={student} />;
+  if (screen === "globalsearch") return <GlobalSearchScreen onBack={() => setScreen("dashboard")} />;
   if (screen === "messages") return <MessagesScreen onBack={() => setScreen("dashboard")} student={student} onRead={setUnreadCount} />;
   if (screen === "referral") return <ReferralScreen onBack={() => setScreen("dashboard")} student={student} />;
   if (screen === "schemas") return <SchemaPracticeScreen onBack={() => setScreen("dashboard")} student={student} />;
