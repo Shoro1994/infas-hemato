@@ -30052,6 +30052,7 @@ function ChapterList({ title, tone, chapters, empty }) {
 /* ---------------- Matières ---------------- */
 function MatieresScreen({ onBack, onSelect }) {
   const [expanded, setExpanded] = useState(() => new Set(UE_LIST.map((u) => u.id)));
+  const [query, setQuery] = useState("");
   const toggle = (ueId) => {
     setExpanded((prev) => {
       const next = new Set(prev);
@@ -30059,6 +30060,33 @@ function MatieresScreen({ onBack, onSelect }) {
       else next.add(ueId);
       return next;
     });
+  };
+
+  const normalizedQuery = normalizeForSearch(query);
+
+  // Recherche par contenu : un étudiant qui tape "Coombs" ou "SONU" doit retrouver la
+  // matière correspondante même s'il ne connaît pas son nom officiel exact. On construit
+  // donc, une seule fois, un index texte par matière (nom des chapitres + un échantillon
+  // du contenu de ses questions), puis on y cherche le terme tapé.
+  const subjectSearchIndex = useMemo(() => {
+    if (normalizedQuery.length < 3) return null;
+    const index = {};
+    CHAPTERS.forEach((c) => {
+      if (!c.subjectId) return;
+      index[c.subjectId] = (index[c.subjectId] || "") + " " + normalizeForSearch(c.label);
+    });
+    QUESTIONS.forEach((q) => {
+      if (!q.subjectId) return;
+      index[q.subjectId] = (index[q.subjectId] || "") + " " + normalizeForSearch(`${q.stem} ${q.explanation}`);
+    });
+    return index;
+  }, [normalizedQuery]);
+
+  const matchesQuery = (ecue) => {
+    if (normalizedQuery.length < 3) return true;
+    if (normalizeForSearch(`${ecue.label} ${ecue.code}`).includes(normalizedQuery)) return true;
+    if (ecue.subjectId && subjectSearchIndex && subjectSearchIndex[ecue.subjectId] && subjectSearchIndex[ecue.subjectId].includes(normalizedQuery)) return true;
+    return false;
   };
 
   const renderSemester = (sem) => (
@@ -30085,7 +30113,10 @@ function MatieresScreen({ onBack, onSelect }) {
             if (e.subjectId) seenSubjects.set(e.subjectId, merged);
           }
         }
-        const isOpen = expanded.has(ue.id);
+        const visibleEcues = ecues.filter(matchesQuery);
+        const isSearching = normalizedQuery.length >= 3;
+        if (isSearching && visibleEcues.length === 0) return null;
+        const isOpen = isSearching ? true : expanded.has(ue.id);
         return (
           <div className="anim-fade-up" key={ue.id} style={{ borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.line}` }}>
             <button
@@ -30116,7 +30147,7 @@ function MatieresScreen({ onBack, onSelect }) {
 
             {isOpen && (
               <div style={{ background: `${color}14`, padding: 10, display: "flex", flexDirection: "column", gap: 8 }}>
-                {ecues.map((e) => {
+                {visibleEcues.map((e) => {
                   const active = !!e.subjectId;
                   const isBonus = e.credits === 0;
                   return (
@@ -30164,15 +30195,43 @@ function MatieresScreen({ onBack, onSelect }) {
       <div style={{ maxWidth: 820, margin: "0 auto", padding: "30px 18px 60px" }}>
         <button onClick={onBack} style={{ ...secondaryBtn, marginBottom: 18, padding: "6px 12px", fontSize: 12.5 }}>← Retour</button>
         <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, color: COLORS.ink, marginBottom: 4 }}>Choisir une matière</h1>
-        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 22, maxWidth: 620 }}>
+        <p style={{ color: COLORS.inkSoft, fontSize: 13, marginBottom: 16, maxWidth: 620 }}>
           Programme officiel Licence 1 IDE-SFM (30 crédits par semestre). Cliquez sur une UE pour afficher ses ECUE ; seules les ECUE dont le cours a déjà été chargé sont cliquables.
         </p>
 
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.blueDeep, marginBottom: 10 }}>Semestre 1</div>
-        {renderSemester(1)}
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Rechercher une matière (nom, ou un mot de son contenu : ex. Coombs, SONU…)"
+          style={{
+            width: "100%", padding: "11px 14px", borderRadius: 10, border: `1px solid ${COLORS.line}`,
+            fontSize: 13.5, fontFamily: "'IBM Plex Sans', sans-serif", marginBottom: 22, boxSizing: "border-box",
+          }}
+        />
 
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.blueDeep, margin: "26px 0 10px" }}>Semestre 2</div>
-        {renderSemester(2)}
+        {normalizedQuery.length >= 3 ? (
+          <>
+            {(() => {
+              const hasAnyMatch = ECUE_LIST.some(matchesQuery);
+              if (!hasAnyMatch) {
+                return (
+                  <div style={{ textAlign: "center", padding: "30px 0", color: COLORS.inkSoft, fontSize: 13.5 }}>
+                    Aucune matière ne correspond à « {query} ».
+                  </div>
+                );
+              }
+              return (<>{renderSemester(1)}{renderSemester(2)}</>);
+            })()}
+          </>
+        ) : (
+          <>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.blueDeep, marginBottom: 10 }}>Semestre 1</div>
+            {renderSemester(1)}
+
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.blueDeep, margin: "26px 0 10px" }}>Semestre 2</div>
+            {renderSemester(2)}
+          </>
+        )}
       </div>
     </div>
   );
