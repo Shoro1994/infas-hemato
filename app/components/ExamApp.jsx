@@ -2554,6 +2554,76 @@ const APP_GENITAL_RAW = [
     "Anatomie/Physiologie — Appareil génital, le périnée"],
 ];
 
+const BACT_RAPPROCH5_RAW = [
+  ["QCM","arbovirus_vecteurs",2,"Concernant les vecteurs de transmission de certaines arboviroses :",
+    ["La dengue et le chikungunya sont transmis par Aedes albopictus et Aedes aegypti","L'encéphalite japonaise est transmise par le Culex, en plus des Aedes","La fièvre jaune est transmise par la mouche tsé-tsé, et non par un moustique","Ces trois maladies partagent exactement les mêmes vecteurs, sans aucune différence"],[0,1],
+    "La dengue et le chikungunya sont transmis par Aedes albopictus et Aedes aegypti ; l'encéphalite japonaise est transmise par les Aedes et le Culex ; la fièvre jaune, elle, est transmise par un moustique (Aedes), et non par la mouche tsé-tsé (qui transmet la trypanosomiase).",
+    "Bactériologie/Virologie — Les arbovirus, vecteurs de transmission"],
+  ["QCD","bact_prelevement",2,"Les urines prélevées pour ECBU doivent être acheminées au laboratoire rapidement, et non dans un délai pouvant aller jusqu'à 24 heures après leur recueil.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les urines pour ECBU doivent être acheminées rapidement au laboratoire (idéalement en moins d'une heure, ou conservées au réfrigérateur en cas de délai), et non dans un délai de 24 heures, sous peine de fausser le résultat par prolifération bactérienne.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, ECBU, délai d'acheminement"],
+  ["QCD","bact_forme",2,"Toutes les espèces bactériennes de forme sphérique ne sont pas toujours immobiles ; certains cocci peuvent être mobiles.",
+    ["Vrai","Faux"],[0],
+    "Vrai, s'il est vrai que la plupart des cocci sont immobiles, l'affirmation selon laquelle ils seraient TOUJOURS immobiles est fausse : certaines espèces de cocci possèdent des flagelles et sont mobiles.",
+    "Bactériologie/Virologie — Structure des bactéries, mobilité des cocci"],
+  ["QCD","bact_prelevement",1,"Tout prélèvement bactériologique doit être pratiqué dans des conditions élémentaires d'asepsie.",
+    ["Vrai","Faux"],[0],
+    "Vrai, tout prélèvement bactériologique doit être pratiqué dans des conditions élémentaires d'asepsie, afin d'éviter toute contamination faussant le résultat.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, règles générales"],
+  ["QCD","bact_def",1,"L'hémoculture est une analyse bactériologique du sang.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'hémoculture est l'analyse bactériologique du sang, réalisée pour rechercher la présence de bactéries (bactériémie/septicémie) dans la circulation sanguine.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, définition de l'hémoculture"],
+  ["QCD","bact_forme",1,"Les bactéries peuvent être mobiles grâce à leurs flagelles.",
+    ["Vrai","Faux"],[0],
+    "Vrai, certaines bactéries sont mobiles grâce à leurs flagelles, des appendices filamenteux assurant leur déplacement.",
+    "Bactériologie/Virologie — Structure des bactéries, mobilité bactérienne"],
+  ["QCD","bact_prelevement",2,"Pour un ECBU, on rejette les premiers millilitres d'urine, puis on recueille les suivants dans un flacon stérile.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la technique du prélèvement pour ECBU (recueil du milieu de jet) consiste à rejeter les premiers millilitres d'urine avant de recueillir la suite dans un flacon stérile, afin d'éviter la contamination par la flore périnéale/urétrale.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, technique de l'ECBU"],
+  ["QCU","bact_atb_mecanisme",2,"Parmi les familles d'antibiotiques suivantes, celle qui est bactéricide et agit sur la paroi bactérienne est :",
+    ["Les bêta-lactamines","Les aminosides","Les tétracyclines","Les macrolides et apparentés"],[0],
+    "Les bêta-lactamines sont des antibiotiques bactéricides à large spectre, dont la cible d'action est la paroi bactérienne.",
+    "Bactériologie/Virologie — Antibiotiques, bêta-lactamines"],
+];
+
+const BACT_RAPPROCH4_RAW = [
+  ["QCD","bact_prelevement",2,"Le prélèvement d'urine pour ECBU est possible chez le nourrisson, notamment grâce à la pose d'une poche urinaire.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le prélèvement d'urine pour ECBU est tout à fait possible chez le nourrisson, en utilisant une poche urinaire adaptée (posée pour un temps limité, généralement 30 minutes).",
+    "Bactériologie/Virologie — Prélèvement bactériologique, ECBU chez le nourrisson"],
+  ["QCD","bact_prelevement",2,"L'acheminement d'une hémoculture au laboratoire doit se faire sans délai.",
+    ["Vrai","Faux"],[0],
+    "Vrai, une hémoculture doit être acheminée sans délai au laboratoire, pour permettre une mise en culture rapide et optimiser la croissance des germes éventuellement présents.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, hémoculture"],
+  ["QCM","bact_prelevement",3,"Lors de l'examen bactériologique du LCR, les éléments évocateurs d'une méningite bactérienne comprennent notamment :",
+    ["Un aspect trouble du LCR","La présence de polynucléaires","La présence de bactéries à l'examen direct ou en culture","Un LCR parfaitement clair et limpide, sans aucune cellule"],[0,1,2],
+    "Les éléments évocateurs d'une méningite bactérienne à l'examen du LCR sont : un aspect trouble, la présence de polynucléaires (réaction inflammatoire), et la présence de bactéries.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, examen du LCR"],
+  ["QCD","bact_forme",2,"Le microscope ordinaire (optique) ne permet pas d'étudier toutes les structures fines des bactéries ; certaines structures ultrafines nécessitent un microscope électronique.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le microscope ordinaire (optique) permet d'étudier la morphologie générale des bactéries, mais ne permet pas de visualiser toutes leurs structures fines (comme certains détails de la paroi ou des organites internes), qui nécessitent un microscope électronique.",
+    "Bactériologie/Virologie — Structure des bactéries, limites du microscope ordinaire"],
+  ["QCM","bact_def",2,"Parmi les micro-organismes suivants, ceux qui sont utiles en microbiologie alimentaire sont notamment :",
+    ["Penicillium roqueforti (affinage de certains fromages)","Lactobacillus (fermentation lactique)","Saccharomyces cerevisiae (fermentation, panification, brasserie)","Staphylococcus aureus, qui est au contraire une bactérie pathogène à surveiller dans l'alimentation"],[0,1,2],
+    "Penicillium roqueforti, Lactobacillus et Saccharomyces cerevisiae sont des micro-organismes utiles en microbiologie alimentaire (fromages, fermentation, panification) ; Staphylococcus aureus est, lui, un agent pathogène redouté en toxi-infection alimentaire.",
+    "Bactériologie/Virologie — Le monde microbien, microbiologie alimentaire"],
+  ["QCD","bact_prelevement",2,"Chez le sujet sondé, il est préférable de prélever directement sur la sonde plutôt que d'utiliser les urines provenant de la poche à urines.",
+    ["Vrai","Faux"],[0],
+    "Vrai, chez le sujet sondé, il est préférable de prélever directement sur la sonde (après désinfection), et non dans la poche collectrice, où les urines stagnantes favorisent la prolifération bactérienne et faussent le résultat.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, prélèvement chez le sujet sondé"],
+  ["QCD","bact_prelevement",2,"Le volume de sang à prélever pour une hémoculture chez l'enfant varie en fonction de son poids.",
+    ["Vrai","Faux"],[0],
+    "Vrai, chez l'enfant, le volume de sang prélevé pour une hémoculture est adapté en fonction du poids, contrairement à l'adulte où le volume est plus standardisé.",
+    "Bactériologie/Virologie — Prélèvement bactériologique, hémoculture chez l'enfant"],
+  ["QCU","bact_def",1,"La principale voie de transmission du SARS-CoV-2 (COVID-19) est :",
+    ["La voie respiratoire (gouttelettes, aérosols)","La voie sanguine","La voie sexuelle","La voie digestive"],[0],
+    "La principale voie de transmission du SARS-CoV-2 est la voie respiratoire, par gouttelettes et aérosols émis lors de la toux, des éternuements ou de la parole.",
+    "Bactériologie/Virologie — Virologie, transmission du SARS-CoV-2"],
+];
+
 const BACT_RAPPROCH3_RAW = [
   ["QCU","bact_prelevement",2,"Le prélèvement pour une hémoculture se fait de préférence :",
     ["Au pic de la température (lors d'un pic fébrile)","Avant la prise de la tension artérielle, sans lien avec la fièvre","Au moment de la visite de l'équipe médicale, par simple commodité","Uniquement le matin à jeun, quelle que soit la température"],[0],
@@ -16502,6 +16572,8 @@ const QUESTIONS = [
   ...buildQuestions(RESUME_CONCEPTS_RAW, "concepts-sciences-inf", "resc"),
   ...buildQuestions(APP_GENITAL_RAW, "anat-physio", "genit"),
   ...buildQuestions(EVAL2_TS_RAW, "techniques-soins-infirmiers", "ev2"),
+  ...buildQuestions(BACT_RAPPROCH5_RAW, "bacteriologie", "bactr5"),
+  ...buildQuestions(BACT_RAPPROCH4_RAW, "bacteriologie", "bactr4"),
   ...buildQuestions(BACT_RAPPROCH3_RAW, "bacteriologie", "bactr3"),
   ...buildQuestions(BACT_RAPPROCH2_RAW, "bacteriologie", "bactr2"),
   ...buildQuestions(BACT_RAPPROCH_RAW, "bacteriologie", "bactr"),
@@ -29065,16 +29137,54 @@ function computeSubjectMastery(history) {
     .sort((a, b) => a.pct - b.pct);
 }
 
-function SubscriptionModal({ onClose, onMarkPending, reclaimMode }) {
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [busy, setBusy] = useState(false);
+const JEKO_PAYMENT_METHODS = [
+  { id: "wave", label: "Wave", color: "#1E8F5E" },
+  { id: "orange", label: "Orange Money", color: "#FF7900" },
+  { id: "mtn", label: "MTN MoMo", color: "#FFC107" },
+  { id: "moov", label: "Moov Money", color: "#0072CE" },
+  { id: "djamo", label: "Djamo", color: "#6B4EA8" },
+];
 
-  const confirm = async () => {
+function SubscriptionModal({ onClose, onMarkPending, reclaimMode, student }) {
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedMethod, setSelectedMethod] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [payError, setPayError] = useState(null);
+
+  const confirmReclaim = async () => {
     if (!selectedPlan || busy) return;
     setBusy(true);
     await onMarkPending(selectedPlan.id);
     setBusy(false);
     onClose();
+  };
+
+  // Paiement automatique via Jèko : le serveur crée la demande (clés API jamais exposées
+  // ici) et renvoie une URL hébergée où l'étudiant termine son paiement dans son application
+  // Mobile Money habituelle. La confirmation définitive arrive par webhook, indépendamment
+  // de ce que fait le navigateur ensuite — rediriger est donc sûr même si l'étudiant ferme
+  // l'onglet avant la fin.
+  const payWithJeko = async () => {
+    if (!selectedPlan || !selectedMethod || busy || !student?.matricule) return;
+    setBusy(true);
+    setPayError(null);
+    try {
+      const res = await fetch("/api/jeko-create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matricule: student.matricule, planId: selectedPlan.id, paymentMethod: selectedMethod }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.redirectUrl) {
+        setPayError("Le paiement n'a pas pu être initié. Réessayez, ou utilisez le lien Wave ci-dessous.");
+        setBusy(false);
+        return;
+      }
+      window.location.href = data.redirectUrl;
+    } catch (e) {
+      setPayError("Connexion impossible. Vérifiez votre réseau et réessayez.");
+      setBusy(false);
+    }
   };
 
   return (
@@ -29084,7 +29194,7 @@ function SubscriptionModal({ onClose, onMarkPending, reclaimMode }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        style={{ width: "100%", maxWidth: 420, background: COLORS.surface, borderRadius: 18, padding: 22, fontFamily: "'IBM Plex Sans', sans-serif" }}
+        style={{ width: "100%", maxWidth: 420, background: COLORS.surface, borderRadius: 18, padding: 22, fontFamily: "'IBM Plex Sans', sans-serif", maxHeight: "90vh", overflowY: "auto" }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
           <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.ink }}>
@@ -29095,7 +29205,7 @@ function SubscriptionModal({ onClose, onMarkPending, reclaimMode }) {
         <p style={{ fontSize: 12, color: COLORS.inkSoft, margin: "0 0 16px" }}>
           {reclaimMode
             ? "Sélectionnez le forfait que vous avez déjà payé, puis confirmez ci-dessous pour le faire vérifier par l'administrateur."
-            : "1. Payez via Wave (nouvel onglet). 2. Revenez ici et confirmez le forfait payé."}
+            : "Choisissez un forfait, puis votre moyen de paiement habituel."}
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
@@ -29114,31 +29224,83 @@ function SubscriptionModal({ onClose, onMarkPending, reclaimMode }) {
                 <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: plan.color }}>{plan.label}</div>
                 <div style={{ fontSize: 12, color: COLORS.inkSoft }}>{plan.price} F CFA</div>
               </div>
-              {!reclaimMode && (
-                <a
-                  href={plan.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => { e.stopPropagation(); setSelectedPlan(plan); }}
-                  style={{
-                    textDecoration: "none", color: "white", background: plan.color, fontWeight: 700,
-                    fontSize: 12.5, borderRadius: 999, padding: "8px 16px",
-                  }}
-                >
-                  Payer →
-                </a>
-              )}
             </div>
           ))}
         </div>
 
-        <button
-          onClick={confirm}
-          disabled={!selectedPlan || busy}
-          style={{ ...primaryBtn, width: "100%", background: selectedPlan ? selectedPlan.color : COLORS.line, opacity: !selectedPlan || busy ? 0.6 : 1 }}
-        >
-          {busy ? "Enregistrement…" : selectedPlan ? `J'ai payé le forfait ${selectedPlan.label}` : "Choisissez d'abord un forfait"}
-        </button>
+        {reclaimMode ? (
+          <button
+            onClick={confirmReclaim}
+            disabled={!selectedPlan || busy}
+            style={{ ...primaryBtn, width: "100%", background: selectedPlan ? selectedPlan.color : COLORS.line, opacity: !selectedPlan || busy ? 0.6 : 1 }}
+          >
+            {busy ? "Enregistrement…" : selectedPlan ? `J'ai payé le forfait ${selectedPlan.label}` : "Choisissez d'abord un forfait"}
+          </button>
+        ) : (
+          <>
+            {selectedPlan && (
+              <div style={{ marginBottom: 14 }}>
+                <div style={{ fontSize: 11.5, fontWeight: 700, color: COLORS.inkSoft, marginBottom: 8, textTransform: "uppercase", letterSpacing: 0.4 }}>
+                  Moyen de paiement
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  {JEKO_PAYMENT_METHODS.map((m) => (
+                    <button
+                      key={m.id}
+                      onClick={() => setSelectedMethod(m.id)}
+                      style={{
+                        padding: "10px 8px", borderRadius: 10, cursor: "pointer", fontSize: 12.5, fontWeight: 700,
+                        border: selectedMethod === m.id ? `2px solid ${m.color}` : `1px solid ${COLORS.line}`,
+                        background: selectedMethod === m.id ? `${m.color}14` : COLORS.surface,
+                        color: selectedMethod === m.id ? m.color : COLORS.ink,
+                      }}
+                    >
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {payError && (
+              <div style={{ fontSize: 12, color: COLORS.red, background: "#FCE8E6", borderRadius: 8, padding: "8px 10px", marginBottom: 12 }}>
+                {payError}
+              </div>
+            )}
+
+            <button
+              onClick={payWithJeko}
+              disabled={!selectedPlan || !selectedMethod || busy}
+              style={{ ...primaryBtn, width: "100%", background: selectedPlan ? selectedPlan.color : COLORS.line, opacity: !selectedPlan || !selectedMethod || busy ? 0.6 : 1, marginBottom: 10 }}
+            >
+              {busy ? "Redirection…" : selectedPlan && selectedMethod ? `Payer ${selectedPlan.price} F CFA` : "Choisissez un forfait et un moyen de paiement"}
+            </button>
+
+            {selectedPlan && (
+              <div style={{ textAlign: "center" }}>
+                <a
+                  href={selectedPlan.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ fontSize: 11.5, color: COLORS.inkSoft, textDecoration: "underline" }}
+                >
+                  Ou payer via le lien Wave, puis signaler le paiement manuellement
+                </a>
+                {selectedPlan && (
+                  <div style={{ marginTop: 8 }}>
+                    <button
+                      onClick={confirmReclaim}
+                      disabled={busy}
+                      style={{ background: "none", border: "none", fontSize: 11.5, color: COLORS.inkSoft, textDecoration: "underline", cursor: "pointer" }}
+                    >
+                      J'ai déjà payé via Wave, signaler ce paiement
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
@@ -29212,7 +29374,7 @@ function SubscriptionGauge({ student, onMarkPending }) {
         </div>
       )}
 
-      {showModal && <SubscriptionModal onClose={() => setShowModal(false)} onMarkPending={onMarkPending} reclaimMode={showModal === "reclaim"} />}
+      {showModal && <SubscriptionModal onClose={() => setShowModal(false)} onMarkPending={onMarkPending} reclaimMode={showModal === "reclaim"} student={student} />}
     </div>
   );
 }
