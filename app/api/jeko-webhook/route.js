@@ -18,8 +18,8 @@ function getBlobStore() {
 // --- Mêmes constantes que côté client (ExamApp.jsx), dupliquées ici car cette route ne
 // peut pas importer un composant client. Toute modification des forfaits doit être répercutée
 // aux DEUX endroits : ici et dans SUBSCRIPTION_PLANS / jeko-create-payment/route.js. ---
-const PLAN_DAYS = { "1mois": 30, "2mois": 60, "6mois": 180 };
-const PLAN_PRICE = { "1mois": 500, "2mois": 800, "6mois": 2000 };
+const PLAN_DAYS = { "1mois": 30, "2mois": 60, "3mois": 90 };
+const PLAN_PRICE = { "1mois": 600, "2mois": 1000, "3mois": 1500 };
 const PAID_DAYS_FALLBACK = 365;
 const TRIAL_DAYS = 15;
 const TRIAL_DAYS_NEW = 7;

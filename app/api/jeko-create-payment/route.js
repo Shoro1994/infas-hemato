@@ -12,9 +12,9 @@ export const revalidate = 0;
 // dans ExamApp.jsx si les forfaits changent — dupliquée ici volontairement, car cette route
 // ne peut pas importer un composant client.
 const PLANS = {
-  "1mois": { price: 500 },
-  "2mois": { price: 800 },
-  "6mois": { price: 2000 },
+  "1mois": { price: 600 },
+  "2mois": { price: 1000 },
+  "3mois": { price: 1500 },
 };
 
 const PAYMENT_METHODS = ["wave", "orange", "mtn", "moov", "djamo"];
@@ -93,11 +93,12 @@ export async function POST(request) {
       }),
     });
 
-    const data = await jekoRes.json();
+    const data = await jekoRes.json().catch(() => ({}));
 
     if (!jekoRes.ok || !data.redirectUrl) {
       console.error("Jèko: échec de création de la demande de paiement", jekoRes.status, data);
-      return jsonNoCache({ error: "jeko_request_failed", detail: data.errorReason || null }, { status: 502 });
+      const detail = data.errorReason || data.message || data.error || `HTTP ${jekoRes.status}`;
+      return jsonNoCache({ error: "jeko_request_failed", detail }, { status: 502 });
     }
 
     return jsonNoCache({ redirectUrl: data.redirectUrl, reference });

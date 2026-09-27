@@ -17952,9 +17952,9 @@ const TRIAL_LENGTH_CHANGE_AT = new Date("2026-08-18T00:00:00Z").getTime();
 const PAID_DAYS = 365; // repli si un compte "paid" existant n'a pas de plan enregistré
 
 const SUBSCRIPTION_PLANS = [
-  { id: "1mois", label: "1 mois", price: 500, days: 30, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=500", color: "#1E8F5E" },
-  { id: "2mois", label: "2 mois", price: 800, days: 60, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=800", color: "#0B5D8C" },
-  { id: "6mois", label: "6 mois", price: 2000, days: 180, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=2000", color: "#2D6E6B" },
+  { id: "1mois", label: "1 mois", price: 600, days: 30, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=600", color: "#1E8F5E" },
+  { id: "2mois", label: "2 mois", price: 1000, days: 60, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=1000", color: "#0B5D8C" },
+  { id: "3mois", label: "3 mois", price: 1500, days: 90, url: "https://pay.wave.com/m/M_ci_gbhLy18P_Mhs/c/ci/?amount=1500", color: "#2D6E6B" },
 ];
 
 function studentKey(matricule) {
@@ -29176,7 +29176,8 @@ function SubscriptionModal({ onClose, onMarkPending, reclaimMode, student }) {
       });
       const data = await res.json();
       if (!res.ok || !data.redirectUrl) {
-        setPayError("Le paiement n'a pas pu être initié. Réessayez, ou utilisez le lien Wave ci-dessous.");
+        const detail = data.detail || data.error || "raison inconnue";
+        setPayError(`Le paiement n'a pas pu être initié (${detail}). Réessayez, ou utilisez le lien Wave ci-dessous.`);
         setBusy(false);
         return;
       }
