@@ -61,9 +61,13 @@ export async function POST(request) {
   const apiKey = process.env.JEKO_API_KEY;
   const apiKeyId = process.env.JEKO_API_KEY_ID;
   const storeId = process.env.JEKO_STORE_ID;
-  if (!apiKey || !apiKeyId || !storeId) {
-    console.error("Jèko: variables d'environnement manquantes (JEKO_API_KEY / JEKO_API_KEY_ID / JEKO_STORE_ID)");
-    return jsonNoCache({ error: "server_misconfigured" }, { status: 500 });
+  const missing = [];
+  if (!apiKey) missing.push("JEKO_API_KEY");
+  if (!apiKeyId) missing.push("JEKO_API_KEY_ID");
+  if (!storeId) missing.push("JEKO_STORE_ID");
+  if (missing.length > 0) {
+    console.error("Jèko: variables d'environnement manquantes à l'exécution :", missing.join(", "));
+    return jsonNoCache({ error: "server_misconfigured", detail: `variable manquante : ${missing.join(", ")}` }, { status: 500 });
   }
 
   const reference = buildReference(matricule, planId);
@@ -106,4 +110,16 @@ export async function POST(request) {
     console.error("Jèko: erreur réseau lors de la création du paiement", e);
     return jsonNoCache({ error: "network_error" }, { status: 502 });
   }
+}
+
+// Page de diagnostic : ouvrir /api/jeko-create-payment dans le navigateur indique, pour chaque
+// variable Jèko, si le serveur la voit à l'exécution (true/false). Ne révèle jamais les valeurs.
+// Peut être supprimée une fois l'intégration validée.
+export async function GET() {
+  return jsonNoCache({
+    JEKO_API_KEY: !!process.env.JEKO_API_KEY,
+    JEKO_API_KEY_ID: !!process.env.JEKO_API_KEY_ID,
+    JEKO_STORE_ID: !!process.env.JEKO_STORE_ID,
+    JEKO_WEBHOOK_SECRET: !!process.env.JEKO_WEBHOOK_SECRET,
+  });
 }
