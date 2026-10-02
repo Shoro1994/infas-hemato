@@ -12733,6 +12733,120 @@ const SANTEINFANT_SUPP_RAW = [
     "Santé infantile — Malnutrition aiguë sévère, critères diagnostiques"],
 ];
 
+const IMMUNO_RAPPROCH2_RAW = [
+  ["QCU","immuno_groupes_sanguins",3,"Si le plasma d'un individu agglutine les hématies-test B, cet individu est du groupe :",
+    ["A","B","AB","O"],[0],
+    "Si le plasma d'un individu agglutine les hématies-test B, cela signifie qu'il possède des anticorps anti-B dans son sérum ; il est donc du groupe A (qui possède l'antigène A et l'anticorps anti-B).",
+    "Immunologie — Groupes sanguins, détermination du groupe ABO"],
+  ["QCM","immuno_crp",2,"Parmi les organes/tissus suivants, la CRP n'est PAS synthétisée par (2 réponses) :",
+    ["Les parasites","La rate","Le foie, qui est au contraire son principal site de synthèse","Les tissus adipeux, qui participent aussi à sa synthèse"],[0,1],
+    "La CRP n'est pas synthétisée par les parasites ni par la rate ; elle est principalement synthétisée par le foie, et dans une moindre mesure par les tissus adipeux.",
+    "Immunologie — La CRP, sites de synthèse"],
+  ["QCD","immuno_intro",2,"Le tube TTA n'est pas indiqué uniquement dans les analyses de sérologie diagnostique ; il sert aussi à d'autres types d'analyses biologiques.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le tube TTA (tube sec, sans anticoagulant) sert à de nombreuses analyses biologiques (biochimie, sérologie...), et pas uniquement à la sérologie diagnostique.",
+    "Immunologie — Prélèvements biologiques, le tube TTA"],
+  ["QCD","immuno_groupes_sanguins",2,"Un sujet du groupe sanguin O positif ne possède ni l'antigène A ni l'antigène B sur ses hématies ; seul l'antigène D (Rhésus) y est présent.",
+    ["Vrai","Faux"],[0],
+    "Vrai, un sujet du groupe O positif ne possède ni antigène A ni antigène B sur ses hématies (d'où le nom « O », zéro antigène ABO) ; seul l'antigène D (Rhésus) y est présent, expliquant le « positif ».",
+    "Immunologie — Groupes sanguins, groupe O"],
+  ["QCD","immuno_widal_felix",3,"Un sujet vacciné contre la fièvre typhoïde peut, malgré tout, contracter la maladie ; le vaccin réduit le risque sans offrir une protection absolue.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la vaccination contre la fièvre typhoïde réduit significativement le risque de contracter la maladie, mais n'offre pas une protection à 100% : un sujet vacciné peut donc, dans de rares cas, être infecté.",
+    "Immunologie — Sérodiagnostic de Widal et Felix, vaccination antityphoïdique"],
+  ["QCD","immuno_hepatite_b",2,"L'hépatite B chronique est affirmée notamment par la persistance de l'antigène HBs positif au-delà de 6 mois.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'hépatite B chronique est affirmée par la persistance de l'antigène HBs positif au-delà de 6 mois (par opposition à l'hépatite aiguë, où il disparaît généralement avant ce délai).",
+    "Immunologie — Sérodiagnostic de l'hépatite B, hépatite chronique"],
+  ["QCD","immuno_groupes_sanguins",3,"Un individu n'appartenant pas au groupe A possède nécessairement, dans son sérum, à la fois des anticorps anti-A et des anticorps anti-B.",
+    ["Vrai","Faux"],[1],
+    "Faux, cette affirmation n'est vraie que pour le groupe O (qui possède les deux anticorps) ; un individu du groupe B ne possède que des anticorps anti-A, et un individu du groupe AB n'en possède aucun des deux — tous n'appartiennent pourtant pas au groupe A.",
+    "Immunologie — Groupes sanguins, anticorps selon le groupe ABO"],
+];
+
+const IMMUNO_RAPPROCH_RAW = [
+  ["QCD","immuno_anticorps",2,"Les anticorps du système ABO sont des anticorps naturels (dits réguliers), présents sans immunisation préalable, et non des anticorps acquis génétiquement.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les anticorps du système ABO sont des anticorps naturels (réguliers) : ils apparaissent spontanément dans les premiers mois de vie, sans contact préalable avec l'antigène correspondant — ils ne sont pas transmis génétiquement en tant qu'anticorps.",
+    "Immunologie — Les anticorps, système ABO"],
+  ["QCD","immuno_vih",1,"Le VIH est un rétrovirus, et non un arbovirus.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le VIH appartient à la famille des rétrovirus (sous-famille des lentivirus) ; un arbovirus est, lui, un virus transmis par un vecteur arthropode (moustique, tique), ce qui n'est pas le mode de transmission du VIH.",
+    "Immunologie — Sérodiagnostic du VIH, classification virale"],
+  ["QCM","immuno_antigenes",2,"Les antigènes immunogènes possèdent notamment les caractéristiques suivantes :",
+    ["Un fort poids moléculaire","Des épitopes","Une grosse molécule","Des paratopes, qui sont en réalité une caractéristique des anticorps, non des antigènes"],[0,1,2],
+    "Les antigènes immunogènes se caractérisent par un fort poids moléculaire, la présence d'épitopes, et une grosse molécule ; les paratopes sont, eux, les sites de reconnaissance portés par les anticorps, pas par les antigènes.",
+    "Immunologie — Les antigènes, caractéristiques de l'immunogénicité"],
+  ["QCD","immuno_anticorps",1,"Les anticorps sont des glycoprotéines.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les anticorps (immunoglobulines) sont des glycoprotéines.",
+    "Immunologie — Les anticorps, nature biochimique"],
+  ["QCD","immuno_intro",2,"Le concept d'immunité repose sur trois piliers : la mémoire, la reconnaissance et la spécificité.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le concept d'immunité repose sur trois piliers fondamentaux : la mémoire (immunitaire), la reconnaissance (du soi et du non-soi), et la spécificité.",
+    "Immunologie — Introduction, les piliers de l'immunité"],
+  ["QCD","immuno_antigenes",2,"Un haptène est une substance de faible poids moléculaire, et non de poids moléculaire élevé.",
+    ["Vrai","Faux"],[0],
+    "Vrai, un haptène est une substance de FAIBLE poids moléculaire, non immunogène à elle seule ; elle doit se coupler à une molécule porteuse pour devenir immunogène (formant alors un antigène complexe).",
+    "Immunologie — Les antigènes, haptènes"],
+  ["QCU","immuno_groupes_sanguins",2,"Le test de Simonin met en évidence :",
+    ["Les anticorps sériques du système ABO (épreuve sérique)","Les antigènes portés par les hématies (épreuve globulaire)","Les anticorps anti-D uniquement","Le facteur Rhésus uniquement"],[0],
+    "Le test de Simonin (épreuve sérique) met en évidence les anticorps du système ABO présents dans le sérum, par opposition à l'épreuve de Beth-Vincent (épreuve globulaire) qui recherche les antigènes portés par les hématies.",
+    "Immunologie — Groupes sanguins, épreuve de Simonin"],
+  ["QCD","immuno_groupes_sanguins",3,"L'injection de sérum anti-D à la mère Rhésus négatif réduit fortement le risque d'allo-immunisation, sans toutefois l'éliminer avec une certitude absolue dans tous les cas.",
+    ["Vrai","Faux"],[1],
+    "Faux, si le sérum anti-D réduit très fortement le risque d'allo-immunisation materno-fœtale, l'affirmation qu'il « élimine » ce risque est une formulation excessive : aucune prophylaxie n'offre une protection absolue à 100%.",
+    "Immunologie — Groupes sanguins, prévention de l'allo-immunisation Rhésus"],
+  ["QCM","immuno_hepatite_b",3,"Le diagnostic d'une hépatite B aiguë est affirmé par la présence de :",
+    ["L'antigène HBs positif","L'antigène HBe positif","Des anticorps anti-HBc de classe IgM positifs","L'antigène HBc lui-même, qui n'est jamais détectable directement dans le sang (il est intracellulaire)"],[0,1,2],
+    "Le diagnostic d'hépatite B aiguë repose sur : antigène HBs positif, antigène HBe positif, et anticorps anti-HBc de classe IgM positifs ; l'antigène HBc (core) est strictement intracellulaire et n'est jamais recherché directement dans le sérum.",
+    "Immunologie — Sérodiagnostic de l'hépatite B, hépatite aiguë"],
+  ["QCD","immuno_anticorps",1,"Les IgM sont les anticorps synthétisés au cours de la réponse immunitaire primaire.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les IgM sont les premiers anticorps synthétisés lors d'une réponse immunitaire primaire (primo-contact avec l'antigène), avant le switch isotypique vers les IgG.",
+    "Immunologie — Les anticorps, cinétique de la réponse immunitaire"],
+  ["QCD","immuno_antigenes",1,"L'immunogénicité est la capacité d'une substance à induire une réponse immunitaire.",
+    ["Vrai","Faux"],[0],
+    "Vrai, l'immunogénicité est la capacité d'une substance (antigène) à induire une réponse immunitaire chez l'hôte.",
+    "Immunologie — Les antigènes, immunogénicité"],
+  ["QCD","immuno_groupes_sanguins",2,"Selon la loi de Landsteiner, un individu possède dans son sérum des anticorps dirigés contre le ou les antigènes qu'il ne possède pas sur ses propres hématies.",
+    ["Vrai","Faux"],[0],
+    "Vrai, c'est la loi de Landsteiner : tout individu possède naturellement les anticorps dirigés contre les antigènes ABO absents de ses propres globules rouges.",
+    "Immunologie — Groupes sanguins, loi de Landsteiner"],
+  ["QCU","immuno_groupes_sanguins",2,"Dans le système ABO, le test de Beth-Vincent met en évidence :",
+    ["Les antigènes présents sur la surface des érythrocytes (épreuve globulaire)","Les anticorps présents dans le sérum (épreuve sérique)","Le facteur Rhésus exclusivement","Les antigènes leucocytaires"],[0],
+    "Le test de Beth-Vincent (épreuve globulaire) met en évidence les antigènes présents sur la surface des érythrocytes, par opposition à l'épreuve de Simonin (épreuve sérique) qui recherche les anticorps du sérum.",
+    "Immunologie — Groupes sanguins, épreuve de Beth-Vincent"],
+  ["QCD","immuno_vih",1,"L'intérêt du traitement antirétroviral est de faire baisser la charge virale et d'augmenter le taux de CD4.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le traitement antirétroviral vise à faire baisser la charge virale plasmatique et à permettre la remontée du taux de lymphocytes CD4.",
+    "Immunologie — Sérodiagnostic du VIH, intérêt du traitement antirétroviral"],
+  ["QCD","immuno_anticorps",2,"Les IgE interviennent dans la défense antiparasitaire.",
+    ["Vrai","Faux"],[0],
+    "Vrai, les IgE jouent un rôle important dans la défense antiparasitaire (en plus de leur rôle dans les réactions allergiques).",
+    "Immunologie — Les anticorps, rôle des IgE"],
+  ["QCU","immuno_groupes_sanguins",2,"Le système Rhésus comporte un nombre d'antigènes principaux égal à :",
+    ["5 (D, C, c, E, e)","3","4","10"],[0],
+    "Le système Rhésus comporte 5 antigènes principaux : D, C, c, E, et e — l'antigène D étant le plus immunogène (déterminant le Rhésus positif ou négatif).",
+    "Immunologie — Groupes sanguins, le système Rhésus"],
+  ["QCD","immuno_toxo",2,"En cas de sérologie toxoplasmose négative chez la femme enceinte, il faut effectuer la sérologie (IgM + IgG) tous les mois jusqu'au terme de la grossesse.",
+    ["Vrai","Faux"],[0],
+    "Vrai, une sérologie toxoplasmique négative en début de grossesse impose une surveillance mensuelle (IgM + IgG) jusqu'au terme, pour dépister une éventuelle séroconversion.",
+    "Immunologie — Sérodiagnostic de la toxoplasmose, surveillance de la femme enceinte séronégative"],
+  ["QCD","immuno_intro",2,"La β-HCG apparaît environ 48 heures après l'implantation (nidation) de l'œuf.",
+    ["Vrai","Faux"],[0],
+    "Vrai, la β-HCG (hormone chorionique gonadotrope) commence à être sécrétée environ 48 heures après l'implantation de l'œuf dans la muqueuse utérine.",
+    "Immunologie — Diagnostic biologique de la grossesse, cinétique de la β-HCG"],
+  ["QCD","immuno_syphilis",1,"Le TPHA et le VDRL sont des tests de référence dans le sérodiagnostic de la syphilis chez la femme enceinte.",
+    ["Vrai","Faux"],[0],
+    "Vrai, le TPHA (test tréponémique) et le VDRL (test non tréponémique) sont les tests de référence pour le dépistage et le suivi sérologique de la syphilis, y compris chez la femme enceinte.",
+    "Immunologie — Sérodiagnostic de la syphilis, tests de référence"],
+  ["QCU","immuno_crp",2,"Le taux usuel (normal) de la CRP chez un sujet sain est généralement :",
+    ["Inférieur à 6 mg/L","Supérieur à 50 mg/L","Toujours égal à 10 mg/L exactement","Impossible à déterminer, la CRP n'ayant pas de valeur normale"],[0],
+    "Le taux usuel (normal) de la CRP chez un sujet sain est généralement inférieur à 6 mg/L ; une élévation significative oriente vers un syndrome inflammatoire.",
+    "Immunologie — La CRP, valeurs normales"],
+];
+
 const IMMUNOLOGIE_RAW = [
   /* ===== Introduction ===== */
   ["QCU","immuno_intro",1,"Il existe deux types d'immunités :",
@@ -16560,6 +16674,8 @@ const QUESTIONS = [
   ...buildQuestions(ISTVIH_RAW, "ist-vih", "iv"),
   ...buildQuestions(ISTVIH_SUPP2_RAW, "ist-vih", "iv2"),
   ...buildQuestions(MNT_RAW, "maladies-non-transmissibles", "mn"),
+  ...buildQuestions(IMMUNO_RAPPROCH2_RAW, "immunologie", "immr2"),
+  ...buildQuestions(IMMUNO_RAPPROCH_RAW, "immunologie", "immr"),
   ...buildQuestions(IMMUNOLOGIE_RAW, "immunologie", "immuno"),
   ...buildQuestions(PATHO_RESPI_PERFECTION2_RAW, "pathologie-respiratoire", "prperf2"),
   ...buildQuestions(PATHO_RESPI_PERFECTION_RAW, "pathologie-respiratoire", "prperf"),
@@ -29341,15 +29457,35 @@ function SubscriptionGauge({ student, onMarkPending }) {
         <div style={{ width: `${pct}%`, height: "100%", background: tone, borderRadius: 999, transition: "width .3s" }} />
       </div>
 
-      {access.isPaid ? (
-        <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>
-          Payé le {fmtDate(student.paidAt)} · valable {student.paidDays || PAID_DAYS} jours.
+      {access.isPaid && !access.isBlocked ? (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+          <div style={{ fontSize: 11.5, color: COLORS.inkSoft }}>
+            Payé le {fmtDate(student.paidAt)} · valable {student.paidDays || PAID_DAYS} jours.
+          </div>
+          {!isPending && (
+            // Permet de prolonger un abonnement encore actif (pas seulement une fois
+            // expiré) : les jours du nouveau forfait s'ajoutent à ceux restants (voir
+            // confirmPayment / le webhook Jèko, qui cumulent plutôt que remplacer).
+            <button
+              onClick={() => setShowModal(true)}
+              style={{ background: "none", border: `1px solid ${COLORS.line}`, borderRadius: 999, color: COLORS.blueDeep, fontWeight: 700, fontSize: 11.5, cursor: "pointer", padding: "5px 12px" }}
+            >
+              Prolonger
+            </button>
+          )}
         </div>
       ) : isPending ? (
         <div style={{ fontSize: 12, color: COLORS.amber, background: COLORS.amberSoft, borderRadius: 8, padding: "8px 10px" }}>
           Paiement signalé, en attente de vérification par l'administrateur.
         </div>
       ) : (
+        // Couvre deux cas distincts avec le même bloc : l'essai gratuit qui se termine
+        // (access.isPaid === false), ET l'abonnement payé qui vient d'expirer
+        // (access.isPaid === true mais access.isBlocked === true, ex. 34 jours écoulés
+        // depuis le dernier paiement). Avant cette correction, le second cas tombait
+        // dans la branche "Payé le... valable X jours" ci-dessus, qui n'affiche aucun
+        // bouton : un étudiant ayant déjà payé une fois se retrouvait donc bloqué sans
+        // aucun moyen de se réabonner une fois son forfait épuisé.
         // Deux entrées visibles côte à côte, plutôt qu'une seule cachant l'autre : le
         // bouton principal "Abonnement" pour découvrir les forfaits et payer, et juste à
         // côté "Déjà payé ? Réclamer ici", pour l'étudiant qui a payé ailleurs (ex. Wave)
@@ -29357,7 +29493,9 @@ function SubscriptionGauge({ student, onMarkPending }) {
         // ne faut jamais laisser bloqué sans issue simple et directe.
         <div>
           <div style={{ fontSize: 11.5, color: COLORS.inkSoft, marginBottom: 10 }}>
-            {access.isBlocked
+            {access.isPaid && access.isBlocked
+              ? `Votre abonnement du ${fmtDate(student.paidAt)} est arrivé à expiration. Renouvelez pour continuer, ou réclamez un nouveau paiement déjà effectué.`
+              : access.isBlocked
               ? "Votre essai gratuit est terminé. Abonnez-vous pour continuer, ou réclamez un paiement déjà effectué."
               : `Essai gratuit de ${access.totalDays} jours en cours. Vous pouvez vous abonner dès maintenant.`}
           </div>
