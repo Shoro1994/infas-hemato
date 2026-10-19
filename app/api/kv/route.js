@@ -94,7 +94,7 @@ export async function GET(request) {
 const PROTECTED_STUDENT_FIELDS = ["isVIP", "paidAt", "paidDays", "parrainRecompense"];
 
 function isAdminOnlyWritePrefix(key) {
-  return key.startsWith("referral-balance:") || key === "infas-hemato:admin-messages" || key === "infas-hemato:announcements";
+  return key.startsWith("referral-balance:") || key === "infas-hemato:admin-messages" || key === "infas-hemato:announcements" || key === "infas-hemato:campaign" || key === "infas-hemato:exam-calendar";
 }
 
 export async function POST(request) {

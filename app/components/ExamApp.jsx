@@ -1686,6 +1686,8 @@ const CHAPTERS = [
   { id: "gonades_ovaires", label: "L'ovaire (fonction endocrine)", subjectId: "anat-physio" },
   { id: "app_genital_fem", label: "Appareil génital féminin (anatomie)", subjectId: "anat-physio" },
   { id: "app_genital_masc", label: "Appareil génital masculin (anatomie)", subjectId: "anat-physio" },
+  { id: "app_bassin_obst", label: "Bassin obstétrical (anatomie)", subjectId: "anat-physio" },
+  { id: "app_physio_obst", label: "Physiologie obstétricale (grossesse, placenta, travail)", subjectId: "anat-physio" },
   { id: "autres_glandes_endocrines", label: "Autres glandes endocrines", subjectId: "anat-physio" },
   { id: "sens_gen", label: "Organes de sens (généralités)", subjectId: "anat-physio" },
   { id: "oeil_anatomie", label: "Anatomie de l'œil", subjectId: "anat-physio" },
@@ -16651,6 +16653,46 @@ const SANTEPUB_EXO_RAW = [
     "Santé publique — Exercice Nutrition, item 35"],
 ];
 
+const SANTEPUB_COMPO_OCT2026_RAW = [
+  ["QCU","santepub_surveillance_def",2,"L'expression « système d'alerte précoce pour la santé publique » désigne :",["L'approche de la santé publique","La surveillance épidémiologique","L'axe évaluatif de l'épidémiologie"],[1],"La surveillance épidémiologique est le système d'alerte précoce de la santé publique : processus continu et systématique de collecte, d'analyse et d'interprétation des données, qui permet de détecter rapidement les événements de santé et de réagir.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCU","santepub_infra_2025",2,"Parmi les sigles suivants, lequel correspond à la nouvelle appellation de l'hôpital général ?",["EPHN","EPHD","EPHR"],[1],"L'hôpital général correspond désormais à l'EPHD (Établissement Public Hospitalier Départemental). L'EPHR est l'établissement régional et l'EPHN l'établissement national, niveau le plus élevé de la pyramide sanitaire.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCM","santepub_pev_orga",2,"Parmi les stratégies suivantes, indiquez celles qui sont pratiquées pendant la vaccination de routine en Côte d'Ivoire par les centres de santé :",["La stratégie fixe","La stratégie avancée","La stratégie de la porte à porte","La stratégie mobile"],[0,1],"Dans la vaccination de routine, les centres de santé pratiquent la stratégie fixe (populations à moins de 5 km, reçues au centre) et la stratégie avancée (localités entre 5 et 15 km). La stratégie mobile relève de l'équipe mobile du district (au-delà de 15 km) et le porte-à-porte des campagnes.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCD","santepub_pev_types",2,"En matière de vaccination, l'intervalle minimum n'existe pas.",["Vrai","Faux"],[1],"Faux, le calendrier vaccinal impose un intervalle minimum entre les doses : en cas d'oubli d'un vaccin, il faut par exemple l'administrer au moins 4 semaines après, pour éviter les interférences entre vaccins.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCD","santepub_priorites",2,"Les disponibilités budgétaires influencent les politiques de santé publique.",["Vrai","Faux"],[0],"Vrai, les ressources financières disponibles conditionnent les priorités, les programmes et l'étendue des services de santé qu'un pays peut mettre en œuvre.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCD","santepub_systeme_valeurs",2,"La pertinence d'un système de santé consiste à agir sur les problèmes prioritaires.",["Vrai","Faux"],[0],"Vrai, la pertinence figure parmi les caractéristiques d'un bon système de santé : elle consiste à répondre aux besoins et à agir sur les problèmes de santé prioritaires de la population.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCD","santepub_def",2,"La promotion de la santé permet aux individus de mieux maîtriser leur santé.",["Vrai","Faux"],[0],"Vrai, selon la Charte d'Ottawa, la promotion de la santé est le processus qui confère aux individus et aux populations les moyens d'assurer un plus grand contrôle sur leur propre santé et de l'améliorer.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCD","santepub_pnlt_dots",2,"Le tuberculeux peut réaliser le traitement DOTS pendant qu'il est seul dans son environnement.",["Vrai","Faux"],[1],"Faux, DOTS signifie traitement directement observé : chaque prise de médicament se fait sous la surveillance d'un agent de santé ou d'un superviseur formé (ou d'un relais communautaire), et non sans témoin.","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+  ["QCD","santepub_pyramide",2,"La pyramide sanitaire ivoirienne comprend, de bas en haut, le niveau périphérique, le niveau intermédiaire et le niveau central.",["Vrai","Faux"],[0],"Vrai, la pyramide sanitaire comporte trois niveaux : périphérique (base, avec les ESPC), intermédiaire (régional) et central (national).","Santé publique — Examen de fin de semestre INFAS, 10 octobre 2026 (Version D)"],
+];
+
+const ANATOMIE_COMPO_OCT2026_RAW = [
+  ["QCD","app_bassin_obst",2,"Le détroit inférieur représente la sortie du bassin obstétrical.",["Vrai","Faux"],[0],"Vrai, le détroit inférieur limite la sortie du bassin obstétrical : c'est le dernier plan que la présentation franchit avant de sortir de la filière pelvi-génitale.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_physio_obst",3,"Lors du toucher vaginal au cours du travail, le franchissement de la ligne bi-épineuse par la palpation de la tête du fœtus certifie que le fœtus a franchi le détroit supérieur.",["Vrai","Faux"],[0],"Vrai, la ligne bi-épineuse (plan des épines sciatiques) se situe sous le détroit supérieur : une tête qui l'a atteinte ou franchie est nécessairement engagée, donc le détroit supérieur est franchi.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"L'épine iliaque antéro-supérieure est sous-cutanée.",["Vrai","Faux"],[0],"Vrai, l'épine iliaque antéro-supérieure est un repère osseux superficiel, directement palpable sous la peau à l'avant de la crête iliaque.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Le losange de Michaelis correspond à un losange plus ou moins visible situé dans le bas du dos.",["Vrai","Faux"],[0],"Vrai, le losange de Michaelis est un losange cutané plus ou moins visible dans la région lombo-sacrée (bas du dos) ; c'est un repère clinique de l'examen du bassin.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",1,"L'anatomie n'est pas importante pour la maîtrise de l'obstétrique.",["Vrai","Faux"],[1],"Faux, la connaissance de l'anatomie (bassin, appareil génital, annexes du fœtus) est indispensable pour comprendre la grossesse et l'accouchement, et pour conduire un travail en sécurité.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"L'épine iliaque antéro-supérieure appartient au bord postéro-supérieur de l'os coxal.",["Vrai","Faux"],[1],"Faux, l'épine iliaque antéro-supérieure appartient au bord antérieur de l'os coxal, à l'extrémité avant de la crête iliaque.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Le cartilage en Y est permanent peu importe l'âge.",["Vrai","Faux"],[1],"Faux, le cartilage en Y (au fond de l'acétabulum) n'existe que pendant la croissance : il s'ossifie à l'adolescence et disparaît chez l'adulte, quand les trois os primitifs sont soudés.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",1,"L'os coxal est un os long.",["Vrai","Faux"],[1],"Faux, l'os coxal est un os plat (large), formé de l'ilion, de l'ischion et du pubis ; l'os le plus long du corps est le fémur.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Le cartilage en Y est issu de la fusion de trois os primitifs au sein de l'acétabulum.",["Vrai","Faux"],[0],"Vrai, l'os coxal est formé de trois os primitifs (ilion, ischion, pubis) réunis au niveau de l'acétabulum par le cartilage en Y chez l'enfant.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Le promontoire participe à la constitution de la limite postérieure du détroit supérieur.",["Vrai","Faux"],[0],"Vrai, le promontoire (saillie de la première vertèbre sacrée) forme le point le plus saillant de la limite postérieure du détroit supérieur.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Le bassin est subdivisé au total en 4 détroits.",["Vrai","Faux"],[1],"Faux, le bassin obstétrical comporte 3 détroits : supérieur, moyen et inférieur.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_physio_obst",2,"La présentation fœtale doit franchir le détroit inférieur avant le détroit supérieur au cours d'un accouchement normal.",["Vrai","Faux"],[1],"Faux, la présentation franchit successivement le détroit supérieur (engagement), puis le détroit moyen, puis le détroit inférieur.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Une réduction importante des dimensions du bassin obstétrical peut constituer un obstacle mécanique à l'accouchement par voie basse.",["Vrai","Faux"],[0],"Vrai, un bassin rétréci réalise une dystocie osseuse : le fœtus ne peut pas s'engager ou progresser, ce qui peut imposer une césarienne.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_physio_obst",2,"Le col utérin reste totalement fermé et ne subit aucune modification pendant le travail.",["Vrai","Faux"],[1],"Faux, pendant le travail le col s'efface puis se dilate progressivement jusqu'à environ 10 cm (dilatation complète).","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Le promontoire est représenté par la première vertèbre thoracique.",["Vrai","Faux"],[1],"Faux, le promontoire correspond à la saillie de la première vertèbre sacrée (S1), au sommet du sacrum, et non à une vertèbre thoracique.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCD","app_bassin_obst",2,"Le diamètre bi-ischiatique est un diamètre antéro-postérieur.",["Vrai","Faux"],[1],"Faux, le diamètre bi-ischiatique est un diamètre transverse (il unit les deux tubérosités ischiatiques au niveau du détroit inférieur).","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_physio_obst",2,"Quel est le rôle principal des contractions utérines pendant le travail ?",["Produire les ovocytes","Former le placenta","Favoriser la progression du fœtus","Produire le liquide amniotique"],[2],"Les contractions utérines provoquent l'effacement et la dilatation du col et font progresser le fœtus dans la filière pelvi-génitale jusqu'à l'expulsion.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_genital_fem",2,"Le vagin joue notamment le rôle de :",["Organe producteur d'ovocytes","Voie de passage lors de l'accouchement","Organe producteur des hormones ovariennes","Canal génital"],[1,3],"Le vagin est l'organe de la copulation et le canal génital ; il constitue la voie de passage du fœtus lors de l'accouchement. Les ovocytes et les hormones ovariennes sont produits par l'ovaire.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_bassin_obst",2,"Le bassin obstétrical comprend notamment :",["Le thorax","Le détroit supérieur","L'excavation pelvienne","Le crâne"],[1,2],"Le bassin obstétrical comprend le détroit supérieur, l'excavation pelvienne (détroit moyen) et le détroit inférieur.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_physio_obst",2,"Les objectifs échographiques au 1er trimestre sont (cocher les 2 bonnes réponses) :",["Dater la grossesse","Évaluer les facteurs de risques maternels","Connaître le sexe","Déterminer le nombre"],[0,3],"L'échographie du 1er trimestre sert à confirmer la grossesse, à la dater (âge gestationnel) et à déterminer le nombre d'embryons ; l'échographie morphologique est réalisée au 2ème trimestre.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_physio_obst",2,"S'agissant de l'examen du placenta, cocher les 2 propositions exactes :",["Il n'est pas systématique après l'accouchement","Il faut s'assurer de son intégralité, ceci pour prévenir une hémorragie","Il est constitué de 2 veines et 1 artère","Son poids représente environ 1/6ème du poids de l'enfant","Il est constitué de 1 veine et 1 artère"],[1,3],"L'examen du placenta est systématique après la délivrance : on vérifie son intégralité (une rétention de fragments provoque une hémorragie). Son poids représente environ 1/6 du poids du nouveau-né. Les vaisseaux comptés sont ceux du cordon (1 veine et 2 artères), non ceux proposés ici.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_physio_obst",2,"Parmi les éléments suivants, lesquels participent directement au travail obstétrical ?",["Les contractions utérines","La production des ovocytes","La dilatation du col","La sécrétion de bile"],[0,2],"Le travail obstétrical repose sur les contractions utérines et sur l'effacement-dilatation du col, qui permettent la progression du fœtus.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_physio_obst",1,"Quel organe reçoit normalement le fœtus pendant la grossesse ?",["L'utérus","Le vagin","La vulve","L'ovaire"],[0],"L'utérus est l'organe de la gestation : l'œuf s'y implante (nidation) et le fœtus s'y développe jusqu'à l'accouchement.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_physio_obst",2,"Parmi les présentations suivantes, l'une a pour repère la racine du nez : laquelle ?",["La présentation du front","La présentation du sommet","La présentation du bregma","La présentation de la face"],[0],"Dans la présentation du front, le repère est la racine du nez. Le repère de la face est le menton et celui du sommet l'occiput.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+  ["QCM","app_physio_obst",2,"Au cours d'un accouchement par voie basse, la présentation fœtale franchit successivement (1 seule réponse juste) :",["Détroit inférieur → supérieur → moyen","Détroit supérieur → moyen → inférieur","Détroit moyen → supérieur → inférieur","Détroit supérieur → inférieur → moyen"],[1],"La présentation franchit d'abord le détroit supérieur (engagement), puis le détroit moyen, puis le détroit inférieur.","Anatomie-physiologie obstétricale — Évaluation INFAS Abidjan, octobre 2026 (Version D)"],
+];
+
 const QUESTIONS = [
   ...buildQuestions(RAW, "hematologie", "q"),
   ...buildQuestions(HEMATO_SUPP_RAW, "hematologie", "hs"),
@@ -16707,6 +16749,8 @@ const QUESTIONS = [
   ...buildQuestions(AEPA_PHARMACO_RAW, "pharmacologie", "aepa"),
   ...buildQuestions(TRAUMATISME_OBST_RAW, "sante-infantile", "trauobst"),
   ...buildQuestions(EXO_SANTEPUB_RAW, "sante-publique", "exosp"),
+  ...buildQuestions(SANTEPUB_COMPO_OCT2026_RAW, "sante-publique", "spo26"),
+  ...buildQuestions(ANATOMIE_COMPO_OCT2026_RAW, "anat-physio", "ano26"),
   ...buildQuestions(EXO_SANTECOMMU_RAW, "sante-communautaire", "exosc"),
   ...buildQuestions(INFORMATIQUE_RAW, "informatique", "info"),
   ...buildQuestions(PATHO_CHIR_ENRICHISSEMENT_RAW, "semio-chir", "pcenr"),
@@ -16913,6 +16957,32 @@ const SANTEPUB_RAW_CASES = [
       { stem: "Pour ce patient, quel objectif de taux de succès thérapeutique le PNLT s'est-il fixé au niveau national ?",
         options: ["Supérieur ou égal à 89%", "Supérieur ou égal à 50%", "Égal à 100% sans exception", "Aucun objectif chiffré n'est fixé"], correct: [0],
         explanation: "Les objectifs de lutte antituberculeuse incluent un taux de succès thérapeutique (nouveaux cas et rechutes) supérieur ou égal à 89%." },
+    ],
+  },
+];
+
+const SANTEPUB_COMPO_OCT2026_CASES = [
+  {
+    chapterId: "santepub_milieu_strategies", level: 3,
+    vignette:
+      "Adiaké est une Sous-Préfecture qui compte 15000 habitants au 31/12/2024. Vous avez pris service le 03 juin 2024 au centre de santé rural d'une localité dont l'aire sanitaire couvre les villages figurant dans le tableau suivant : Fouadé : 5 km du centre de santé, 3000 habitants ; Etueboué : 2 km, 8000 habitants ; Melekoukro : 14 km, 1300 habitants ; Djiminikoffikro : 7 km, 1800 habitants ; Kacoukro : 3 km, 2000 habitants ; Akounougbe : 11 km, 2200 habitants. (Stratégie fixe : moins de 5 km ; stratégie avancée : de 5 à 15 km ; femmes enceintes : 5 % de la population ; enfants de 0 à 23 mois : 6,82 % de la population.)",
+    ref: "Santé publique — Étude de cas (examen de fin de semestre INFAS Abidjan, 10 octobre 2026, Version D)",
+    qs: [
+      { stem: "Quelle est la population totale de l'aire sanitaire du CSR d'Adiaké en 2024 ?",
+        options: ["18 300 habitants", "33 000 habitants", "33 300 habitants"], correct: [0],
+        explanation: "On additionne les villages du tableau : 3000 + 8000 + 1300 + 1800 + 2000 + 2200 = 18 300 habitants." },
+      { stem: "Quelle est la population totale des enfants de 0 à 23 mois de l'aire sanitaire au cours de l'année 2024 ?",
+        options: ["2 105 enfants", "1 249 enfants", "1 166 enfants"], correct: [1],
+        explanation: "Enfants de 0 à 23 mois = 6,82 % de la population : 18 300 x 6,82 % = 1 248,06, soit environ 1 249 enfants." },
+      { stem: "Quelle est l'estimation de la population pour une stratégie avancée ?",
+        options: ["14 500 habitants", "8 300 habitants", "11 500 habitants"], correct: [1],
+        explanation: "La stratégie avancée concerne les localités situées entre 5 et 15 km : Fouadé (5 km, 3000) + Melekoukro (14 km, 1300) + Djiminikoffikro (7 km, 1800) + Akounougbe (11 km, 2200) = 8 300 habitants." },
+      { stem: "Quelle est l'estimation de la population pour une stratégie fixe ?",
+        options: ["25 000 habitants", "15 000 habitants", "10 000 habitants"], correct: [2],
+        explanation: "La stratégie fixe concerne les localités situées à moins de 5 km : Etueboué (2 km, 8000) + Kacoukro (3 km, 2000) = 10 000 habitants." },
+      { stem: "Combien de femmes enceintes bénéficient des activités du centre de santé rural d'Adiaké en stratégie fixe en 2024 ?",
+        options: ["500 FE", "750 FE", "1 250 FE"], correct: [0],
+        explanation: "Les femmes enceintes représentent 5 % de la population : 10 000 (population de la stratégie fixe) x 5 % = 500 femmes enceintes." },
     ],
   },
 ];
@@ -17804,6 +17874,7 @@ const CASES = [
   ...buildCases(RAW_CASES, "hematologie", "case"),
   ...buildCases(DEONTO_RAW_CASES, "deontologie", "dcase"),
   ...buildCases(SANTEPUB_RAW_CASES, "sante-publique", "spcase"),
+  ...buildCases(SANTEPUB_COMPO_OCT2026_CASES, "sante-publique", "spcaseo26"),
   ...buildCases(GYNECO_RAW_CASES, "gyneco-obstetrique", "gycase"),
   ...buildCases(EVAL_DALOA_RAW_CASES, "techniques-soins-infirmiers", "evdcase"),
   ...buildCases(SOINS_INF_OBST_RAW_CASES, "soins-infirmiers-obstetricaux", "siocase"),
@@ -28329,7 +28400,7 @@ function AdminScreen({ onBack }) {
         </p>
 
         <div style={{ display: "flex", gap: 6, marginBottom: 20, background: "#E9EFF2", borderRadius: 10, padding: 4, maxWidth: 620, overflowX: "auto" }}>
-          {[["stats", "Statistiques"], ["calendrier", "Calendrier"], ["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
+          {[["stats", "Statistiques"], ["calendrier", "Calendrier"], ["students", "Étudiants"], ["payments", `Paiements${pending.length ? ` (${pending.length})` : ""}`], ["announcements", "Annonces"], ["campaign", "Campagne"], ["messages", "Messages"], ["ratings", `Avis${ratings && ratings.length ? ` (${ratings.length})` : ""}`]].map(([id, label]) => (
             <button
               key={id}
               onClick={() => { setTab(id); refreshStudents(); }}
@@ -28754,6 +28825,8 @@ function AdminScreen({ onBack }) {
 
         {tab === "announcements" && <AnnouncementsAdmin announcements={announcements} onChanged={refreshAnnouncements} />}
         {tab === "messages" && <MessagesAdmin students={students} />}
+
+        {tab === "campaign" && <CampaignAdmin />}
 
         {tab === "ratings" && (
           <div>
@@ -29518,6 +29591,397 @@ function SubscriptionGauge({ student, onMarkPending }) {
   );
 }
 
+/* ---------------- Campagnes de sensibilisation (Octobre rose / Novembre bleu) ----------------
+   Bandeau affiché sur le tableau de bord de l'étudiant + cartes d'information à partager.
+   Réglage piloté par l'admin (onglet « Campagne »), stocké côté serveur comme les annonces :
+   { mode: "auto" | "rose" | "bleu" | "off", message: "texte libre facultatif" }.
+   En mode "auto", le bandeau suit le calendrier : rose en octobre, bleu en novembre, rien le reste de l'année. */
+const CAMPAIGN_KEY = "infas-hemato:campaign";
+const CAMPAIGN_THEMES = {
+  rose: {
+    id: "rose", name: "Octobre rose", color: "#C2185B", deep: "#880E4F", soft: "#FCE4EC",
+    subtitle: "Mois de sensibilisation au cancer du sein",
+    defaultMessage: "Des cartes d'information fiables, à partager avec vos proches.",
+  },
+  bleu: {
+    id: "bleu", name: "Novembre bleu", color: "#1565C0", deep: "#0D47A1", soft: "#E3F2FD",
+    subtitle: "Mois de sensibilisation à la santé de l'homme et à la prostate",
+    defaultMessage: "Des cartes d'information fiables, à partager avec vos proches.",
+  },
+};
+// Contenu des cartes : chaque information vient d'une source citée sur la carte elle-même
+// (fiche OMS sur le cancer du sein, fiche OMS sur le cancer, fiche PSA du National Cancer
+// Institute, cours INFAS d'anatomie et de pathologie chirurgicale). Rien n'est écrit de mémoire.
+const CAMPAIGN_CARDS = {
+  rose: [
+    {
+      id: "rose-signes", titre: "Cancer du sein : les signes qui doivent alerter",
+      lignes: [
+        "Une masse ou un épaississement, souvent indolore",
+        "Un changement de taille, de forme ou d'aspect du sein",
+        "Des fossettes, des rougeurs ou une peau d'orange",
+        "Une modification du mamelon ou de l'aréole",
+        "Un écoulement anormal ou sanglant du mamelon",
+      ],
+      note: "La plupart des masses ne sont pas cancéreuses, mais toute anomalie doit être examinée par un professionnel de santé.",
+      source: "Source : OMS, fiche d'information sur le cancer du sein",
+    },
+    {
+      id: "rose-chiffres", titre: "Le cancer du sein dans le monde",
+      lignes: [
+        "2,4 millions de femmes diagnostiquées en 2024",
+        "694 000 décès la même année",
+        "Cancer le plus fréquent chez les femmes dans 164 pays sur 186",
+        "Environ 99 % des cas touchent des femmes, 0,5 à 1 % des hommes",
+      ],
+      note: "Reconnaître les signes et consulter vite : c'est le premier pilier de l'Initiative mondiale de l'OMS contre le cancer du sein.",
+      source: "Source : OMS, fiche d'information sur le cancer du sein",
+    },
+    {
+      id: "rose-risque", titre: "Facteurs de risque du cancer du sein",
+      lignes: [
+        "Le sexe féminin et l'âge (plus de 40 ans)",
+        "Les antécédents familiaux et gynécologiques",
+        "L'obésité, l'alcool, le tabac",
+        "Le traitement hormonal postménopausique",
+        "L'exposition aux radiations",
+        "Les mutations des gènes BRCA1, BRCA2 et PALB2",
+      ],
+      note: "Environ 80 % des cas surviennent chez des femmes sans facteur de risque modifiable en dehors du sexe et de l'âge.",
+      source: "Source : OMS, fiche d'information sur le cancer du sein",
+    },
+    {
+      id: "rose-depistage", titre: "Dépister et soigner",
+      lignes: [
+        "Connaître les signes et consulter rapidement",
+        "Mammographie de dépistage : généralement entre 50 et 69 ans",
+        "Traitements selon le cas : chirurgie, radiothérapie, hormonothérapie, chimiothérapie, thérapies ciblées",
+      ],
+      note: "Seul un professionnel de santé peut poser un diagnostic.",
+      source: "Source : OMS, fiche d'information sur le cancer du sein",
+    },
+  ],
+  bleu: [
+    {
+      id: "bleu-prostate", titre: "La prostate, c'est quoi ?",
+      lignes: [
+        "Un organe unique (impair)",
+        "Située sous la vessie, autour de la première portion de l'urètre",
+        "Ses sécrétions entrent dans la composition du sperme",
+      ],
+      note: "Avec l'âge, elle peut grossir ou s'infecter : mieux vaut connaître les signes.",
+      source: "Source : cours d'anatomie INFAS, appareil génital masculin",
+    },
+    {
+      id: "bleu-adenome", titre: "Adénome de la prostate : les signes",
+      lignes: [
+        "Besoin d'uriner la nuit (pollakiurie nocturne)",
+        "Miction retardée, gouttes retardataires",
+        "Urines très rouges en cas d'hémorragie",
+        "Rétention urinaire possible",
+        "Examens : échographie, dosage du PSA, biopsie prostatique",
+      ],
+      note: "L'adénome est une tumeur bénigne. Tout trouble urinaire mérite une consultation.",
+      source: "Source : cours INFAS de pathologie chirurgicale",
+    },
+    {
+      id: "bleu-psa", titre: "Le PSA, un chiffre à interpréter",
+      lignes: [
+        "Une protéine produite par les cellules normales de la prostate comme par les cellules cancéreuses",
+        "Il peut aussi monter avec un adénome ou une prostatite",
+        "Une infection ou une biopsie récente peut le faire monter un mois ou deux",
+        "Environ 25 % des hommes biopsiés pour un PSA élevé ont un cancer",
+      ],
+      note: "Un PSA élevé ne veut pas toujours dire cancer : le résultat se discute avec un médecin.",
+      source: "Source : National Cancer Institute (États-Unis), fiche sur le test PSA",
+    },
+    {
+      id: "bleu-risque", titre: "Cancer de la prostate : qui est le plus à risque ?",
+      lignes: [
+        "Les hommes noirs",
+        "Les hommes dont le père ou un frère a eu un cancer de la prostate",
+        "1,5 million de nouveaux cas dans le monde en 2024",
+      ],
+      note: "Certaines organisations conseillent aux hommes à risque élevé d'en parler à un médecin dès 40 ou 45 ans.",
+      source: "Sources : National Cancer Institute ; OMS, fiche sur le cancer",
+    },
+    {
+      id: "bleu-depistage", titre: "Dépistage du cancer de la prostate : ce qu'il faut savoir",
+      lignes: [
+        "Le test PSA peut détecter un cancer plus tôt, avant qu'il se propage",
+        "Il peut aussi détecter des tumeurs qui n'auraient jamais posé de problème (surdiagnostic)",
+        "Environ 6 à 7 % des hommes ont un faux positif à chaque tour de dépistage",
+      ],
+      note: "La décision de se faire dépister se prend avec un médecin.",
+      source: "Source : National Cancer Institute (États-Unis), fiche sur le test PSA",
+    },
+  ],
+};
+async function loadCampaign() {
+  try {
+    const res = await storage.get(CAMPAIGN_KEY, true);
+    const cfg = res ? JSON.parse(res.value) : null;
+    return { mode: cfg?.mode || "auto", message: cfg?.message || "" };
+  } catch { return { mode: "auto", message: "" }; }
+}
+async function saveCampaign(cfg) {
+  try { await storage.set(CAMPAIGN_KEY, JSON.stringify(cfg), true); return true; } catch (e) { console.error(e); return false; }
+}
+function activeCampaignTheme(cfg, now = new Date()) {
+  const mode = cfg?.mode || "auto";
+  if (mode === "off") return null;
+  if (mode === "rose" || mode === "bleu") return CAMPAIGN_THEMES[mode];
+  const m = now.getMonth(); // 9 = octobre, 10 = novembre
+  if (m === 9) return CAMPAIGN_THEMES.rose;
+  if (m === 10) return CAMPAIGN_THEMES.bleu;
+  return null;
+}
+
+// Découpe un texte en lignes qui tiennent dans une largeur donnée (canvas).
+function wrapCanvasText(ctx, text, maxWidth) {
+  const words = String(text).split(" ");
+  const lines = [];
+  let line = "";
+  words.forEach((w) => {
+    const test = line ? line + " " + w : w;
+    if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; } else { line = test; }
+  });
+  if (line) lines.push(line);
+  return lines;
+}
+
+// Dessine une carte d'information (image 1080 x 1350, format partageable) et renvoie un Blob PNG.
+function renderCampaignCard(theme, card) {
+  return new Promise((resolve, reject) => {
+    try {
+      const W = 1080, H = 1350, PAD = 70;
+      const canvas = document.createElement("canvas");
+      canvas.width = W; canvas.height = H;
+      const ctx = canvas.getContext("2d");
+      const FONT = "'IBM Plex Sans', 'Segoe UI', Arial, sans-serif";
+      const bodyW = W - PAD * 2;
+      // On réduit progressivement la taille du texte jusqu'à ce que tout tienne dans la carte.
+      const BAND = 230, FOOT = 150;
+      let scale = 1, layout = null;
+      while (scale >= 0.6) {
+        const tSize = Math.round(62 * scale), lSize = Math.round(40 * scale), nSize = Math.round(34 * scale);
+        ctx.font = `700 ${tSize}px ${FONT}`;
+        const tLines = wrapCanvasText(ctx, card.titre, bodyW);
+        ctx.font = `400 ${lSize}px ${FONT}`;
+        const lLines = card.lignes.map((l) => wrapCanvasText(ctx, l, bodyW - 56));
+        ctx.font = `400 ${nSize}px ${FONT}`;
+        const nLines = wrapCanvasText(ctx, card.note, bodyW - 60);
+        const tH = tLines.length * tSize * 1.2;
+        const lH = lLines.reduce((s, l) => s + l.length * lSize * 1.35 + 22, 0);
+        const nH = nLines.length * nSize * 1.4 + 56;
+        const total = BAND + 50 + tH + 40 + lH + 30 + nH + FOOT;
+        layout = { tSize, lSize, nSize, tLines, lLines, nLines, tH, lH, nH };
+        if (total <= H) break;
+        scale -= 0.05;
+      }
+      const { tSize, lSize, nSize, tLines, lLines, nLines, tH, lH, nH } = layout;
+
+      ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, W, H);
+      // Bandeau supérieur
+      ctx.fillStyle = theme.color; ctx.fillRect(0, 0, W, BAND);
+      ctx.fillStyle = theme.deep; ctx.fillRect(0, BAND - 10, W, 10);
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = `800 64px ${FONT}`; ctx.textBaseline = "alphabetic";
+      ctx.fillText(theme.name.toUpperCase(), PAD, 112);
+      ctx.font = `400 30px ${FONT}`; ctx.globalAlpha = 0.92;
+      wrapCanvasText(ctx, theme.subtitle, bodyW).slice(0, 2).forEach((ln, i) => ctx.fillText(ln, PAD, 160 + i * 38));
+      ctx.globalAlpha = 1;
+
+      let y = BAND + 50;
+      // Titre
+      ctx.fillStyle = "#17222B"; ctx.font = `700 ${tSize}px ${FONT}`;
+      tLines.forEach((ln, i) => ctx.fillText(ln, PAD, y + tSize * (i + 0.9) * 1.2 - tSize * 0.2));
+      y += tH + 40;
+      // Lignes à puces
+      ctx.font = `400 ${lSize}px ${FONT}`;
+      lLines.forEach((lines) => {
+        ctx.fillStyle = theme.color;
+        ctx.beginPath(); ctx.arc(PAD + 14, y + lSize * 0.55, 10, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#26323B";
+        lines.forEach((ln, i) => ctx.fillText(ln, PAD + 56, y + lSize * (i + 1) * 1.35 - lSize * 0.3));
+        y += lines.length * lSize * 1.35 + 22;
+      });
+      y += 30;
+      // Encadré de conclusion
+      ctx.fillStyle = theme.soft;
+      const bx = PAD, bw = bodyW;
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(bx, y, bw, nH, 22); else ctx.rect(bx, y, bw, nH);
+      ctx.fill();
+      ctx.fillStyle = theme.color; ctx.fillRect(bx, y, 10, nH);
+      ctx.fillStyle = theme.deep; ctx.font = `400 ${nSize}px ${FONT}`;
+      nLines.forEach((ln, i) => ctx.fillText(ln, bx + 40, y + 28 + nSize * (i + 1) * 1.4 - nSize * 0.35));
+
+      // Pied de carte
+      ctx.fillStyle = "#6B7A85"; ctx.font = `400 25px ${FONT}`;
+      wrapCanvasText(ctx, card.source, bodyW).forEach((ln, i) => ctx.fillText(ln, PAD, H - 98 + i * 30));
+      ctx.fillStyle = theme.color; ctx.font = `700 28px ${FONT}`;
+      ctx.fillText("Agent de Santé Nouveau  ·  shoro-prepa-agentsante.netlify.app", PAD, H - 40);
+      ctx.fillStyle = "#6B7A85"; ctx.font = `400 22px ${FONT}`;
+      ctx.textAlign = "right"; ctx.fillText("Information de sensibilisation, elle ne remplace pas une consultation.", W - PAD, H - 66); ctx.textAlign = "left";
+
+      canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("canvas vide"))), "image/png");
+    } catch (e) { reject(e); }
+  });
+}
+
+function CampaignCardsModal({ theme, onClose }) {
+  const cards = CAMPAIGN_CARDS[theme.id] || [];
+  const [previews, setPreviews] = useState({});
+  const [status, setStatus] = useState("");
+  useEffect(() => {
+    let alive = true;
+    const urls = [];
+    (async () => {
+      for (const card of cards) {
+        try {
+          const blob = await renderCampaignCard(theme, card);
+          const url = URL.createObjectURL(blob);
+          urls.push(url);
+          if (!alive) return;
+          setPreviews((p) => ({ ...p, [card.id]: url }));
+        } catch { /* la carte reste sans aperçu, le partage retentera le rendu */ }
+      }
+    })();
+    return () => { alive = false; urls.forEach((u) => URL.revokeObjectURL(u)); };
+  }, [theme.id]);
+
+  const saveCard = async (card) => {
+    try {
+      const blob = await renderCampaignCard(theme, card);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = `${card.id}.png`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      setStatus("Image enregistrée dans vos téléchargements : vous pouvez la joindre dans WhatsApp.");
+    } catch { setStatus("Impossible de créer l'image sur cet appareil."); }
+  };
+  const shareCard = async (card) => {
+    const text = `${card.titre} (${theme.name}). Plus d'infos sur Agent de Santé Nouveau : ${APP_URL}`;
+    try {
+      const blob = await renderCampaignCard(theme, card);
+      const file = new File([blob], `${card.id}.png`, { type: "image/png" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], text, title: theme.name }); setStatus(""); return; }
+        catch (e) { if (e && e.name === "AbortError") return; }
+      }
+      await saveCard(card);
+    } catch { window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank"); }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(10,20,30,0.6)", zIndex: 9999, display: "flex", alignItems: "flex-end", justifyContent: "center" }} onClick={onClose}>
+      <div onClick={(e) => e.stopPropagation()} style={{ background: COLORS.bg, width: "100%", maxWidth: 560, maxHeight: "92vh", overflowY: "auto", borderRadius: "18px 18px 0 0", padding: "18px 16px 28px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 17, fontWeight: 700, color: theme.color }}>{theme.name} · cartes à partager</div>
+          <button onClick={onClose} aria-label="Fermer" style={{ ...secondaryBtn, padding: "4px 10px", fontSize: 13 }}>Fermer</button>
+        </div>
+        <div style={{ fontSize: 12.5, color: COLORS.inkSoft, marginBottom: 14 }}>
+          Choisissez une carte et envoyez-la sur WhatsApp ou enregistrez l'image. Chaque carte cite sa source.
+        </div>
+        {status && <div style={{ background: theme.soft, color: theme.deep, borderRadius: 10, padding: "8px 12px", fontSize: 12.5, marginBottom: 12 }}>{status}</div>}
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {cards.map((card) => (
+            <div key={card.id} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, overflow: "hidden" }}>
+              {previews[card.id]
+                ? <img src={previews[card.id]} alt={card.titre} style={{ width: "100%", display: "block" }} />
+                : <div style={{ padding: 28, textAlign: "center", fontSize: 12.5, color: COLORS.inkSoft }}>Préparation de la carte…</div>}
+              <div style={{ display: "flex", gap: 8, padding: 10 }}>
+                <button onClick={() => shareCard(card)} style={{ ...primaryBtn, flex: 1, padding: "9px 12px", fontSize: 13, background: theme.color }}>Partager</button>
+                <button onClick={() => saveCard(card)} style={{ ...secondaryBtn, padding: "9px 12px", fontSize: 13 }}>Enregistrer</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CampaignBanner() {
+  const [theme, setTheme] = useState(null);
+  const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    loadCampaign().then((cfg) => {
+      const t = activeCampaignTheme(cfg);
+      setTheme(t);
+      setMessage((cfg.message || "").trim());
+      if (t) {
+        try { if (window.localStorage.getItem(`infas-campaign-hidden:${t.id}:${new Date().toISOString().slice(0, 7)}`)) setHidden(true); } catch {}
+      }
+    });
+  }, []);
+  if (!theme || hidden) return null;
+  const dismiss = () => {
+    try { window.localStorage.setItem(`infas-campaign-hidden:${theme.id}:${new Date().toISOString().slice(0, 7)}`, "1"); } catch {}
+    setHidden(true);
+  };
+  return (
+    <>
+      <div style={{ background: `linear-gradient(135deg, ${theme.color}, ${theme.deep})`, color: "#fff", borderRadius: 14, padding: "14px 16px", marginBottom: 22, position: "relative" }}>
+        <button onClick={dismiss} aria-label="Masquer ce bandeau" style={{ position: "absolute", top: 6, right: 8, background: "transparent", border: "none", color: "#fff", opacity: 0.8, fontSize: 18, cursor: "pointer", lineHeight: 1 }}>×</button>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, fontWeight: 700, marginBottom: 2, paddingRight: 22 }}>{theme.name}</div>
+        <div style={{ fontSize: 12, opacity: 0.92, marginBottom: 6 }}>{theme.subtitle}</div>
+        <div style={{ fontSize: 13, lineHeight: 1.5, marginBottom: 10 }}>{message || theme.defaultMessage}</div>
+        <button onClick={() => setOpen(true)} style={{ background: "#fff", color: theme.deep, border: "none", borderRadius: 999, padding: "8px 16px", fontSize: 12.5, fontWeight: 700, cursor: "pointer", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+          Voir et partager les cartes
+        </button>
+      </div>
+      {open && <CampaignCardsModal theme={theme} onClose={() => setOpen(false)} />}
+    </>
+  );
+}
+
+function CampaignAdmin() {
+  const [cfg, setCfg] = useState(null);
+  const [saved, setSaved] = useState("");
+  useEffect(() => { loadCampaign().then(setCfg); }, []);
+  if (cfg === null) return <div style={{ fontSize: 13, color: COLORS.inkSoft }}>Chargement…</div>;
+  const active = activeCampaignTheme(cfg);
+  const options = [
+    ["auto", "Automatique", "Rose en octobre, bleu en novembre, rien le reste de l'année"],
+    ["rose", "Octobre rose, en permanence", "Force le bandeau rose, quel que soit le mois"],
+    ["bleu", "Novembre bleu, en permanence", "Force le bandeau bleu, quel que soit le mois"],
+    ["off", "Désactivé", "Aucun bandeau pour les étudiants"],
+  ];
+  return (
+    <div>
+      <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
+        <div style={{ fontSize: 13.5, fontWeight: 700, color: COLORS.ink, marginBottom: 12 }}>Bandeau de sensibilisation</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14 }}>
+          {options.map(([id, label, desc]) => (
+            <label key={id} style={{ display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer", fontSize: 13, color: COLORS.ink }}>
+              <input type="radio" name="campaign-mode" checked={cfg.mode === id} onChange={() => { setCfg({ ...cfg, mode: id }); setSaved(""); }} style={{ marginTop: 3 }} />
+              <span><b>{label}</b><br /><span style={{ fontSize: 11.5, color: COLORS.inkSoft }}>{desc}</span></span>
+            </label>
+          ))}
+        </div>
+        <div style={{ fontSize: 11, color: COLORS.inkSoft, marginBottom: 4 }}>Message affiché sous le titre (facultatif, 160 caractères)</div>
+        <textarea value={cfg.message} maxLength={160} rows={2} onChange={(e) => { setCfg({ ...cfg, message: e.target.value }); setSaved(""); }}
+          placeholder="Laissez vide pour le message par défaut"
+          style={{ width: "100%", boxSizing: "border-box", padding: "8px 10px", borderRadius: 8, border: `1px solid ${COLORS.line}`, fontSize: 13, fontFamily: "'IBM Plex Sans', sans-serif", marginBottom: 12 }} />
+        <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+          <button onClick={async () => { const ok = await saveCampaign({ mode: cfg.mode, message: cfg.message.trim() }); setSaved(ok ? "Enregistré." : "Échec de l'enregistrement : reconnectez-vous en tant qu'admin."); }}
+            style={{ ...primaryBtn, padding: "9px 16px", fontSize: 13 }}>Enregistrer</button>
+          {saved && <span style={{ fontSize: 12.5, color: COLORS.inkSoft }}>{saved}</span>}
+        </div>
+      </div>
+      <div style={{ fontSize: 12.5, color: COLORS.inkSoft }}>
+        Actuellement visible par les étudiants : <b style={{ color: active ? active.color : COLORS.ink }}>{active ? active.name : "aucun bandeau"}</b>.
+        Chaque carte cite sa source (OMS, National Cancer Institute, cours INFAS).
+      </div>
+    </div>
+  );
+}
+
 function AnnouncementsFeed({ student }) {
   const [items, setItems] = useState(null);
   useEffect(() => {
@@ -29829,6 +30293,7 @@ function Dashboard({ history, onStart, onTrain, onLearn, onDiagnostic, onDiagnos
           <SubscriptionGauge student={student} onMarkPending={onMarkPending} />
         </div>
 
+        <CampaignBanner />
         <AnnouncementsFeed student={student} />
 
         <div className="anim-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 22 }}>
