@@ -4,7 +4,7 @@
 // ressources statiques (icônes, polices) qui ne changent presque jamais.
 // Le nom du cache change à chaque nouvelle version du service worker : ça force la purge
 // automatique de l'ancien cache et évite de rester bloqué sur une vieille version de l'app.
-const CACHE_VERSION = "infas-prepa-v3";
+const CACHE_VERSION = "infas-prepa-v4";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -40,6 +40,8 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return; // laisser passer les appels externes (API Gemini, etc.) sans les intercepter
+  // ne jamais intercepter l'APK ni les fichiers de vérification Android
+  if (url.pathname.endsWith(".apk") || url.pathname.startsWith("/.well-known/")) return;
 
   // Ressources statiques (icônes, polices) : cache d'abord, réseau en secours si absent
   if (isStaticAsset(url)) {

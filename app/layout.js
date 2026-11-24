@@ -1,4 +1,5 @@
 import RegisterSW from "./components/RegisterSW";
+import InstallApp from "./components/InstallApp";
 
 export const metadata = {
   title: "ASN Santé — Préparation aux examens",
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
       <body style={{ margin: 0 }}>
         {children}
         <RegisterSW />
+        <InstallApp />
       </body>
     </html>
   );

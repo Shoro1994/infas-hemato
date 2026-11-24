@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.asnsante.app",
+      "sha256_cert_fingerprints": [
+        "B7:3E:04:FA:73:84:24:60:FD:48:CA:CC:12:37:FD:B2:5C:AE:C0:C3:A3:DA:31:80:7C:83:72:11:B7:51:DE:DF"
+      ]
+    }
+  }
+]
